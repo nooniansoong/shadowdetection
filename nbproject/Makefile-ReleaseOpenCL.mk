@@ -89,7 +89,7 @@ ${OBJECTDIR}/src/shadowdetection/util/Cofig.o: src/shadowdetection/util/Cofig.cp
 ${OBJECTDIR}/src/shadowdetection/util/TabParser.o: src/shadowdetection/util/TabParser.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/shadowdetection/util
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/shadowdetection/util/TabParser.o src/shadowdetection/util/TabParser.cpp
+	$(COMPILE.cc) -O2 -D_OPENCL -I/usr/local/include/opencv -Isrc -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/shadowdetection/util/TabParser.o src/shadowdetection/util/TabParser.cpp
 
 # Subprojects
 .build-subprojects:

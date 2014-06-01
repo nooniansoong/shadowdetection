@@ -157,6 +157,7 @@
         </cTool>
         <ccTool>
           <developmentMode>5</developmentMode>
+          <architecture>2</architecture>
           <incDir>
             <pElem>/usr/local/include/opencv</pElem>
             <pElem>src</pElem>
@@ -239,6 +240,7 @@
       </toolsSet>
       <compileType>
         <ccTool>
+          <architecture>2</architecture>
           <incDir>
             <pElem>/usr/local/include/opencv</pElem>
             <pElem>src</pElem>

@@ -2,16 +2,16 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <data xmlns="http://www.netbeans.org/ns/make-project-private/1">
         <activeConfTypeElem>1</activeConfTypeElem>
-        <activeConfIndexElem>2</activeConfIndexElem>
+        <activeConfIndexElem>0</activeConfIndexElem>
     </data>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/data/Dev/shadowdetection/main.cpp</file>
-            <file>file:/data/Dev/shadowdetection/OpenCVTools.cpp</file>
-            <file>file:/data/Dev/shadowdetection/image_hci_convert_kernel.cl</file>
-            <file>file:/data/Dev/shadowdetection/OpenCLTools.cpp</file>
-            <file>file:/data/Dev/shadowdetection/OpenCLTools.h</file>
+            <file>file:/data/Dev/shadowdetection/src/shadowdetection/opencv/OpenCVTools.cpp</file>
+            <file>file:/data/Dev/shadowdetection/src/shadowdetection/opencl/OpenCLTools.cpp</file>
+            <file>file:/data/Dev/shadowdetection/ShadowDetectionConfig.xml</file>
+            <file>file:/data/Dev/shadowdetection/src/shadowdetection/util/raii/RAIIS.h</file>
         </group>
     </open-files>
 </project-private>
