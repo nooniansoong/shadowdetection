@@ -22,6 +22,22 @@ CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux-x86/shadowdetection
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux-x86/package
 CND_PACKAGE_NAME_Release=shadowdetection.tar
 CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux-x86/package/shadowdetection.tar
+# DebugOpenCL configuration
+CND_PLATFORM_DebugOpenCL=GNU+CUDA-Linux-x86
+CND_ARTIFACT_DIR_DebugOpenCL=dist/DebugOpenCL/GNU+CUDA-Linux-x86
+CND_ARTIFACT_NAME_DebugOpenCL=shadowdetection
+CND_ARTIFACT_PATH_DebugOpenCL=dist/DebugOpenCL/GNU+CUDA-Linux-x86/shadowdetection
+CND_PACKAGE_DIR_DebugOpenCL=dist/DebugOpenCL/GNU+CUDA-Linux-x86/package
+CND_PACKAGE_NAME_DebugOpenCL=shadowdetection.tar
+CND_PACKAGE_PATH_DebugOpenCL=dist/DebugOpenCL/GNU+CUDA-Linux-x86/package/shadowdetection.tar
+# ReleaseOpenCL configuration
+CND_PLATFORM_ReleaseOpenCL=GNU+CUDA-Linux-x86
+CND_ARTIFACT_DIR_ReleaseOpenCL=dist/ReleaseOpenCL/GNU+CUDA-Linux-x86
+CND_ARTIFACT_NAME_ReleaseOpenCL=shadowdetection
+CND_ARTIFACT_PATH_ReleaseOpenCL=dist/ReleaseOpenCL/GNU+CUDA-Linux-x86/shadowdetection
+CND_PACKAGE_DIR_ReleaseOpenCL=dist/ReleaseOpenCL/GNU+CUDA-Linux-x86/package
+CND_PACKAGE_NAME_ReleaseOpenCL=shadowdetection.tar
+CND_PACKAGE_PATH_ReleaseOpenCL=dist/ReleaseOpenCL/GNU+CUDA-Linux-x86/package/shadowdetection.tar
 #
 # include compiler specific variables
 #

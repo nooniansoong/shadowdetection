@@ -5,3 +5,5 @@
 #
 # Debug configuration
 # Release configuration
+# DebugOpenCL configuration
+# ReleaseOpenCL configuration

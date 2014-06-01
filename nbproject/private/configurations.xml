@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="90">
+<configurationDescriptor version="94">
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="Debug" type="1">
@@ -13,6 +13,8 @@
         <gdb_interceptlist>
           <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
         </gdb_interceptlist>
+        <gdb_signals>
+        </gdb_signals>
         <gdb_options>
           <DebugOptions>
           </DebugOptions>
@@ -24,9 +26,18 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 0.jpg out.jpg</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" camel.jpg out.jpg</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" deca.jpg out.jpg</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 5.jpg out.jpg</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" sh.jpg out.jpg</runcommandpicklistitem>
+          <runcommandpicklistitem>${OUTPUT_PATH}" files.tab</runcommandpicklistitem>
+          <runcommandpicklistitem>${OUTPUT_PATH}" files.list</runcommandpicklistitem>
+          <runcommandpicklistitem>${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" deca.png out.jpg</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}"</runcommand>
+        <runcommand>"${OUTPUT_PATH}" list.csv</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>
@@ -58,8 +69,105 @@
       <runprofile version="9">
         <runcommandpicklist>
           <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 0.jpg out.jpg</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" camel.jpg out.jpg</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" deca.jpg out.jpg</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 5.jpg out.jpg</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" deca.png out.jpg</runcommandpicklistitem>
+          <runcommandpicklistitem>${OUTPUT_PATH}" files.tab</runcommandpicklistitem>
+          <runcommandpicklistitem>${OUTPUT_PATH}" files.list</runcommandpicklistitem>
+          <runcommandpicklistitem>${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}"</runcommand>
+        <runcommand>"${OUTPUT_PATH}" list.csv</runcommand>
+        <rundir></rundir>
+        <buildfirst>true</buildfirst>
+        <terminal-type>0</terminal-type>
+        <remove-instrumentation>0</remove-instrumentation>
+        <environment>
+        </environment>
+      </runprofile>
+    </conf>
+    <conf name="DebugOpenCL" type="1">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <platform>2</platform>
+      </toolsSet>
+      <dbx_gdbdebugger version="1">
+        <gdb_pathmaps>
+        </gdb_pathmaps>
+        <gdb_interceptlist>
+          <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
+        </gdb_interceptlist>
+        <gdb_signals>
+        </gdb_signals>
+        <gdb_options>
+          <DebugOptions>
+          </DebugOptions>
+        </gdb_options>
+        <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
+      </dbx_gdbdebugger>
+      <nativedebugger version="1">
+        <engine>gdb</engine>
+      </nativedebugger>
+      <runprofile version="9">
+        <runcommandpicklist>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 0.jpg out.jpg</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" camel.jpg out.jpg</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" deca.jpg out.jpg</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 5.jpg out.jpg</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" files.tab</runcommandpicklistitem>
+          <runcommandpicklistitem>${OUTPUT_PATH}" files.tab</runcommandpicklistitem>
+          <runcommandpicklistitem>${OUTPUT_PATH}" files.list</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" deca.png out.jpg</runcommandpicklistitem>
+          <runcommandpicklistitem>${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
+        </runcommandpicklist>
+        <runcommand>"${OUTPUT_PATH}" list.csv</runcommand>
+        <rundir></rundir>
+        <buildfirst>true</buildfirst>
+        <terminal-type>0</terminal-type>
+        <remove-instrumentation>0</remove-instrumentation>
+        <environment>
+        </environment>
+      </runprofile>
+    </conf>
+    <conf name="ReleaseOpenCL" type="1">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <platform>2</platform>
+      </toolsSet>
+      <dbx_gdbdebugger version="1">
+        <gdb_pathmaps>
+        </gdb_pathmaps>
+        <gdb_interceptlist>
+          <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
+        </gdb_interceptlist>
+        <gdb_signals>
+        </gdb_signals>
+        <gdb_options>
+          <DebugOptions>
+          </DebugOptions>
+        </gdb_options>
+        <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
+      </dbx_gdbdebugger>
+      <nativedebugger version="1">
+        <engine>gdb</engine>
+      </nativedebugger>
+      <runprofile version="9">
+        <runcommandpicklist>
+          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 0.jpg out.jpg</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" camel.jpg out.jpg</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" deca.jpg out.jpg</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 5.jpg out.jpg</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" deca.png out.jpg</runcommandpicklistitem>
+          <runcommandpicklistitem>${OUTPUT_PATH}" files.tab</runcommandpicklistitem>
+          <runcommandpicklistitem>${OUTPUT_PATH}" files.list</runcommandpicklistitem>
+          <runcommandpicklistitem>${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
+        </runcommandpicklist>
+        <runcommand>"${OUTPUT_PATH}" list.csv</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>

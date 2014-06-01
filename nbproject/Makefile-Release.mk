@@ -35,7 +35,11 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/main.o
+	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/src/shadowdetection/opencl/OpenCLTools.o \
+	${OBJECTDIR}/src/shadowdetection/opencv/OpenCVTools.o \
+	${OBJECTDIR}/src/shadowdetection/util/Cofig.o \
+	${OBJECTDIR}/src/shadowdetection/util/TabParser.o
 
 
 # C Compiler Flags
@@ -52,7 +56,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=
+LDLIBSOPTIONS=-L/usr/local/lib
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -60,12 +64,32 @@ LDLIBSOPTIONS=
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection ${OBJECTFILES} ${LDLIBSOPTIONS}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection ${OBJECTFILES} ${LDLIBSOPTIONS} -lopencv_highgui -lopencv_core -lopencv_imgproc -lopencv_ocl
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -O2 -I/usr/local/include/opencv -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+
+${OBJECTDIR}/src/shadowdetection/opencl/OpenCLTools.o: src/shadowdetection/opencl/OpenCLTools.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/shadowdetection/opencl
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I/usr/local/include/opencv -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/shadowdetection/opencl/OpenCLTools.o src/shadowdetection/opencl/OpenCLTools.cpp
+
+${OBJECTDIR}/src/shadowdetection/opencv/OpenCVTools.o: src/shadowdetection/opencv/OpenCVTools.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/shadowdetection/opencv
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I/usr/local/include/opencv -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/shadowdetection/opencv/OpenCVTools.o src/shadowdetection/opencv/OpenCVTools.cpp
+
+${OBJECTDIR}/src/shadowdetection/util/Cofig.o: src/shadowdetection/util/Cofig.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/shadowdetection/util
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I/usr/local/include/opencv -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/shadowdetection/util/Cofig.o src/shadowdetection/util/Cofig.cpp
+
+${OBJECTDIR}/src/shadowdetection/util/TabParser.o: src/shadowdetection/util/TabParser.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/shadowdetection/util
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I/usr/local/include/opencv -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/shadowdetection/util/TabParser.o src/shadowdetection/util/TabParser.cpp
 
 # Subprojects
 .build-subprojects:
