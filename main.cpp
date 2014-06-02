@@ -21,8 +21,9 @@ using namespace shadowdetection::util;
 using namespace cv;
 using namespace shadowdetection::util::raii;
 
-void handleError(int exception){
-    cout << "Error: " << exception << endl;
+void handleError(const SDException& exception){
+    const char* err = exception.what();
+    cout << "Error: " << err << endl;
 }
 
 #ifndef _OPENCL
@@ -61,7 +62,7 @@ void processSingleGPU(const char* out, IplImage* image) {
     Mat* processedImage = 0;
     try {
         processedImage = oclt.processRGBImage(buffer, image->width, image->height, image->nChannels);        
-    } catch (int exception) {
+    } catch (SDException& exception) {
         throw exception;
     }
     if (processedImage != 0) {
@@ -72,7 +73,7 @@ void processSingleGPU(const char* out, IplImage* image) {
 #endif
 
 IplImage* image;
-void processSingle(const char* input, const char* out) throw (int) {        
+void processSingle(const char* input, const char* out) throw (SDException&) {        
     image = cvLoadImage(input);
     ImageRaii rai(image);    
     if (image != 0) {
@@ -83,15 +84,41 @@ void processSingle(const char* input, const char* out) throw (int) {
             processSingleCPU(out, image);
 #endif
         }            
-        catch (int exception) {
+        catch (SDException& exception) {
             throw exception;
         }        
     } else {
-        throw (int)SHADOW_READ_UNABLE;
+        string msg = "Process single image file: ";
+        msg += input;
+        SDException exc(SHADOW_READ_UNABLE, msg);
+        throw exc;
     }    
 }
 
 int main(int argc, char **argv) {
+    if (argc == 1){
+        cout << "Call with -help for help" << endl;
+#ifdef _OPENCL
+        cout << "Call with -list for list of openCL capable platforms" << endl;
+#endif
+        return 0;
+    }
+    if (argc == 2 && strcmp(argv[1], "-help") == 0){
+        cout << "Please visit: http://code.google.com/p/shadowdetection/wiki/ShadowDetection section Usage" << endl;
+        return 0;
+    }
+#ifdef _OPENCL
+    if (argc == 2 && strcmp(argv[1], "-list") == 0){
+        try{
+            oclt.init(0, 0);
+            oclt.cleanUp();
+        } catch (SDException& exception) {
+            handleError(exception);
+            exit(1);
+        }
+        return 0;
+    }
+#endif
     Config* conf = Config::getInstancePtr();
     string useBatch = conf->getPropertyValue("process.UseBatch");
 #ifdef _OPENCL    
@@ -109,7 +136,7 @@ int main(int argc, char **argv) {
         oclt.init(platformId, deviceId);
         OpenCvTools::initOpenCL(platformId, deviceId);        
     }
-    catch (int exception){
+    catch (SDException& exception){
         handleError(exception);
         exit(1);
     }
@@ -121,7 +148,7 @@ int main(int argc, char **argv) {
             try{
                 processSingle(path, savePath);
             }
-            catch (int exception){
+            catch (SDException& exception){
                 handleError(exception);
                 exit(1);
             }
@@ -134,7 +161,7 @@ int main(int argc, char **argv) {
             try{
                 tp.init(path);
             }
-            catch (int exception){
+            catch (SDException& exception){
                 handleError(exception);
                 exit(1);
             }
@@ -144,7 +171,7 @@ int main(int argc, char **argv) {
                 try{
                     processSingle(in.c_str(), out.c_str());
                 }
-                catch (int exception){
+                catch (SDException& exception){
                     handleError(exception);
                 }
 #ifdef _OPENCL

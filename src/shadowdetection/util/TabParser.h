@@ -21,9 +21,9 @@ namespace shadowdetection {
             TabParser();
             TabParser(const char* path);
             virtual ~TabParser();
-            void init(const char* path) throw (int);
+            void init(const char* path) throw (SDException&);
             size_t size();
-            KeyVal<std::string> get(int i) throw (int);
+            KeyVal<std::string> get(int i) throw (SDException&);
         };
 
     }

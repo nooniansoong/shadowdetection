@@ -22,7 +22,7 @@ namespace shadowdetection {
             return ((coef + 1) * localSize);
         }
 
-        void OpenclTools::err_check(int err, string err_code) throw (int) {
+        void OpenclTools::err_check(int err, string err_code) throw (SDException&) {
             if (err != CL_SUCCESS) {
                 cout << "Error: " << err_code << "(" << err << ")" << endl;
                 if (err == CL_BUILD_PROGRAM_FAILURE) {
@@ -36,7 +36,8 @@ namespace shadowdetection {
                     // Print the log
                     cout << log << endl;
                 }
-                throw err;
+                SDException exc(SHADOW_OTHER, err_code);
+                throw exc;
             }
         }
         
@@ -105,7 +106,7 @@ namespace shadowdetection {
             cleanUp();
         }
 
-        void OpenclTools::init(int platformID, int deviceID) throw (int) {
+        void OpenclTools::init(int platformID, int deviceID) throw (SDException&) {
             char info[256];
             cl_platform_id* platform = new cl_platform_id[MAX_PLATFORMS];
             cl_uint num_platforms;                        
@@ -133,7 +134,8 @@ namespace shadowdetection {
             }
             
             if (platformID >= num_platforms){
-                throw (int)SHADOW_NO_OPENCL_PLATFORM;
+                SDException exc(SHADOW_NO_OPENCL_PLATFORM, "Init platform");
+                throw exc;
             }
             
             cl_device_id devices[MAX_DEVICES];
@@ -141,7 +143,8 @@ namespace shadowdetection {
             err = clGetDeviceIDs(platform[platformID], CL_DEVICE_TYPE_GPU, MAX_DEVICES, devices, &num_devices);
             err_check(err, "clGetDeviceIDs");
             if (deviceID >= num_devices){
-                throw (int)SHADOW_NO_OPENCL_DEVICE;
+                SDException exc(SHADOW_NO_OPENCL_DEVICE, "Init devices");
+                throw exc;
             }
             device = devices[deviceID];
 
@@ -176,11 +179,13 @@ namespace shadowdetection {
                     delete[] buffer;
                 } else {
                     kernelFile.close();
-                    throw (int)SHADOW_NO_MEM;
+                    SDException exc(SHADOW_NO_MEM, "Init Kernel");
+                    throw exc;
                 }
                 kernelFile.close();
             } else {
-                throw (int)SHADOW_READ_UNABLE;
+                SDException exc(SHADOW_READ_UNABLE, "Init Kernel");
+                throw exc;
             }
             return;
         }
@@ -213,7 +218,7 @@ namespace shadowdetection {
             err_check(err, "clCreateBuffer3");
         }
 
-        Mat* OpenclTools::processRGBImage(uchar* image, u_int32_t width, u_int32_t height, uchar channels) throw (int) {
+        Mat* OpenclTools::processRGBImage(uchar* image, u_int32_t width, u_int32_t height, uchar channels) throw (SDException&) {
             if (image == 0) {
                 return 0;
             }
@@ -271,7 +276,8 @@ namespace shadowdetection {
             ratios1 = 0;
             ratios1 = new uchar[width * height];
             if (ratios1 == 0) {
-                throw (int)SHADOW_NO_MEM;
+                SDException exc(SHADOW_NO_MEM, "Calculate ratios1");
+                throw exc;
             }
             err = clEnqueueReadBuffer(command_queue, output3, CL_TRUE, 0, width * height, ratios1, 0, NULL, NULL);
             err_check(err, "clEnqueueReadBuffer1");
@@ -313,7 +319,8 @@ namespace shadowdetection {
             ratios2 = 0;
             ratios2 = new uchar[width * height];
             if (ratios2 == 0) {
-                throw (int)SHADOW_NO_MEM;
+                SDException exc(SHADOW_NO_MEM, "Calculate ratios2");
+                throw exc;
             }
             err = clEnqueueReadBuffer(command_queue, output3, CL_TRUE, 0, width * height, ratios2, 0, NULL, NULL);
             err_check(err, "clEnqueueReadBuffer2");

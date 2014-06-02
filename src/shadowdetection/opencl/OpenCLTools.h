@@ -11,7 +11,7 @@
 #ifdef _OPENCL
 
 #include <CL/cl.h>
-#include <string>
+#include "typedefs.h"
 
 #define MAX_DEVICES 100
 #define MAX_SRC_SIZE 5242800
@@ -48,7 +48,7 @@ namespace shadowdetection {
             unsigned char* ratios1;
             unsigned char* ratios2;
             
-            void err_check(int err, std::string err_code) throw (int);
+            void err_check(int err, std::string err_code) throw (SDException&);
             void createKernels();
             void createWorkGroupSizes();
             void createBuffers(unsigned char* image, u_int32_t height, u_int32_t width, unsigned char channels);            
@@ -58,8 +58,8 @@ namespace shadowdetection {
         public:
             OpenclTools();
             virtual ~OpenclTools();
-            void init(int platformID, int deviceID) throw (int);
-            cv::Mat* processRGBImage(unsigned char* image, u_int32_t width, u_int32_t height, unsigned char channels) throw (int);
+            void init(int platformID, int deviceID) throw (SDException&);
+            cv::Mat* processRGBImage(unsigned char* image, u_int32_t width, u_int32_t height, unsigned char channels) throw (SDException&);
             void cleanUp();
             void cleanWorkPart();
         };

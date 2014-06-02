@@ -16,7 +16,7 @@ namespace shadowdetection {
         TabParser::~TabParser(){            
         }
         
-        void TabParser::init(const char* path) throw (int){
+        void TabParser::init(const char* path) throw (SDException&){
             container.clear();
             ifstream stream(path);
             if (stream.is_open()){
@@ -34,7 +34,8 @@ namespace shadowdetection {
                 stream.close();
             }
             else{
-                throw (int)SHADOW_READ_UNABLE;
+                SDException exc(SHADOW_READ_UNABLE, "Tab file init");
+                throw exc;
             }
         }
         
@@ -42,9 +43,10 @@ namespace shadowdetection {
             return container.size();
         }
         
-        KeyVal<std::string> TabParser::get(int i)throw (int){
+        KeyVal<std::string> TabParser::get(int i)throw (SDException&){
             if (i >= size()){
-                throw (int)SHADOW_OUT_OF_BOUNDS;
+                SDException exc(SHADOW_OUT_OF_BOUNDS, "Get Tab elemenent");
+                throw exc;
             }
             return container[i];
         }

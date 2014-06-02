@@ -43,7 +43,8 @@ namespace shadowdetection {
                 string xmlContent = stream.str();
                 fillMap(xmlContent);
             } else {
-                throw (int)SHADOW_READ_UNABLE;
+                SDException exc(SHADOW_READ_UNABLE, "Config init");
+                throw exc;
             }
         }
         void Config::fillMap(string xmlFileContent) {
@@ -58,7 +59,8 @@ namespace shadowdetection {
                     processNode(root, currName);
                 }
             } catch (exception exc) {
-                throw (int) SHADOW_INVALID_XML;
+                SDException exc(SHADOW_INVALID_XML, "Config init");
+                throw exc;
             }
         }
 

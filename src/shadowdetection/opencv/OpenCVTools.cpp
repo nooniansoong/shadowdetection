@@ -308,25 +308,25 @@ namespace shadowdetection {
 //        }
 
 #ifdef _OPENCL 
-        void OpenCvTools::initOpenCL(int pid, int device) throw (int){
+        void OpenCvTools::initOpenCL(int pid, int device) throw (SDException&){
             int typeFlag = cv::ocl::CVCL_DEVICE_TYPE_GPU;
             cv::ocl::PlatformsInfo platformsInfo;
             cv::ocl::getOpenCLPlatforms(platformsInfo);
             size_t size = platformsInfo.size();
             if (size <= 0 || pid >= size){
-                throw (int)SHADOW_NO_OPENCL_PLATFORM;
+                SDException exc(SHADOW_NO_OPENCL_PLATFORM, "OpenCV Init OpenCL platforms");
+                throw exc;
             }
             cv::ocl::DevicesInfo devicesInfo;            
             int devnums = cv::ocl::getOpenCLDevices(devicesInfo, typeFlag, (pid < 0) ? NULL : platformsInfo[pid]);
             if (device >= devnums){
-                throw (int)SHADOW_NO_OPENCL_DEVICE;
+                SDException exc(SHADOW_NO_OPENCL_DEVICE, "OpenCV Init OpenCL devices");
+                throw exc;
             }
             cv::ocl::setDevice(devicesInfo[device]);
             cout << "Device type: GPU" << endl;     
             cout << "Platform name:" << devicesInfo[device]->platform->platformName << endl;
-            cout << "Device name:" << devicesInfo[device]->deviceName << endl;
-            int a = 0;
-            ++a;
+            cout << "Device name:" << devicesInfo[device]->deviceName << endl;            
         }
         
 //        Mat* OpenCvTools::binarizeOcl(const Mat& image){

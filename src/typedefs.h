@@ -12,6 +12,8 @@
 #include <hash_fun.h>
 #include <vector>
 #include <sstream>
+#include <exception>
+#include <cstring>
 
 enum SHADOW_EXCEPTIONS {
     SHADOW_SUCC = 0,
@@ -22,6 +24,19 @@ enum SHADOW_EXCEPTIONS {
     SHADOW_NO_OPENCL_PLATFORM,
     SHADOW_NO_OPENCL_DEVICE,
     SHADOW_OUT_OF_BOUNDS,
+    SHADOW_OTHER,
+};
+
+static std::string ExceptionStrings[] = {
+    "SHADOW_SUCC",
+    "SHADOW_NO_MEM",
+    "SHADOW_WRITE_UNABLE",
+    "SHADOW_READ_UNABLE",
+    "SHADOW_INVALID_XML",
+    "SHADOW_NO_OPENCL_PLATFORM",
+    "SHADOW_NO_OPENCL_DEVICE",
+    "SHADOW_OUT_OF_BOUNDS",
+    "SHADOW_OTHER"
 };
 
 //class sdString : public std::string{
@@ -110,6 +125,31 @@ inline std::vector<std::string> split(const std::string &s, char delim) {
     splitwr(s, delim, elems);
     return elems;
 }
+
+class SDException : public std::exception{
+private:
+    SHADOW_EXCEPTIONS excCode;
+    std::string location;
+    
+    SDException(){}
+protected:
+public:
+    virtual ~SDException() throw(){}
+    
+    SDException(SHADOW_EXCEPTIONS code, std::string location){
+        excCode = code;
+        this->location = location;
+    }
+    virtual const char* what() const throw () {
+        std::string retStr = ExceptionStrings[excCode] + " " + location;
+        const char* msg = retStr.c_str();
+//        size_t len = strlen(msg);
+//        char* ret = new char[len + 1];
+//        ret[len] = 0;
+//        strcpy(ret, msg);
+        return msg;
+    }
+};
 
 #endif	/* TYPEDEFS_H */
 
