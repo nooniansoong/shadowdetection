@@ -7,3 +7,5 @@
 # Release configuration
 # DebugOpenCL configuration
 # ReleaseOpenCL configuration
+# DebugOpenCL_AMD configuration
+# ReleaseOpenCL_AMD configuration

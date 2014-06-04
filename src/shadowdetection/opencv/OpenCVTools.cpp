@@ -309,7 +309,11 @@ namespace shadowdetection {
 
 #ifdef _OPENCL 
         void OpenCvTools::initOpenCL(int pid, int device) throw (SDException&){
+#ifdef _AMD
+            int typeFlag = cv::ocl::CVCL_DEVICE_TYPE_CPU;
+#else
             int typeFlag = cv::ocl::CVCL_DEVICE_TYPE_GPU;
+#endif
             cv::ocl::PlatformsInfo platformsInfo;
             cv::ocl::getOpenCLPlatforms(platformsInfo);
             size_t size = platformsInfo.size();

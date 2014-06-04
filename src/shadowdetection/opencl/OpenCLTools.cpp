@@ -106,32 +106,45 @@ namespace shadowdetection {
             cleanUp();
         }
 
-        void OpenclTools::init(int platformID, int deviceID) throw (SDException&) {
+        void OpenclTools::init(int platformID, int deviceID, bool listOnly) throw (SDException&) {
             char info[256];
-            cl_platform_id* platform = new cl_platform_id[MAX_PLATFORMS];
+            cl_platform_id platform[MAX_PLATFORMS];
             cl_uint num_platforms;                        
             
             err = clGetPlatformIDs(MAX_PLATFORMS, platform, &num_platforms);
             err_check(err, "clGetPlatformIDs");
             cout << "Found " << num_platforms << " platforms." << endl;                        
-            
-            for (int i = 0; i < num_platforms; i++){
+            cout << "=============" << endl;
+            for (int i = 0; i < num_platforms; i++) {
                 cl_device_id devices[MAX_DEVICES];
                 cl_uint num_devices;
                 err = clGetPlatformInfo(platform[i], CL_PLATFORM_NAME, 256, info, 0);
                 err_check(err, "clGetPlatformInfo");
                 cout << "Platform name: " << info << endl;
+                try {
+#ifdef _AMD
+                    err = clGetDeviceIDs(platform[i], CL_DEVICE_TYPE_CPU, MAX_DEVICES, devices, &num_devices);
+#else
+                    err = clGetDeviceIDs(platform[i], CL_DEVICE_TYPE_GPU, MAX_DEVICES, devices, &num_devices);
+#endif
+                    err_check(err, "clGetDeviceIDs");
+                    cout << "Found " << num_devices << " devices" << endl;
 
-                err = clGetDeviceIDs(platform[i], CL_DEVICE_TYPE_ALL, MAX_DEVICES, devices, &num_devices);
-                err_check(err, "clGetDeviceIDs");
-                cout << "Found " << num_devices << " devices" << endl;
-
-                for (i = 0; i < num_devices; ++i) {
-                    err = clGetDeviceInfo(devices[i], CL_DEVICE_NAME, 256, info, 0);
-                    err_check(err, "clGetDeviceInfo");
-                    cout << "Device " << i << " name: " << info << endl;
+                    for (int j = 0; j < num_devices; j++) {
+                        err = clGetDeviceInfo(devices[j], CL_DEVICE_NAME, 256, info, 0);
+                        err_check(err, "clGetDeviceInfo");
+                        cout << "Device " << j << " name: " << info << endl;
+                    }
+                }                
+                catch (SDException& exception) {
+                    cout << "Platform not supported by this build" << endl;
+                    cout << exception.what() << endl;
                 }
+                cout << "=============" << endl;
             }
+            
+            if (listOnly)
+                return;
             
             if (platformID >= num_platforms){
                 SDException exc(SHADOW_NO_OPENCL_PLATFORM, "Init platform");
@@ -140,7 +153,11 @@ namespace shadowdetection {
             
             cl_device_id devices[MAX_DEVICES];
             cl_uint num_devices;
-            err = clGetDeviceIDs(platform[platformID], CL_DEVICE_TYPE_GPU, MAX_DEVICES, devices, &num_devices);
+#ifdef _AMD
+                err = clGetDeviceIDs(platform[platformID], CL_DEVICE_TYPE_CPU, MAX_DEVICES, devices, &num_devices);
+#else
+                err = clGetDeviceIDs(platform[platformID], CL_DEVICE_TYPE_GPU, MAX_DEVICES, devices, &num_devices);
+#endif
             err_check(err, "clGetDeviceIDs");
             if (deviceID >= num_devices){
                 SDException exc(SHADOW_NO_OPENCL_DEVICE, "Init devices");
@@ -155,7 +172,8 @@ namespace shadowdetection {
             size_t rsize;
             clGetDeviceInfo(device, CL_DEVICE_IMAGE_SUPPORT, sizeof (sup), &sup, &rsize);
             if (sup != CL_TRUE) {
-                cout << "Image not Supported" << endl;
+                SDException exception(SHADOW_IMAGE_NOT_SUPPORTED_ON_DEVICE, "Check for image support");
+                throw exception;
             }
 
             command_queue = clCreateCommandQueue(context, device, 0, &err);
@@ -208,6 +226,7 @@ namespace shadowdetection {
 
         void OpenclTools::createBuffers(uchar* image, u_int32_t height, u_int32_t width, uchar channels) {
             size_t size = width * height * channels;
+#ifndef _AMD
             input = clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, size, image, &err);
             err_check(err, "clCreateBuffer1");
             output1 = clCreateBuffer(context, CL_MEM_READ_WRITE, size * sizeof (u_int32_t), 0, &err);
@@ -216,6 +235,17 @@ namespace shadowdetection {
             err_check(err, "clCreateBuffer3");
             output3 = clCreateBuffer(context, CL_MEM_WRITE_ONLY, width * height, 0, &err);
             err_check(err, "clCreateBuffer3");
+#else
+            int flag = CL_MEM_USE_HOST_PTR;
+            input = clCreateBuffer(context, CL_MEM_READ_ONLY | flag, size, image, &err);
+            err_check(err, "clCreateBuffer1");            
+            output1 = clCreateBuffer(context, CL_MEM_READ_WRITE | CL_MEM_ALLOC_HOST_PTR, size * sizeof (u_int32_t), 0, &err);
+            err_check(err, "clCreateBuffer2");
+            output2 = clCreateBuffer(context, CL_MEM_READ_WRITE | CL_MEM_ALLOC_HOST_PTR, size * sizeof (u_int32_t), 0, &err);
+            err_check(err, "clCreateBuffer3");
+            output3 = clCreateBuffer(context, CL_MEM_WRITE_ONLY | CL_MEM_ALLOC_HOST_PTR, width * height, 0, &err);
+            err_check(err, "clCreateBuffer3");
+#endif
         }
 
         Mat* OpenclTools::processRGBImage(uchar* image, u_int32_t width, u_int32_t height, uchar channels) throw (SDException&) {

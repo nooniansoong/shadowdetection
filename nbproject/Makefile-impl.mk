@@ -31,7 +31,7 @@ DEFAULTCONF=Debug
 CONF=${DEFAULTCONF}
 
 # All Configurations
-ALLCONFS=Debug Release DebugOpenCL ReleaseOpenCL 
+ALLCONFS=Debug Release DebugOpenCL ReleaseOpenCL DebugOpenCL_AMD ReleaseOpenCL_AMD 
 
 
 # build

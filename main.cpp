@@ -74,6 +74,8 @@ void processSingleGPU(const char* out, IplImage* image) {
 
 IplImage* image;
 void processSingle(const char* input, const char* out) throw (SDException&) {        
+    cout << "===========" << endl;
+    cout << "Processing: " << input << endl;
     image = cvLoadImage(input);
     ImageRaii rai(image);    
     if (image != 0) {
@@ -110,7 +112,7 @@ int main(int argc, char **argv) {
 #ifdef _OPENCL
     if (argc == 2 && strcmp(argv[1], "-list") == 0){
         try{
-            oclt.init(0, 0);
+            oclt.init(0, 0, true);
             oclt.cleanUp();
         } catch (SDException& exception) {
             handleError(exception);
@@ -126,14 +128,14 @@ int main(int argc, char **argv) {
         int platformId = 0;
         int deviceId = 0;
         string platformStr = conf->getPropertyValue("settings.openCL.platformid");
-        string deviceStr = conf->getPropertyValue("settings.openCL.platformid");
+        string deviceStr = conf->getPropertyValue("settings.openCL.deviceid");
         int tmp = atoi(platformStr.c_str());
         if (tmp != 0)
             platformId = tmp;
         tmp = atoi(deviceStr.c_str());
         if (tmp != 0)
             deviceId = tmp;
-        oclt.init(platformId, deviceId);
+        oclt.init(platformId, deviceId, false);
         OpenCvTools::initOpenCL(platformId, deviceId);        
     }
     catch (SDException& exception){

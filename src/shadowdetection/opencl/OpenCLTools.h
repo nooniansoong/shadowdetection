@@ -29,11 +29,7 @@ namespace shadowdetection {
     namespace opencl {        
 
         class OpenclTools {
-        private:
-            //cl_platform_id platform[MAX_PLATFORMS];
-            //cl_uint num_platforms;
-            //cl_device_id devices[MAX_DEVICES];
-            //cl_uint num_devices;
+        private:            
             cl_device_id device;
             cl_int err;
             cl_command_queue command_queue;
@@ -58,7 +54,7 @@ namespace shadowdetection {
         public:
             OpenclTools();
             virtual ~OpenclTools();
-            void init(int platformID, int deviceID) throw (SDException&);
+            void init(int platformID, int deviceID, bool listOnly) throw (SDException&);
             cv::Mat* processRGBImage(unsigned char* image, u_int32_t width, u_int32_t height, unsigned char channels) throw (SDException&);
             void cleanUp();
             void cleanWorkPart();
