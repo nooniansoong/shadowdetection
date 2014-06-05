@@ -16,7 +16,6 @@
 #define MAX_DEVICES 100
 #define MAX_SRC_SIZE 5242800
 #define KERNEL_COUNT 3
-#define KERNEL_FILE "src/shadowdetection/opencl/kernels/image_hci_convert_kernel.cl"
 #define MAX_PLATFORMS 100
 
 typedef struct _IplImage IplImage;
@@ -50,6 +49,11 @@ namespace shadowdetection {
             void createBuffers(unsigned char* image, u_int32_t height, u_int32_t width, unsigned char channels);            
             void initVars();
             void initWorkVars();
+            
+            void loadKernelFile(std::string kernelFileName);
+            void loadKernelFileFromSource(std::string kernelFileName);
+            bool loadKernelFileFromBinary(std::string kernelFileName);
+            const char* saveKernelBinary(std::string kernelFileName);
         protected:
         public:
             OpenclTools();

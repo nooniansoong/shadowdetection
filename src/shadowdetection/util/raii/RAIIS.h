@@ -11,6 +11,7 @@
 #include <cv.h>
 #include <highgui.h>
 #include <pthread.h>
+#include <fstream>
 
 namespace shadowdetection {
     namespace util{
@@ -49,6 +50,24 @@ namespace shadowdetection {
                 ~MutexRaii(){
                     if (mutex != 0)
                         pthread_mutex_unlock(mutex);
+                }
+            };
+            
+            class FileRaii{
+            private:
+                std::fstream* file;
+                FileRaii(){}
+            protected:
+            public:
+                FileRaii(std::fstream* file){
+                    this->file = file;
+                }
+                
+                ~FileRaii(){
+                    if (file){
+                        file->flush();
+                        file->close();
+                    }
                 }
             };
             

@@ -2,10 +2,14 @@
 #include "OpenCLTools.h"
 
 #include <iostream>
-#include <fstream>
 
 #include "shadowdetection/opencv/OpenCVTools.h"
 #include "typedefs.h"
+#include "shadowdetection/util/Config.h"
+#include "shadowdetection/util/raii/RAIIS.h"
+
+#define KERNEL_FILE "image_hci_convert_kernel"
+#define KERNEL_PATH "src/shadowdetection/opencl/kernels/"
 
 namespace shadowdetection {
     namespace opencl {
@@ -13,6 +17,8 @@ namespace shadowdetection {
         using namespace std;
         using namespace shadowdetection::opencv;
         using namespace cv;
+        using namespace shadowdetection::util;
+        using namespace shadowdetection::util::raii;
 
         size_t shrRoundUp(size_t localSize, size_t allSize) {
             if (allSize % localSize == 0) {
@@ -105,7 +111,159 @@ namespace shadowdetection {
         OpenclTools::~OpenclTools() {
             cleanUp();
         }
+        
+        void OpenclTools::loadKernelFile(string kernelFileName){
+            string usePrecompiledStr = Config::getInstancePtr()->getPropertyValue("settings.openCL.UsePrecompiledKernels");
+            bool usePrecompiled = usePrecompiledStr.compare("true") == 0;
+            if (usePrecompiled){
+                bool succ = loadKernelFileFromBinary(kernelFileName);
+                if (succ){
+                    return;
+                }
+            }
+            loadKernelFileFromSource(kernelFileName);
+            if (usePrecompiled){
+                const char* fp = saveKernelBinary(kernelFileName);
+                if (fp != 0)
+                    remove(fp);
+            }
+        }
+        
+        void OpenclTools::loadKernelFileFromSource(string kernelFileName){
+            fstream kernelFile;
+            string file = KERNEL_PATH + kernelFileName + ".cl";
+            kernelFile.open(file.c_str(), ifstream::in);
+            FileRaii fRaii(&kernelFile);
+            if (kernelFile.is_open()) {
+                char* buffer = 0;
+                buffer = new char[MAX_SRC_SIZE];
+                if (buffer) {
+                    kernelFile.read(buffer, MAX_SRC_SIZE);
+                    if (kernelFile.eof()) {
+                        size_t readBytes = kernelFile.gcount();
+                        program = clCreateProgramWithSource(context, 1, (const char **) &buffer, &readBytes, &err);
+                        err_check(err, "clCreateProgramWithSource");
 
+                        err = clBuildProgram(program, 1, &device, NULL, NULL, NULL);
+                        err_check(err, "clBuildProgram");
+                    }
+                    delete[] buffer;
+                } else {                    
+                    SDException exc(SHADOW_NO_MEM, "Init Kernel");
+                    throw exc;
+                }                
+            } else {
+                SDException exc(SHADOW_READ_UNABLE, "Init Kernel");
+                throw exc;
+            }
+        }
+        
+        bool OpenclTools::loadKernelFileFromBinary(std::string kernelFileName){
+            fstream kernelFile;
+            char deviceName[256];
+            err = clGetDeviceInfo(device, CL_DEVICE_NAME, 256, deviceName, 0);
+            try{
+                err_check(err, "Get device name, load binary kernel");
+            }
+            catch (SDException& e){
+                cout << e.what() << endl;
+                return false;
+            }
+            string file = deviceName;
+            file += "_" + kernelFileName + ".ptx";
+            kernelFile.open(file.c_str(), ifstream::in | ifstream::binary);
+            FileRaii fRaii(&kernelFile);
+            if (kernelFile.is_open()) {
+                char* buffer = 0;
+                buffer = new char[MAX_SRC_SIZE];
+                if (buffer) {
+                    kernelFile.read(buffer, MAX_SRC_SIZE);
+                    if (kernelFile.eof()) {
+                        size_t readBytes = kernelFile.gcount();
+                        program = clCreateProgramWithBinary(context, 1, &device, &readBytes, (const unsigned char**)&buffer, 0, &err);
+                        try{
+                            err_check(err, "clCreateProgramWithBinary");
+                        }
+                        catch (SDException& e){
+                            cout << e.what() << endl;
+                            return false;
+                        }
+                        err = clBuildProgram(program, 1, &device, NULL, NULL, NULL);
+                        try{
+                            err_check(err, "clBuildProgram");
+                        }
+                        catch (SDException& e){
+                            cout << e.what() << endl;
+                            return false;
+                        }
+                    }
+                    delete[] buffer;
+                } else {                    
+                    return false;
+                }                
+            } else {
+                return false;
+            }
+        }
+        
+        const char* OpenclTools::saveKernelBinary(std::string kernelFileName){
+            cl_device_type type;
+            clGetDeviceInfo(device, CL_DEVICE_TYPE, sizeof(cl_device_type), &type, 0);
+            if (type != CL_DEVICE_TYPE_GPU)
+            {
+                return 0;
+            }
+            char deviceName[256];
+            err = clGetDeviceInfo(device, CL_DEVICE_NAME, 256, deviceName, 0);
+            try{
+                err_check(err, "Get device name, save binary kernel");
+            }
+            catch (SDException& e){
+                cout << e.what() << endl;
+                return 0;
+            }
+            string file = deviceName;
+            file += "_" + kernelFileName + ".ptx";
+            fstream kernel;            
+            kernel.open(file.c_str(), ofstream::out | ofstream::binary);
+            FileRaii fRaii(&kernel);
+            if (kernel.is_open()){                
+                size_t binarySize;
+                err = clGetProgramInfo(program, CL_PROGRAM_BINARY_SIZES, sizeof(size_t), &binarySize, 0);
+                try{
+                    err_check(err, "Get binary size");
+                }
+                catch (SDException& e){
+                    cout << e.what() << endl;
+                    return file.c_str();
+                }
+                unsigned char* buffer = 0;
+                buffer = new unsigned char[binarySize];
+                if (buffer != 0){
+                    err = clGetProgramInfo(program, CL_PROGRAM_BINARIES, binarySize, &buffer, 0);
+                    try{
+                        err_check(err, "Get kernel binaries");
+                    }
+                    catch (SDException& e){
+                        cout << e.what() << endl;
+                        return file.c_str();
+                    }
+                    kernel.write((const char*)buffer, binarySize);
+                }
+                else{
+                    SDException exc(SHADOW_NO_MEM, "Save binary kernel");
+                    cout << exc.what() << endl;
+                    return file.c_str();
+                }                
+            }
+            else{
+                SDException exc(SHADOW_WRITE_UNABLE, "Save binary kernel");
+                cout << exc.what() << endl;
+                return file.c_str();
+            }
+            return 0;
+        }
+        
         void OpenclTools::init(int platformID, int deviceID, bool listOnly) throw (SDException&) {
             char info[256];
             cl_platform_id platform[MAX_PLATFORMS];
@@ -179,32 +337,8 @@ namespace shadowdetection {
             command_queue = clCreateCommandQueue(context, device, 0, &err);
             err_check(err, "clCreateCommandQueue");
 
-            ifstream kernelFile;
-            kernelFile.open(KERNEL_FILE, ifstream::in | ifstream::binary);
-            if (kernelFile.is_open()) {
-                char* buffer = 0;
-                buffer = new char[MAX_SRC_SIZE];
-                if (buffer) {
-                    kernelFile.read(buffer, MAX_SRC_SIZE);
-                    if (kernelFile.eof()) {
-                        size_t readBytes = kernelFile.gcount();
-                        program = clCreateProgramWithSource(context, 1, (const char **) &buffer, &readBytes, &err);
-                        err_check(err, "clCreateProgramWithSource");
-
-                        err = clBuildProgram(program, 1, &device, NULL, NULL, NULL);
-                        err_check(err, "clBuildProgram");
-                    }
-                    delete[] buffer;
-                } else {
-                    kernelFile.close();
-                    SDException exc(SHADOW_NO_MEM, "Init Kernel");
-                    throw exc;
-                }
-                kernelFile.close();
-            } else {
-                SDException exc(SHADOW_READ_UNABLE, "Init Kernel");
-                throw exc;
-            }
+            loadKernelFile(KERNEL_FILE);
+            
             return;
         }
 
@@ -226,26 +360,34 @@ namespace shadowdetection {
 
         void OpenclTools::createBuffers(uchar* image, u_int32_t height, u_int32_t width, uchar channels) {
             size_t size = width * height * channels;
-#ifndef _AMD
-            input = clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, size, image, &err);
-            err_check(err, "clCreateBuffer1");
-            output1 = clCreateBuffer(context, CL_MEM_READ_WRITE, size * sizeof (u_int32_t), 0, &err);
-            err_check(err, "clCreateBuffer2");
-            output2 = clCreateBuffer(context, CL_MEM_READ_WRITE, size * sizeof (u_int32_t), 0, &err);
-            err_check(err, "clCreateBuffer3");
-            output3 = clCreateBuffer(context, CL_MEM_WRITE_ONLY, width * height, 0, &err);
-            err_check(err, "clCreateBuffer3");
-#else
-            int flag = CL_MEM_USE_HOST_PTR;
-            input = clCreateBuffer(context, CL_MEM_READ_ONLY | flag, size, image, &err);
-            err_check(err, "clCreateBuffer1");            
-            output1 = clCreateBuffer(context, CL_MEM_READ_WRITE | CL_MEM_ALLOC_HOST_PTR, size * sizeof (u_int32_t), 0, &err);
-            err_check(err, "clCreateBuffer2");
-            output2 = clCreateBuffer(context, CL_MEM_READ_WRITE | CL_MEM_ALLOC_HOST_PTR, size * sizeof (u_int32_t), 0, &err);
-            err_check(err, "clCreateBuffer3");
-            output3 = clCreateBuffer(context, CL_MEM_WRITE_ONLY | CL_MEM_ALLOC_HOST_PTR, width * height, 0, &err);
-            err_check(err, "clCreateBuffer3");
-#endif
+            cl_device_type type;
+            clGetDeviceInfo(device, CL_DEVICE_TYPE, sizeof(cl_device_type), &type, 0);
+            if (type == CL_DEVICE_TYPE_GPU)
+            {
+                input = clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, size, image, &err);
+                err_check(err, "clCreateBuffer1");
+                output1 = clCreateBuffer(context, CL_MEM_READ_WRITE, size * sizeof (u_int32_t), 0, &err);
+                err_check(err, "clCreateBuffer2");
+                output2 = clCreateBuffer(context, CL_MEM_READ_WRITE, size * sizeof (u_int32_t), 0, &err);
+                err_check(err, "clCreateBuffer3");
+                output3 = clCreateBuffer(context, CL_MEM_WRITE_ONLY, width * height, 0, &err);
+                err_check(err, "clCreateBuffer3");
+            }
+            else if (type == CL_DEVICE_TYPE_CPU){
+                int flag = CL_MEM_USE_HOST_PTR;
+                input = clCreateBuffer(context, CL_MEM_READ_ONLY | flag, size, image, &err);
+                err_check(err, "clCreateBuffer1");            
+                output1 = clCreateBuffer(context, CL_MEM_READ_WRITE | CL_MEM_ALLOC_HOST_PTR, size * sizeof (u_int32_t), 0, &err);
+                err_check(err, "clCreateBuffer2");
+                output2 = clCreateBuffer(context, CL_MEM_READ_WRITE | CL_MEM_ALLOC_HOST_PTR, size * sizeof (u_int32_t), 0, &err);
+                err_check(err, "clCreateBuffer3");
+                output3 = clCreateBuffer(context, CL_MEM_WRITE_ONLY | CL_MEM_ALLOC_HOST_PTR, width * height, 0, &err);
+                err_check(err, "clCreateBuffer3");
+            }
+            else{
+                SDException exc(SHADOW_NOT_SUPPORTED_DEVICE, "Init buffers, currently not supported device");
+                throw exc;
+            }
         }
 
         Mat* OpenclTools::processRGBImage(uchar* image, u_int32_t width, u_int32_t height, uchar channels) throw (SDException&) {

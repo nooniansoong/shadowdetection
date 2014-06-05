@@ -8,12 +8,10 @@
     </process>
     <settings>
         
-        <openCL>
-            <!--
+        <openCL>            
             <UsePrecompiledKernels>
-                false
-            </UsePrecompiledKernels>
-            -->
+                true
+            </UsePrecompiledKernels>            
             <platformid>
                 0
             </platformid>
