@@ -18,8 +18,6 @@
 #define KERNEL_COUNT 3
 #define MAX_PLATFORMS 100
 
-typedef struct _IplImage IplImage;
-
 namespace cv{
     class Mat;
 }
@@ -49,6 +47,9 @@ namespace shadowdetection {
             void createBuffers(unsigned char* image, u_int32_t height, u_int32_t width, unsigned char channels);            
             void initVars();
             void initWorkVars();
+            void setKernelArgs1(u_int32_t height, u_int32_t width, unsigned char channels);
+            void setKernelArgs2(u_int32_t height, u_int32_t width, unsigned char channels);
+            void setKernelArgs3(u_int32_t height, u_int32_t width, unsigned char channels);
             
             void loadKernelFile(std::string kernelFileName);
             void loadKernelFileFromSource(std::string kernelFileName);
@@ -60,6 +61,7 @@ namespace shadowdetection {
             virtual ~OpenclTools();
             void init(int platformID, int deviceID, bool listOnly) throw (SDException&);
             cv::Mat* processRGBImage(unsigned char* image, u_int32_t width, u_int32_t height, unsigned char channels) throw (SDException&);
+            cv::Mat* processRGBImageOld(unsigned char* image, u_int32_t width, u_int32_t height, unsigned char channels) throw (SDException&);
             void cleanUp();
             void cleanWorkPart();
         };

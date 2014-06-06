@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include "shadowdetection/opencl/OpenCLTools.h"
+#include "shadowdetection/opencv/OpenCV2Tools.h"
 #include "shadowdetection/opencv/OpenCVTools.h"
 #include "shadowdetection/util/Config.h"
 #include "shadowdetection/util/TabParser.h"
@@ -17,6 +18,7 @@ using namespace std;
 using namespace shadowdetection::opencl;
 #endif
 using namespace shadowdetection::opencv;
+using namespace shadowdetection::opencv2;
 using namespace shadowdetection::util;
 using namespace cv;
 using namespace shadowdetection::util::raii;
@@ -57,11 +59,11 @@ void processSingleCPU(const char* out, IplImage* image) {
 
 #ifdef _OPENCL
 OpenclTools oclt;
-void processSingleGPU(const char* out, IplImage* image) {                
-    unsigned char* buffer = OpenCvTools::convertImageToByteArray(image);
+void processSingleOpenCL(const char* out, const Mat& imageNew) {                
+    unsigned char* buffer = OpenCV2Tools::convertImageToByteArray(&imageNew, true);    
     Mat* processedImage = 0;
     try {
-        processedImage = oclt.processRGBImage(buffer, image->width, image->height, image->nChannels);        
+        processedImage = oclt.processRGBImage(buffer, imageNew.size().width, imageNew.size().height, imageNew.channels());
     } catch (SDException& exception) {
         throw exception;
     }
@@ -75,26 +77,34 @@ void processSingleGPU(const char* out, IplImage* image) {
 IplImage* image;
 void processSingle(const char* input, const char* out) throw (SDException&) {        
     cout << "===========" << endl;
-    cout << "Processing: " << input << endl;
-    image = cvLoadImage(input);
-    ImageRaii rai(image);    
-    if (image != 0) {
-        try {
-#ifdef _OPENCL            
-            processSingleGPU(out, image);
-#else            
+    cout << "Processing: " << input << endl;            
+    try {
+#ifdef _OPENCL
+        Mat imageNew = cv::imread(input);        
+        if (imageNew.data == 0){
+            string msg = "Process single image file: ";
+            msg += input;
+            SDException exc(SHADOW_READ_UNABLE, msg);
+            throw exc;
+        }
+        processSingleOpenCL(out, imageNew);
+#else
+        image = cvLoadImage(input);
+        if (image != 0) {
+        ImageRaii rai(image);
             processSingleCPU(out, image);
+        }
+        else {
+            string msg = "Process single image file: ";
+            msg += input;
+            SDException exc(SHADOW_READ_UNABLE, msg);
+            throw exc;
+        } 
 #endif
-        }            
-        catch (SDException& exception) {
-            throw exception;
-        }        
-    } else {
-        string msg = "Process single image file: ";
-        msg += input;
-        SDException exc(SHADOW_READ_UNABLE, msg);
-        throw exc;
-    }    
+    }            
+    catch (SDException& exception) {
+        throw exception;
+    }           
 }
 
 int main(int argc, char **argv) {
@@ -136,7 +146,7 @@ int main(int argc, char **argv) {
         if (tmp != 0)
             deviceId = tmp;
         oclt.init(platformId, deviceId, false);
-        OpenCvTools::initOpenCL(platformId, deviceId);        
+        OpenCV2Tools::initOpenCL(platformId, deviceId);        
     }
     catch (SDException& exception){
         handleError(exception);
@@ -179,8 +189,7 @@ int main(int argc, char **argv) {
 #ifdef _OPENCL
                 oclt.cleanWorkPart();
 #endif
-            }
-            
+            }            
         }
     }
 #ifdef _OPENCL

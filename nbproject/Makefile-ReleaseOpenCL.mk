@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/_ext/33800812/OpenCV2Tools.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/src/shadowdetection/opencl/OpenCLTools.o \
 	${OBJECTDIR}/src/shadowdetection/opencv/OpenCVTools.o \
@@ -65,6 +66,11 @@ LDLIBSOPTIONS=-L/usr/local/lib
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection ${OBJECTFILES} ${LDLIBSOPTIONS} -lOpenCL -lopencv_highgui -lopencv_core -lopencv_imgproc -lopencv_ocl
+
+${OBJECTDIR}/_ext/33800812/OpenCV2Tools.o: /data/Dev/shadowdetection/src/shadowdetection/opencv/OpenCV2Tools.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/33800812
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -D_OPENCL -I/usr/local/include/opencv -Isrc -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/_ext/33800812/OpenCV2Tools.o /data/Dev/shadowdetection/src/shadowdetection/opencv/OpenCV2Tools.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}

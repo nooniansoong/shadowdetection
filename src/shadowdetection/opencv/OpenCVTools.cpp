@@ -4,35 +4,7 @@
 namespace shadowdetection {
     namespace opencv {
         
-        using namespace std;
-        using namespace cv::ocl;
-        using namespace cv;
-        
-        unsigned char maxF(unsigned char a, unsigned char b, unsigned char c) {
-            unsigned char max = a;
-            if (b > max)
-                max = b;
-            if (c > max)
-                max = c;
-
-            return max;
-        }
-
-        unsigned char minF(unsigned char a, unsigned char b, unsigned char c) {
-            unsigned char min = a;
-            if (b < min)
-                min = b;
-            if (c < min)
-                min = c;
-
-            return min;
-        }
-
-        float radToDegrees(float radians) {
-            const float PI_F = 3.14159265358979f;
-            float oneRad = 180.f / PI_F;
-            return radians * oneRad;
-        }
+        using namespace std;                        
 
         void OpenCvTools::RGBtoHSI_1(unsigned char r, unsigned char g, unsigned char b, unsigned int& h, unsigned char& s, unsigned char& i) {
             unsigned char min, max;// delta;
@@ -258,98 +230,7 @@ namespace shadowdetection {
             IplImage* image = cvCreateImage(cvSize(src1->width, src1->height), src1->depth, src1->nChannels);
             cvOr(src1, src2, image);
             return image;
-        }               
-        
-//        IplImage* OpenCvTools::convertMatToIplImage(const Mat& matrix){
-//            const int depth = matrix.depth(); 
-//            IPL_DEPTH_8U;
-//            int oldDepth;
-//            switch (depth){
-//                case CV_8U:
-//                    oldDepth = IPL_DEPTH_8U;
-//                    break;
-//                case CV_8S:
-//                    oldDepth = IPL_DEPTH_8S;
-//                    break;
-//                case CV_16U:
-//                    oldDepth = IPL_DEPTH_16U;
-//                    break;
-//                case CV_16S:
-//                    oldDepth = IPL_DEPTH_16S;
-//                    break;
-//                case CV_32S:
-//                    oldDepth = IPL_DEPTH_32S;
-//                    break;
-//                case CV_32F:
-//                    oldDepth = IPL_DEPTH_32F;
-//                    break;
-//                case CV_64F:
-//                    return 0;
-//                    break;
-//                case CV_USRTYPE1:
-//                    return 0;
-//                    break;
-//                default:
-//                    oldDepth = IPL_DEPTH_8U;
-//                    break;
-//            }
-//            int channels = matrix.channels();
-//            IplImage* processedImage = cvCreateImage(cvSize(matrix.size().width, matrix.size().height), oldDepth, channels);
-//            size_t ws = processedImage->widthStep;
-//            size_t wsNew = matrix.step;
-//            if (ws != wsNew){
-//                cvReleaseImage(&processedImage);
-//                cout << "ERROR" << endl;
-//                return 0;
-//            }
-//            memcpy(processedImage->imageData, matrix.data, wsNew);
-//            //processedImage->imageData = (char*)matrix.data;
-//            return processedImage;
-//        }
-
-#ifdef _OPENCL 
-        void OpenCvTools::initOpenCL(int pid, int device) throw (SDException&){
-#ifdef _AMD
-            int typeFlag = cv::ocl::CVCL_DEVICE_TYPE_CPU;
-#else
-            int typeFlag = cv::ocl::CVCL_DEVICE_TYPE_GPU;
-#endif
-            cv::ocl::PlatformsInfo platformsInfo;
-            cv::ocl::getOpenCLPlatforms(platformsInfo);
-            size_t size = platformsInfo.size();
-            if (size <= 0 || pid >= size){
-                SDException exc(SHADOW_NO_OPENCL_PLATFORM, "OpenCV Init OpenCL platforms");
-                throw exc;
-            }
-            cv::ocl::DevicesInfo devicesInfo;            
-            int devnums = cv::ocl::getOpenCLDevices(devicesInfo, typeFlag, (pid < 0) ? NULL : platformsInfo[pid]);
-            if (device >= devnums){
-                SDException exc(SHADOW_NO_OPENCL_DEVICE, "OpenCV Init OpenCL devices");
-                throw exc;
-            }
-            cv::ocl::setDevice(devicesInfo[device]);
-            cout << "Device type: GPU" << endl;     
-            cout << "Platform name:" << devicesInfo[device]->platform->platformName << endl;
-            cout << "Device name:" << devicesInfo[device]->deviceName << endl;            
-        }
-        
-//        Mat* OpenCvTools::binarizeOcl(const Mat& image){
-//            cv::ocl::oclMat oclMatrix(image);
-//            cv::ocl::oclMat oclThreshed;
-//            ocl::threshold(oclMatrix, oclThreshed, 0, 255, CV_THRESH_BINARY | CV_THRESH_OTSU);            
-//            Mat* retMat = new Mat(oclThreshed);
-//            return retMat;
-//        }
-        
-        Mat* OpenCvTools::joinTwoOcl(const cv::Mat& src1, const cv::Mat& src2){            
-            oclMat oclSrc1(src1);
-            oclMat oclSrc2(src2);
-            oclMat res;
-            ocl::bitwise_or(oclSrc1, oclSrc2, res);
-            Mat* image = new Mat(res);
-            return image;
-        }
-#endif
+        }                      
         
     }
 }

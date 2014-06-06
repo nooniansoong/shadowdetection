@@ -11,6 +11,7 @@
           <itemPath>src/shadowdetection/opencl/OpenCLTools.h</itemPath>
         </logicalFolder>
         <logicalFolder name="opencv" displayName="opencv" projectFiles="true">
+          <itemPath>/data/Dev/shadowdetection/src/shadowdetection/opencv/OpenCV2Tools.h</itemPath>
           <itemPath>src/shadowdetection/opencv/OpenCVTools.h</itemPath>
         </logicalFolder>
         <logicalFolder name="util" displayName="util" projectFiles="true">
@@ -41,6 +42,7 @@
           <itemPath>src/shadowdetection/opencl/OpenCLTools.cpp</itemPath>
         </logicalFolder>
         <logicalFolder name="opencv" displayName="opencv" projectFiles="true">
+          <itemPath>/data/Dev/shadowdetection/src/shadowdetection/opencv/OpenCV2Tools.cpp</itemPath>
           <itemPath>src/shadowdetection/opencv/OpenCVTools.cpp</itemPath>
         </logicalFolder>
         <logicalFolder name="util" displayName="util" projectFiles="true">
@@ -89,6 +91,16 @@
           <commandLine>-lOpenCL -lopencv_highgui -lopencv_core -lopencv_imgproc -lopencv_ocl</commandLine>
         </linkerTool>
       </compileType>
+      <item path="/data/Dev/shadowdetection/src/shadowdetection/opencv/OpenCV2Tools.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/data/Dev/shadowdetection/src/shadowdetection/opencv/OpenCV2Tools.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="ShadowDetectionConfig.xml" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
@@ -176,6 +188,16 @@
           <commandLine>-lopencv_highgui -lopencv_core -lopencv_imgproc -lopencv_ocl</commandLine>
         </linkerTool>
       </compileType>
+      <item path="/data/Dev/shadowdetection/src/shadowdetection/opencv/OpenCV2Tools.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/data/Dev/shadowdetection/src/shadowdetection/opencv/OpenCV2Tools.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="ShadowDetectionConfig.xml" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
@@ -257,6 +279,16 @@
           <commandLine>-lOpenCL -lopencv_highgui -lopencv_core -lopencv_imgproc -lopencv_ocl</commandLine>
         </linkerTool>
       </compileType>
+      <item path="/data/Dev/shadowdetection/src/shadowdetection/opencv/OpenCV2Tools.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/data/Dev/shadowdetection/src/shadowdetection/opencv/OpenCV2Tools.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="ShadowDetectionConfig.xml" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
@@ -339,6 +371,16 @@
           <commandLine>-lOpenCL -lopencv_highgui -lopencv_core -lopencv_imgproc -lopencv_ocl</commandLine>
         </linkerTool>
       </compileType>
+      <item path="/data/Dev/shadowdetection/src/shadowdetection/opencv/OpenCV2Tools.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/data/Dev/shadowdetection/src/shadowdetection/opencv/OpenCV2Tools.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="ShadowDetectionConfig.xml" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
@@ -423,6 +465,16 @@
           <commandLine>-lOpenCL -lopencv_highgui -lopencv_core -lopencv_imgproc -lopencv_ocl</commandLine>
         </linkerTool>
       </compileType>
+      <item path="/data/Dev/shadowdetection/src/shadowdetection/opencv/OpenCV2Tools.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/data/Dev/shadowdetection/src/shadowdetection/opencv/OpenCV2Tools.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="ShadowDetectionConfig.xml" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
@@ -512,6 +564,16 @@
           <commandLine>-lOpenCL -lopencv_highgui -lopencv_core -lopencv_imgproc -lopencv_ocl</commandLine>
         </linkerTool>
       </compileType>
+      <item path="/data/Dev/shadowdetection/src/shadowdetection/opencv/OpenCV2Tools.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/data/Dev/shadowdetection/src/shadowdetection/opencv/OpenCV2Tools.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="ShadowDetectionConfig.xml" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">

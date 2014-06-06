@@ -12,13 +12,6 @@
 #include <highgui.h>
 #include <math.h>
 
-#include "opencv2/ocl/ocl.hpp"
-#include "opencv2/core/core.hpp"
-#include "opencv2/highgui/highgui.hpp"
-#include "opencv2/imgproc/imgproc.hpp"
-
-#include "typedefs.h"
-
 namespace shadowdetection{
     namespace opencv{
         class OpenCvTools{
@@ -34,15 +27,7 @@ namespace shadowdetection{
             static uchar* simpleTsai(unsigned int* inputHSI, int height, int width, int channels);
             static IplImage* get8bitImage(unsigned char* input, int height, int width);
             static IplImage* binarize(IplImage* input);
-            static IplImage* joinTwo(IplImage* src1, IplImage* src2);
-                        
-            //static IplImage* convertMatToIplImage(const cv::Mat& matrix);
-#ifdef _OPENCL
-            static void initOpenCL(int pid, int device) throw (SDException&);
-            //OTZU still not supported
-            //static cv::Mat* binarizeOcl(const cv::Mat& image);
-            static cv::Mat* joinTwoOcl(const cv::Mat& src1, const cv::Mat& src2);
-#endif
+            static IplImage* joinTwo(IplImage* src1, IplImage* src2);                                    
         };
     }
 }

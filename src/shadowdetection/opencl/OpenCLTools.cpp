@@ -3,6 +3,7 @@
 
 #include <iostream>
 
+#include "shadowdetection/opencv/OpenCV2Tools.h"
 #include "shadowdetection/opencv/OpenCVTools.h"
 #include "typedefs.h"
 #include "shadowdetection/util/Config.h"
@@ -15,6 +16,7 @@ namespace shadowdetection {
     namespace opencl {
 
         using namespace std;
+        using namespace shadowdetection::opencv2;
         using namespace shadowdetection::opencv;
         using namespace cv;
         using namespace shadowdetection::util;
@@ -389,16 +391,8 @@ namespace shadowdetection {
                 throw exc;
             }
         }
-
-        Mat* OpenclTools::processRGBImage(uchar* image, u_int32_t width, u_int32_t height, uchar channels) throw (SDException&) {
-            if (image == 0) {
-                return 0;
-            }
-
-            createKernels();
-            createWorkGroupSizes();
-            createBuffers(image, height, width, channels);
-
+        
+        void OpenclTools::setKernelArgs1(u_int32_t height, u_int32_t width, uchar channels){
             err = clSetKernelArg(kernel[0], 0, sizeof (cl_mem), &input);
             err_check(err, "clSetKernelArg1");
             err = clSetKernelArg(kernel[0], 1, sizeof (cl_mem), &output1);
@@ -420,14 +414,9 @@ namespace shadowdetection {
             err_check(err, "clSetKernelArg2");
             err = clSetKernelArg(kernel[1], 4, sizeof (uchar), &channels);
             err_check(err, "clSetKernelArg2");
-
-            size_t local_ws = workGroupSize[0];
-            size_t global_ws = shrRoundUp(local_ws, width * height);
-            err = clEnqueueNDRangeKernel(command_queue, kernel[0], 1, NULL, &global_ws, &local_ws, 0, NULL, NULL);
-            err_check(err, "clEnqueueNDRangeKernel1");
-            clFlush(command_queue);
-            clFinish(command_queue);
-
+        }
+        
+        void OpenclTools::setKernelArgs2(u_int32_t height, u_int32_t width, unsigned char channels){
             err = clSetKernelArg(kernel[2], 0, sizeof (cl_mem), &output1);
             err_check(err, "clSetKernelArg2");
             err = clSetKernelArg(kernel[2], 1, sizeof (cl_mem), &output3);
@@ -438,7 +427,124 @@ namespace shadowdetection {
             err_check(err, "clSetKernelArg2");
             err = clSetKernelArg(kernel[2], 4, sizeof (uchar), &channels);
             err_check(err, "clSetKernelArg2");
+        }
+        
+        void OpenclTools::setKernelArgs3(u_int32_t height, u_int32_t width, unsigned char channels){
+            err = clSetKernelArg(kernel[2], 0, sizeof (cl_mem), &output2);
+            err_check(err, "clSetKernelArg3");
+            err = clSetKernelArg(kernel[2], 1, sizeof (cl_mem), &output3);
+            err_check(err, "clSetKernelArg3");
+            err = clSetKernelArg(kernel[2], 2, sizeof (u_int32_t), &width);
+            err_check(err, "clSetKernelArg3");
+            err = clSetKernelArg(kernel[2], 3, sizeof (u_int32_t), &height);
+            err_check(err, "clSetKernelArg3");
+            err = clSetKernelArg(kernel[2], 4, sizeof (uchar), &channels);
+            err_check(err, "clSetKernelArg3");
+        }
+        
+        Mat* OpenclTools::processRGBImage(uchar* image, u_int32_t width, u_int32_t height, uchar channels) throw (SDException&) {
+            if (image == 0) {
+                return 0;
+            }
 
+            createKernels();
+            createWorkGroupSizes();
+            createBuffers(image, height, width, channels);            
+            
+            setKernelArgs1(height, width, channels);            
+            size_t local_ws = workGroupSize[0];
+            size_t global_ws = shrRoundUp(local_ws, width * height);
+            err = clEnqueueNDRangeKernel(command_queue, kernel[0], 1, NULL, &global_ws, &local_ws, 0, NULL, NULL);
+            err_check(err, "clEnqueueNDRangeKernel1");
+            clFlush(command_queue);
+            clFinish(command_queue);
+            
+            setKernelArgs2(height, width, channels);
+            local_ws = workGroupSize[2];
+            global_ws = shrRoundUp(local_ws, width * height);
+            err = clEnqueueNDRangeKernel(command_queue, kernel[2], 1, NULL, &global_ws, &local_ws, 0, NULL, NULL);
+            err_check(err, "clEnqueueNDRangeKernel3");
+            clReleaseMemObject(output1);
+            output1 = 0;
+            ratios1 = 0;
+            ratios1 = new uchar[width * height];
+            if (ratios1 == 0) {
+                SDException exc(SHADOW_NO_MEM, "Calculate ratios1");
+                throw exc;
+            }
+            err = clEnqueueReadBuffer(command_queue, output3, CL_TRUE, 0, width * height, ratios1, 0, NULL, NULL);
+            err_check(err, "clEnqueueReadBuffer1");
+            clFlush(command_queue);
+            clFinish(command_queue);                       
+            
+            Mat* ratiosImage1 = OpenCV2Tools::get8bitImage(ratios1, height, width);            
+            Mat* binarized1 = OpenCV2Tools::binarize(ratiosImage1);            
+            delete[] ratios1;
+            ratios1 = 0;
+            delete ratiosImage1;
+
+            local_ws = workGroupSize[1];
+            global_ws = shrRoundUp(local_ws, width * height);
+            err = clEnqueueNDRangeKernel(command_queue, kernel[1], 1, NULL, &global_ws, &local_ws, 0, NULL, NULL);
+            err_check(err, "clEnqueueNDRangeKernel2");
+            clReleaseMemObject(input);
+            input = 0;
+            clFlush(command_queue);
+            clFinish(command_queue);
+            
+            setKernelArgs3(height, width, channels);
+            local_ws = workGroupSize[2];
+            global_ws = shrRoundUp(local_ws, width * height);
+            err = clEnqueueNDRangeKernel(command_queue, kernel[2], 1, NULL, &global_ws, &local_ws, 0, NULL, NULL);
+            err_check(err, "clEnqueueNDRangeKernel3");
+            clReleaseMemObject(output2);
+            output2 = 0;
+            ratios2 = 0;
+            ratios2 = new uchar[width * height];
+            if (ratios2 == 0) {
+                SDException exc(SHADOW_NO_MEM, "Calculate ratios2");
+                throw exc;
+            }
+            err = clEnqueueReadBuffer(command_queue, output3, CL_TRUE, 0, width * height, ratios2, 0, NULL, NULL);
+            err_check(err, "clEnqueueReadBuffer2");
+            clFlush(command_queue);
+            clFinish(command_queue);
+
+            clReleaseMemObject(output3);
+            output3 = 0;
+            clFlush(command_queue);
+            clFinish(command_queue);                        
+            
+            Mat* ratiosImage2 = OpenCV2Tools::get8bitImage(ratios2, height, width);            
+            Mat* binarized2 = OpenCV2Tools::binarize(ratiosImage2);            
+            delete[] ratios2;
+            ratios2 = 0;
+            delete ratiosImage2;
+            
+            Mat* processedImageMat = OpenCV2Tools::joinTwoOcl(*binarized1, *binarized2);
+            delete binarized1;
+            delete binarized2;
+            return processedImageMat;             
+        }
+        
+        Mat* OpenclTools::processRGBImageOld(uchar* image, u_int32_t width, u_int32_t height, uchar channels) throw (SDException&) {
+            if (image == 0) {
+                return 0;
+            }
+
+            createKernels();
+            createWorkGroupSizes();
+            createBuffers(image, height, width, channels);
+            setKernelArgs1(height, width, channels);
+
+            size_t local_ws = workGroupSize[0];
+            size_t global_ws = shrRoundUp(local_ws, width * height);
+            err = clEnqueueNDRangeKernel(command_queue, kernel[0], 1, NULL, &global_ws, &local_ws, 0, NULL, NULL);
+            err_check(err, "clEnqueueNDRangeKernel1");
+            clFlush(command_queue);
+            clFinish(command_queue);
+
+            setKernelArgs2(height, width, channels);
             local_ws = workGroupSize[2];
             global_ws = shrRoundUp(local_ws, width * height);
             err = clEnqueueNDRangeKernel(command_queue, kernel[2], 1, NULL, &global_ws, &local_ws, 0, NULL, NULL);
@@ -471,17 +577,7 @@ namespace shadowdetection {
             clFlush(command_queue);
             clFinish(command_queue);
 
-            err = clSetKernelArg(kernel[2], 0, sizeof (cl_mem), &output2);
-            err_check(err, "clSetKernelArg2");
-            err = clSetKernelArg(kernel[2], 1, sizeof (cl_mem), &output3);
-            err_check(err, "clSetKernelArg2");
-            err = clSetKernelArg(kernel[2], 2, sizeof (u_int32_t), &width);
-            err_check(err, "clSetKernelArg2");
-            err = clSetKernelArg(kernel[2], 3, sizeof (u_int32_t), &height);
-            err_check(err, "clSetKernelArg2");
-            err = clSetKernelArg(kernel[2], 4, sizeof (uchar), &channels);
-            err_check(err, "clSetKernelArg2");
-
+            setKernelArgs3(height, width, channels);
             local_ws = workGroupSize[2];
             global_ws = shrRoundUp(local_ws, width * height);
             err = clEnqueueNDRangeKernel(command_queue, kernel[2], 1, NULL, &global_ws, &local_ws, 0, NULL, NULL);
@@ -512,7 +608,7 @@ namespace shadowdetection {
 
             Mat b1 = cvarrToMat(binarized1, false, false);
             Mat b2 = cvarrToMat(binarized2, false, false);
-            Mat* processedImageMat = OpenCvTools::joinTwoOcl(b1, b2);            
+            Mat* processedImageMat = OpenCV2Tools::joinTwoOcl(b1, b2);            
             cvReleaseImage(&binarized1);
             cvReleaseImage(&binarized2);
             return processedImageMat;             

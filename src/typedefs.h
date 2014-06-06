@@ -155,5 +155,31 @@ public:
     }
 };
 
+inline unsigned char maxF(unsigned char a, unsigned char b, unsigned char c) {
+    unsigned char max = a;
+    if (b > max)
+        max = b;
+    if (c > max)
+        max = c;
+
+    return max;
+}
+
+inline unsigned char minF(unsigned char a, unsigned char b, unsigned char c) {
+    unsigned char min = a;
+    if (b < min)
+        min = b;
+    if (c < min)
+        min = c;
+
+    return min;
+}
+
+inline float radToDegrees(float radians) {
+    const float PI_F = 3.14159265358979f;
+    float oneRad = 180.f / PI_F;
+    return radians * oneRad;
+}
+
 #endif	/* TYPEDEFS_H */
 
