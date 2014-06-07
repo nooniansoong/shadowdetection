@@ -206,6 +206,7 @@ namespace shadowdetection {
             } else {
                 return false;
             }
+            return true;
         }
         
         const char* OpenclTools::saveKernelBinary(std::string kernelFileName){
