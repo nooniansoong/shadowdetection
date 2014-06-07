@@ -35,9 +35,9 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/_ext/33800812/OpenCV2Tools.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/src/shadowdetection/opencl/OpenCLTools.o \
+	${OBJECTDIR}/src/shadowdetection/opencv/OpenCV2Tools.o \
 	${OBJECTDIR}/src/shadowdetection/opencv/OpenCVTools.o \
 	${OBJECTDIR}/src/shadowdetection/util/Cofig.o \
 	${OBJECTDIR}/src/shadowdetection/util/TabParser.o
@@ -67,11 +67,6 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection ${OBJECTFILES} ${LDLIBSOPTIONS} -lOpenCL -lopencv_highgui -lopencv_core -lopencv_imgproc -lopencv_ocl
 
-${OBJECTDIR}/_ext/33800812/OpenCV2Tools.o: /data/Dev/shadowdetection/src/shadowdetection/opencv/OpenCV2Tools.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/33800812
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -D_AMD -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/33800812/OpenCV2Tools.o /data/Dev/shadowdetection/src/shadowdetection/opencv/OpenCV2Tools.cpp
-
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
@@ -81,6 +76,11 @@ ${OBJECTDIR}/src/shadowdetection/opencl/OpenCLTools.o: src/shadowdetection/openc
 	${MKDIR} -p ${OBJECTDIR}/src/shadowdetection/opencl
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -D_AMD -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/shadowdetection/opencl/OpenCLTools.o src/shadowdetection/opencl/OpenCLTools.cpp
+
+${OBJECTDIR}/src/shadowdetection/opencv/OpenCV2Tools.o: src/shadowdetection/opencv/OpenCV2Tools.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/shadowdetection/opencv
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -D_AMD -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/shadowdetection/opencv/OpenCV2Tools.o src/shadowdetection/opencv/OpenCV2Tools.cpp
 
 ${OBJECTDIR}/src/shadowdetection/opencv/OpenCVTools.o: src/shadowdetection/opencv/OpenCVTools.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/shadowdetection/opencv
