@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/src/shadowdetection/learning/TrainingSet.o \
 	${OBJECTDIR}/src/shadowdetection/opencl/OpenCLTools.o \
 	${OBJECTDIR}/src/shadowdetection/opencv/OpenCV2Tools.o \
 	${OBJECTDIR}/src/shadowdetection/opencv/OpenCVTools.o \
@@ -71,6 +72,11 @@ ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -D_OPENCL -I/usr/local/include/opencv -Isrc -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/main.o main.cpp
+
+${OBJECTDIR}/src/shadowdetection/learning/TrainingSet.o: src/shadowdetection/learning/TrainingSet.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/shadowdetection/learning
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -D_OPENCL -I/usr/local/include/opencv -Isrc -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/shadowdetection/learning/TrainingSet.o src/shadowdetection/learning/TrainingSet.cpp
 
 ${OBJECTDIR}/src/shadowdetection/opencl/OpenCLTools.o: src/shadowdetection/opencl/OpenCLTools.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/shadowdetection/opencl

@@ -7,6 +7,9 @@
       <logicalFolder name="shadowdetection"
                      displayName="shadowdetection"
                      projectFiles="true">
+        <logicalFolder name="learning" displayName="learning" projectFiles="true">
+          <itemPath>src/shadowdetection/learning/TrainingSet.cpp</itemPath>
+        </logicalFolder>
         <logicalFolder name="opencl" displayName="opencl" projectFiles="true">
           <itemPath>src/shadowdetection/opencl/OpenCLTools.h</itemPath>
         </logicalFolder>
@@ -35,6 +38,9 @@
       <logicalFolder name="shadowdetection"
                      displayName="shadowdetection"
                      projectFiles="true">
+        <logicalFolder name="learning" displayName="learning" projectFiles="true">
+          <itemPath>src/shadowdetection/learning/TrainingSet.h</itemPath>
+        </logicalFolder>
         <logicalFolder name="opencl" displayName="opencl" projectFiles="true">
           <logicalFolder name="kernels" displayName="kernels" projectFiles="true">
             <itemPath>src/shadowdetection/opencl/kernels/image_hci_convert_kernel.cl</itemPath>
@@ -94,6 +100,16 @@
       <item path="ShadowDetectionConfig.xml" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/shadowdetection/learning/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/learning/TrainingSet.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
@@ -192,6 +208,16 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/shadowdetection/learning/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/learning/TrainingSet.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -282,6 +308,16 @@
       <item path="ShadowDetectionConfig.xml" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/shadowdetection/learning/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/learning/TrainingSet.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
@@ -374,6 +410,16 @@
       <item path="ShadowDetectionConfig.xml" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="src/shadowdetection/learning/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/learning/TrainingSet.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
@@ -468,6 +514,16 @@
       <item path="ShadowDetectionConfig.xml" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="src/shadowdetection/learning/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/learning/TrainingSet.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
@@ -568,6 +624,16 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
       </item>
+      <item path="src/shadowdetection/learning/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/learning/TrainingSet.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -659,6 +725,16 @@
       <item path="ShadowDetectionConfig.xml" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="src/shadowdetection/learning/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/learning/TrainingSet.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
@@ -756,6 +832,16 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
       </item>
+      <item path="src/shadowdetection/learning/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/learning/TrainingSet.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -845,6 +931,16 @@
       <item path="ShadowDetectionConfig.xml" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="src/shadowdetection/learning/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/learning/TrainingSet.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
@@ -939,6 +1035,16 @@
       <item path="ShadowDetectionConfig.xml" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="src/shadowdetection/learning/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/learning/TrainingSet.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
