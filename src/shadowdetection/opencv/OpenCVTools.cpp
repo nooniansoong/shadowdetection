@@ -99,8 +99,12 @@ namespace shadowdetection {
             height = image->height;
             width = image->width;
             channels = image->nChannels;
-            unsigned int* retArr = new unsigned int[height * width * channels];
-
+            unsigned int* retArr = 0;
+            retArr = new(nothrow) unsigned int[height * width * channels];
+            if (retArr == 0){
+                SDException exc(SHADOW_NO_MEM, "convertImagetoHSI");
+                throw exc;
+            }
             unsigned char* data = (unsigned char*) image->imageData;
 
             for (int i = 0; i < height; i++) {
@@ -132,7 +136,12 @@ namespace shadowdetection {
             int height = image->height;
             int width = image->width;
             int channels = image->nChannels;
-            unsigned char* retArr = new unsigned char[height * width * channels];
+            unsigned char* retArr = 0;
+            retArr = new unsigned char[height * width * channels];
+            if (retArr == 0){
+                SDException exc(SHADOW_NO_MEM, "convertImageToByteArray");
+                throw exc;
+            }
             unsigned char* data = (unsigned char*) image->imageData;
 
             for (int i = 0; i < height; i++) {
@@ -179,7 +188,12 @@ namespace shadowdetection {
         }
 
         uchar* OpenCvTools::simpleTsai(unsigned int* inputHSI, int height, int width, int channels) {
-            unsigned char* retArr = new unsigned char[height * width];
+            unsigned char* retArr = 0;
+            retArr = new(nothrow) unsigned char[height * width];
+            if (retArr == 0){
+                SDException exc(SHADOW_NO_MEM, "simpleTsai");
+                throw exc;
+            }
 
             float maxVal = 360.f; // * 255.f;// + 1;
             float minVal = 0.f;

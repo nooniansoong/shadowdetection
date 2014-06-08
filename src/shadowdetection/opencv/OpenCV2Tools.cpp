@@ -18,7 +18,11 @@ namespace shadowdetection {
             height = image->size().height;
             width = image->size().width;
             channels = image->channels();
-            unsigned int* retArr = new unsigned int[height * width * channels];
+            unsigned int* retArr = 0;
+            retArr = new(nothrow) unsigned int[height * width * channels];
+            if (retArr == 0){
+                SDException exc(SHADOW_NO_MEM, "Convert to HSI");
+            }
             unsigned char* data = (unsigned char*) image->data;
             size_t step = image->step;
             for (int i = 0; i < height; i++) {
@@ -50,7 +54,12 @@ namespace shadowdetection {
                 int height = image->size().height;
                 int width = image->size().width;
                 int channels = image->channels();
-                unsigned char* retArr = new unsigned char[height * width * channels];
+                unsigned char* retArr = 0;
+                retArr = new(nothrow) unsigned char[height * width * channels];
+                if (retArr == 0){
+                    SDException exc(SHADOW_NO_MEM, "Convert image to array");
+                    throw exc;
+                }
                 unsigned char* data = image->data;
                 size_t step = image->step;
                 for (int i = 0; i < height; i++) {
@@ -76,7 +85,12 @@ namespace shadowdetection {
                 return 0;
             }
 
-            Mat* image = new Mat(height, width, CV_8UC3, arr);
+            Mat* image = 0;
+            image = new(nothrow) Mat(height, width, CV_8UC3, arr);
+            if (image == 0){
+                SDException exc(SHADOW_NO_MEM, "Convert array to image");
+                throw exc;
+            }
 //            if (image != 0) {
 //                unsigned char* data = (unsigned char*) image->data;
 //                size_t step = image->step;
@@ -97,18 +111,33 @@ namespace shadowdetection {
         }
         
         Mat* OpenCV2Tools::get8bitImage(unsigned char* input, int height, int width){
-            Mat* image = new Mat(height, width, CV_8U, input);
+            Mat* image = 0;
+            image = new(nothrow) Mat(height, width, CV_8U, input);
+            if (image == 0){
+                SDException exc(SHADOW_NO_MEM, "Get 8bit image");
+                throw exc;
+            }
             return image;
         }
         
         Mat* OpenCV2Tools::binarize(const Mat* input){
-            Mat* image = new Mat();
+            Mat* image = 0;
+            image = new(nothrow) Mat();
+            if (image == 0){
+                SDException exc(SHADOW_NO_MEM, "binarize");
+                throw exc;
+            }
             double thresh = threshold(*input, *image, 0, 255, CV_THRESH_BINARY | CV_THRESH_OTSU);
             return image;
         }
         
         Mat* OpenCV2Tools::joinTwo(const Mat* src1, const Mat* src2){
-            Mat* image = new Mat();
+            Mat* image = 0;
+            image = new(nothrow) Mat();
+            if (image == 0){
+                SDException exc(SHADOW_NO_MEM, "Join two");
+                throw exc;
+            }
             bitwise_or(*src1, *src2, *image);
             return image;
         }
@@ -159,7 +188,12 @@ namespace shadowdetection {
             oclMat oclSrc2(src2);
             oclMat res;
             ocl::bitwise_or(oclSrc1, oclSrc2, res);
-            Mat* image = new Mat(res);
+            Mat* image = 0;
+            image = new(nothrow) Mat(res);
+            if (image == 0){
+                SDException exc(SHADOW_NO_MEM, "Join two ocl");
+                throw exc;
+            }
             return image;
         }
 #endif

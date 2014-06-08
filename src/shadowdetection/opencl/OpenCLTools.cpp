@@ -209,13 +209,18 @@ namespace shadowdetection {
             return true;
         }
         
+        void releaseBuffers(unsigned char**  buffer, size_t length){
+            for (int i = 0; i < length; i++)
+                delete[] buffer[i];
+        }
+        
         const char* OpenclTools::saveKernelBinary(std::string kernelFileName){
             cl_device_type type;
             clGetDeviceInfo(device, CL_DEVICE_TYPE, sizeof(cl_device_type), &type, 0);
 #ifndef _MAC
             if (type != CL_DEVICE_TYPE_GPU)
             {
-                return 0;
+                //return 0;
             }
 #endif
             char deviceName[256];
@@ -233,8 +238,25 @@ namespace shadowdetection {
             kernel.open(file.c_str(), ofstream::out | ofstream::binary);
             FileRaii fRaii(&kernel);
             if (kernel.is_open()){                
-                size_t binarySize;
-                err = clGetProgramInfo(program, CL_PROGRAM_BINARY_SIZES, sizeof(size_t), &binarySize, 0);
+                size_t nb_devices;
+                err = clGetProgramInfo(program, CL_PROGRAM_NUM_DEVICES, sizeof(size_t), &nb_devices, 0);
+                try{
+                    err_check(err, "Get num of devices");
+                }
+                catch (SDException& e){
+                    cout << e.what() << endl;
+                    return file.c_str();
+                }
+                
+                size_t* binarySize = 0;
+                binarySize = new(nothrow) size_t[nb_devices];
+                if (binarySize == 0){
+                    SDException exc(SHADOW_NO_MEM, "Get binary sizes");
+                    cout << exc.what() << endl;
+                    return file.c_str();
+                }
+                VectorRaii bsRaii(binarySize);
+                err = clGetProgramInfo(program, CL_PROGRAM_BINARY_SIZES, sizeof(size_t) * nb_devices, binarySize, 0);
                 try{
                     err_check(err, "Get binary size");
                 }
@@ -242,10 +264,16 @@ namespace shadowdetection {
                     cout << e.what() << endl;
                     return file.c_str();
                 }
-                unsigned char* buffer = 0;
-                buffer = new unsigned char[binarySize];
-                if (buffer != 0){
-                    err = clGetProgramInfo(program, CL_PROGRAM_BINARIES, binarySize, &buffer, 0);
+                unsigned char**  buffer = 0;
+                buffer = new(nothrow) unsigned char*[nb_devices];                
+                if (buffer != 0){                    
+                    for (int i = 0; i < nb_devices; i++){
+                        buffer[i] = new unsigned char[binarySize[i]];                        
+                    }
+                    MatrixRaii mRaii((void**)buffer, nb_devices);
+                    
+                    size_t read;
+                    err = clGetProgramInfo(program, CL_PROGRAM_BINARIES, sizeof(unsigned char *)*nb_devices, buffer, &read);
                     try{
                         err_check(err, "Get kernel binaries");
                     }
@@ -253,7 +281,8 @@ namespace shadowdetection {
                         cout << e.what() << endl;
                         return file.c_str();
                     }
-                    kernel.write((const char*)buffer, binarySize);
+                    //because I know that is on one device
+                    kernel.write((const char*)buffer[0], binarySize[0]);
                 }
                 else{
                     SDException exc(SHADOW_NO_MEM, "Save binary kernel");
@@ -482,7 +511,7 @@ namespace shadowdetection {
             clReleaseMemObject(output1);
             output1 = 0;
             ratios1 = 0;
-            ratios1 = new uchar[width * height];
+            ratios1 = new(nothrow) uchar[width * height];
             if (ratios1 == 0) {
                 SDException exc(SHADOW_NO_MEM, "Calculate ratios1");
                 throw exc;
@@ -515,7 +544,7 @@ namespace shadowdetection {
             clReleaseMemObject(output2);
             output2 = 0;
             ratios2 = 0;
-            ratios2 = new uchar[width * height];
+            ratios2 = new(nothrow) uchar[width * height];
             if (ratios2 == 0) {
                 SDException exc(SHADOW_NO_MEM, "Calculate ratios2");
                 throw exc;
@@ -567,7 +596,7 @@ namespace shadowdetection {
             clReleaseMemObject(output1);
             output1 = 0;
             ratios1 = 0;
-            ratios1 = new uchar[width * height];
+            ratios1 = new(nothrow) uchar[width * height];
             if (ratios1 == 0) {
                 SDException exc(SHADOW_NO_MEM, "Calculate ratios1");
                 throw exc;
@@ -600,7 +629,7 @@ namespace shadowdetection {
             clReleaseMemObject(output2);
             output2 = 0;
             ratios2 = 0;
-            ratios2 = new uchar[width * height];
+            ratios2 = new(nothrow) uchar[width * height];
             if (ratios2 == 0) {
                 SDException exc(SHADOW_NO_MEM, "Calculate ratios2");
                 throw exc;

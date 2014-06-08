@@ -9,6 +9,7 @@
 #define	SINGLETON_H
 
 #include "shadowdetection/util/raii/RAIIS.h"
+#include "typedefs.h"
 
 namespace shadowdetection {
     namespace util{
@@ -37,7 +38,11 @@ namespace shadowdetection {
             //pthread_mutex_lock(&mutex);
             raii::MutexRaii autoLock(&mutex);
             if (instancePtr == 0){
-                instancePtr = new T();
+                instancePtr = new(std::nothrow) T();
+                if (instancePtr == 0){
+                    SDException exc(SHADOW_NO_MEM, "Init singleton");
+                    throw exc;
+                }
             }
             return instancePtr;
         }

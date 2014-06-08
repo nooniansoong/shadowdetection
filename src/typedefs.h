@@ -151,10 +151,6 @@ public:
     virtual const char* what() const throw () {
         std::string retStr = ExceptionStrings[excCode] + " " + location;
         const char* msg = retStr.c_str();
-//        size_t len = strlen(msg);
-//        char* ret = new char[len + 1];
-//        ret[len] = 0;
-//        strcpy(ret, msg);
         return msg;
     }
 };

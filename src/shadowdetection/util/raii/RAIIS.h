@@ -71,6 +71,50 @@ namespace shadowdetection {
                 }
             };
             
+            class VectorRaii{
+            private:
+                VectorRaii(){
+                    vector = 0;
+                }
+                
+                void* vector;                
+            protected:
+            public:                                
+                VectorRaii(void* vec){
+                    vector = vec;
+                }
+                
+                ~VectorRaii(){
+                    if (vector)                        
+                        delete[] vector;
+                }                                
+            };
+            
+            class MatrixRaii{
+            private:
+                MatrixRaii(){
+                    matrix = 0;
+                }
+                
+                void** matrix;
+                int dim;
+            protected:
+            public:
+                MatrixRaii(void** mat, int dimension){
+                    matrix = mat;
+                    dim = dimension;
+                }
+                
+                ~MatrixRaii(){
+                    if (matrix != 0){
+                        for (int i = 0; i < dim; i++){
+                            delete[] matrix[i];
+                        }
+                        delete[] matrix;
+                    }
+                }
+            };
+            
         }
     }
 }
