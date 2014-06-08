@@ -9,7 +9,11 @@
 #define	CONFIG_H
 
 #include "Singleton.h"
+#ifndef _MAC
 #include <hash_map>
+#else
+#include <ext/hash_map>
+#endif
 #include "typedefs.h"
 #include "thirdparty/rapidxml-1.13/rapidxml.hpp"
 

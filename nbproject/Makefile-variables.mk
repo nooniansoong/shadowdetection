@@ -54,6 +54,38 @@ CND_ARTIFACT_PATH_ReleaseOpenCL_AMD=dist/ReleaseOpenCL_AMD/GNU-Linux-x86/shadowd
 CND_PACKAGE_DIR_ReleaseOpenCL_AMD=dist/ReleaseOpenCL_AMD/GNU-Linux-x86/package
 CND_PACKAGE_NAME_ReleaseOpenCL_AMD=shadowdetection.tar
 CND_PACKAGE_PATH_ReleaseOpenCL_AMD=dist/ReleaseOpenCL_AMD/GNU-Linux-x86/package/shadowdetection.tar
+# DebugOpenCL_Mac configuration
+CND_PLATFORM_DebugOpenCL_Mac=GNU-MacOSX
+CND_ARTIFACT_DIR_DebugOpenCL_Mac=dist/DebugOpenCL_Mac/GNU-MacOSX
+CND_ARTIFACT_NAME_DebugOpenCL_Mac=shadowdetection
+CND_ARTIFACT_PATH_DebugOpenCL_Mac=dist/DebugOpenCL_Mac/GNU-MacOSX/shadowdetection
+CND_PACKAGE_DIR_DebugOpenCL_Mac=dist/DebugOpenCL_Mac/GNU-MacOSX/package
+CND_PACKAGE_NAME_DebugOpenCL_Mac=shadowdetection.tar
+CND_PACKAGE_PATH_DebugOpenCL_Mac=dist/DebugOpenCL_Mac/GNU-MacOSX/package/shadowdetection.tar
+# ReleaseOpenCL_Mac configuration
+CND_PLATFORM_ReleaseOpenCL_Mac=GNU-MacOSX
+CND_ARTIFACT_DIR_ReleaseOpenCL_Mac=dist/ReleaseOpenCL_Mac/GNU-MacOSX
+CND_ARTIFACT_NAME_ReleaseOpenCL_Mac=shadowdetection
+CND_ARTIFACT_PATH_ReleaseOpenCL_Mac=dist/ReleaseOpenCL_Mac/GNU-MacOSX/shadowdetection
+CND_PACKAGE_DIR_ReleaseOpenCL_Mac=dist/ReleaseOpenCL_Mac/GNU-MacOSX/package
+CND_PACKAGE_NAME_ReleaseOpenCL_Mac=shadowdetection.tar
+CND_PACKAGE_PATH_ReleaseOpenCL_Mac=dist/ReleaseOpenCL_Mac/GNU-MacOSX/package/shadowdetection.tar
+# Debug_Mac configuration
+CND_PLATFORM_Debug_Mac=GNU-MacOSX
+CND_ARTIFACT_DIR_Debug_Mac=dist/Debug_Mac/GNU-MacOSX
+CND_ARTIFACT_NAME_Debug_Mac=shadowdetection
+CND_ARTIFACT_PATH_Debug_Mac=dist/Debug_Mac/GNU-MacOSX/shadowdetection
+CND_PACKAGE_DIR_Debug_Mac=dist/Debug_Mac/GNU-MacOSX/package
+CND_PACKAGE_NAME_Debug_Mac=shadowdetection.tar
+CND_PACKAGE_PATH_Debug_Mac=dist/Debug_Mac/GNU-MacOSX/package/shadowdetection.tar
+# Release_Mac configuration
+CND_PLATFORM_Release_Mac=GNU-MacOSX
+CND_ARTIFACT_DIR_Release_Mac=dist/Release_Mac/GNU-MacOSX
+CND_ARTIFACT_NAME_Release_Mac=shadowdetection
+CND_ARTIFACT_PATH_Release_Mac=dist/Release_Mac/GNU-MacOSX/shadowdetection
+CND_PACKAGE_DIR_Release_Mac=dist/Release_Mac/GNU-MacOSX/package
+CND_PACKAGE_NAME_Release_Mac=shadowdetection.tar
+CND_PACKAGE_PATH_Release_Mac=dist/Release_Mac/GNU-MacOSX/package/shadowdetection.tar
 #
 # include compiler specific variables
 #

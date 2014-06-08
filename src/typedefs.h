@@ -9,7 +9,9 @@
 #define	TYPEDEFS_H
 
 #include <string>
+#ifndef _MAC
 #include <hash_fun.h>
+#endif
 #include <vector>
 #include <sstream>
 #include <exception>
@@ -51,6 +53,7 @@ static std::string ExceptionStrings[] = {
 //    }                                                                                                                                                                                     
 //};     
 
+#ifndef _MAC
 namespace __gnu_cxx {
   template<> struct hash<std::string>
   {
@@ -61,6 +64,7 @@ namespace __gnu_cxx {
     };
   };
 }
+#endif
 
 template<typename T> class KeyVal{
     private:

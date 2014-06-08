@@ -58,7 +58,7 @@ namespace shadowdetection {
                 for (xml_node<>* root = doc.first_node(); root; root = root->next_sibling()) {                    
                     processNode(root, currName);
                 }
-            } catch (exception exc) {
+            } catch (exception e) {
                 SDException exc(SHADOW_INVALID_XML, "Config init");
                 throw exc;
             }

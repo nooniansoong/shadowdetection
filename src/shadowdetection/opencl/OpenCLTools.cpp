@@ -212,10 +212,12 @@ namespace shadowdetection {
         const char* OpenclTools::saveKernelBinary(std::string kernelFileName){
             cl_device_type type;
             clGetDeviceInfo(device, CL_DEVICE_TYPE, sizeof(cl_device_type), &type, 0);
+#ifndef _MAC
             if (type != CL_DEVICE_TYPE_GPU)
             {
                 return 0;
             }
+#endif
             char deviceName[256];
             err = clGetDeviceInfo(device, CL_DEVICE_NAME, 256, deviceName, 0);
             try{
@@ -285,6 +287,12 @@ namespace shadowdetection {
                 try {
 #ifdef _AMD
                     err = clGetDeviceIDs(platform[i], CL_DEVICE_TYPE_CPU, MAX_DEVICES, devices, &num_devices);
+#elif defined _MAC
+                    string useGPUStr = Config::getInstancePtr()->getPropertyValue("settings.openCL.mac.useGPU");
+                    if (useGPUStr.compare("true") == 0)
+                        err = clGetDeviceIDs(platform[i], CL_DEVICE_TYPE_GPU, MAX_DEVICES, devices, &num_devices);
+                    else
+                        err = clGetDeviceIDs(platform[i], CL_DEVICE_TYPE_CPU, MAX_DEVICES, devices, &num_devices);
 #else
                     err = clGetDeviceIDs(platform[i], CL_DEVICE_TYPE_GPU, MAX_DEVICES, devices, &num_devices);
 #endif
@@ -315,6 +323,12 @@ namespace shadowdetection {
             cl_device_id devices[MAX_DEVICES];
             cl_uint num_devices;
 #ifdef _AMD
+                err = clGetDeviceIDs(platform[platformID], CL_DEVICE_TYPE_CPU, MAX_DEVICES, devices, &num_devices);
+#elif defined _MAC
+            string useGPUStr = Config::getInstancePtr()->getPropertyValue("settings.openCL.mac.useGPU");
+            if (useGPUStr.compare("true") == 0)
+                err = clGetDeviceIDs(platform[platformID], CL_DEVICE_TYPE_GPU, MAX_DEVICES, devices, &num_devices);
+            else
                 err = clGetDeviceIDs(platform[platformID], CL_DEVICE_TYPE_CPU, MAX_DEVICES, devices, &num_devices);
 #else
                 err = clGetDeviceIDs(platform[platformID], CL_DEVICE_TYPE_GPU, MAX_DEVICES, devices, &num_devices);
@@ -374,7 +388,7 @@ namespace shadowdetection {
                 output2 = clCreateBuffer(context, CL_MEM_READ_WRITE, size * sizeof (u_int32_t), 0, &err);
                 err_check(err, "clCreateBuffer3");
                 output3 = clCreateBuffer(context, CL_MEM_WRITE_ONLY, width * height, 0, &err);
-                err_check(err, "clCreateBuffer3");
+                err_check(err, "clCreateBuffer4");
             }
             else if (type == CL_DEVICE_TYPE_CPU){
                 int flag = CL_MEM_USE_HOST_PTR;
@@ -385,7 +399,7 @@ namespace shadowdetection {
                 output2 = clCreateBuffer(context, CL_MEM_READ_WRITE | CL_MEM_ALLOC_HOST_PTR, size * sizeof (u_int32_t), 0, &err);
                 err_check(err, "clCreateBuffer3");
                 output3 = clCreateBuffer(context, CL_MEM_WRITE_ONLY | CL_MEM_ALLOC_HOST_PTR, width * height, 0, &err);
-                err_check(err, "clCreateBuffer3");
+                err_check(err, "clCreateBuffer4");
             }
             else{
                 SDException exc(SHADOW_NOT_SUPPORTED_DEVICE, "Init buffers, currently not supported device");

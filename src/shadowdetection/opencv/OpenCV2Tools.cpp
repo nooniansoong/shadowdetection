@@ -1,5 +1,6 @@
 #include <iostream>
 #include "OpenCV2Tools.h"
+#include "shadowdetection/util/Config.h"
 
 namespace shadowdetection {
     namespace opencv2 {
@@ -7,6 +8,7 @@ namespace shadowdetection {
         using namespace std;
         using namespace cv;
         using namespace cv::ocl;
+        using namespace shadowdetection::util;
         
         uint* OpenCV2Tools::convertImagetoHSI  (const Mat* image, int& height, int& width, int& channels,
                                              void (*convertFunc)(unsigned char, unsigned char, unsigned char, unsigned int&, unsigned char&, unsigned char&)){
@@ -115,6 +117,13 @@ namespace shadowdetection {
         void OpenCV2Tools::initOpenCL(int pid, int device) throw (SDException&) {
 #ifdef _AMD
             int typeFlag = cv::ocl::CVCL_DEVICE_TYPE_CPU;
+#elif defined _MAC
+            int typeFlag;
+            string useGPUStr = Config::getInstancePtr()->getPropertyValue("settings.openCL.mac.useGPU");
+            if (useGPUStr.compare("true") == 0)
+                typeFlag = cv::ocl::CVCL_DEVICE_TYPE_GPU;
+            else
+                typeFlag = cv::ocl::CVCL_DEVICE_TYPE_CPU;
 #else
             int typeFlag = cv::ocl::CVCL_DEVICE_TYPE_GPU;
 #endif
