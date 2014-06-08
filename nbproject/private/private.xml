@@ -9,6 +9,9 @@
         <group>
             <file>file:/Users/markodjurovic/!Dev/shadowdetection/main.cpp</file>
             <file>file:/Users/markodjurovic/!Dev/shadowdetection/src/shadowdetection/opencl/OpenCLTools.cpp</file>
+            <file>file:/Users/markodjurovic/!Dev/shadowdetection/src/shadowdetection/util/raii/RAIIS.h</file>
+            <file>file:/Users/markodjurovic/!Dev/shadowdetection/src/shadowdetection/util/Cofig.cpp</file>
+            <file>file:/Users/markodjurovic/!Dev/shadowdetection/src/shadowdetection/util/TabParser.cpp</file>
             <file>file:/Users/markodjurovic/!Dev/shadowdetection/src/shadowdetection/opencl/OpenCLTools.h</file>
             <file>file:/Users/markodjurovic/!Dev/shadowdetection/ShadowDetectionConfig.xml</file>
             <file>file:/Users/markodjurovic/!Dev/shadowdetection/src/shadowdetection/opencv/OpenCV2Tools.cpp</file>
