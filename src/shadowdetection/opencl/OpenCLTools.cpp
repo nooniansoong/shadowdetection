@@ -114,7 +114,7 @@ namespace shadowdetection {
             cleanUp();
         }
         
-        void OpenclTools::loadKernelFile(string kernelFileName){
+        void OpenclTools::loadKernelFile(string& kernelFileName){
             string usePrecompiledStr = Config::getInstancePtr()->getPropertyValue("settings.openCL.UsePrecompiledKernels");
             bool usePrecompiled = usePrecompiledStr.compare("true") == 0;
             if (usePrecompiled){
@@ -126,19 +126,21 @@ namespace shadowdetection {
             loadKernelFileFromSource(kernelFileName);
             if (usePrecompiled){
                 const char* fp = saveKernelBinary(kernelFileName);
-                if (fp != 0)
+                if (fp != 0){
                     remove(fp);
+                    delete[] fp;
+                }
             }
         }
         
-        void OpenclTools::loadKernelFileFromSource(string kernelFileName){
+        void OpenclTools::loadKernelFileFromSource(string& kernelFileName){
             fstream kernelFile;
             string file = KERNEL_PATH + kernelFileName + ".cl";
             kernelFile.open(file.c_str(), ifstream::in);
             FileRaii fRaii(&kernelFile);
             if (kernelFile.is_open()) {
                 char* buffer = 0;
-                buffer = new char[MAX_SRC_SIZE];
+                buffer = new(nothrow) char[MAX_SRC_SIZE];
                 if (buffer) {
                     kernelFile.read(buffer, MAX_SRC_SIZE);
                     if (kernelFile.eof()) {
@@ -160,7 +162,7 @@ namespace shadowdetection {
             }
         }
         
-        bool OpenclTools::loadKernelFileFromBinary(std::string kernelFileName){
+        bool OpenclTools::loadKernelFileFromBinary(string& kernelFileName){
             fstream kernelFile;
             char deviceName[256];
             err = clGetDeviceInfo(device, CL_DEVICE_NAME, 256, deviceName, 0);
@@ -209,20 +211,16 @@ namespace shadowdetection {
             return true;
         }
         
-        void releaseBuffers(unsigned char**  buffer, size_t length){
-            for (int i = 0; i < length; i++)
-                delete[] buffer[i];
+        char* getCStrCopy(string str){
+            char* ret = new char[str.size() + 1];
+            ret[str.size()] = '\0';
+            strcpy(ret, str.c_str());
+            return ret;
         }
         
-        const char* OpenclTools::saveKernelBinary(std::string kernelFileName){
+        const char* OpenclTools::saveKernelBinary(string& kernelFileName){
             cl_device_type type;
             clGetDeviceInfo(device, CL_DEVICE_TYPE, sizeof(cl_device_type), &type, 0);
-#ifndef _MAC
-            if (type != CL_DEVICE_TYPE_GPU)
-            {
-                //return 0;
-            }
-#endif
             char deviceName[256];
             err = clGetDeviceInfo(device, CL_DEVICE_NAME, 256, deviceName, 0);
             try{
@@ -238,22 +236,23 @@ namespace shadowdetection {
             kernel.open(file.c_str(), ofstream::out | ofstream::binary);
             FileRaii fRaii(&kernel);
             if (kernel.is_open()){                
-                size_t nb_devices;
-                err = clGetProgramInfo(program, CL_PROGRAM_NUM_DEVICES, sizeof(size_t), &nb_devices, 0);
+                cl_uint nb_devices;
+                size_t retBytes;
+                err = clGetProgramInfo(program, CL_PROGRAM_NUM_DEVICES, sizeof(cl_uint), &nb_devices, &retBytes);
                 try{
                     err_check(err, "Get num of devices");
                 }
                 catch (SDException& e){
                     cout << e.what() << endl;
-                    return file.c_str();
+                    return getCStrCopy(file);
                 }
                 
                 size_t* binarySize = 0;
-                binarySize = new(nothrow) size_t[nb_devices];
+                binarySize = (size_t*)malloc(sizeof(size_t) * nb_devices);
                 if (binarySize == 0){
                     SDException exc(SHADOW_NO_MEM, "Get binary sizes");
                     cout << exc.what() << endl;
-                    return file.c_str();
+                    return getCStrCopy(file);
                 }
                 VectorRaii bsRaii(binarySize);
                 err = clGetProgramInfo(program, CL_PROGRAM_BINARY_SIZES, sizeof(size_t) * nb_devices, binarySize, 0);
@@ -262,13 +261,13 @@ namespace shadowdetection {
                 }
                 catch (SDException& e){
                     cout << e.what() << endl;
-                    return file.c_str();
+                    return getCStrCopy(file);
                 }
                 unsigned char**  buffer = 0;
-                buffer = new(nothrow) unsigned char*[nb_devices];                
+                buffer = (unsigned char**)malloc(sizeof(unsigned char*) * nb_devices);                
                 if (buffer != 0){                    
                     for (int i = 0; i < nb_devices; i++){
-                        buffer[i] = new unsigned char[binarySize[i]];                        
+                        buffer[i] = (unsigned char*)malloc(binarySize[i] * sizeof(unsigned char));                        
                     }
                     MatrixRaii mRaii((void**)buffer, nb_devices);
                     
@@ -279,7 +278,7 @@ namespace shadowdetection {
                     }
                     catch (SDException& e){
                         cout << e.what() << endl;
-                        return file.c_str();
+                        return getCStrCopy(file);
                     }
                     //because I know that is on one device
                     kernel.write((const char*)buffer[0], binarySize[0]);
@@ -287,13 +286,13 @@ namespace shadowdetection {
                 else{
                     SDException exc(SHADOW_NO_MEM, "Save binary kernel");
                     cout << exc.what() << endl;
-                    return file.c_str();
+                    return getCStrCopy(file);
                 }                
             }
             else{
                 SDException exc(SHADOW_WRITE_UNABLE, "Save binary kernel");
                 cout << exc.what() << endl;
-                return file.c_str();
+                return getCStrCopy(file);
             }
             return 0;
         }
@@ -382,8 +381,9 @@ namespace shadowdetection {
 
             command_queue = clCreateCommandQueue(context, device, 0, &err);
             err_check(err, "clCreateCommandQueue");
-
-            loadKernelFile(KERNEL_FILE);
+            
+            string kernelFile = KERNEL_FILE;
+            loadKernelFile(kernelFile);
             
             return;
         }

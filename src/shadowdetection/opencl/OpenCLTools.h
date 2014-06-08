@@ -55,10 +55,10 @@ namespace shadowdetection {
             void setKernelArgs2(u_int32_t height, u_int32_t width, unsigned char channels);
             void setKernelArgs3(u_int32_t height, u_int32_t width, unsigned char channels);
             
-            void loadKernelFile(std::string kernelFileName);
-            void loadKernelFileFromSource(std::string kernelFileName);
-            bool loadKernelFileFromBinary(std::string kernelFileName);
-            const char* saveKernelBinary(std::string kernelFileName);
+            void loadKernelFile(std::string& kernelFileName);
+            void loadKernelFileFromSource(std::string& kernelFileName);
+            bool loadKernelFileFromBinary(std::string& kernelFileName);
+            const char* saveKernelBinary(std::string& kernelFileName);
         protected:
         public:
             OpenclTools();

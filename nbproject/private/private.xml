@@ -2,18 +2,16 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <data xmlns="http://www.netbeans.org/ns/make-project-private/1">
         <activeConfTypeElem>1</activeConfTypeElem>
-        <activeConfIndexElem>3</activeConfIndexElem>
+        <activeConfIndexElem>6</activeConfIndexElem>
     </data>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/Users/markodjurovic/!Dev/shadowdetection/main.cpp</file>
             <file>file:/Users/markodjurovic/!Dev/shadowdetection/src/shadowdetection/opencl/OpenCLTools.cpp</file>
-            <file>file:/Users/markodjurovic/!Dev/shadowdetection/src/shadowdetection/util/Cofig.cpp</file>
             <file>file:/Users/markodjurovic/!Dev/shadowdetection/src/shadowdetection/opencl/OpenCLTools.h</file>
-            <file>file:/Users/markodjurovic/!Dev/shadowdetection/src/shadowdetection/util/Config.h</file>
-            <file>file:/Users/markodjurovic/!Dev/shadowdetection/src/typedefs.h</file>
             <file>file:/Users/markodjurovic/!Dev/shadowdetection/ShadowDetectionConfig.xml</file>
+            <file>file:/Users/markodjurovic/!Dev/shadowdetection/src/shadowdetection/opencv/OpenCV2Tools.cpp</file>
         </group>
     </open-files>
 </project-private>

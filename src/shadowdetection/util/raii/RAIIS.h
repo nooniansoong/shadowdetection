@@ -71,6 +71,8 @@ namespace shadowdetection {
                 }
             };
             
+            /*allocate vector with malloc
+             */
             class VectorRaii{
             private:
                 VectorRaii(){
@@ -86,10 +88,11 @@ namespace shadowdetection {
                 
                 ~VectorRaii(){
                     if (vector)                        
-                        delete[] vector;
+                        free(vector);
                 }                                
             };
             
+            /**allocate vector and elements wit malloc*/
             class MatrixRaii{
             private:
                 MatrixRaii(){
@@ -108,9 +111,9 @@ namespace shadowdetection {
                 ~MatrixRaii(){
                     if (matrix != 0){
                         for (int i = 0; i < dim; i++){
-                            delete[] matrix[i];
+                            free(matrix[i]);
                         }
-                        delete[] matrix;
+                        free(matrix);
                     }
                 }
             };
