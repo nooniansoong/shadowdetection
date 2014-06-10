@@ -12,6 +12,7 @@
 #include "shadowdetection/util/Config.h"
 #include "shadowdetection/util/TabParser.h"
 #include "shadowdetection/util/raii/RAIIS.h"
+#include "shadowdetection/learning/TrainingSet.h"
 
 using namespace std;
 #ifdef _OPENCL
@@ -22,6 +23,7 @@ using namespace shadowdetection::opencv2;
 using namespace shadowdetection::util;
 using namespace cv;
 using namespace shadowdetection::util::raii;
+using namespace shadowdetection::learning;
 
 void handleError(const SDException& exception){
     const char* err = exception.what();
@@ -117,6 +119,12 @@ int main(int argc, char **argv) {
     }
     if (argc == 2 && strcmp(argv[1], "-help") == 0){
         cout << "Please visit: http://code.google.com/p/shadowdetection/wiki/ShadowDetection section Usage" << endl;
+        return 0;
+    }
+    
+    if (argc >= 2 && strcmp(argv[1], "-train") == 0){
+        TrainingSet ts(argv[2]);
+        ts.process(argv[3]);
         return 0;
     }
 #ifdef _OPENCL

@@ -8,7 +8,7 @@
                      displayName="shadowdetection"
                      projectFiles="true">
         <logicalFolder name="learning" displayName="learning" projectFiles="true">
-          <itemPath>src/shadowdetection/learning/TrainingSet.cpp</itemPath>
+          <itemPath>src/shadowdetection/learning/TrainingSet.h</itemPath>
         </logicalFolder>
         <logicalFolder name="opencl" displayName="opencl" projectFiles="true">
           <itemPath>src/shadowdetection/opencl/OpenCLTools.h</itemPath>
@@ -39,7 +39,7 @@
                      displayName="shadowdetection"
                      projectFiles="true">
         <logicalFolder name="learning" displayName="learning" projectFiles="true">
-          <itemPath>src/shadowdetection/learning/TrainingSet.h</itemPath>
+          <itemPath>src/shadowdetection/learning/TrainingSet.cpp</itemPath>
         </logicalFolder>
         <logicalFolder name="opencl" displayName="opencl" projectFiles="true">
           <logicalFolder name="kernels" displayName="kernels" projectFiles="true">
