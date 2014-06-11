@@ -31,6 +31,11 @@ void handleError(const SDException& exception){
 }
 
 #ifndef _OPENCL
+/**
+ * process single image on CPU not using openCL
+ * @param out
+ * @param image
+ */
 void processSingleCPU(const char* out, IplImage* image) {
     IplImage* processedImage = 0;
     int height, width, channels;
@@ -61,6 +66,11 @@ void processSingleCPU(const char* out, IplImage* image) {
 
 #ifdef _OPENCL
 OpenclTools oclt;
+/**
+ * process single image using openCL
+ * @param out
+ * @param imageNew
+ */
 void processSingleOpenCL(const char* out, const Mat& imageNew) {                
     unsigned char* buffer = OpenCV2Tools::convertImageToByteArray(&imageNew, true);    
     Mat* processedImage = 0;
@@ -77,6 +87,11 @@ void processSingleOpenCL(const char* out, const Mat& imageNew) {
 #endif
 
 IplImage* image;
+/**
+ * global function for process single image
+ * @param input
+ * @param out
+ */
 void processSingle(const char* input, const char* out) throw (SDException&) {        
     cout << "===========" << endl;
     cout << "Processing: " << input << endl;            

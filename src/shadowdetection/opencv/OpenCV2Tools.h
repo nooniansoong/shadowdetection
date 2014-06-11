@@ -22,10 +22,19 @@ namespace shadowdetection {
         private:
         protected:
         public:
+            /**
+             * converts BGR image to HSI
+             * @param image
+             * @param height
+             * @param width
+             * @param channels
+             * @param convertFunc
+             * @return 
+             */
             static uint* convertImagetoHSI  (const cv::Mat* image, int& height, int& width, int& channels,
                                              void (*convertFunc)(unsigned char, unsigned char, unsigned char, unsigned int&, unsigned char&, unsigned char&));
             /**
-            * 
+            * convert image to RGB byte array
             * @param image
             * @param copy 
              * if copy == true expect BGR format not RGB
@@ -51,12 +60,34 @@ namespace shadowdetection {
              * @return 
              */
             static cv::Mat* get8bitImage(unsigned char* input, int height, int width);
+            /**
+             * binarize image using otzu
+             * @param input
+             * @return 
+             */
             static cv::Mat* binarize(const cv::Mat* input);
+            /**
+             * joins two single channel images using or operator
+             * @param src1
+             * @param src2
+             * @return 
+             */
             static cv::Mat* joinTwo(const cv::Mat* src1, const cv::Mat* src2);
 #ifdef _OPENCL
+            /**
+             * init global variables needed for openCV openCL processing
+             * @param pid
+             * @param device
+             */
             static void initOpenCL(int pid, int device) throw (SDException&);
             //OTZU still not supported
             //static cv::Mat* binarizeOcl(const cv::Mat& image);
+            /**
+             * joins two single channel images using or operator using openCL
+             * @param src1
+             * @param src2
+             * @return 
+             */
             static cv::Mat* joinTwoOcl(const cv::Mat& src1, const cv::Mat& src2);
 #endif
         };
