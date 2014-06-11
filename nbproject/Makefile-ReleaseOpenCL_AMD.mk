@@ -36,10 +36,10 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/src/shadowdetection/learning/TrainingSet.o \
 	${OBJECTDIR}/src/shadowdetection/opencl/OpenCLTools.o \
 	${OBJECTDIR}/src/shadowdetection/opencv/OpenCV2Tools.o \
 	${OBJECTDIR}/src/shadowdetection/opencv/OpenCVTools.o \
+	${OBJECTDIR}/src/shadowdetection/tools/svm/TrainingSet.o \
 	${OBJECTDIR}/src/shadowdetection/util/Cofig.o \
 	${OBJECTDIR}/src/shadowdetection/util/TabParser.o
 
@@ -73,11 +73,6 @@ ${OBJECTDIR}/main.o: main.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -D_AMD -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
-${OBJECTDIR}/src/shadowdetection/learning/TrainingSet.o: src/shadowdetection/learning/TrainingSet.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/shadowdetection/learning
-	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -D_AMD -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/shadowdetection/learning/TrainingSet.o src/shadowdetection/learning/TrainingSet.cpp
-
 ${OBJECTDIR}/src/shadowdetection/opencl/OpenCLTools.o: src/shadowdetection/opencl/OpenCLTools.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/shadowdetection/opencl
 	${RM} "$@.d"
@@ -92,6 +87,11 @@ ${OBJECTDIR}/src/shadowdetection/opencv/OpenCVTools.o: src/shadowdetection/openc
 	${MKDIR} -p ${OBJECTDIR}/src/shadowdetection/opencv
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -D_AMD -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/shadowdetection/opencv/OpenCVTools.o src/shadowdetection/opencv/OpenCVTools.cpp
+
+${OBJECTDIR}/src/shadowdetection/tools/svm/TrainingSet.o: src/shadowdetection/tools/svm/TrainingSet.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/shadowdetection/tools/svm
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -D_AMD -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/shadowdetection/tools/svm/TrainingSet.o src/shadowdetection/tools/svm/TrainingSet.cpp
 
 ${OBJECTDIR}/src/shadowdetection/util/Cofig.o: src/shadowdetection/util/Cofig.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/shadowdetection/util

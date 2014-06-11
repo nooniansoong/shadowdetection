@@ -7,15 +7,17 @@
       <logicalFolder name="shadowdetection"
                      displayName="shadowdetection"
                      projectFiles="true">
-        <logicalFolder name="learning" displayName="learning" projectFiles="true">
-          <itemPath>src/shadowdetection/learning/TrainingSet.h</itemPath>
-        </logicalFolder>
         <logicalFolder name="opencl" displayName="opencl" projectFiles="true">
           <itemPath>src/shadowdetection/opencl/OpenCLTools.h</itemPath>
         </logicalFolder>
         <logicalFolder name="opencv" displayName="opencv" projectFiles="true">
           <itemPath>src/shadowdetection/opencv/OpenCV2Tools.h</itemPath>
           <itemPath>src/shadowdetection/opencv/OpenCVTools.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="tools" displayName="tools" projectFiles="true">
+          <logicalFolder name="svm" displayName="svm" projectFiles="true">
+            <itemPath>src/shadowdetection/tools/svm/TrainingSet.h</itemPath>
+          </logicalFolder>
         </logicalFolder>
         <logicalFolder name="util" displayName="util" projectFiles="true">
           <logicalFolder name="raii" displayName="raii" projectFiles="true">
@@ -38,9 +40,6 @@
       <logicalFolder name="shadowdetection"
                      displayName="shadowdetection"
                      projectFiles="true">
-        <logicalFolder name="learning" displayName="learning" projectFiles="true">
-          <itemPath>src/shadowdetection/learning/TrainingSet.cpp</itemPath>
-        </logicalFolder>
         <logicalFolder name="opencl" displayName="opencl" projectFiles="true">
           <logicalFolder name="kernels" displayName="kernels" projectFiles="true">
             <itemPath>src/shadowdetection/opencl/kernels/image_hci_convert_kernel.cl</itemPath>
@@ -50,6 +49,11 @@
         <logicalFolder name="opencv" displayName="opencv" projectFiles="true">
           <itemPath>src/shadowdetection/opencv/OpenCV2Tools.cpp</itemPath>
           <itemPath>src/shadowdetection/opencv/OpenCVTools.cpp</itemPath>
+        </logicalFolder>
+        <logicalFolder name="tools" displayName="tools" projectFiles="true">
+          <logicalFolder name="svm" displayName="svm" projectFiles="true">
+            <itemPath>src/shadowdetection/tools/svm/TrainingSet.cpp</itemPath>
+          </logicalFolder>
         </logicalFolder>
         <logicalFolder name="util" displayName="util" projectFiles="true">
           <itemPath>src/shadowdetection/util/Cofig.cpp</itemPath>
@@ -101,16 +105,6 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/shadowdetection/learning/TrainingSet.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/shadowdetection/learning/TrainingSet.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -142,6 +136,16 @@
             flavor2="0">
       </item>
       <item path="src/shadowdetection/opencv/OpenCVTools.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/tools/svm/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/tools/svm/TrainingSet.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -208,16 +212,6 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/shadowdetection/learning/TrainingSet.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/shadowdetection/learning/TrainingSet.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -249,6 +243,16 @@
             flavor2="0">
       </item>
       <item path="src/shadowdetection/opencv/OpenCVTools.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/tools/svm/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/tools/svm/TrainingSet.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -309,16 +313,6 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/shadowdetection/learning/TrainingSet.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/shadowdetection/learning/TrainingSet.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -350,6 +344,16 @@
             flavor2="0">
       </item>
       <item path="src/shadowdetection/opencv/OpenCVTools.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/tools/svm/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/tools/svm/TrainingSet.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -411,16 +415,6 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
       </item>
-      <item path="src/shadowdetection/learning/TrainingSet.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/shadowdetection/learning/TrainingSet.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -452,6 +446,16 @@
             flavor2="9">
       </item>
       <item path="src/shadowdetection/opencv/OpenCVTools.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/tools/svm/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/tools/svm/TrainingSet.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -515,16 +519,6 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
       </item>
-      <item path="src/shadowdetection/learning/TrainingSet.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/shadowdetection/learning/TrainingSet.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -556,6 +550,16 @@
             flavor2="9">
       </item>
       <item path="src/shadowdetection/opencv/OpenCVTools.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/tools/svm/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/tools/svm/TrainingSet.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -624,16 +628,6 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
       </item>
-      <item path="src/shadowdetection/learning/TrainingSet.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/shadowdetection/learning/TrainingSet.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -665,6 +659,16 @@
             flavor2="9">
       </item>
       <item path="src/shadowdetection/opencv/OpenCVTools.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/tools/svm/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/tools/svm/TrainingSet.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -726,16 +730,6 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
       </item>
-      <item path="src/shadowdetection/learning/TrainingSet.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/shadowdetection/learning/TrainingSet.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -767,6 +761,16 @@
             flavor2="9">
       </item>
       <item path="src/shadowdetection/opencv/OpenCVTools.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/tools/svm/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/tools/svm/TrainingSet.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -832,16 +836,6 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
       </item>
-      <item path="src/shadowdetection/learning/TrainingSet.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/shadowdetection/learning/TrainingSet.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -873,6 +867,16 @@
             flavor2="9">
       </item>
       <item path="src/shadowdetection/opencv/OpenCVTools.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/tools/svm/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/tools/svm/TrainingSet.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -932,16 +936,6 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
       </item>
-      <item path="src/shadowdetection/learning/TrainingSet.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/shadowdetection/learning/TrainingSet.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -973,6 +967,16 @@
             flavor2="9">
       </item>
       <item path="src/shadowdetection/opencv/OpenCVTools.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/tools/svm/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/tools/svm/TrainingSet.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1036,16 +1040,6 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
       </item>
-      <item path="src/shadowdetection/learning/TrainingSet.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/shadowdetection/learning/TrainingSet.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -1077,6 +1071,16 @@
             flavor2="9">
       </item>
       <item path="src/shadowdetection/opencv/OpenCVTools.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/tools/svm/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/tools/svm/TrainingSet.h"
             ex="false"
             tool="3"
             flavor2="0">

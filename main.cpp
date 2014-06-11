@@ -12,7 +12,7 @@
 #include "shadowdetection/util/Config.h"
 #include "shadowdetection/util/TabParser.h"
 #include "shadowdetection/util/raii/RAIIS.h"
-#include "shadowdetection/learning/TrainingSet.h"
+#include "shadowdetection/tools/svm/TrainingSet.h"
 
 using namespace std;
 #ifdef _OPENCL
@@ -23,7 +23,7 @@ using namespace shadowdetection::opencv2;
 using namespace shadowdetection::util;
 using namespace cv;
 using namespace shadowdetection::util::raii;
-using namespace shadowdetection::learning;
+using namespace shadowdetection::tools::svm;
 
 void handleError(const SDException& exception){
     const char* err = exception.what();
