@@ -24,8 +24,6 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" camel.jpg out.jpg</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" deca.jpg out.jpg</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" 5.jpg out.jpg</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" sh.jpg out.jpg</runcommandpicklistitem>
           <runcommandpicklistitem>${OUTPUT_PATH}" files.tab</runcommandpicklistitem>
@@ -34,8 +32,10 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}" deca.png out.jpg</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -train list.csv data.svm</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -training list.csv data.svm</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -training test_data.svm test_model2</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" -train list.csv data.svm</runcommand>
+        <runcommand>"${OUTPUT_PATH}" -training test_data.svm test_model2</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>
@@ -66,7 +66,6 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" 0.jpg out.jpg</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" camel.jpg out.jpg</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" deca.jpg out.jpg</runcommandpicklistitem>
@@ -76,8 +75,9 @@
           <runcommandpicklistitem>${OUTPUT_PATH}" files.list</runcommandpicklistitem>
           <runcommandpicklistitem>${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -training test_data.svm test_model2</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" list.csv</runcommand>
+        <runcommand>"${OUTPUT_PATH}" -training test_data.svm test_model2</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>

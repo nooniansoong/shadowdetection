@@ -13,6 +13,8 @@
 #include "shadowdetection/util/TabParser.h"
 #include "shadowdetection/util/raii/RAIIS.h"
 #include "shadowdetection/tools/svm/TrainingSet.h"
+#include "shadowdetection/tools/svm/libsvmopenmp/svm-train.h"
+//#include <omp.h>
 
 using namespace std;
 #ifdef _OPENCL
@@ -124,7 +126,7 @@ void processSingle(const char* input, const char* out) throw (SDException&) {
     }           
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv) {    
     if (argc == 1){
         cout << "Call with -help for help" << endl;
 #ifdef _OPENCL
@@ -137,11 +139,18 @@ int main(int argc, char **argv) {
         return 0;
     }
     
-    if (argc >= 2 && strcmp(argv[1], "-train") == 0){
+    if (argc >= 2 && strcmp(argv[1], "-makeset") == 0){
         TrainingSet ts(argv[2]);
         ts.process(argv[3]);
         return 0;
     }
+    
+    if (argc >= 2 && strcmp(argv[1], "-training") == 0){
+        int val = shadowdetection::tools::svm::libsvmopenmp::train(argv[2], argv[3]);
+        cout << val << endl;
+        return 0;
+    }
+    
 #ifdef _OPENCL
     if (argc == 2 && strcmp(argv[1], "-list") == 0){
         try{

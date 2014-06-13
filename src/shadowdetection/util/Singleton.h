@@ -13,15 +13,25 @@
 
 namespace shadowdetection {
     namespace util{
-
+        
+        /**
+         * template singleton class
+         */
         template <class T> class Singleton{
         private:
             static T* instancePtr;
         protected:
             Singleton();            
             virtual ~Singleton();
-        public:            
+        public:
+            /**
+             * 
+             * @return instance of T class
+             */
             static T* getInstancePtr();
+            /**
+             * maybe someone will call it sometime !!??
+             */
             static void destroy();
         };
         
@@ -34,8 +44,7 @@ namespace shadowdetection {
         }
         
         template<class T> T* Singleton<T>::getInstancePtr(){
-            pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;            
-            //pthread_mutex_lock(&mutex);
+            pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
             raii::MutexRaii autoLock(&mutex);
             if (instancePtr == 0){
                 instancePtr = new(std::nothrow) T();
