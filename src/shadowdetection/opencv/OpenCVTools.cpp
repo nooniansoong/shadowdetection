@@ -94,7 +94,7 @@ namespace shadowdetection {
             s = (unsigned char) (fS * 255.f);
         }
 
-        uint* OpenCvTools::convertImagetoHSI(IplImage* image, int& height, int& width, int& channels,
+        unsigned int* OpenCvTools::convertImagetoHSI(IplImage* image, int& height, int& width, int& channels,
                 void (*convertFunc)(unsigned char, unsigned char, unsigned char, unsigned int&, unsigned char&, unsigned char&)) {
             height = image->height;
             width = image->width;

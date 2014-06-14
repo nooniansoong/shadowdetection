@@ -47,7 +47,7 @@ namespace shadowdetection{
              * @param convertFunc
              * @return 
              */
-            static uint* convertImagetoHSI  (IplImage* image, int& height, int& width, int& channels,
+            static unsigned int* convertImagetoHSI  (IplImage* image, int& height, int& width, int& channels,
                                              void (*convertFunc)(unsigned char, unsigned char, unsigned char, unsigned int&, unsigned char&, unsigned char&));
             /**
              * converts BGR image to RGB byte array

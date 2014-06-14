@@ -165,8 +165,8 @@ namespace shadowdetection {
             }
 
             float** TrainingSet::processImage(std::string orImage, std::string maskImg, int& rowDimesion, int& pixelNum) {
-                Mat originalImage = imread(orImage, CV_LOAD_IMAGE_COLOR);
-                Mat maskImage = imread(maskImg, CV_LOAD_IMAGE_GRAYSCALE);
+                Mat originalImage = cv::imread(orImage, CV_LOAD_IMAGE_COLOR);
+                Mat maskImage = cv::imread(maskImg, CV_LOAD_IMAGE_GRAYSCALE);
 
                 if (originalImage.data == 0 || maskImage.data == 0) {
 

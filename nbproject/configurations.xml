@@ -1335,7 +1335,7 @@
     </conf>
     <conf name="Debug_Mac" type="1">
       <toolsSet>
-        <compilerSet>default</compilerSet>
+        <compilerSet>GNU|GNU</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
@@ -1354,7 +1354,7 @@
           <linkerAddLib>
             <pElem>/usr/local/lib</pElem>
           </linkerAddLib>
-          <commandLine>-lopencv_highgui -lopencv_core -lopencv_imgproc -lopencv_ocl</commandLine>
+          <commandLine>-lopencv_imgproc -lopencv_highgui -lopencv_core -lopencv_ocl</commandLine>
         </linkerTool>
       </compileType>
       <item path="ShadowDetectionConfig.xml" ex="false" tool="3" flavor2="0">

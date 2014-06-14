@@ -10,7 +10,7 @@ namespace shadowdetection {
         using namespace cv::ocl;
         using namespace shadowdetection::util;
         
-        uint* OpenCV2Tools::convertImagetoHSI  (const Mat* image, int& height, int& width, int& channels,
+        unsigned int* OpenCV2Tools::convertImagetoHSI  (const Mat* image, int& height, int& width, int& channels,
                                              void (*convertFunc)(unsigned char, unsigned char, unsigned char, unsigned int&, unsigned char&, unsigned char&)){
             if (image == 0){
                 return 0;

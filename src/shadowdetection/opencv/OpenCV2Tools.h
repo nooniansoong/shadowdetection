@@ -31,7 +31,7 @@ namespace shadowdetection {
              * @param convertFunc
              * @return 
              */
-            static uint* convertImagetoHSI  (const cv::Mat* image, int& height, int& width, int& channels,
+            static unsigned int* convertImagetoHSI  (const cv::Mat* image, int& height, int& width, int& channels,
                                              void (*convertFunc)(unsigned char, unsigned char, unsigned char, unsigned int&, unsigned char&, unsigned char&));
             /**
             * convert image to RGB byte array

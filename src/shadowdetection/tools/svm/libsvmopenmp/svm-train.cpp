@@ -4,7 +4,9 @@
 #include <ctype.h>
 #include <errno.h>
 #include <iostream>
+#ifndef _MAC
 #include <omp.h>
+#endif
 #include "svm-train.h"
 
 
@@ -57,8 +59,10 @@ namespace shadowdetection {
 
                 int train(char* input_file_name, char* model_file_name) {
                     //openmp hello world 
+#ifndef _MAC
                     omp_set_dynamic(0);
                     omp_set_num_threads(4);
+#endif
                 //    #pragma omp parallel
                 //    {
                 //        int id = omp_get_thread_num();
