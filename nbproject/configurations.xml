@@ -66,6 +66,7 @@
             <itemPath>src/shadowdetection/opencl/kernels/lib_svm.cl</itemPath>
           </logicalFolder>
           <itemPath>src/shadowdetection/opencl/OpenCLTools.cpp</itemPath>
+          <itemPath>src/shadowdetection/opencl/OpenCLToolsLibSVM.cpp</itemPath>
         </logicalFolder>
         <logicalFolder name="opencv" displayName="opencv" projectFiles="true">
           <itemPath>src/shadowdetection/opencv/OpenCV2Tools.cpp</itemPath>
@@ -145,6 +146,11 @@
       <item path="src/shadowdetection/opencl/OpenCLTools.h"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/opencl/OpenCLToolsLibSVM.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="src/shadowdetection/opencl/kernels/image_hci_convert_kernel.cl"
@@ -304,6 +310,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/shadowdetection/opencl/OpenCLToolsLibSVM.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="src/shadowdetection/opencl/kernels/image_hci_convert_kernel.cl"
             ex="false"
             tool="3"
@@ -452,6 +463,11 @@
       <item path="src/shadowdetection/opencl/OpenCLTools.h"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/opencl/OpenCLToolsLibSVM.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="src/shadowdetection/opencl/kernels/image_hci_convert_kernel.cl"
@@ -603,6 +619,11 @@
       <item path="src/shadowdetection/opencl/OpenCLTools.h"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/opencl/OpenCLToolsLibSVM.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="src/shadowdetection/opencl/kernels/image_hci_convert_kernel.cl"
@@ -758,6 +779,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/shadowdetection/opencl/OpenCLToolsLibSVM.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="src/shadowdetection/opencl/kernels/image_hci_convert_kernel.cl"
             ex="false"
             tool="3"
@@ -888,6 +914,7 @@
             <pElem>/opt/AMDAPP/include</pElem>
             <pElem>src</pElem>
           </incDir>
+          <commandLine>-fopenmp</commandLine>
           <preprocessorList>
             <Elem>_AMD</Elem>
             <Elem>_OPENCL</Elem>
@@ -899,7 +926,7 @@
             <pElem>/usr/local/lib</pElem>
             <pElem>/opt/AMDAPP/lib/x86_64</pElem>
           </linkerAddLib>
-          <commandLine>-lOpenCL -lopencv_highgui -lopencv_core -lopencv_imgproc -lopencv_ocl</commandLine>
+          <commandLine>-lOpenCL -lopencv_highgui -lopencv_core -lopencv_imgproc -lopencv_ocl -fopenmp</commandLine>
         </linkerTool>
       </compileType>
       <item path="ShadowDetectionConfig.xml" ex="false" tool="3" flavor2="0">
@@ -914,6 +941,11 @@
       <item path="src/shadowdetection/opencl/OpenCLTools.h"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/opencl/OpenCLToolsLibSVM.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="src/shadowdetection/opencl/kernels/image_hci_convert_kernel.cl"
@@ -1065,6 +1097,11 @@
       <item path="src/shadowdetection/opencl/OpenCLTools.h"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/opencl/OpenCLToolsLibSVM.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="src/shadowdetection/opencl/kernels/image_hci_convert_kernel.cl"
@@ -1222,6 +1259,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/shadowdetection/opencl/OpenCLToolsLibSVM.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="src/shadowdetection/opencl/kernels/image_hci_convert_kernel.cl"
             ex="false"
             tool="3"
@@ -1369,6 +1411,11 @@
       <item path="src/shadowdetection/opencl/OpenCLTools.h"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/opencl/OpenCLToolsLibSVM.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="src/shadowdetection/opencl/kernels/image_hci_convert_kernel.cl"
@@ -1522,6 +1569,11 @@
       <item path="src/shadowdetection/opencl/OpenCLTools.h"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/opencl/OpenCLToolsLibSVM.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="src/shadowdetection/opencl/kernels/image_hci_convert_kernel.cl"

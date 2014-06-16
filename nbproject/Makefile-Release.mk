@@ -37,6 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/src/shadowdetection/opencl/OpenCLTools.o \
+	${OBJECTDIR}/src/shadowdetection/opencl/OpenCLToolsLibSVM.o \
 	${OBJECTDIR}/src/shadowdetection/opencv/OpenCV2Tools.o \
 	${OBJECTDIR}/src/shadowdetection/opencv/OpenCVTools.o \
 	${OBJECTDIR}/src/shadowdetection/tools/svm/TrainingSet.o \
@@ -79,6 +80,11 @@ ${OBJECTDIR}/src/shadowdetection/opencl/OpenCLTools.o: src/shadowdetection/openc
 	${MKDIR} -p ${OBJECTDIR}/src/shadowdetection/opencl
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -I/usr/local/include/opencv -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/shadowdetection/opencl/OpenCLTools.o src/shadowdetection/opencl/OpenCLTools.cpp
+
+${OBJECTDIR}/src/shadowdetection/opencl/OpenCLToolsLibSVM.o: src/shadowdetection/opencl/OpenCLToolsLibSVM.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/shadowdetection/opencl
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/local/include/opencv -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/shadowdetection/opencl/OpenCLToolsLibSVM.o src/shadowdetection/opencl/OpenCLToolsLibSVM.cpp
 
 ${OBJECTDIR}/src/shadowdetection/opencv/OpenCV2Tools.o: src/shadowdetection/opencv/OpenCV2Tools.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/shadowdetection/opencv

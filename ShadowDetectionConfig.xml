@@ -10,10 +10,10 @@
         
         <openCL>            
             <UsePrecompiledKernels>
-                true
+                false
             </UsePrecompiledKernels>            
             <platformid>
-                1
+                0
             </platformid>
             <deviceid>
                 0

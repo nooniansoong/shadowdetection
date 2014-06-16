@@ -181,5 +181,10 @@ inline float radToDegrees(float radians) {
     return radians * oneRad;
 }
 
+enum LIBSVM_CLASS_TYPE{
+    SVC_Q_TYPE,
+    SVR_Q_TYPE,
+};
+
 #endif	/* TYPEDEFS_H */
 

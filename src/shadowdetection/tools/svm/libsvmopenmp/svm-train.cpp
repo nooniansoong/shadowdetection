@@ -59,7 +59,7 @@ namespace shadowdetection {
 
                 int train(char* input_file_name, char* model_file_name) {
                     //openmp hello world 
-#ifndef _MAC
+#if !defined _MAC && !defined _OPENCL
                     omp_set_dynamic(0);
                     omp_set_num_threads(4);
 #endif

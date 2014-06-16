@@ -67,7 +67,7 @@ void processSingleCPU(const char* out, IplImage* image) {
 #endif
 
 #ifdef _OPENCL
-OpenclTools oclt;
+OpenclTools* oclt = OpenclTools::getInstancePtr();
 /**
  * process single image using openCL
  * @param out
@@ -77,7 +77,7 @@ void processSingleOpenCL(const char* out, const Mat& imageNew) {
     unsigned char* buffer = OpenCV2Tools::convertImageToByteArray(&imageNew, true);    
     Mat* processedImage = 0;
     try {
-        processedImage = oclt.processRGBImage(buffer, imageNew.size().width, imageNew.size().height, imageNew.channels());
+        processedImage = oclt->processRGBImage(buffer, imageNew.size().width, imageNew.size().height, imageNew.channels());
     } catch (SDException& exception) {
         throw exception;
     }
@@ -145,7 +145,26 @@ int main(int argc, char **argv) {
         return 0;
     }
     
-    if (argc >= 2 && strcmp(argv[1], "-training") == 0){
+    if (argc >= 2 && strcmp(argv[1], "-training") == 0) {
+#ifdef _OPENCL    
+        try {
+            int platformId = 0;
+            int deviceId = 0;
+            Config* conf = Config::getInstancePtr();
+            string platformStr = conf->getPropertyValue("settings.openCL.platformid");
+            string deviceStr = conf->getPropertyValue("settings.openCL.deviceid");
+            int tmp = atoi(platformStr.c_str());
+            if (tmp != 0)
+                platformId = tmp;
+            tmp = atoi(deviceStr.c_str());
+            if (tmp != 0)
+                deviceId = tmp;
+            oclt->init(platformId, deviceId, false);            
+        } catch (SDException& exception) {
+            handleError(exception);
+            exit(1);
+        }
+#endif
         int val = shadowdetection::tools::svm::libsvmopenmp::train(argv[2], argv[3]);
         cout << val << endl;
         return 0;
@@ -154,8 +173,8 @@ int main(int argc, char **argv) {
 #ifdef _OPENCL
     if (argc == 2 && strcmp(argv[1], "-list") == 0){
         try{
-            oclt.init(0, 0, true);
-            oclt.cleanUp();
+            oclt->init(0, 0, true);
+            oclt->cleanUp();
         } catch (SDException& exception) {
             handleError(exception);
             exit(1);
@@ -177,7 +196,7 @@ int main(int argc, char **argv) {
         tmp = atoi(deviceStr.c_str());
         if (tmp != 0)
             deviceId = tmp;
-        oclt.init(platformId, deviceId, false);
+        oclt->init(platformId, deviceId, false);
         OpenCV2Tools::initOpenCL(platformId, deviceId);        
     }
     catch (SDException& exception){
@@ -219,13 +238,13 @@ int main(int argc, char **argv) {
                     handleError(exception);
                 }
 #ifdef _OPENCL
-                oclt.cleanWorkPart();
+                oclt->cleanWorkPart();
 #endif
             }            
         }
     }
 #ifdef _OPENCL
-    oclt.cleanUp();
+    oclt->cleanUp();
 #endif
     return 0;
 }

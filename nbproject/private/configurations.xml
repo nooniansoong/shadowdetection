@@ -24,7 +24,6 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" 5.jpg out.jpg</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" sh.jpg out.jpg</runcommandpicklistitem>
           <runcommandpicklistitem>${OUTPUT_PATH}" files.tab</runcommandpicklistitem>
           <runcommandpicklistitem>${OUTPUT_PATH}" files.list</runcommandpicklistitem>
@@ -34,8 +33,9 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}" -train list.csv data.svm</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -training list.csv data.svm</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -training test_data.svm test_model2</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -training data.svm test_model2</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" -training test_data.svm test_model2</runcommand>
+        <runcommand>"${OUTPUT_PATH}" -training data.svm test_model2</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>
@@ -97,6 +97,8 @@
         <gdb_interceptlist>
           <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
         </gdb_interceptlist>
+        <gdb_signals>
+        </gdb_signals>
         <gdb_options>
           <DebugOptions>
           </DebugOptions>
@@ -108,8 +110,6 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" camel.jpg out.jpg</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" deca.jpg out.jpg</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" 5.jpg out.jpg</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" files.tab</runcommandpicklistitem>
           <runcommandpicklistitem>${OUTPUT_PATH}" files.tab</runcommandpicklistitem>
@@ -118,8 +118,10 @@
           <runcommandpicklistitem>${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -list</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -training data.svm test_model3</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -training data.svm test_model2</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" list.csv</runcommand>
+        <runcommand>"${OUTPUT_PATH}" -training data.svm test_model2</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>
@@ -150,8 +152,6 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" 0.jpg out.jpg</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" camel.jpg out.jpg</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" deca.jpg out.jpg</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" 5.jpg out.jpg</runcommandpicklistitem>
@@ -160,8 +160,10 @@
           <runcommandpicklistitem>${OUTPUT_PATH}" files.list</runcommandpicklistitem>
           <runcommandpicklistitem>${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -training sdata.svm test_model2</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -training data.svm test_model2</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" list.csv</runcommand>
+        <runcommand>"${OUTPUT_PATH}" -training data.svm test_model2</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>
@@ -181,6 +183,8 @@
         <gdb_interceptlist>
           <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
         </gdb_interceptlist>
+        <gdb_signals>
+        </gdb_signals>
         <gdb_options>
           <DebugOptions>
           </DebugOptions>
@@ -192,8 +196,6 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" camel.jpg out.jpg</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" deca.jpg out.jpg</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" 5.jpg out.jpg</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" files.tab</runcommandpicklistitem>
           <runcommandpicklistitem>${OUTPUT_PATH}" files.tab</runcommandpicklistitem>
@@ -202,8 +204,10 @@
           <runcommandpicklistitem>${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -list</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -training data.svm </runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -training data.svm test_model3</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" list.csv</runcommand>
+        <runcommand>"${OUTPUT_PATH}" -training data.svm test_model3</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>
@@ -234,7 +238,6 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" camel.jpg out.jpg</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" deca.jpg out.jpg</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" 5.jpg out.jpg</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" files.tab</runcommandpicklistitem>
@@ -244,8 +247,9 @@
           <runcommandpicklistitem>${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -list</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -training data.svm test_model3</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" list.csv</runcommand>
+        <runcommand>"${OUTPUT_PATH}" -training data.svm test_model3</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>

@@ -16,11 +16,15 @@
 #include <OpenCL/opencl.h>
 #endif
 #include "typedefs.h"
+#include "shadowdetection/util/Singleton.h"
 
 #define MAX_DEVICES 100
 #define MAX_SRC_SIZE 5242800
-#define KERNEL_COUNT 3
+#define KERNEL_COUNT 5
 #define MAX_PLATFORMS 100
+#define PROGRAM_COUNT 2
+
+struct svm_node;
 
 namespace cv{
     class Mat;
@@ -29,14 +33,15 @@ namespace cv{
 namespace shadowdetection {
     namespace opencl {        
 
-        class OpenclTools {
+        class OpenclTools : public shadowdetection::util::Singleton<OpenclTools>{
+            friend class shadowdetection::util::Singleton<OpenclTools>;
         private:            
             cl_device_id device;
             cl_int err;
-            cl_command_queue command_queue;
-            cl_program program;
+            cl_command_queue command_queue[PROGRAM_COUNT];
+            cl_program program[PROGRAM_COUNT];
             cl_kernel kernel[KERNEL_COUNT];
-            cl_context context;
+            cl_context context[PROGRAM_COUNT];
             size_t workGroupSize[KERNEL_COUNT];
             cl_mem input;
             cl_mem output1;
@@ -44,16 +49,18 @@ namespace shadowdetection {
             cl_mem output3;
             unsigned char* ratios1;
             unsigned char* ratios2;
+            
+            size_t shrRoundUp(size_t localSize, size_t allSize);
             /**
              * check for openCL error
              * @param err
              * @param err_code
              */
-            void err_check(int err, std::string err_code) throw (SDException&);
+            void err_check(int err, std::string err_code, int programIndex) throw (SDException&);
             /**
              * create openCL kernels from program
              */
-            void createKernels();
+            void createKernels(int index);
             /**
              * calculate work group sizes for each kernel
              */
@@ -100,25 +107,25 @@ namespace shadowdetection {
              * global function for load program
              * @param kernelFileName
              */
-            void loadKernelFile(std::string& kernelFileName);
+            void loadKernelFile(std::string& kernelFileName, int index);
             /**
              * load program from source
              * @param kernelFileName
              */
-            void loadKernelFileFromSource(std::string& kernelFileName);
+            void loadKernelFileFromSource(std::string& kernelFileName, int index);
             /**
              * load program from precompiled binary
              * @param kernelFileName
              * @return 
              */
-            bool loadKernelFileFromBinary(std::string& kernelFileName);
+            bool loadKernelFileFromBinary(std::string& kernelFileName, int index);
             /**
              * saves program binary loaded from source
              */
-            const char* saveKernelBinary(std::string& kernelFileName);
+            const char* saveKernelBinary(std::string& kernelFileName, int index);
         protected:
-        public:
             OpenclTools();
+        public:            
             virtual ~OpenclTools();
             /**
              * init variables for OpenclTools class instances
@@ -154,6 +161,34 @@ namespace shadowdetection {
              * clean up variables used for single image processing
              */
             void cleanWorkPart();
+            //libsvm section
+        private:
+            struct cl_svm_node{
+                cl_int index;
+                cl_double value;
+            };
+            
+            cl_mem clData;
+            int clDataLen;
+            cl_mem clY;
+            cl_mem clX;
+            
+            svm_node *xForCl;
+            void createBuffersSVM(  float* data, int dataLen,
+                                    char* y, int yLen,
+                                    const svm_node* x, int xX, int xY, bool diffX);
+            void setKernelArgsSVC( cl_int start, cl_int len, cl_int i, 
+                                    cl_int kernel_type, cl_int xW, cl_int dataLen,
+                                    cl_double gamma, cl_double coef0, cl_int degree);
+            void setKernelArgsSVR(  cl_int start, cl_int len, cl_int i, 
+                                    cl_int kernel_type, cl_int xW, cl_int dataLen,
+                                    cl_double gamma, cl_double coef0, cl_int degree);
+            bool xDif (const svm_node** x, int xLen, int xW);
+        protected:
+        public:
+            void get_Q( float* data, int dataLen, int start, int len, int i, int kernel_type, 
+                        char* y, int yLen, const svm_node** x, int xX, int xY, LIBSVM_CLASS_TYPE classType,
+                        double gamma, double coef0, int degree, double *x_square) throw (SDException);            
         };
 
     }
