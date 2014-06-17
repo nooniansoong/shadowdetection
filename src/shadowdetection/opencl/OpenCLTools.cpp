@@ -67,7 +67,8 @@ namespace shadowdetection {
             clY = 0;
             clX = 0;
             xForCl = 0;
-            clData = 0; 
+            clData = 0;
+            newTask = true;
             
             initWorkVars();
         }
@@ -82,6 +83,7 @@ namespace shadowdetection {
         }
         
         OpenclTools::OpenclTools() : Singleton<OpenclTools>(){
+            newTask = true;
             initVars();
         }
 
@@ -136,7 +138,7 @@ namespace shadowdetection {
             if (clData){
                 err = clReleaseMemObject(clData);
                 err_check(err, "clReleaseMemObject1", -1);
-            }
+            }                        
             
             cleanWorkPart();            
             initVars();

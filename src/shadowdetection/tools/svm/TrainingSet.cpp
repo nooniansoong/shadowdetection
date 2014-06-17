@@ -71,6 +71,10 @@ namespace shadowdetection {
                         if (processed != 0) {
                             for (int j = 0; j < pixelNum; j++) {
                                 string str = getStr(processed[j], dimension);
+                                string tmp = str.substr(0, 2);
+                                if (tmp.compare("1 ") != 0 && tmp.compare("0 ") != 0){
+                                    cout << "Error create train set, label value: " << tmp << endl;
+                                }
                                 if (first == false) {
                                     file << endl;
                                 }

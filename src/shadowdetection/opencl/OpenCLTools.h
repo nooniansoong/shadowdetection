@@ -172,17 +172,21 @@ namespace shadowdetection {
             int clDataLen;
             cl_mem clY;
             cl_mem clX;
+            bool newTask;
             
             svm_node *xForCl;
             void createBuffersSVM(  float* data, int dataLen,
                                     char* y, int yLen,
-                                    const svm_node* x, int xX, int xY, bool diffX);
+                                    const svm_node* x, int xX, int xY, bool diffX,
+                                    int start, int steps, bool& clDataChanged);
             void setKernelArgsSVC( cl_int start, cl_int len, cl_int i, 
                                     cl_int kernel_type, cl_int xW, cl_int dataLen,
-                                    cl_double gamma, cl_double coef0, cl_int degree);
+                                    cl_double gamma, cl_double coef0, cl_int degree,
+                                    bool clDataChanged);
             void setKernelArgsSVR(  cl_int start, cl_int len, cl_int i, 
                                     cl_int kernel_type, cl_int xW, cl_int dataLen,
-                                    cl_double gamma, cl_double coef0, cl_int degree);
+                                    cl_double gamma, cl_double coef0, cl_int degree,
+                                    bool clDataChanged);
             bool xDif (const svm_node** x, int xLen, int xW);
         protected:
         public:
