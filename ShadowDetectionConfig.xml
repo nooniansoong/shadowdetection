@@ -3,7 +3,7 @@
 <QsConfig>
     <process>
         <UseBatch>
-            true
+            false
         </UseBatch>        
     </process>
     <settings>
@@ -22,6 +22,14 @@
                 <useGPU>false</useGPU>
             </mac>      
         </openCL>
+        
+        <svm>
+            <openMP>
+                <threadNum>
+                    4
+                </threadNum>
+            </openMP>
+        </svm>
         
     </settings>
 </QsConfig>

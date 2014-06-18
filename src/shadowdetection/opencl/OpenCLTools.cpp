@@ -364,7 +364,14 @@ namespace shadowdetection {
                     for (int j = 0; j < num_devices; j++) {
                         err = clGetDeviceInfo(devices[j], CL_DEVICE_NAME, 256, info, 0);
                         err_check(err, "clGetDeviceInfo", -1);
-                        cout << "Device " << j << " name: " << info << endl;
+                        cl_device_type type;
+                        err = clGetDeviceInfo(devices[j], CL_DEVICE_TYPE, sizeof(cl_device_type), &type, 0);
+                        string typeStr = "DEVICE_OTHER";
+                        if (type == CL_DEVICE_TYPE_CPU)
+                            typeStr = "DEVICE_CPU";
+                        else
+                            typeStr = "DEVICE_GPU";
+                        cout << "Device " << j << " name: " << info << " type: " << typeStr << endl;
                     }
                 }                
                 catch (SDException& exception) {

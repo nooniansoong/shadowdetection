@@ -8,6 +8,7 @@
 #include <omp.h>
 #endif
 #include "svm-train.h"
+#include "shadowdetection/util/Config.h"
 
 
 #define Malloc(type,n) (type *)malloc((n)*sizeof(type))
@@ -18,6 +19,7 @@ namespace shadowdetection {
             namespace libsvmopenmp {
 
                 using namespace std;
+                using namespace shadowdetection::util;
                 
                 void print_null(const char *s) {
                 }                
@@ -61,7 +63,13 @@ namespace shadowdetection {
                     //openmp hello world 
 #if !defined _MAC && !defined _OPENCL
                     omp_set_dynamic(0);
-                    omp_set_num_threads(4);
+                    int numThreads = 4;
+                    Config* conf = Config::getInstancePtr();
+                    string tnStr = conf->getPropertyValue("settings.svm.openMP.threadNum");
+                    int tmp = atoi(tnStr.c_str());
+                    if (tmp != 0)
+                        numThreads = tmp;
+                    omp_set_num_threads(numThreads);
 #endif
                 //    #pragma omp parallel
                 //    {
