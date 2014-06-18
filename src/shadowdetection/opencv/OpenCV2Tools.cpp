@@ -1,6 +1,7 @@
 #include <iostream>
 #include "OpenCV2Tools.h"
 #include "shadowdetection/util/Config.h"
+#include <string>
 
 namespace shadowdetection {
     namespace opencv2 {
@@ -168,9 +169,14 @@ namespace shadowdetection {
             if (device >= devnums) {
                 SDException exc(SHADOW_NO_OPENCL_DEVICE, "OpenCV Init OpenCL devices");
                 throw exc;
-            }
+            }            
             cv::ocl::setDevice(devicesInfo[device]);
-            cout << "Device type: GPU" << endl;
+            string type = "DEVICE_OTHER";
+            if (devicesInfo[device]->deviceType == CVCL_DEVICE_TYPE_CPU)
+                type = "DEVICE_CPU";
+            else if (devicesInfo[device]->deviceType == CVCL_DEVICE_TYPE_GPU)
+                type = "DEVICE_GPU";
+            cout << "Device type: " << type << endl;
             cout << "Platform name:" << devicesInfo[device]->platform->platformName << endl;
             cout << "Device name:" << devicesInfo[device]->deviceName << endl;
         }

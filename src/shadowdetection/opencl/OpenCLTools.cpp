@@ -369,7 +369,7 @@ namespace shadowdetection {
                         string typeStr = "DEVICE_OTHER";
                         if (type == CL_DEVICE_TYPE_CPU)
                             typeStr = "DEVICE_CPU";
-                        else
+                        else if (type == CL_DEVICE_TYPE_GPU)
                             typeStr = "DEVICE_GPU";
                         cout << "Device " << j << " name: " << info << " type: " << typeStr << endl;
                     }
