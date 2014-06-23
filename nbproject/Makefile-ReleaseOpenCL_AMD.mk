@@ -44,6 +44,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/shadowdetection/tools/svm/libsvmopenmp/svm-train.o \
 	${OBJECTDIR}/src/shadowdetection/util/Cofig.o \
 	${OBJECTDIR}/src/shadowdetection/util/TabParser.o \
+	${OBJECTDIR}/src/shadowdetection/util/Timer.o \
 	${OBJECTDIR}/src/thirdparty/lib_svm/svm.o
 
 
@@ -51,8 +52,8 @@ OBJECTFILES= \
 CFLAGS=-m64
 
 # CC Compiler Flags
-CCFLAGS=-m64 -fopenmp
-CXXFLAGS=-m64 -fopenmp
+CCFLAGS=-m64
+CXXFLAGS=-m64
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -69,7 +70,7 @@ LDLIBSOPTIONS=-L/usr/local/lib -L/opt/AMDAPP/lib/x86_64
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection ${OBJECTFILES} ${LDLIBSOPTIONS} -lOpenCL -lopencv_highgui -lopencv_core -lopencv_imgproc -lopencv_ocl -fopenmp
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection ${OBJECTFILES} ${LDLIBSOPTIONS} -lOpenCL -lopencv_highgui -lopencv_core -lopencv_imgproc -lopencv_ocl
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -115,6 +116,11 @@ ${OBJECTDIR}/src/shadowdetection/util/TabParser.o: src/shadowdetection/util/TabP
 	${MKDIR} -p ${OBJECTDIR}/src/shadowdetection/util
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -D_AMD -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/shadowdetection/util/TabParser.o src/shadowdetection/util/TabParser.cpp
+
+${OBJECTDIR}/src/shadowdetection/util/Timer.o: src/shadowdetection/util/Timer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/shadowdetection/util
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -D_AMD -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/shadowdetection/util/Timer.o src/shadowdetection/util/Timer.cpp
 
 ${OBJECTDIR}/src/thirdparty/lib_svm/svm.o: src/thirdparty/lib_svm/svm.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/thirdparty/lib_svm

@@ -75,27 +75,79 @@ double my_dot(__global const svm_node *px, __global const svm_node *py)
                 ++py;
             else
                 ++px;
-        }			
+        }
     }
     return sum;
 }
 
-double kernel_linear(int i, int j, __global const svm_node* x, const int xW){
+//double kfunction_linear(__global const svm_node* x, int i, __global const svm_node* yS,
+//                        const int yW){
+//    __global const svm_node* y = yS + i * yW;
+//    return my_dot(x, y);
+//}
+//
+//double kfunction_poly(__global const svm_node* x, int i, __global const svm_node* yS,
+//                        const int yW, double gamma, double coef0, int degree){
+//    __global const svm_node* y = yS + i * yW;
+//    return pow(gamma * my_dot(x, y) + coef0, degree);
+//}
+//
+//double kfunction_rbf(__global const svm_node* x, int i, __global const svm_node* yS, 
+//                    const int yW, double gamma){
+//    double sum = 0;    
+//    __global const svm_node* y = yS + i * yW;
+//    while (x->index != -1 && y->index != -1) {
+//        if (x->index == y->index) {
+//            double d = x->value - y->value;
+//            sum += d * d;
+//            ++x;
+//            ++y;
+//        } else {
+//            if (x->index > y->index) {
+//                sum += y->value * y->value;
+//                ++y;
+//            } else {
+//                sum += x->value * x->value;
+//                ++x;
+//            }
+//        }
+//    }
+//
+//    while (x->index != -1) {
+//        sum += x->value * x->value;
+//        ++x;
+//    }
+//
+//    while (y->index != -1) {
+//        sum += y->value * y->value;
+//        ++y;
+//    }
+//
+//    return exp(gamma * sum);
+//}
+//
+//double kfunction_precomputed(__global const svm_node* x, int i, __global const svm_node* yS, const int yW){    
+//    __global const svm_node* y = yS + i * yW;
+//    return x[(int)(y->value)].value;
+//}
+
+
+double kernel_linear(const int i, const int j, __global const svm_node* x, const int xW){
     return my_dot(&x[i * xW], &x[j * xW]);
 }
 
-double kernel_poly( int i, int j, __global const svm_node* x, const int xW, 
+double kernel_poly( const int i, const int j, __global const svm_node* x, const int xW, 
                     double gamma, double coef0, int degree){    
     return pow(gamma * my_dot(&x[i * xW], &x[j * xW]) + coef0, degree);
 }
 
-double kernel_rbf(  int i, int j, __global const svm_node* x, const int xW,
+double kernel_rbf(  const int i, const int j, __global const svm_node* x, const int xW,
                     double gamma, __global double* x_square){   
     return exp(-gamma * (x_square[i] + x_square[j] - 2 * my_dot(&x[i * xW], &x[j * xW])));
 }
 
-double kernel_sigmoid(  int i, int j, __global const svm_node* x, 
-                        const int xW, double gamma, double coef0){
+double kernel_sigmoid(const int i, const int j, __global const svm_node* x, 
+                      const int xW, double gamma, double coef0){
     return tanh(gamma * my_dot(&x[i * xW], &x[j * xW]) + coef0);
 }
 
@@ -108,35 +160,38 @@ __kernel void svcQgetQ( __global float* data, const int dataLen, const int start
                         const int len, const int i, const int kernel_type, 
                         __global const char* y, __global const svm_node* x, const int xW,
                         double gamma, double coef0, int degree, __global double* x_square)
-{
+{  
+    
     const int index = get_global_id(0);
-    const int realIndex = index + start;
+    const int realIndex = index + start;    
     if (realIndex < dataLen){
-        data[realIndex] = y[i] * y[realIndex];
+        float res = y[i] * y[realIndex];
         switch (abs(kernel_type)){
         case LINEAR:
-            data[realIndex] *= (float)kernel_linear(i, realIndex, x, xW);
+            res *= (float)kernel_linear(i, realIndex, x, xW);
             break;
         case POLY:
-            data[realIndex] *= (float)kernel_poly(i, realIndex, x, xW, gamma, coef0, degree);
+            res *= (float)kernel_poly(i, realIndex, x, xW, gamma, coef0, degree);
             break;
         case RBF:
-            data[realIndex] *= (float)kernel_rbf(i, realIndex, x, xW, gamma, x_square);
+            res *= (float)kernel_rbf(i, realIndex, x, xW, gamma, x_square);
             break;
         case SIGMOID:
-            data[realIndex] *= (float)kernel_sigmoid(i, realIndex, x, xW, gamma, coef0);
+            res *= (float)kernel_sigmoid(i, realIndex, x, xW, gamma, coef0);
             break;
         case PRECOMPUTED:
-            data[realIndex] *= (float)kernel_precomputed(i, realIndex, x, xW);
+            res *= (float)kernel_precomputed(i, realIndex, x, xW);
             break;
         }
+        data[realIndex] = res;
     }
 }
-//__kernel void SVR_Q_get_Q(  __global float* data, const int start, const int len, const int i, 
-//                            const int kernel_type, __global svm_node* x, const int xW){
-__kernel void svrQgetQ ( __global float* data, const int dataLen, const int start, const int len, const int i, 
-                                const int kernel_type, __global svm_node* x, const int xW,
-                                double gamma, double coef0, int degree, __global double* x_square){
+
+__kernel void svrQgetQ (__global float* data, const int dataLen, const int start, 
+                        const int len, const int i, const int kernel_type,
+                         __global svm_node* x, const int xW, double gamma,
+                        double coef0, int degree, __global double* x_square)
+{    
     const int index = get_global_id(0);
     const int realIndex = index + start;    
     if (realIndex < dataLen){
@@ -147,7 +202,7 @@ __kernel void svrQgetQ ( __global float* data, const int dataLen, const int star
         case POLY:
             data[realIndex] = (float)kernel_poly(i, realIndex, x, xW, gamma, coef0, degree);
             break;
-        case RBF:
+        case RBF:            
             data[realIndex] = (float)kernel_rbf(i, realIndex, x, xW, gamma, x_square);
             break;
         case SIGMOID:
@@ -160,64 +215,6 @@ __kernel void svrQgetQ ( __global float* data, const int dataLen, const int star
     }
 }
 
-//double k_function(const svm_node *x, const svm_node *y, const svm_parameter& param)
-//{
-//    switch(param.kernel_type)
-//    {
-//        case LINEAR:
-//            return dot(x,y);
-//        case POLY:
-//            return powi(param.gamma * dot(x,y) + param.coef0, param.degree);
-//        case RBF:
-//        {
-//            double sum = 0;
-//            while(x->index != -1 && y->index !=-1)
-//            {
-//                if(x->index == y->index)
-//                {
-//                    double d = x->value - y->value;
-//                    sum += d*d;
-//                    ++x;
-//                    ++y;
-//                }
-//                else
-//                {
-//                    if(x->index > y->index)
-//                    {	
-//                        sum += y->value * y->value;
-//                        ++y;
-//                    }
-//                    else
-//                    {
-//                        sum += x->value * x->value;
-//                        ++x;
-//                    }
-//                }
-//            }
-//
-//            while(x->index != -1)
-//            {
-//                sum += x->value * x->value;
-//                ++x;
-//            }
-//
-//            while(y->index != -1)
-//            {
-//                sum += y->value * y->value;
-//                ++y;
-//            }
-//
-//            return exp(-param.gamma * sum);
-//        }
-//        case SIGMOID:
-//            return tanh(param.gamma * dot(x,y) + param.coef0);
-//        case PRECOMPUTED:  //x: test (validation), y: SV
-//            return x[(int)(y->value)].value;
-//        default:
-//            return 0;  // Unreachable 
-//    }
-//}
-//
 //double svm_predict_values(const svm_model *model, const svm_node *x, double* dec_values)
 //{
 //    int i;

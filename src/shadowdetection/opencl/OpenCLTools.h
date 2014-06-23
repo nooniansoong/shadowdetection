@@ -17,6 +17,7 @@
 #endif
 #include "typedefs.h"
 #include "shadowdetection/util/Singleton.h"
+#include "shadowdetection/util/Matrix.h"
 
 #define MAX_DEVICES 100
 #define MAX_SRC_SIZE 5242800
@@ -172,13 +173,13 @@ namespace shadowdetection {
             int clDataLen;
             cl_mem clY;
             cl_mem clX;
+            cl_mem clXSquared;            
             bool newTask;
-            
-            svm_node *xForCl;
-            void createBuffersSVM(  float* data, int dataLen,
+            void createBuffersSVM(  float* data, int dataLen, int i,
                                     char* y, int yLen,
-                                    const svm_node* x, int xX, int xY, bool diffX,
-                                    int start, int steps, bool& clDataChanged);
+                                    shadowdetection::util::Matrix<svm_node>* x,
+                                    int start, int steps, bool& clDataChanged,
+                                    double* xSquared);
             void setKernelArgsSVC( cl_int start, cl_int len, cl_int i, 
                                     cl_int kernel_type, cl_int xW, cl_int dataLen,
                                     cl_double gamma, cl_double coef0, cl_int degree,
@@ -187,12 +188,18 @@ namespace shadowdetection {
                                     cl_int kernel_type, cl_int xW, cl_int dataLen,
                                     cl_double gamma, cl_double coef0, cl_int degree,
                                     bool clDataChanged);
-            bool xDif (const svm_node** x, int xLen, int xW);
+            //bool xDif (const svm_node** x, int xLen, int xW);
         protected:
         public:
             void get_Q( float* data, int dataLen, int start, int len, int i, int kernel_type, 
-                        char* y, int yLen, const svm_node** x, int xX, int xY, LIBSVM_CLASS_TYPE classType,
-                        double gamma, double coef0, int degree, double *x_square) throw (SDException);            
+                        char* y, int yLen, shadowdetection::util::Matrix<svm_node>* x, LIBSVM_CLASS_TYPE classType,
+                        double gamma, double coef0, int degree, double *xSquared) throw (SDException);
+
+            int64_t durrData;
+            int64_t durrSetSrgs;
+            int64_t durrBuff;
+            int64_t durrExec;
+            int64_t durrReadBuff;
         };
 
     }

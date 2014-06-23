@@ -44,6 +44,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/shadowdetection/tools/svm/libsvmopenmp/svm-train.o \
 	${OBJECTDIR}/src/shadowdetection/util/Cofig.o \
 	${OBJECTDIR}/src/shadowdetection/util/TabParser.o \
+	${OBJECTDIR}/src/shadowdetection/util/Timer.o \
 	${OBJECTDIR}/src/thirdparty/lib_svm/svm.o
 
 
@@ -115,6 +116,11 @@ ${OBJECTDIR}/src/shadowdetection/util/TabParser.o: src/shadowdetection/util/TabP
 	${MKDIR} -p ${OBJECTDIR}/src/shadowdetection/util
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -I/usr/local/include/opencv -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/shadowdetection/util/TabParser.o src/shadowdetection/util/TabParser.cpp
+
+${OBJECTDIR}/src/shadowdetection/util/Timer.o: src/shadowdetection/util/Timer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/shadowdetection/util
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/local/include/opencv -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/shadowdetection/util/Timer.o src/shadowdetection/util/Timer.cpp
 
 ${OBJECTDIR}/src/thirdparty/lib_svm/svm.o: src/thirdparty/lib_svm/svm.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/thirdparty/lib_svm

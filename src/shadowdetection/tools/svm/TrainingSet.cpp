@@ -1,6 +1,5 @@
 #include "TrainingSet.h"
 #include <fstream>
-#include <sstream>
 #include <iostream>
 #include "shadowdetection/util/raii/RAIIS.h"
 #include "typedefs.h"

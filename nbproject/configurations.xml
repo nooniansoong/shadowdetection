@@ -29,8 +29,10 @@
             <itemPath>src/shadowdetection/util/raii/RAIIS.h</itemPath>
           </logicalFolder>
           <itemPath>src/shadowdetection/util/Config.h</itemPath>
+          <itemPath>src/shadowdetection/util/Matrix.h</itemPath>
           <itemPath>src/shadowdetection/util/Singleton.h</itemPath>
           <itemPath>src/shadowdetection/util/TabParser.h</itemPath>
+          <itemPath>src/shadowdetection/util/Timer.h</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="thirdparty" displayName="thirdparty" projectFiles="true">
@@ -85,6 +87,7 @@
         <logicalFolder name="util" displayName="util" projectFiles="true">
           <itemPath>src/shadowdetection/util/Cofig.cpp</itemPath>
           <itemPath>src/shadowdetection/util/TabParser.cpp</itemPath>
+          <itemPath>src/shadowdetection/util/Timer.cpp</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="thirdparty" displayName="thirdparty" projectFiles="true">
@@ -207,6 +210,8 @@
       </item>
       <item path="src/shadowdetection/util/Config.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/shadowdetection/util/Matrix.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/shadowdetection/util/Singleton.h"
             ex="false"
             tool="3"
@@ -221,6 +226,10 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/Timer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/Timer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/shadowdetection/util/raii/RAIIS.h"
             ex="false"
@@ -369,6 +378,8 @@
       </item>
       <item path="src/shadowdetection/util/Config.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/shadowdetection/util/Matrix.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/shadowdetection/util/Singleton.h"
             ex="false"
             tool="3"
@@ -383,6 +394,10 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/Timer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/Timer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/shadowdetection/util/raii/RAIIS.h"
             ex="false"
@@ -524,6 +539,8 @@
       </item>
       <item path="src/shadowdetection/util/Config.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/shadowdetection/util/Matrix.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/shadowdetection/util/Singleton.h"
             ex="false"
             tool="3"
@@ -538,6 +555,10 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/Timer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/Timer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/shadowdetection/util/raii/RAIIS.h"
             ex="false"
@@ -588,9 +609,13 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
+        <cTool>
+          <developmentMode>6</developmentMode>
+        </cTool>
         <ccTool>
           <developmentMode>6</developmentMode>
           <architecture>2</architecture>
+          <commandlineTool>nvcc</commandlineTool>
           <incDir>
             <pElem>/usr/local/include/opencv</pElem>
             <pElem>src</pElem>
@@ -680,6 +705,8 @@
       </item>
       <item path="src/shadowdetection/util/Config.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/shadowdetection/util/Matrix.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/shadowdetection/util/Singleton.h"
             ex="false"
             tool="3"
@@ -694,6 +721,10 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/Timer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/Timer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/shadowdetection/util/raii/RAIIS.h"
             ex="false"
@@ -838,6 +869,8 @@
       </item>
       <item path="src/shadowdetection/util/Config.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/shadowdetection/util/Matrix.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/shadowdetection/util/Singleton.h"
             ex="false"
             tool="3"
@@ -852,6 +885,10 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/Timer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/Timer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/shadowdetection/util/raii/RAIIS.h"
             ex="false"
@@ -914,7 +951,6 @@
             <pElem>/opt/AMDAPP/include</pElem>
             <pElem>src</pElem>
           </incDir>
-          <commandLine>-fopenmp</commandLine>
           <preprocessorList>
             <Elem>_AMD</Elem>
             <Elem>_OPENCL</Elem>
@@ -926,7 +962,7 @@
             <pElem>/usr/local/lib</pElem>
             <pElem>/opt/AMDAPP/lib/x86_64</pElem>
           </linkerAddLib>
-          <commandLine>-lOpenCL -lopencv_highgui -lopencv_core -lopencv_imgproc -lopencv_ocl -fopenmp</commandLine>
+          <commandLine>-lOpenCL -lopencv_highgui -lopencv_core -lopencv_imgproc -lopencv_ocl</commandLine>
         </linkerTool>
       </compileType>
       <item path="ShadowDetectionConfig.xml" ex="false" tool="3" flavor2="0">
@@ -1002,6 +1038,8 @@
       </item>
       <item path="src/shadowdetection/util/Config.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/shadowdetection/util/Matrix.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/shadowdetection/util/Singleton.h"
             ex="false"
             tool="3"
@@ -1016,6 +1054,10 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/Timer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/Timer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/shadowdetection/util/raii/RAIIS.h"
             ex="false"
@@ -1158,6 +1200,8 @@
       </item>
       <item path="src/shadowdetection/util/Config.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/shadowdetection/util/Matrix.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/shadowdetection/util/Singleton.h"
             ex="false"
             tool="3"
@@ -1172,6 +1216,10 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/Timer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/Timer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/shadowdetection/util/raii/RAIIS.h"
             ex="false"
@@ -1318,6 +1366,8 @@
       </item>
       <item path="src/shadowdetection/util/Config.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/shadowdetection/util/Matrix.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/shadowdetection/util/Singleton.h"
             ex="false"
             tool="3"
@@ -1332,6 +1382,10 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/Timer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/Timer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/shadowdetection/util/raii/RAIIS.h"
             ex="false"
@@ -1472,6 +1526,8 @@
       </item>
       <item path="src/shadowdetection/util/Config.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/shadowdetection/util/Matrix.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/shadowdetection/util/Singleton.h"
             ex="false"
             tool="3"
@@ -1486,6 +1542,10 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/Timer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/Timer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/shadowdetection/util/raii/RAIIS.h"
             ex="false"
@@ -1630,6 +1690,8 @@
       </item>
       <item path="src/shadowdetection/util/Config.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/shadowdetection/util/Matrix.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/shadowdetection/util/Singleton.h"
             ex="false"
             tool="3"
@@ -1644,6 +1706,10 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/Timer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/Timer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/shadowdetection/util/raii/RAIIS.h"
             ex="false"
