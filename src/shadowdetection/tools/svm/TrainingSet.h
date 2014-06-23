@@ -1,8 +1,6 @@
 #ifndef __TRAINING_SET_H__ 
 #define __TRAINING_SET_H__
 
-#include <string>
-#include <vector>
 #include <fstream>
 #include "typedefs.h"
 

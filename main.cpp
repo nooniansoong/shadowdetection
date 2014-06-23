@@ -126,7 +126,8 @@ void processSingle(const char* input, const char* out) throw (SDException&) {
     }           
 }
 
-int main(int argc, char **argv) {    
+int main(int argc, char **argv) {
+    cout << "MAIN" << endl;
     if (argc == 1){
         cout << "Call with -help for help" << endl;
 #ifdef _OPENCL
@@ -148,6 +149,7 @@ int main(int argc, char **argv) {
     if (argc >= 2 && strcmp(argv[1], "-training") == 0) {
 #ifdef _OPENCL    
         try {
+            cout << "Train mode" << endl;
             int platformId = 0;
             int deviceId = 0;
             Config* conf = Config::getInstancePtr();
@@ -159,7 +161,9 @@ int main(int argc, char **argv) {
             tmp = atoi(deviceStr.c_str());
             if (tmp != 0)
                 deviceId = tmp;
+            cout << "Opencl init started" << endl;
             oclt->init(platformId, deviceId, false);            
+            cout << "Opencl init finished" << endl;
         } catch (SDException& exception) {
             handleError(exception);
             exit(1);

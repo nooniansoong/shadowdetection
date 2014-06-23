@@ -1,6 +1,5 @@
 #include "Config.h"
 #include <fstream>
-#include <cstring>
 
 //#define ARRAY_KEY_TAG "array"
 //#define TYPE_KEY_TAG "type"

@@ -9,6 +9,7 @@
 #endif
 #include "svm-train.h"
 #include "shadowdetection/util/Config.h"
+#include "shadowdetection/opencl/OpenCLTools.h"
 
 
 #define Malloc(type,n) (type *)malloc((n)*sizeof(type))
@@ -20,6 +21,9 @@ namespace shadowdetection {
 
                 using namespace std;
                 using namespace shadowdetection::util;
+#ifdef _OPENCL
+                using namespace shadowdetection::opencl;
+#endif
                 
                 void print_null(const char *s) {
                 }                
@@ -60,6 +64,7 @@ namespace shadowdetection {
                 }
 
                 int train(char* input_file_name, char* model_file_name) {
+                    cout << "Start training" << endl;
                     //openmp hello world 
 #if !defined _MAC && !defined _OPENCL
                     omp_set_dynamic(0);
@@ -70,18 +75,7 @@ namespace shadowdetection {
                     if (tmp != 0)
                         numThreads = tmp;
                     omp_set_num_threads(numThreads);
-#endif
-                //    #pragma omp parallel
-                //    {
-                //        int id = omp_get_thread_num();
-                //        int num = omp_get_num_threads();
-                //        cout << "TID: " << id << " " << num << endl;
-                //        int i;
-                //        #pragma omp for
-                //        for (i = 0; i < 5; i++){
-                //            cout << "MIMI: " << i << endl;
-                //        }        
-                //    }
+#endif                
                     
                     param.svm_type = C_SVC;
                     param.kernel_type = RBF;
@@ -101,12 +95,13 @@ namespace shadowdetection {
                     cross_validation = 0;
                     
                     param.svm_type = 0;
-                    param.kernel_type = 0;
+                    param.kernel_type = RBF;
                     
                     void (*print_func)(const char*) = NULL;	// default printing to stdout
                     svm_set_print_string_function(print_func);
                     
                     const char *error_msg;
+                    cout << "Start read problem" << endl;
                     read_problem(input_file_name);
                     cout << "Finished read problem" << endl;
                     model = svm_train(&prob, &param);
@@ -122,6 +117,12 @@ namespace shadowdetection {
                     free(x_space);
                     free(line);
 
+#ifdef _OPENCL                    
+                    OpenclTools* oclt = OpenclTools::getInstancePtr();
+                    cout << "data durr: " << oclt->durrData << " buff durr: " << oclt->durrBuff << " durr exec: " << oclt->durrExec;
+                    cout << " durr set args: " << oclt->durrSetSrgs << " durr readbuff: " << oclt->durrReadBuff << endl;
+#endif
+                    
                     return 0;
                 }
 

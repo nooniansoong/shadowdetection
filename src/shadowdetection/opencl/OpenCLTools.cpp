@@ -65,10 +65,16 @@ namespace shadowdetection {
             
             //libsvm part
             clY = 0;
-            clX = 0;
-            xForCl = 0;
+            clX = 0;            
             clData = 0;
             newTask = true;
+            clXSquared = 0;            
+            
+            durrData = 0l;
+            durrBuff = 0l;
+            durrExec = 0l;
+            durrReadBuff = 0l;
+            durrSetSrgs = 0l;
             
             initWorkVars();
         }
@@ -82,8 +88,7 @@ namespace shadowdetection {
             ratios2 = 0;
         }
         
-        OpenclTools::OpenclTools() : Singleton<OpenclTools>(){
-            newTask = true;
+        OpenclTools::OpenclTools() : Singleton<OpenclTools>(){            
             initVars();
         }
 
@@ -130,18 +135,24 @@ namespace shadowdetection {
                 err = clReleaseMemObject(clX);
                 err_check(err, "clReleaseMemObject3", -1);
             }
-            
-            if (xForCl){
-                delete[] xForCl;
-            }
-            
+                        
             if (clData){
                 err = clReleaseMemObject(clData);
                 err_check(err, "clReleaseMemObject1", -1);
+            }
+            
+            if (clXSquared){
+                err = clReleaseMemObject(clData);
+                err_check(err, "clReleaseMemObjectXSquared", -1);
             }                        
             
             cleanWorkPart();            
             initVars();
+            durrData = 0l;
+            durrBuff = 0l;
+            durrExec = 0l;
+            durrReadBuff = 0l;
+            durrSetSrgs = 0l;
         }
 
         OpenclTools::~OpenclTools() {
@@ -180,10 +191,11 @@ namespace shadowdetection {
                     if (kernelFile.eof()) {
                         size_t readBytes = kernelFile.gcount();
                         program[index] = clCreateProgramWithSource(context[index], 1, (const char **) &buffer, &readBytes, &err);
-                        err_check(err, "clCreateProgramWithSource", index);
-
-                        err = clBuildProgram(program[index], 1, &device, NULL, NULL, NULL);
+                        err_check(err, "clCreateProgramWithSource", index);                                                
+                        cout << "Build program: " << kernelFileName << " started" << endl;
+                        err = clBuildProgram(program[index], 1, &device, 0, NULL, NULL);
                         err_check(err, "clBuildProgram", index);
+                        cout << "Build program: " << kernelFileName << " finished" << endl;
                     }
                     delete[] buffer;
                 } else {                    

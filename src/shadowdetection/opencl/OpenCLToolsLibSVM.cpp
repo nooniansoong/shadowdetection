@@ -1,5 +1,6 @@
 #include "OpenCLTools.h"
 #include "thirdparty/lib_svm/svm.h"
+#include "shadowdetection/util/Timer.h"
 
 #ifdef _OPENCL
 
@@ -7,91 +8,68 @@ namespace shadowdetection {
     namespace opencl {
         
         using namespace std;
+        using namespace shadowdetection::util;
         
         struct cl_svm_node{
             cl_int index;
             cl_double value;
-        };               
-        
-        bool OpenclTools::xDif (const svm_node** x, int xX, int xY){
-            bool diffX = false;
-            if (x != 0 && xForCl == 0){
-                xForCl = new(nothrow) svm_node[xX * xY];
-                for (int ix = 0; ix < xX; ix++){
-                    memcpy(xForCl + (ix * xY), x[ix], xY * sizeof(svm_node));
-                }
-            }
-            else if (x == 0){
-                xForCl = 0;
-            }
-            else{                
-                //different is rare so I think this is better
-                for (int ix = 0; ix < xX; ix++){
-                    const svm_node* actual = x[ix];
-                    diffX = !(memcmp(actual, &xForCl[ix * xY], sizeof(svm_node) * xY) == 0);
-//                    for (int jx = 0; jx < xY; jx++){
-//                        if (actual[jx].index != xForCl[ix * xY + jx].index ||
-//                                actual[jx].value != xForCl[ix * xY + jx].value){
-//                            diffX = true;
-//                            break;
-//                        }
-//                    }
-                    if (diffX)
-                        break;
-                }
-                if (diffX) {                    
-                    //h always have same dimension in one training
-                    for (int ix = 0; ix < xX; ix++) {
-                        memcpy(xForCl + (ix * xY), x[ix], xY * sizeof(svm_node));
-                    }
-                }
-            }
-            return diffX;
-        }
+        };
         
         void OpenclTools::get_Q(float* data, int dataLen, int start, int len, int i, int kernel_type, 
-                                char* y, int yLen, const svm_node** x, int xX, int xY, LIBSVM_CLASS_TYPE classType,
-                                double gamma, double coef0, int degree, double *x_square) throw (SDException){
-            bool diffX = xDif(x, xX, xY);
+                                char* y, int yLen, Matrix<svm_node>* x, LIBSVM_CLASS_TYPE classType,
+                                double gamma, double coef0, int degree, double *xSquared) throw (SDException){
+            Timer time;
+            
+            //bool diffX = xDif(x, xX, xY);
+            durrData += time.sinceLastCheck();
             int steps = len - start;
             bool clDataChaned = false;
-            createBuffersSVM(data, dataLen, y, yLen, xForCl, xX, xY, diffX, start, steps, clDataChaned);
-            
+            createBuffersSVM(   data, dataLen, i, y, yLen, x, start, steps, 
+                                clDataChaned, xSquared);
+            durrBuff += time.sinceLastCheck();
             size_t local_ws;
             cl_kernel activeKernel;
             if (classType == SVC_Q_TYPE){
-                setKernelArgsSVC(   start, len, i, kernel_type, xY, dataLen, gamma, 
+                setKernelArgsSVC(   start, len, i, kernel_type, x->getWidth(), dataLen, gamma, 
                                     coef0, degree, clDataChaned);
                 local_ws = workGroupSize[3];
                 activeKernel = kernel[3];
             }
             else{
-                setKernelArgsSVR(   start, len, i, kernel_type, xY, dataLen, gamma, 
+                setKernelArgsSVR(   start, len, i, kernel_type, x->getWidth(), dataLen, gamma, 
                                     coef0, degree, clDataChaned);
                 local_ws = workGroupSize[4];
                 activeKernel = kernel[4];
             }
+            durrSetSrgs += time.sinceLastCheck();
             size_t global_ws = shrRoundUp(local_ws, steps);
             err = clEnqueueNDRangeKernel(command_queue[1], activeKernel, 1, NULL, &global_ws, &local_ws, 0, NULL, NULL);
             err_check(err, "clEnqueueNDRangeKernelSVM1", -1);            
+            durrExec += time.sinceLastCheck();
             size_t size = steps * sizeof(float);//dataLen
             cl_device_type type;
             clGetDeviceInfo(device, CL_DEVICE_TYPE, sizeof(cl_device_type), &type, 0);
             if (type == CL_DEVICE_TYPE_GPU){
                 err = clEnqueueReadBuffer(command_queue[1], clData, CL_TRUE, start * sizeof(cl_float), size, data + start, 0, NULL, NULL);
-                err_check(err, "clEnqueueReadBufferX", -1);
+                err_check(err, "clEnqueueReadBufferDATA", -1);
             }
             clFlush(command_queue[1]);
             clFinish(command_queue[1]); 
             newTask = false;
+            durrReadBuff += time.sinceLastCheck();
         }
         
-        void OpenclTools::createBuffersSVM( float* data, int dataLen,
-                                            char* y, int yLen, const svm_node* x, int xX, 
-                                            int xY, bool diffX, int start, int steps, bool& clDataChanged){
+        void OpenclTools::createBuffersSVM( float* data, int dataLen, int i,
+                                            char* y, int yLen, Matrix<svm_node>* x, 
+                                            int start, int steps, bool& clDataChanged,
+                                            double* xSquared){
+            bool xChanged = x->changedValues();
             int flag1, flag2;
             cl_device_type type;
             clGetDeviceInfo(device, CL_DEVICE_TYPE, sizeof(cl_device_type), &type, 0);
+            
+            cl_ulong constBuffSize;
+            clGetDeviceInfo(device, CL_DEVICE_MAX_CONSTANT_BUFFER_SIZE, sizeof(cl_ulong), &constBuffSize, 0);
             if (type == CL_DEVICE_TYPE_GPU)
             {                
                 flag1 = CL_MEM_WRITE_ONLY;
@@ -111,21 +89,28 @@ namespace shadowdetection {
                 if (clData == 0 || (clData != 0 && clDataLen < dataLen)){
                     if (clData != 0){
                         err = clReleaseMemObject(clData);
-                        err_check(err, "clReleaseMemObjectX", -1);
+                        err_check(err, "clReleaseMemObjectData", -1);
                     }                
                     clData = clCreateBuffer(context[1], flag1, sizeof(cl_float) * dataLen, 0, &err);
+                    err_check(err, "clCreateBufferData", -1);
                     clDataChanged = true;
                 }
-                else              
+                else{              
                     err =  clEnqueueWriteBuffer(command_queue[1], clData, CL_TRUE, 
                                                 start, sizeof(cl_float) * steps, 
                                                 (cl_float*)(data + start), 0, 0, 0);
+                    err_check(err, "clWriteBufferData", -1);
+                }
             }
             else{
+                if (clData != 0){
+                    err = clReleaseMemObject(clData);
+                    err_check(err, "clReleaseMemObjectData", -1);
+                } 
                 clData = clCreateBuffer(context[1], flag1, sizeof(cl_float) * dataLen, data, &err);
                 clDataChanged = true;
             }
-            err_check(err, "clCreateBufferX", -1);
+            err_check(err, "clCreateBufferData", -1);
             clDataLen = dataLen;
             //====
             //====Y section
@@ -135,10 +120,12 @@ namespace shadowdetection {
                 err_check(err, "clCreateBufferY", -1);
             }
             else if (y != 0){
-                if (type == CL_DEVICE_TYPE_GPU){
-                    err = clEnqueueWriteBuffer(command_queue[1], clY, CL_TRUE, 0, sizeof(cl_char) * yLen, (cl_char*)y, 0, 0, 0);
-                    err_check(err, "clEnqueueWriteBufferY", -1);
-                }
+                if (xChanged){
+                    if (type == CL_DEVICE_TYPE_GPU){
+                         err = clEnqueueWriteBuffer(command_queue[1], clY, CL_TRUE, 0, 
+                                                    sizeof(cl_char) * yLen, (cl_char*)y, 0, 0, 0);
+                    }
+                }                
             }
             else{
                 clY = 0;
@@ -147,15 +134,16 @@ namespace shadowdetection {
             //====X section
             //dimensions of x never changes for one task, so can do like this
             if (clX == 0 && x != 0){
-                size_t size = sizeof(cl_svm_node) * xX * xY;
-                clX = clCreateBuffer(context[1], flag2, size, (cl_svm_node*)x, &err);
+                size_t size = sizeof(cl_svm_node) * x->getWidth() * x->getHeight();
+                clX = clCreateBuffer(context[1], flag2, size, (cl_svm_node*)x->operator const svm_node*(), &err);
                 err_check(err, "clCreateBufferX", -1);
             }
             else if (x != 0){
                 if (type == CL_DEVICE_TYPE_GPU){
-                    if (diffX){
-                        size_t size = sizeof(cl_svm_node) * xX * xY;
-                        err = clEnqueueWriteBuffer(command_queue[1], clX, CL_TRUE, 0, size, (cl_svm_node*)x, 0, 0, 0);
+                    if (xChanged){                    
+                        size_t size = sizeof(cl_svm_node) * x->getWidth() * x->getHeight();
+                        err = clEnqueueWriteBuffer( command_queue[1], clX, CL_TRUE, 
+                                                    0, size, (cl_svm_node*)x->operator const svm_node*(), 0, 0, 0);
                         err_check(err, "clEnqueueWriteBufferX", -1);
                     }
                 }
@@ -164,6 +152,27 @@ namespace shadowdetection {
                 clX = 0;
             }
             //====
+            //==== x squared section
+            if (clXSquared == 0 && xSquared != 0){
+                size_t size = sizeof(cl_double) * x->getHeight();
+                clXSquared = clCreateBuffer(context[1], flag2, size, (cl_double*)xSquared, &err);
+                err_check(err, "clCreateBufferXSquared", -1);
+            }
+            else if (xSquared != 0){
+                if (type == CL_DEVICE_TYPE_GPU){
+                    //if x changed then xsquared is changed too
+                    if (xChanged){
+                        size_t size = sizeof(cl_double) * x->getHeight();
+                        err = clEnqueueWriteBuffer( command_queue[1], clXSquared, CL_TRUE, 
+                                                    0, size, (cl_double*)xSquared, 0, 0, 0);
+                        err_check(err, "clEnqueueWriteBufferXSquared", -1);
+                    }
+                }
+            }
+            else{
+                clXSquared = 0;
+            }
+            //====            
         }
         
         void OpenclTools::setKernelArgsSVC( cl_int start, cl_int len, cl_int i, 
@@ -189,6 +198,8 @@ namespace shadowdetection {
                 err_check(err, "setKernelArgsSVCCLY", -1);
                 err = clSetKernelArg(kernel[3], 7, sizeof(cl_mem), &clX);
                 err_check(err, "setKernelArgsSVCCLX", -1);
+                err = clSetKernelArg(kernel[3], 12, sizeof(cl_mem), &clXSquared);
+                err_check(err, "clSetKernelArgCLXSQUARED", -1);                
             }
             err = clSetKernelArg(kernel[3], 8, sizeof(cl_int), &xW);
             err_check(err, "clSetKernelArgSVM1", -1);
@@ -197,9 +208,7 @@ namespace shadowdetection {
             err = clSetKernelArg(kernel[3], 10, sizeof(cl_double), &coef0);
             err_check(err, "clSetKernelArgSVM1", -1);
             err = clSetKernelArg(kernel[3], 11, sizeof(cl_int), &degree);
-            err_check(err, "clSetKernelArgSVM1", -1);
-            err = clSetKernelArg(kernel[3], 12, sizeof(cl_mem), 0);
-            err_check(err, "clSetKernelArgSVM1", -1);
+            err_check(err, "clSetKernelArgSVM1", -1);            
         }
         
         void OpenclTools::setKernelArgsSVR( cl_int start, cl_int len, cl_int i, 
@@ -223,6 +232,8 @@ namespace shadowdetection {
             if (newTask){
                 err = clSetKernelArg(kernel[4], 6, sizeof(cl_mem), &clX);
                 err_check(err, "setKernelArgsSVRCLX", -1);
+                err = clSetKernelArg(kernel[3], 11, sizeof(cl_mem), &clXSquared);
+                err_check(err, "clSetKernelArgXSQUARED", -1);                
             }
             err = clSetKernelArg(kernel[4], 7, sizeof(cl_int), &xW);
             err_check(err, "clSetKernelArgSVM2", -1);
@@ -231,9 +242,7 @@ namespace shadowdetection {
             err = clSetKernelArg(kernel[3], 9, sizeof(cl_double), &coef0);
             err_check(err, "clSetKernelArgSVM1", -1);
             err = clSetKernelArg(kernel[3], 10, sizeof(cl_int), &degree);
-            err_check(err, "clSetKernelArgSVM1", -1);
-            err = clSetKernelArg(kernel[3], 11, sizeof(cl_mem), 0);
-            err_check(err, "clSetKernelArgSVM1", -1);
+            err_check(err, "clSetKernelArgSVM1", -1);            
         }
         
     }

@@ -1,7 +1,6 @@
 #include <iostream>
 #include "OpenCV2Tools.h"
 #include "shadowdetection/util/Config.h"
-#include <string>
 
 namespace shadowdetection {
     namespace opencv2 {

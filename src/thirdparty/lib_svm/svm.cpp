@@ -9,10 +9,13 @@
 #include <locale.h>
 #include "svm.h"
 #include "shadowdetection/opencl/OpenCLTools.h"
+#include "shadowdetection/util/Matrix.h"
 
 #ifdef _OPENCL
 using namespace shadowdetection::opencl;
 #endif
+
+using namespace shadowdetection::util;
 
 int libsvm_version = LIBSVM_VERSION;
 typedef float Qfloat;
@@ -220,14 +223,15 @@ public:
 
     virtual void swap_index(int i, int j) const // no so const...
     {
-        swap(x[i], x[j]);
+        //swap((*x)[i], (*x)[j]);
+        x->swap(i, j);
         if (x_square) swap(x_square[i], x_square[j]);
     }
 protected:
 
     double (Kernel::*kernel_function)(int i, int j) const;
     const int kernel_type;
-    const svm_node **x;
+    Matrix<svm_node>* x;
     int kL;
     int kW;
     
@@ -240,23 +244,23 @@ private:
     static double dot(const svm_node *px, const svm_node *py);
 
     double kernel_linear(int i, int j) const {
-        return dot(x[i], x[j]);
+        return dot((*x)[i], (*x)[j]);
     }
 
     double kernel_poly(int i, int j) const {
-        return powi(gamma * dot(x[i], x[j]) + coef0, degree);
+        return powi(gamma * dot((*x)[i], (*x)[j]) + coef0, degree);
     }
 
     double kernel_rbf(int i, int j) const {
-        return exp(-gamma * (x_square[i] + x_square[j] - 2 * dot(x[i], x[j])));
+        return exp(-gamma * (x_square[i] + x_square[j] - 2 * dot((*x)[i], (*x)[j])));
     }
 
     double kernel_sigmoid(int i, int j) const {
-        return tanh(gamma * dot(x[i], x[j]) + coef0);
+        return tanh(gamma * dot((*x)[i], (*x)[j]) + coef0);
     }
 
     double kernel_precomputed(int i, int j) const {
-        return x[i][(int) (x[j][0].value)].value;
+        return (*x)[i][(int) ((*x)[j][0].value)].value;
     }
 };
 
@@ -281,26 +285,28 @@ gamma(param.gamma), coef0(param.coef0) {
             break;
     }
 
-    clone(x, x_, l);
-
-    if (kernel_type == RBF) {
-        x_square = new double[l];
-        for (int i = 0; i < l; i++)
-            x_square[i] = dot(x[i], x[i]);
-    } else
-        x_square = 0;
-    kL = l;
-    
-    const svm_node *px = x[0];
+    const svm_node *px = x_[0];
     kW = 1;
     while (px->index != -1){
         ++kW;
         ++px;
-    }    
+    } 
+    
+    //clone(x, x_, l);
+    x = new Matrix<svm_node>(x_, kW, l);
+
+    if (kernel_type == RBF) {
+        x_square = new double[l];
+        for (int i = 0; i < l; i++)
+            x_square[i] = dot((*x)[i], (*x)[i]);
+    } else
+        x_square = 0;
+    kL = l;          
 }
 
 Kernel::~Kernel() {
-    delete[] x;
+    if (x)
+        delete x;
     delete[] x_square;
 }
 
@@ -1184,17 +1190,14 @@ public:
 #pragma omp parallel for private(j)            
             for (j = start; j < len; j++)
                 data[j] = (Qfloat) (y[i] * y[j]*(this->*kernel_function)(i, j));
-#else            
+#else       
+//            int j;
+//            for (j = start; j < len; j++)
+//                data[j] = (Qfloat) (y[i] * y[j]*(this->*kernel_function)(i, j));
             OpenclTools* oclt = OpenclTools::getInstancePtr();            
             oclt->get_Q(data, len, start, len, i, kernel_type, (char*)y, kL, x, 
-                        kL, kW, SVC_Q_TYPE, gamma, coef0, degree, x_square);
+                        SVC_Q_TYPE, gamma, coef0, degree, x_square);
             oclt->cleanWorkPart();
-//            for (int k = 0; k < len; k++){
-//                if (beta[k] != data[k]){
-//                    int a = 0;
-//                    ++a;
-//                }
-//            }
 #endif
         }        
         //printf("%f , %d , %d\n", data[5], i, len);
@@ -1302,7 +1305,7 @@ public:
                 data[j] = (Qfloat) (this->*kernel_function)(real_i, j);        
 #else
             OpenclTools* oclt = OpenclTools::getInstancePtr();
-            oclt->get_Q(data, len, 0, l, real_i, kernel_type, 0, 0, x, kL, kW, 
+            oclt->get_Q(data, len, 0, l, real_i, kernel_type, 0, 0, x, 
                         SVR_Q_TYPE, gamma, coef0, degree, x_square);
             oclt->cleanWorkPart();
 #endif
@@ -2323,7 +2326,9 @@ double svm_predict_values(const svm_model *model, const svm_node *x, double* dec
             model->param.svm_type == NU_SVR) {
         double *sv_coef = model->sv_coef[0];
         double sum = 0;
+#ifndef _OPENCL
 #pragma omp parallel for private(i)
+#endif
         for (i = 0; i < model->l; i++)
             sum += sv_coef[i] * Kernel::k_function(x, model->SV[i], model->param);
         sum -= model->rho[0];
@@ -2338,7 +2343,9 @@ double svm_predict_values(const svm_model *model, const svm_node *x, double* dec
         int l = model->l;
 
         double *kvalue = Malloc(double, l);
+#ifndef _OPENCL
 #pragma omp parallel for private(i)
+#endif
         for (i = 0; i < l; i++)
             kvalue[i] = Kernel::k_function(x, model->SV[i], model->param);
 

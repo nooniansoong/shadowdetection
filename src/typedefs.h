@@ -16,6 +16,7 @@
 #include <sstream>
 #include <exception>
 #include <cstring>
+#include <stdint.h>
 
 enum SHADOW_EXCEPTIONS {
     SHADOW_SUCC = 0,
