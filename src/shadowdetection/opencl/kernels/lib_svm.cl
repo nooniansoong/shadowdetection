@@ -80,56 +80,56 @@ double my_dot(__global const svm_node *px, __global const svm_node *py)
     return sum;
 }
 
-//double kfunction_linear(__global const svm_node* x, int i, __global const svm_node* yS,
-//                        const int yW){
-//    __global const svm_node* y = yS + i * yW;
-//    return my_dot(x, y);
-//}
-//
-//double kfunction_poly(__global const svm_node* x, int i, __global const svm_node* yS,
-//                        const int yW, double gamma, double coef0, int degree){
-//    __global const svm_node* y = yS + i * yW;
-//    return pow(gamma * my_dot(x, y) + coef0, degree);
-//}
-//
-//double kfunction_rbf(__global const svm_node* x, int i, __global const svm_node* yS, 
-//                    const int yW, double gamma){
-//    double sum = 0;    
-//    __global const svm_node* y = yS + i * yW;
-//    while (x->index != -1 && y->index != -1) {
-//        if (x->index == y->index) {
-//            double d = x->value - y->value;
-//            sum += d * d;
-//            ++x;
-//            ++y;
-//        } else {
-//            if (x->index > y->index) {
-//                sum += y->value * y->value;
-//                ++y;
-//            } else {
-//                sum += x->value * x->value;
-//                ++x;
-//            }
-//        }
-//    }
-//
-//    while (x->index != -1) {
-//        sum += x->value * x->value;
-//        ++x;
-//    }
-//
-//    while (y->index != -1) {
-//        sum += y->value * y->value;
-//        ++y;
-//    }
-//
-//    return exp(gamma * sum);
-//}
-//
-//double kfunction_precomputed(__global const svm_node* x, int i, __global const svm_node* yS, const int yW){    
-//    __global const svm_node* y = yS + i * yW;
-//    return x[(int)(y->value)].value;
-//}
+double kfunction_linear(__global const svm_node* x, int i, __global const svm_node* yS,
+                        const int yW){
+    __global const svm_node* y = yS + i * yW;
+    return my_dot(x, y);
+}
+
+double kfunction_poly(__global const svm_node* x, int i, __global const svm_node* yS,
+                        const int yW, double gamma, double coef0, int degree){
+    __global const svm_node* y = yS + i * yW;
+    return pow(gamma * my_dot(x, y) + coef0, degree);
+}
+
+double kfunction_rbf(__global const svm_node* x, int i, __global const svm_node* yS, 
+                    const int yW, double gamma){
+    double sum = 0;    
+    __global const svm_node* y = yS + i * yW;
+    while (x->index != -1 && y->index != -1) {
+        if (x->index == y->index) {
+            double d = x->value - y->value;
+            sum += d * d;
+            ++x;
+            ++y;
+        } else {
+            if (x->index > y->index) {
+                sum += y->value * y->value;
+                ++y;
+            } else {
+                sum += x->value * x->value;
+                ++x;
+            }
+        }
+    }
+
+    while (x->index != -1) {
+        sum += x->value * x->value;
+        ++x;
+    }
+
+    while (y->index != -1) {
+        sum += y->value * y->value;
+        ++y;
+    }
+
+    return exp(gamma * sum);
+}
+
+double kfunction_precomputed(__global const svm_node* x, int i, __global const svm_node* yS, const int yW){    
+    __global const svm_node* y = yS + i * yW;
+    return x[(int)(y->value)].value;
+}
 
 
 double kernel_linear(const int i, const int j, __global const svm_node* x, const int xW){

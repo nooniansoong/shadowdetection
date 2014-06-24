@@ -360,7 +360,7 @@ namespace shadowdetection {
                 cout << "Platform name: " << info << endl;
                 try {
 #ifdef _AMD
-                    err = clGetDeviceIDs(platform[i], CL_DEVICE_TYPE_CPU, MAX_DEVICES, devices, &num_devices);
+                    err = clGetDeviceIDs(platform[i], CL_DEVICE_TYPE_ALL, MAX_DEVICES, devices, &num_devices);
 #elif defined _MAC
                     string useGPUStr = Config::getInstancePtr()->getPropertyValue("settings.openCL.mac.useGPU");
                     if (useGPUStr.compare("true") == 0)
@@ -404,7 +404,7 @@ namespace shadowdetection {
             cl_device_id devices[MAX_DEVICES];
             cl_uint num_devices;
 #ifdef _AMD
-                err = clGetDeviceIDs(platform[platformID], CL_DEVICE_TYPE_CPU, MAX_DEVICES, devices, &num_devices);
+                err = clGetDeviceIDs(platform[platformID], CL_DEVICE_TYPE_ALL, MAX_DEVICES, devices, &num_devices);
 #elif defined _MAC
             string useGPUStr = Config::getInstancePtr()->getPropertyValue("settings.openCL.mac.useGPU");
             if (useGPUStr.compare("true") == 0)

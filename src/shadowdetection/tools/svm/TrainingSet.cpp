@@ -68,17 +68,32 @@ namespace shadowdetection {
                         int pixelNum = 0;
                         float** processed = processImage(pair.getKey(), pair.getVal(), dimension, pixelNum);
                         if (processed != 0) {
-                            for (int j = 0; j < pixelNum; j++) {
-                                string str = getStr(processed[j], dimension);
-                                string tmp = str.substr(0, 2);
-                                if (tmp.compare("1 ") != 0 && tmp.compare("0 ") != 0){
-                                    cout << "Error create train set, label value: " << tmp << endl;
+                            //to have same number of 1s and 0s
+                            bool write0 = true;
+                            for (int j = 0; j < pixelNum; j++) {                                
+                                bool succ = false;
+                                if (write0){
+                                    if (processed[j][0] == 0.f)
+                                        succ = true;
                                 }
-                                if (first == false) {
-                                    file << endl;
+                                else{
+                                    if (processed[j][0] != 0.f)
+                                        succ = true;
                                 }
-                                file << str;
-                                first = false;
+                                if (succ){
+                                    string str = getStr(processed[j], dimension);
+                                    string tmp = str.substr(0, 2);
+                                    if (tmp.compare("1 ") != 0 && tmp.compare("0 ") != 0){
+                                        cout << "Error create train set, label value: " << tmp << endl;
+                                    }
+                                    
+                                    if (first == false) {
+                                        file << endl;
+                                    }
+                                    file << str;
+                                    first = false;
+                                    write0 = !write0;
+                                }
                                 delete[] processed[j];
                             }
                             delete[] processed;

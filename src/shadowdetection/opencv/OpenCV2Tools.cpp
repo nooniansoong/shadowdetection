@@ -145,7 +145,7 @@ namespace shadowdetection {
 #ifdef _OPENCL 
         void OpenCV2Tools::initOpenCL(int pid, int device) throw (SDException&) {
 #ifdef _AMD
-            int typeFlag = cv::ocl::CVCL_DEVICE_TYPE_CPU;
+            int typeFlag = cv::ocl::CVCL_DEVICE_TYPE_ALL;
 #elif defined _MAC
             int typeFlag;
             string useGPUStr = Config::getInstancePtr()->getPropertyValue("settings.openCL.mac.useGPU");
@@ -164,7 +164,11 @@ namespace shadowdetection {
                 throw exc;
             }
             cv::ocl::DevicesInfo devicesInfo;
+#ifdef _AMD
+            int devnums = cv::ocl::getOpenCLDevices(devicesInfo, typeFlag, NULL);
+#else
             int devnums = cv::ocl::getOpenCLDevices(devicesInfo, typeFlag, (pid < 0) ? NULL : platformsInfo[pid]);
+#endif
             if (device >= devnums) {
                 SDException exc(SHADOW_NO_OPENCL_DEVICE, "OpenCV Init OpenCL devices");
                 throw exc;
@@ -178,15 +182,7 @@ namespace shadowdetection {
             cout << "Device type: " << type << endl;
             cout << "Platform name:" << devicesInfo[device]->platform->platformName << endl;
             cout << "Device name:" << devicesInfo[device]->deviceName << endl;
-        }
-
-        //        Mat* OpenCvTools::binarizeOcl(const Mat& image){
-        //            cv::ocl::oclMat oclMatrix(image);
-        //            cv::ocl::oclMat oclThreshed;
-        //            ocl::threshold(oclMatrix, oclThreshed, 0, 255, CV_THRESH_BINARY | CV_THRESH_OTSU);            
-        //            Mat* retMat = new Mat(oclThreshed);
-        //            return retMat;
-        //        }
+        }        
 
         Mat* OpenCV2Tools::joinTwoOcl(const cv::Mat& src1, const cv::Mat& src2) {
             oclMat oclSrc1(src1);
