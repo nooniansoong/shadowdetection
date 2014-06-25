@@ -2326,9 +2326,6 @@ double svm_predict_values(const svm_model *model, const svm_node *x, double* dec
             model->param.svm_type == NU_SVR) {
         double *sv_coef = model->sv_coef[0];
         double sum = 0;
-#ifndef _OPENCL
-#pragma omp parallel for private(i)
-#endif
         for (i = 0; i < model->l; i++)
             sum += sv_coef[i] * Kernel::k_function(x, model->SV[i], model->param);
         sum -= model->rho[0];

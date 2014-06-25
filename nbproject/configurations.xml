@@ -66,6 +66,7 @@
           <logicalFolder name="kernels" displayName="kernels" projectFiles="true">
             <itemPath>src/shadowdetection/opencl/kernels/image_hci_convert_kernel.cl</itemPath>
             <itemPath>src/shadowdetection/opencl/kernels/lib_svm.cl</itemPath>
+            <itemPath>src/shadowdetection/opencl/kernels/lib_svm_predict.cl</itemPath>
           </logicalFolder>
           <itemPath>src/shadowdetection/opencl/OpenCLTools.cpp</itemPath>
           <itemPath>src/shadowdetection/opencl/OpenCLToolsLibSVM.cpp</itemPath>
@@ -162,6 +163,11 @@
             flavor2="0">
       </item>
       <item path="src/shadowdetection/opencl/kernels/lib_svm.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/opencl/kernels/lib_svm_predict.cl"
             ex="false"
             tool="3"
             flavor2="0">
@@ -334,6 +340,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/shadowdetection/opencl/kernels/lib_svm_predict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/shadowdetection/opencv/OpenCV2Tools.cpp"
             ex="false"
             tool="1"
@@ -491,6 +502,11 @@
             flavor2="0">
       </item>
       <item path="src/shadowdetection/opencl/kernels/lib_svm.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/opencl/kernels/lib_svm_predict.cl"
             ex="false"
             tool="3"
             flavor2="0">
@@ -661,6 +677,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/shadowdetection/opencl/kernels/lib_svm_predict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/shadowdetection/opencv/OpenCV2Tools.cpp"
             ex="false"
             tool="1"
@@ -821,6 +842,11 @@
             flavor2="0">
       </item>
       <item path="src/shadowdetection/opencl/kernels/lib_svm.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/opencl/kernels/lib_svm_predict.cl"
             ex="false"
             tool="3"
             flavor2="0">
@@ -994,6 +1020,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/shadowdetection/opencl/kernels/lib_svm_predict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/shadowdetection/opencv/OpenCV2Tools.cpp"
             ex="false"
             tool="1"
@@ -1152,6 +1183,11 @@
             flavor2="0">
       </item>
       <item path="src/shadowdetection/opencl/kernels/lib_svm.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/opencl/kernels/lib_svm_predict.cl"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1322,6 +1358,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/shadowdetection/opencl/kernels/lib_svm_predict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/shadowdetection/opencv/OpenCV2Tools.cpp"
             ex="false"
             tool="1"
@@ -1478,6 +1519,11 @@
             flavor2="0">
       </item>
       <item path="src/shadowdetection/opencl/kernels/lib_svm.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/opencl/kernels/lib_svm_predict.cl"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1642,6 +1688,11 @@
             flavor2="0">
       </item>
       <item path="src/shadowdetection/opencl/kernels/lib_svm.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/opencl/kernels/lib_svm_predict.cl"
             ex="false"
             tool="3"
             flavor2="0">
