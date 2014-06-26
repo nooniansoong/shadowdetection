@@ -359,14 +359,8 @@ namespace shadowdetection {
                 err_check(err, "clGetPlatformInfo", -1);
                 cout << "Platform name: " << info << endl;
                 try {
-#ifdef _AMD
+#if defined _AMD || defined _MAC
                     err = clGetDeviceIDs(platform[i], CL_DEVICE_TYPE_ALL, MAX_DEVICES, devices, &num_devices);
-#elif defined _MAC
-                    string useGPUStr = Config::getInstancePtr()->getPropertyValue("settings.openCL.mac.useGPU");
-                    if (useGPUStr.compare("true") == 0)
-                        err = clGetDeviceIDs(platform[i], CL_DEVICE_TYPE_GPU, MAX_DEVICES, devices, &num_devices);
-                    else
-                        err = clGetDeviceIDs(platform[i], CL_DEVICE_TYPE_CPU, MAX_DEVICES, devices, &num_devices);
 #else
                     err = clGetDeviceIDs(platform[i], CL_DEVICE_TYPE_GPU, MAX_DEVICES, devices, &num_devices);
 #endif
@@ -403,14 +397,8 @@ namespace shadowdetection {
             
             cl_device_id devices[MAX_DEVICES];
             cl_uint num_devices;
-#ifdef _AMD
+#if defined _AMD || defined _MAC
                 err = clGetDeviceIDs(platform[platformID], CL_DEVICE_TYPE_ALL, MAX_DEVICES, devices, &num_devices);
-#elif defined _MAC
-            string useGPUStr = Config::getInstancePtr()->getPropertyValue("settings.openCL.mac.useGPU");
-            if (useGPUStr.compare("true") == 0)
-                err = clGetDeviceIDs(platform[platformID], CL_DEVICE_TYPE_GPU, MAX_DEVICES, devices, &num_devices);
-            else
-                err = clGetDeviceIDs(platform[platformID], CL_DEVICE_TYPE_CPU, MAX_DEVICES, devices, &num_devices);
 #else
                 err = clGetDeviceIDs(platform[platformID], CL_DEVICE_TYPE_GPU, MAX_DEVICES, devices, &num_devices);
 #endif

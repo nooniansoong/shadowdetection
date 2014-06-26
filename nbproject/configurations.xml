@@ -25,6 +25,9 @@
           </logicalFolder>
         </logicalFolder>
         <logicalFolder name="util" displayName="util" projectFiles="true">
+          <logicalFolder name="image" displayName="image" projectFiles="true">
+            <itemPath>src/shadowdetection/util/image/ImageParameters.h</itemPath>
+          </logicalFolder>
           <logicalFolder name="raii" displayName="raii" projectFiles="true">
             <itemPath>src/shadowdetection/util/raii/RAIIS.h</itemPath>
           </logicalFolder>
@@ -86,6 +89,9 @@
           </logicalFolder>
         </logicalFolder>
         <logicalFolder name="util" displayName="util" projectFiles="true">
+          <logicalFolder name="image" displayName="image" projectFiles="true">
+            <itemPath>src/shadowdetection/util/image/ImageParameters.cpp</itemPath>
+          </logicalFolder>
           <itemPath>src/shadowdetection/util/Cofig.cpp</itemPath>
           <itemPath>src/shadowdetection/util/TabParser.cpp</itemPath>
           <itemPath>src/shadowdetection/util/Timer.cpp</itemPath>
@@ -236,6 +242,16 @@
       <item path="src/shadowdetection/util/Timer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/shadowdetection/util/Timer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/image/ImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/image/ImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/shadowdetection/util/raii/RAIIS.h"
             ex="false"
@@ -410,6 +426,16 @@
       </item>
       <item path="src/shadowdetection/util/Timer.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/shadowdetection/util/image/ImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/image/ImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/shadowdetection/util/raii/RAIIS.h"
             ex="false"
             tool="3"
@@ -575,6 +601,16 @@
       <item path="src/shadowdetection/util/Timer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/shadowdetection/util/Timer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/image/ImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/image/ImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/shadowdetection/util/raii/RAIIS.h"
             ex="false"
@@ -747,6 +783,16 @@
       </item>
       <item path="src/shadowdetection/util/Timer.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/shadowdetection/util/image/ImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/image/ImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/shadowdetection/util/raii/RAIIS.h"
             ex="false"
             tool="3"
@@ -915,6 +961,16 @@
       <item path="src/shadowdetection/util/Timer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/shadowdetection/util/Timer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/image/ImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/image/ImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/shadowdetection/util/raii/RAIIS.h"
             ex="false"
@@ -1090,6 +1146,16 @@
       </item>
       <item path="src/shadowdetection/util/Timer.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/shadowdetection/util/image/ImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/image/ImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/shadowdetection/util/raii/RAIIS.h"
             ex="false"
             tool="3"
@@ -1256,6 +1322,16 @@
       <item path="src/shadowdetection/util/Timer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/shadowdetection/util/Timer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/image/ImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/image/ImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/shadowdetection/util/raii/RAIIS.h"
             ex="false"
@@ -1428,6 +1504,16 @@
       </item>
       <item path="src/shadowdetection/util/Timer.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/shadowdetection/util/image/ImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/image/ImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/shadowdetection/util/raii/RAIIS.h"
             ex="false"
             tool="3"
@@ -1592,6 +1678,16 @@
       <item path="src/shadowdetection/util/Timer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/shadowdetection/util/Timer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/image/ImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/image/ImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/shadowdetection/util/raii/RAIIS.h"
             ex="false"
@@ -1761,6 +1857,16 @@
       <item path="src/shadowdetection/util/Timer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/shadowdetection/util/Timer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/image/ImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/shadowdetection/util/image/ImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/shadowdetection/util/raii/RAIIS.h"
             ex="false"

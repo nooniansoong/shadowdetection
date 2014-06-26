@@ -29,6 +29,8 @@ enum SHADOW_EXCEPTIONS {
     SHADOW_OUT_OF_BOUNDS,
     SHADOW_IMAGE_NOT_SUPPORTED_ON_DEVICE,
     SHADOW_NOT_SUPPORTED_DEVICE,
+    SHADOW_INVALID_IMAGE_FORMAT,
+    SHADOW_DIFFERENT_IMAGES_SIZES,
     SHADOW_OTHER,
 };
 
@@ -43,6 +45,8 @@ static std::string ExceptionStrings[] = {
     "SHADOW_OUT_OF_BOUNDS",
     "SHADOW_IMAGE_NOT_SUPPORTED_ON_DEVICE",
     "SHADOW_NOT_SUPPORTED_DEVICE",
+    "SHADOW_INVALID_IMAGE_FORMAT",
+    "SHADOW_DIFFERENT_IMAGES_SIZES",
     "SHADOW_OTHER"
 };
 
@@ -181,6 +185,14 @@ inline float radToDegrees(float radians) {
     float oneRad = 180.f / PI_F;
     return radians * oneRad;
 }
+
+inline float clamp(float val, float min, float max) {
+    if (val > max)
+        return max;
+    if (val < min)
+        return min;
+    return val;
+} 
 
 enum LIBSVM_CLASS_TYPE{
     SVC_Q_TYPE,

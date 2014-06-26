@@ -73,6 +73,8 @@ namespace shadowdetection {
              * @return 
              */
             static cv::Mat* joinTwo(const cv::Mat* src1, const cv::Mat* src2);
+            static cv::Mat* convertToHSV(const cv::Mat* src) throw (SDException&);
+            static cv::Mat* convertToHLS(const cv::Mat* src) throw (SDException&);
 #ifdef _OPENCL
             /**
              * init global variables needed for openCV openCL processing

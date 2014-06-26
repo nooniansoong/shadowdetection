@@ -3,7 +3,7 @@
 <QsConfig>
     <process>
         <UseBatch>
-            false
+            true
         </UseBatch>        
     </process>
     <settings>
@@ -17,10 +17,7 @@
             </platformid>
             <deviceid>
                 0
-            </deviceid> 
-            <mac>
-                <useGPU>false</useGPU>
-            </mac>      
+            </deviceid>    
         </openCL>
         
         <svm>

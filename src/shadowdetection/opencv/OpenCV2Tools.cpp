@@ -198,6 +198,50 @@ namespace shadowdetection {
             return image;
         }
 #endif
+        
+        cv::Mat* OpenCV2Tools::convertToHSV(const cv::Mat* src) throw (SDException&){
+            Mat* ret = 0;
+#ifdef _OPENCL
+            oclMat oclSrc(*src);
+            oclMat res;
+            ocl::cvtColor(oclSrc, res, CV_BGR2HSV);
+            ret = new(nothrow) Mat(res);
+            if (ret == 0){
+                SDException exc(SHADOW_NO_MEM, "Convert to HSV");
+                throw exc;
+            }
+#else
+            ret = new(nothrow) Mat();
+            if (ret == 0){
+                SDException exc(SHADOW_NO_MEM, "Convert to HSV");
+                throw exc;
+            }
+            cvtColor(*src, *ret, CV_BGR2HSV);
+#endif
+            return ret;
+        }
+        
+        cv::Mat* OpenCV2Tools::convertToHLS(const cv::Mat* src) throw (SDException&){
+            Mat* ret = 0;
+#ifdef _OPENCL
+            oclMat oclSrc(*src);
+            oclMat res;
+            ocl::cvtColor(oclSrc, res, CV_BGR2HLS);
+            ret = new(nothrow) Mat(res);
+            if (ret == 0){
+                SDException exc(SHADOW_NO_MEM, "Convert to HSV");
+                throw exc;
+            }
+#else
+            ret = new(nothrow) Mat();
+            if (ret == 0){
+                SDException exc(SHADOW_NO_MEM, "Convert to HSV");
+                throw exc;
+            }
+            cvtColor(*src, *ret, CV_BGR2HLS);
+#endif
+            return ret;
+        }
 
     }
 }
