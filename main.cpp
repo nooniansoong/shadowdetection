@@ -6,6 +6,9 @@
  */
 
 #include <iostream>
+#if !defined _MAC && !defined _OPENCL
+#include <omp.h>
+#endif
 #include "shadowdetection/opencl/OpenCLTools.h"
 #include "shadowdetection/opencv/OpenCV2Tools.h"
 #include "shadowdetection/opencv/OpenCVTools.h"
@@ -14,7 +17,10 @@
 #include "shadowdetection/util/raii/RAIIS.h"
 #include "shadowdetection/tools/svm/TrainingSet.h"
 #include "shadowdetection/tools/svm/libsvmopenmp/svm-train.h"
-//#include <omp.h>
+#include "shadowdetection/util/libsvm/SvmPredict.h"
+#include "shadowdetection/util/image/ImageParameters.h"
+#include "shadowdetection/util/FileSaver.h"
+#include "shadowdetection/util/Matrix.h"
 
 using namespace std;
 #ifdef _OPENCL
@@ -26,8 +32,22 @@ using namespace shadowdetection::util;
 using namespace cv;
 using namespace shadowdetection::util::raii;
 using namespace shadowdetection::tools::svm;
+using namespace shadowdetection::util::libsvm;
+using namespace shadowdetection::util::image;
 
-void handleError(const SDException& exception){
+void initOpenMP(){
+#if !defined _MAC && !defined _OPENCL
+    omp_set_dynamic(0);
+    int numThreads = 4;                    
+    string tnStr = Config::getInstancePtr()->getPropertyValue("settings.openMP.threadNum");
+    int tmp = atoi(tnStr.c_str());
+    if (tmp != 0)
+        numThreads = tmp;
+    omp_set_num_threads(numThreads);
+#endif
+}
+
+void handleException(const SDException& exception){
     const char* err = exception.what();
     cout << "Error: " << err << endl;
 }
@@ -38,31 +58,56 @@ void handleError(const SDException& exception){
  * @param out
  * @param image
  */
-void processSingleCPU(const char* out, IplImage* image) {
+void processSingleCPU(const char* out, IplImage* image) {    
     IplImage* processedImage = 0;
     int height, width, channels;
     unsigned int* hsi1 = OpenCvTools::convertImagetoHSI(image, height, width, channels, &OpenCvTools::RGBtoHSI_1);
+    VectorRaii vraiiHsi1(hsi1);
     unsigned char* ratios1 = OpenCvTools::simpleTsai(hsi1, height, width, channels);
+    VectorRaii vraiiR1(ratios1);
     IplImage* ratiosImage1 = OpenCvTools::get8bitImage(ratios1, height, width);
+    ImageRaii iariiR1(ratiosImage1);
     IplImage* binarized1 = OpenCvTools::binarize(ratiosImage1);
+    ImageRaii iraiiBin1(binarized1);
     unsigned int* hsi2 = OpenCvTools::convertImagetoHSI(image, height, width, channels, &OpenCvTools::RGBtoHSI_2);
+    VectorRaii vraiiHsi2(hsi2);
     unsigned char* ratios2 = OpenCvTools::simpleTsai(hsi2, height, width, channels);
+    VectorRaii vraiiR2(ratios2);
     IplImage* ratiosImage2 = OpenCvTools::get8bitImage(ratios2, height, width);
+    ImageRaii iraiiR2(ratiosImage2);
     IplImage* binarized2 = OpenCvTools::binarize(ratiosImage2);
-
-    processedImage = OpenCvTools::joinTwo(binarized1, binarized2);
-
-    delete[] hsi1;
-    delete[] ratios1;
-    delete[] hsi2;
-    delete[] ratios2;
-
-    cvReleaseImage(&binarized1);
-    cvReleaseImage(&ratiosImage1);
-    cvReleaseImage(&binarized2);
-    cvReleaseImage(&ratiosImage2);    
-    cvSaveImage(out, processedImage);
-    cvReleaseImage(&processedImage);
+    ImageRaii iraiiBin2(binarized2);
+    
+    bool usePrediction = false;
+    string usePredStr = Config::getInstancePtr()->getPropertyValue("process.Prediction.usePrediction");
+    if (usePredStr.compare("true") == 0)
+        usePrediction = true;
+    if (usePrediction){
+        IplImage* pi = OpenCvTools::joinTwo(binarized1, binarized2);
+        ImageRaii iraii(pi);
+        Mat* imageMat = new Mat(image);
+        int pixCount;
+        int parameterCount;
+        Matrix<float>* parameters = ImageParameters::getImageParameters(*imageMat, parameterCount, pixCount);
+        if (SvmPredict::getInstancePtr()->hasLoadedModel() == false){
+            string modelFile = Config::getInstancePtr()->getPropertyValue("process.Prediction.modelFile");
+            SvmPredict::getInstancePtr()->loadModel(modelFile);
+        }
+        uchar* predicted = SvmPredict::getInstancePtr()->predict(parameters, pixCount, parameterCount);
+        VectorRaii vraii(predicted);
+        FileSaver<uchar>::saveToFile("myPredictedS1.out", predicted, pixCount);
+        for (int i = 0; i < pixCount; i++)
+            predicted[i] *= 255;
+        IplImage* predictedImage = OpenCvTools::get8bitImage(predicted, height, width);
+        ImageRaii iraii2(predictedImage);
+        cvSaveImage("predicted.jpg", predictedImage);
+        processedImage = OpenCvTools::joinTwo(pi, predictedImage);               
+    }
+    else{
+        processedImage = OpenCvTools::joinTwo(binarized1, binarized2);
+    }
+    ImageRaii iraii(processedImage);                
+    cvSaveImage(out, processedImage);    
 }
 #endif
 
@@ -73,22 +118,62 @@ OpenclTools* oclt = OpenclTools::getInstancePtr();
  * @param out
  * @param imageNew
  */
-void processSingleOpenCL(const char* out, const Mat& imageNew) {                
-    unsigned char* buffer = OpenCV2Tools::convertImageToByteArray(&imageNew, true);    
+void processSingleOpenCL(const char* out, const Mat& image) {                
+    unsigned char* buffer = OpenCV2Tools::convertImageToByteArray(&image, true);    
     Mat* processedImage = 0;
-    try {
-        processedImage = oclt->processRGBImage(buffer, imageNew.size().width, imageNew.size().height, imageNew.channels());
-    } catch (SDException& exception) {
-        throw exception;
+    bool usePrediction = false;
+    string usePredStr = Config::getInstancePtr()->getPropertyValue("process.Prediction.usePrediction");
+    if (usePredStr.compare("true") == 0)
+        usePrediction = true;
+    if (usePrediction == false){
+        try {
+            processedImage = oclt->processRGBImage(buffer, image.size().width, image.size().height, image.channels());
+        } catch (SDException& exception) {
+            throw exception;
+        }
+    }
+    else{
+        Mat* pi = oclt->processRGBImage(buffer, image.size().width, image.size().height, image.channels());
+        if (pi){
+            ImageNewRaii imraiiPi(pi);
+            int pixCount;
+            int parameterCount;
+            Matrix<float>* parameters = ImageParameters::getImageParameters(image, parameterCount, pixCount);
+            if (parameters){
+                PointerRaii< Matrix<float> > paramRaii(parameters);
+                if (SvmPredict::getInstancePtr()->hasLoadedModel() == false){
+                    string modelFile = Config::getInstancePtr()->getPropertyValue("process.Prediction.modelFile");
+                    SvmPredict::getInstancePtr()->loadModel(modelFile);
+                }
+                uchar* predicted = SvmPredict::getInstancePtr()->predict(parameters, pixCount, parameterCount);
+                if (predicted){
+                    VectorRaii vraiiPred(predicted);
+                    FileSaver<uchar>::saveToFile("myPredictedOCL.out", predicted, pixCount);
+                    for (int i = 0; i < pixCount; i++)
+                        predicted[i] *= 255;
+                    Mat* predictedImage = OpenCV2Tools::get8bitImage(predicted, image.size().height, image.size().width);
+                    imwrite("myPredictedOCL.jpg", *predictedImage);
+                    processedImage = OpenCV2Tools::joinTwoOcl(*pi, *predictedImage);                
+                    delete predictedImage;
+                }
+                else{
+                    SDException e(SHADOW_CANT_PREDICT, "processSingleOpenCL");
+                    throw e;
+                }
+            }
+            else{
+                SDException e(SHADOW_CANT_GET_PARAMETERS, "processSingleOpenCL");
+                throw e;
+            }
+        }        
     }
     if (processedImage != 0) {
         imwrite(out, *processedImage);
         delete processedImage;
-    }
+    }    
 }
 #endif
 
-IplImage* image;
 /**
  * global function for process single image
  * @param input
@@ -108,9 +193,9 @@ void processSingle(const char* input, const char* out) throw (SDException&) {
         }
         processSingleOpenCL(out, imageNew);
 #else
-        image = cvLoadImage(input);
+        IplImage* image = cvLoadImage(input);
         if (image != 0) {
-        ImageRaii rai(image);
+            ImageRaii rai(image);
             processSingleCPU(out, image);
         }
         else {
@@ -127,7 +212,7 @@ void processSingle(const char* input, const char* out) throw (SDException&) {
 }
 
 int main(int argc, char **argv) {
-    cout << "MAIN" << endl;
+    cout << "MAIN" << endl;    
     if (argc == 1){
         cout << "Call with -help for help" << endl;
 #ifdef _OPENCL
@@ -140,12 +225,19 @@ int main(int argc, char **argv) {
         return 0;
     }
     
+    initOpenMP();
+    
     if (argc >= 2 && strcmp(argv[1], "-makeset") == 0){
         TrainingSet ts(argv[2]);
-        ts.process(argv[3]);
+        bool distribute = true;
+        string distributeStr = Config::getInstancePtr()->getPropertyValue("process.Training.distribute0and1");
+        if (distributeStr.compare("false") == 0){
+            distribute = false;
+        }
+        ts.process(argv[3], distribute);
         return 0;
     }
-    
+        
     if (argc >= 2 && strcmp(argv[1], "-training") == 0) {
 #ifdef _OPENCL    
         try {
@@ -165,7 +257,7 @@ int main(int argc, char **argv) {
             oclt->init(platformId, deviceId, false);            
             cout << "Opencl init finished" << endl;
         } catch (SDException& exception) {
-            handleError(exception);
+            handleException(exception);
             exit(1);
         }
 #endif
@@ -180,7 +272,7 @@ int main(int argc, char **argv) {
             oclt->init(0, 0, true);
             oclt->cleanUp();
         } catch (SDException& exception) {
-            handleError(exception);
+            handleException(exception);
             exit(1);
         }
         return 0;
@@ -204,7 +296,7 @@ int main(int argc, char **argv) {
         OpenCV2Tools::initOpenCL(platformId, deviceId);        
     }
     catch (SDException& exception){
-        handleError(exception);
+        handleException(exception);
         exit(1);
     }
 #endif
@@ -216,9 +308,12 @@ int main(int argc, char **argv) {
                 processSingle(path, savePath);
             }
             catch (SDException& exception){
-                handleError(exception);
+                handleException(exception);
                 exit(1);
             }
+#ifdef _OPENCL
+            oclt->cleanUp();
+#endif
         }
     }
     else{
@@ -229,7 +324,7 @@ int main(int argc, char **argv) {
                 tp.init(path);
             }
             catch (SDException& exception){
-                handleError(exception);
+                handleException(exception);
                 exit(1);
             }
             for (int i = 0; i < tp.size(); i++){
@@ -239,7 +334,7 @@ int main(int argc, char **argv) {
                     processSingle(in.c_str(), out.c_str());
                 }
                 catch (SDException& exception){
-                    handleError(exception);
+                    handleException(exception);
                 }
 #ifdef _OPENCL
                 oclt->cleanWorkPart();
