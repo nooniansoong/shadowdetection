@@ -93,10 +93,10 @@ namespace shadowdetection {
         }
         
         void OpenclTools::initWorkVars(){
-            input = 0;
-            output1 = 0;
-            output2 = 0;
-            output3 = 0;
+            inputImage = 0;
+            hsi1Converted = 0;
+            hsi2Converted = 0;
+            tsaiOutput = 0;
             ratios1 = 0;
             ratios2 = 0;
             
@@ -112,14 +112,14 @@ namespace shadowdetection {
         }
 
         void OpenclTools::cleanWorkPart() {
-            if (input)
-                clReleaseMemObject(input);
-            if (output1)
-                clReleaseMemObject(output1);
-            if (output2)
-                clReleaseMemObject(output2);
-            if (output3)
-                clReleaseMemObject(output3);            
+            if (inputImage)
+                clReleaseMemObject(inputImage);
+            if (hsi1Converted)
+                clReleaseMemObject(hsi1Converted);
+            if (hsi2Converted)
+                clReleaseMemObject(hsi2Converted);
+            if (tsaiOutput)
+                clReleaseMemObject(tsaiOutput);            
 
             if (ratios1)
                 MemMenager::delocate(ratios1);
@@ -154,6 +154,7 @@ namespace shadowdetection {
                     err_check(err, "clReleaseKernel", i);
                 }
             }
+            initialized = false;
             
             //train part
             if (clY){
@@ -533,60 +534,66 @@ namespace shadowdetection {
             clGetDeviceInfo(device, CL_DEVICE_TYPE, sizeof(cl_device_type), &type, 0);
             if (type == CL_DEVICE_TYPE_GPU)
             {
-                input = clCreateBuffer(context[0], CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, size, image, &err);
-                err_check(err, "clCreateBuffer1", -1);
-                output1 = clCreateBuffer(context[0], CL_MEM_READ_WRITE, size * sizeof (u_int32_t), 0, &err);
-                err_check(err, "clCreateBuffer2", -1);
-                output2 = clCreateBuffer(context[0], CL_MEM_READ_WRITE, size * sizeof (u_int32_t), 0, &err);
-                err_check(err, "clCreateBuffer3", -1);
-                output3 = clCreateBuffer(context[0], CL_MEM_WRITE_ONLY, width * height, 0, &err);
-                err_check(err, "clCreateBuffer4", -1);
+                inputImage = clCreateBuffer(context[0], CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, size, image, &err);
+                err_check(err, "OpenclTools::createBuffers inputImage", -1);
+                hsi1Converted = clCreateBuffer(context[0], CL_MEM_READ_WRITE, size * sizeof (u_int32_t), 0, &err);
+                err_check(err, "OpenclTools::createBuffers hsi1Converted", -1);
+                hsi2Converted = clCreateBuffer(context[0], CL_MEM_READ_WRITE, size * sizeof (u_int32_t), 0, &err);
+                err_check(err, "OpenclTools::createBuffers hsi2Converted", -1);
+                tsaiOutput = clCreateBuffer(context[0], CL_MEM_WRITE_ONLY, width * height, 0, &err);
+                err_check(err, "OpenclTools::createBuffers tsaiOutput", -1);
             }
             else if (type == CL_DEVICE_TYPE_CPU){
                 int flag = CL_MEM_USE_HOST_PTR;
-                input = clCreateBuffer(context[0], CL_MEM_READ_ONLY | flag, size, image, &err);
-                err_check(err, "clCreateBuffer1", -1);            
-                output1 = clCreateBuffer(context[0], CL_MEM_READ_WRITE | CL_MEM_ALLOC_HOST_PTR, size * sizeof (u_int32_t), 0, &err);
-                err_check(err, "clCreateBuffer2", -1);
-                output2 = clCreateBuffer(context[0], CL_MEM_READ_WRITE | CL_MEM_ALLOC_HOST_PTR, size * sizeof (u_int32_t), 0, &err);
-                err_check(err, "clCreateBuffer3", -1);
-                output3 = clCreateBuffer(context[0], CL_MEM_WRITE_ONLY | CL_MEM_ALLOC_HOST_PTR, width * height, 0, &err);
-                err_check(err, "clCreateBuffer4", -1);
+                inputImage = clCreateBuffer(context[0], CL_MEM_READ_ONLY | flag, size, image, &err);
+                err_check(err, "OpenclTools::createBuffers inputImage", -1);
+                hsi1Converted = clCreateBuffer(context[0], CL_MEM_READ_WRITE | CL_MEM_ALLOC_HOST_PTR, size * sizeof (u_int32_t), 0, &err);
+                err_check(err, "OpenclTools::createBuffers hsi1Converted", -1);
+                hsi2Converted = clCreateBuffer(context[0], CL_MEM_READ_WRITE | CL_MEM_ALLOC_HOST_PTR, size * sizeof (u_int32_t), 0, &err);
+                err_check(err, "OpenclTools::createBuffers hsi2Converted", -1);
+                tsaiOutput = clCreateBuffer(context[0], CL_MEM_WRITE_ONLY | CL_MEM_ALLOC_HOST_PTR, width * height, 0, &err);
+                err_check(err, "OpenclTools::createBuffers tsaiOutput", -1);
             }
             else{
-                SDException exc(SHADOW_NOT_SUPPORTED_DEVICE, "Init buffers, currently not supported device");
+                SDException exc(SHADOW_NOT_SUPPORTED_DEVICE, 
+                                "OpenclTools::createBuffers Init buffers, currently not supported device");
                 throw exc;
             }
         }
         
-        void OpenclTools::setKernelArgs1(u_int32_t height, u_int32_t width, uchar channels){
-            err = clSetKernelArg(kernel[0], 0, sizeof (cl_mem), &input);
-            err_check(err, "clSetKernelArg1", -1);
-            err = clSetKernelArg(kernel[0], 1, sizeof (cl_mem), &output1);
-            err_check(err, "clSetKernelArg1", -1);
-            err = clSetKernelArg(kernel[0], 2, sizeof (u_int32_t), &width);
-            err_check(err, "clSetKernelArg1", -1);
-            err = clSetKernelArg(kernel[0], 3, sizeof (u_int32_t), &height);
-            err_check(err, "clSetKernelArg1", -1);
-            err = clSetKernelArg(kernel[0], 4, sizeof (uchar), &channels);
-            err_check(err, "clSetKernelArg1", -1);
-
-            err = clSetKernelArg(kernel[1], 0, sizeof (cl_mem), &input);
-            err_check(err, "clSetKernelArg2", -1);
-            err = clSetKernelArg(kernel[1], 1, sizeof (cl_mem), &output2);
-            err_check(err, "clSetKernelArg2", -1);
-            err = clSetKernelArg(kernel[1], 2, sizeof (u_int32_t), &width);
-            err_check(err, "clSetKernelArg2",  -1);
-            err = clSetKernelArg(kernel[1], 3, sizeof (u_int32_t), &height);
-            err_check(err, "clSetKernelArg2", -1);
-            err = clSetKernelArg(kernel[1], 4, sizeof (uchar), &channels);
-            err_check(err, "clSetKernelArg2", -1);
+        void OpenclTools::setKernelArgs1(   u_int32_t height, u_int32_t width, 
+                                            uchar channels, int lastKernelIndex){
+            if (lastKernelIndex >= 0){
+                err = clSetKernelArg(kernel[0], 0, sizeof (cl_mem), &inputImage);
+                err_check(err, "clSetKernelArg1", -1);
+                err = clSetKernelArg(kernel[0], 1, sizeof (cl_mem), &hsi1Converted);
+                err_check(err, "clSetKernelArg1", -1);
+                err = clSetKernelArg(kernel[0], 2, sizeof (u_int32_t), &width);
+                err_check(err, "clSetKernelArg1", -1);
+                err = clSetKernelArg(kernel[0], 3, sizeof (u_int32_t), &height);
+                err_check(err, "clSetKernelArg1", -1);
+                err = clSetKernelArg(kernel[0], 4, sizeof (uchar), &channels);
+                err_check(err, "clSetKernelArg1", -1);
+                
+                if (lastKernelIndex >= 1){
+                    err = clSetKernelArg(kernel[1], 0, sizeof (cl_mem), &inputImage);
+                    err_check(err, "clSetKernelArg2", -1);
+                    err = clSetKernelArg(kernel[1], 1, sizeof (cl_mem), &hsi2Converted);
+                    err_check(err, "clSetKernelArg2", -1);
+                    err = clSetKernelArg(kernel[1], 2, sizeof (u_int32_t), &width);
+                    err_check(err, "clSetKernelArg2",  -1);
+                    err = clSetKernelArg(kernel[1], 3, sizeof (u_int32_t), &height);
+                    err_check(err, "clSetKernelArg2", -1);
+                    err = clSetKernelArg(kernel[1], 4, sizeof (uchar), &channels);
+                    err_check(err, "clSetKernelArg2", -1);
+                }
+            }
         }
         
         void OpenclTools::setKernelArgs2(u_int32_t height, u_int32_t width, unsigned char channels){
-            err = clSetKernelArg(kernel[2], 0, sizeof (cl_mem), &output1);
+            err = clSetKernelArg(kernel[2], 0, sizeof (cl_mem), &hsi1Converted);
             err_check(err, "clSetKernelArg2", -1);
-            err = clSetKernelArg(kernel[2], 1, sizeof (cl_mem), &output3);
+            err = clSetKernelArg(kernel[2], 1, sizeof (cl_mem), &tsaiOutput);
             err_check(err, "clSetKernelArg2", -1);
             err = clSetKernelArg(kernel[2], 2, sizeof (u_int32_t), &width);
             err_check(err, "clSetKernelArg2", -1);
@@ -597,9 +604,9 @@ namespace shadowdetection {
         }
         
         void OpenclTools::setKernelArgs3(u_int32_t height, u_int32_t width, unsigned char channels){
-            err = clSetKernelArg(kernel[2], 0, sizeof (cl_mem), &output2);
+            err = clSetKernelArg(kernel[2], 0, sizeof (cl_mem), &hsi2Converted);
             err_check(err, "clSetKernelArg3", -1);
-            err = clSetKernelArg(kernel[2], 1, sizeof (cl_mem), &output3);
+            err = clSetKernelArg(kernel[2], 1, sizeof (cl_mem), &tsaiOutput);
             err_check(err, "clSetKernelArg3",  -1);
             err = clSetKernelArg(kernel[2], 2, sizeof (u_int32_t), &width);
             err_check(err, "clSetKernelArg3", -1);
@@ -616,7 +623,7 @@ namespace shadowdetection {
             
             createBuffers(image, height, width, channels);            
             
-            setKernelArgs1(height, width, channels);            
+            setKernelArgs1(height, width, channels, 1);            
             size_t local_ws = workGroupSize[0];
             size_t global_ws = shrRoundUp(local_ws, width * height);
             err = clEnqueueNDRangeKernel(command_queue[0], kernel[0], 1, NULL, &global_ws, &local_ws, 0, NULL, NULL);
@@ -629,15 +636,15 @@ namespace shadowdetection {
             global_ws = shrRoundUp(local_ws, width * height);
             err = clEnqueueNDRangeKernel(command_queue[0], kernel[2], 1, NULL, &global_ws, &local_ws, 0, NULL, NULL);
             err_check(err, "clEnqueueNDRangeKernel3", -1);
-            clReleaseMemObject(output1);
-            output1 = 0;
+            clReleaseMemObject(hsi1Converted);
+            hsi1Converted = 0;
             ratios1 = 0;
             ratios1 = (uchar*)MemMenager::allocate<uchar>(width * height);
             if (ratios1 == 0) {
                 SDException exc(SHADOW_NO_MEM, "Calculate ratios1");
                 throw exc;
             }
-            err = clEnqueueReadBuffer(command_queue[0], output3, CL_TRUE, 0, width * height, ratios1, 0, NULL, NULL);
+            err = clEnqueueReadBuffer(command_queue[0], tsaiOutput, CL_TRUE, 0, width * height, ratios1, 0, NULL, NULL);
             err_check(err, "clEnqueueReadBuffer1", -1);
             clFlush(command_queue[0]);
             clFinish(command_queue[0]);                       
@@ -652,8 +659,8 @@ namespace shadowdetection {
             global_ws = shrRoundUp(local_ws, width * height);
             err = clEnqueueNDRangeKernel(command_queue[0], kernel[1], 1, NULL, &global_ws, &local_ws, 0, NULL, NULL);
             err_check(err, "clEnqueueNDRangeKernel2", -1);
-            clReleaseMemObject(input);
-            input = 0;
+            clReleaseMemObject(inputImage);
+            inputImage = 0;
             clFlush(command_queue[0]);
             clFinish(command_queue[0]);
             
@@ -662,21 +669,21 @@ namespace shadowdetection {
             global_ws = shrRoundUp(local_ws, width * height);
             err = clEnqueueNDRangeKernel(command_queue[0], kernel[2], 1, NULL, &global_ws, &local_ws, 0, NULL, NULL);
             err_check(err, "clEnqueueNDRangeKernel3", -1);
-            clReleaseMemObject(output2);
-            output2 = 0;
+            clReleaseMemObject(hsi2Converted);
+            hsi2Converted = 0;
             ratios2 = 0;
             ratios2 = (uchar*)MemMenager::allocate<uchar>(width * height);
             if (ratios2 == 0) {
                 SDException exc(SHADOW_NO_MEM, "Calculate ratios2");
                 throw exc;
             }
-            err = clEnqueueReadBuffer(command_queue[0], output3, CL_TRUE, 0, width * height, ratios2, 0, NULL, NULL);
+            err = clEnqueueReadBuffer(command_queue[0], tsaiOutput, CL_TRUE, 0, width * height, ratios2, 0, NULL, NULL);
             err_check(err, "clEnqueueReadBuffer2", -1);
             clFlush(command_queue[0]);
             clFinish(command_queue[0]);
 
-            clReleaseMemObject(output3);
-            output3 = 0;
+            clReleaseMemObject(tsaiOutput);
+            tsaiOutput = 0;
             clFlush(command_queue[0]);
             clFinish(command_queue[0]);                        
             

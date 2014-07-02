@@ -47,6 +47,30 @@ void initOpenMP(){
 #endif
 }
 
+#ifdef _OPENCL
+void initOpenCL(){
+    try{
+        int platformId = 0;
+        int deviceId = 0;
+        Config* conf = Config::getInstancePtr();
+        string platformStr = conf->getPropertyValue("settings.openCL.platformid");
+        string deviceStr = conf->getPropertyValue("settings.openCL.deviceid");
+        int tmp = atoi(platformStr.c_str());
+        if (tmp != 0)
+            platformId = tmp;
+        tmp = atoi(deviceStr.c_str());
+        if (tmp != 0)
+            deviceId = tmp;
+        OpenclTools::getInstancePtr()->init(platformId, deviceId, false);
+        OpenCV2Tools::initOpenCL(platformId, deviceId);        
+    }
+    catch (SDException& exception){
+        handleException(exception);
+        exit(1);
+    }
+}
+#endif
+
 void handleException(const SDException& exception){
     const char* err = exception.what();
     cout << "Error: " << err << endl;
@@ -95,12 +119,12 @@ void processSingleCPU(const char* out, IplImage* image) {
         }
         uchar* predicted = SvmPredict::getInstancePtr()->predict(parameters, pixCount, parameterCount);
         VectorRaii vraii(predicted);
-        FileSaver<uchar>::saveToFile("myPredictedS1.out", predicted, pixCount);
+        //FileSaver<uchar>::saveToFile("myPredictedS1.out", predicted, pixCount);
         for (int i = 0; i < pixCount; i++)
             predicted[i] *= 255;
         IplImage* predictedImage = OpenCvTools::get8bitImage(predicted, height, width);
         ImageRaii iraii2(predictedImage);
-        cvSaveImage("predicted.jpg", predictedImage);
+        //cvSaveImage("predicted.jpg", predictedImage);
         processedImage = OpenCvTools::joinTwo(pi, predictedImage);               
     }
     else{
@@ -112,13 +136,13 @@ void processSingleCPU(const char* out, IplImage* image) {
 #endif
 
 #ifdef _OPENCL
-OpenclTools* oclt = OpenclTools::getInstancePtr();
 /**
  * process single image using openCL
  * @param out
  * @param imageNew
  */
 void processSingleOpenCL(const char* out, const Mat& image) {                
+    OpenclTools* oclt = OpenclTools::getInstancePtr();
     unsigned char* buffer = OpenCV2Tools::convertImageToByteArray(&image, true);    
     Mat* processedImage = 0;
     bool usePrediction = false;
@@ -148,13 +172,13 @@ void processSingleOpenCL(const char* out, const Mat& image) {
                 uchar* predicted = SvmPredict::getInstancePtr()->predict(parameters, pixCount, parameterCount);
                 if (predicted){
                     VectorRaii vraiiPred(predicted);
-                    FileSaver<uchar>::saveToFile("myPredictedOCL.out", predicted, pixCount);
+                    //FileSaver<uchar>::saveToFile("myPredictedOCL.out", predicted, pixCount);
                     for (int i = 0; i < pixCount; i++)
                         predicted[i] *= 255;
                     Mat* predictedImage = OpenCV2Tools::get8bitImage(predicted, image.size().height, image.size().width);
-                    imwrite("myPredictedOCL.jpg", *predictedImage);
-                    processedImage = OpenCV2Tools::joinTwoOcl(*pi, *predictedImage);                
-                    delete predictedImage;
+                    ImageNewRaii prdeRaii(predictedImage);
+                    //imwrite("myPredictedOCL.jpg", *predictedImage);
+                    processedImage = OpenCV2Tools::joinTwoOcl(*pi, *predictedImage);
                 }
                 else{
                     SDException e(SHADOW_CANT_PREDICT, "processSingleOpenCL");
@@ -224,82 +248,70 @@ int main(int argc, char **argv) {
         cout << "Please visit: http://code.google.com/p/shadowdetection/wiki/ShadowDetection section Usage" << endl;
         return 0;
     }
+
+#ifdef _OPENCL
+    if (argc == 2 && strcmp(argv[1], "-list") == 0){
+        try{
+            OpenclTools::getInstancePtr()->init(0, 0, true);
+            OpenclTools::getInstancePtr()->cleanUp();
+        } catch (SDException& exception) {
+            handleException(exception);
+            exit(1);
+        }
+        return 0;
+    }
+#endif
     
     initOpenMP();
+#ifdef _OPENCL
+    initOpenCL();
+#endif
     
     if (argc >= 2 && strcmp(argv[1], "-makeset") == 0){
-        TrainingSet ts(argv[2]);
-        bool distribute = true;
-        string distributeStr = Config::getInstancePtr()->getPropertyValue("process.Training.distribute0and1");
-        if (distributeStr.compare("false") == 0){
-            distribute = false;
+        if (argc < 4){
+            cout << "makeset needs more parameters: input csv file, output file" << endl;
+            return 0;
         }
-        ts.process(argv[3], distribute);
+        try{
+            TrainingSet ts(argv[2]);
+            bool distribute = true;
+            string distributeStr = Config::getInstancePtr()->getPropertyValue("process.Training.distribute0and1");
+            if (distributeStr.compare("false") == 0){
+                distribute = false;
+            }
+            ts.process(argv[3], distribute);
+        }
+        catch (SDException& exc){
+            handleException(exc);
+            exit(1);
+        }
+#ifdef _OPENCL
+        OpenclTools::getInstancePtr()->cleanUp();
+#endif
         return 0;
     }
         
     if (argc >= 2 && strcmp(argv[1], "-training") == 0) {
-#ifdef _OPENCL    
-        try {
-            cout << "Train mode" << endl;
-            int platformId = 0;
-            int deviceId = 0;
-            Config* conf = Config::getInstancePtr();
-            string platformStr = conf->getPropertyValue("settings.openCL.platformid");
-            string deviceStr = conf->getPropertyValue("settings.openCL.deviceid");
-            int tmp = atoi(platformStr.c_str());
-            if (tmp != 0)
-                platformId = tmp;
-            tmp = atoi(deviceStr.c_str());
-            if (tmp != 0)
-                deviceId = tmp;
-            cout << "Opencl init started" << endl;
-            oclt->init(platformId, deviceId, false);            
-            cout << "Opencl init finished" << endl;
-        } catch (SDException& exception) {
-            handleException(exception);
+        if (argc < 4){
+            cout << "training needs more parameters: input data file, output file" << endl;
+            return 0;
+        }
+        try{
+            int val = shadowdetection::tools::svm::libsvmopenmp::train(argv[2], argv[3]);
+            cout << val << endl;
+        }
+        catch (SDException& e){
+            handleException(e);
             exit(1);
         }
+#ifdef _OPENCL
+        OpenclTools::getInstancePtr()->cleanUp();
 #endif
-        int val = shadowdetection::tools::svm::libsvmopenmp::train(argv[2], argv[3]);
-        cout << val << endl;
         return 0;
     }
     
-#ifdef _OPENCL
-    if (argc == 2 && strcmp(argv[1], "-list") == 0){
-        try{
-            oclt->init(0, 0, true);
-            oclt->cleanUp();
-        } catch (SDException& exception) {
-            handleException(exception);
-            exit(1);
-        }
-        return 0;
-    }
-#endif
     Config* conf = Config::getInstancePtr();
     string useBatch = conf->getPropertyValue("process.UseBatch");
-#ifdef _OPENCL    
-    try{
-        int platformId = 0;
-        int deviceId = 0;
-        string platformStr = conf->getPropertyValue("settings.openCL.platformid");
-        string deviceStr = conf->getPropertyValue("settings.openCL.deviceid");
-        int tmp = atoi(platformStr.c_str());
-        if (tmp != 0)
-            platformId = tmp;
-        tmp = atoi(deviceStr.c_str());
-        if (tmp != 0)
-            deviceId = tmp;
-        oclt->init(platformId, deviceId, false);
-        OpenCV2Tools::initOpenCL(platformId, deviceId);        
-    }
-    catch (SDException& exception){
-        handleException(exception);
-        exit(1);
-    }
-#endif
     if (useBatch.compare("false") == 0){
         if (argc > 2) {
             char* path = argv[1];
@@ -311,9 +323,10 @@ int main(int argc, char **argv) {
                 handleException(exception);
                 exit(1);
             }
-#ifdef _OPENCL
-            oclt->cleanUp();
-#endif
+        }
+        else{
+            cout << "need two arguments: input image path, output image path" << endl;
+            return 0;
         }
     }
     else{
@@ -335,15 +348,20 @@ int main(int argc, char **argv) {
                 }
                 catch (SDException& exception){
                     handleException(exception);
+                    cout << "Continue to process" << endl;
                 }
 #ifdef _OPENCL
-                oclt->cleanWorkPart();
+                OpenclTools::getInstancePtr()->cleanWorkPart();
 #endif
             }            
         }
+        else{
+            cout << "Needed parameter path to csv file" << endl;
+            return 0;
+        }
     }
 #ifdef _OPENCL
-    oclt->cleanUp();
+    OpenclTools::getInstancePtr()->cleanUp();
 #endif
     return 0;
 }

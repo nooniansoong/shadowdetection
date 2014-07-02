@@ -60,9 +60,16 @@ namespace shadowdetection {
                     return line;
                 }
 
-                int train(char* input_file_name, char* model_file_name) {
-                    cout << "Start training" << endl;                    
-                    Config* conf = Config::getInstancePtr();                
+                int train(char* input_file_name, char* model_file_name) throw(SDException&){
+                    cout << "Start training" << endl;
+#ifdef _OPENCL
+                    OpenclTools* oclt = OpenclTools::getInstancePtr();
+                    if (oclt->hasInitialized() == false){
+                        SDException exc(SHADOW_OPENCL_TOOLS_NOT_INITIALIZED, "libsvm train");
+                        throw exc;
+                    }
+#endif
+                    Config* conf = Config::getInstancePtr();
                     
                     param.svm_type = C_SVC;
                     param.kernel_type = RBF;
@@ -119,7 +126,7 @@ namespace shadowdetection {
                     free(line);
 
 #ifdef _OPENCL                    
-                    OpenclTools* oclt = OpenclTools::getInstancePtr();
+                    oclt = OpenclTools::getInstancePtr();
                     cout << "data durr: " << oclt->durrData << " buff durr: " << oclt->durrBuff << " durr exec: " << oclt->durrExec;
                     cout << " durr set args: " << oclt->durrSetSrgs << " durr readbuff: " << oclt->durrReadBuff << endl;
 #endif

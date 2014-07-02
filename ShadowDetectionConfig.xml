@@ -3,7 +3,7 @@
 <QsConfig>
     <process>
         <UseBatch>
-            false
+            true
         </UseBatch>
         <Training>
             <distribute0and1>
@@ -35,7 +35,7 @@
         
         <openMP>
             <threadNum>
-                4
+                2
             </threadNum>
         </openMP>
         

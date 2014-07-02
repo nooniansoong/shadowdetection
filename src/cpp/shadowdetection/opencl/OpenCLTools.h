@@ -50,10 +50,10 @@ namespace shadowdetection {
             cl_kernel kernel[KERNEL_COUNT];
             cl_context context[PROGRAM_COUNT];
             size_t workGroupSize[KERNEL_COUNT];
-            cl_mem input;
-            cl_mem output1;
-            cl_mem output2;
-            cl_mem output3;
+            cl_mem inputImage;
+            cl_mem hsi1Converted;
+            cl_mem hsi2Converted;
+            cl_mem tsaiOutput;
             unsigned char* ratios1;
             unsigned char* ratios2;
             bool initialized;
@@ -95,7 +95,7 @@ namespace shadowdetection {
              * @param width
              * @param channels
              */
-            void setKernelArgs1(u_int32_t height, u_int32_t width, unsigned char channels);
+            void setKernelArgs1(u_int32_t height, u_int32_t width, unsigned char channels, int lastKernelIndex);
             /**
              * set arguments for kernel function2
              * @param height
@@ -164,6 +164,11 @@ namespace shadowdetection {
              * @return 
              */
             bool hasInitialized();
+            //Image part
+            uint32_t* convertHSI1(  uchar* image, u_int32_t width, u_int32_t height, 
+                                    uchar channels) throw(SDException&);
+            uint32_t* convertHSI2(  uchar* image, u_int32_t width, u_int32_t height, 
+                                    uchar channels) throw(SDException&);
             //======libsvm train section
         private:
             cl_mem clData;

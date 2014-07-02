@@ -75,6 +75,7 @@
             <itemPath>src/cpp/shadowdetection/opencl/kernels/lib_svm_predict.cl</itemPath>
           </logicalFolder>
           <itemPath>src/cpp/shadowdetection/opencl/OpenCLTools.cpp</itemPath>
+          <itemPath>src/cpp/shadowdetection/opencl/OpenCLToolsImage.cpp</itemPath>
           <itemPath>src/cpp/shadowdetection/opencl/OpenCLToolsLibSVM.cpp</itemPath>
           <itemPath>src/cpp/shadowdetection/opencl/OpenCLToolsPredict.cpp</itemPath>
         </logicalFolder>
@@ -164,6 +165,11 @@
       <item path="src/cpp/shadowdetection/opencl/OpenCLTools.h"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLToolsImage.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLToolsLibSVM.cpp"
@@ -384,6 +390,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLToolsImage.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLToolsLibSVM.cpp"
             ex="false"
             tool="1"
@@ -593,6 +604,11 @@
       <item path="src/cpp/shadowdetection/opencl/OpenCLTools.h"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLToolsImage.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLToolsLibSVM.cpp"
@@ -811,6 +827,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLToolsImage.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLToolsLibSVM.cpp"
             ex="false"
             tool="1"
@@ -1023,6 +1044,11 @@
       <item path="src/cpp/shadowdetection/opencl/OpenCLTools.h"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLToolsImage.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLToolsLibSVM.cpp"
@@ -1244,6 +1270,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLToolsImage.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLToolsLibSVM.cpp"
             ex="false"
             tool="1"
@@ -1454,6 +1485,11 @@
       <item path="src/cpp/shadowdetection/opencl/OpenCLTools.h"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLToolsImage.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLToolsLibSVM.cpp"
@@ -1672,6 +1708,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLToolsImage.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLToolsLibSVM.cpp"
             ex="false"
             tool="1"
@@ -1880,6 +1921,11 @@
       <item path="src/cpp/shadowdetection/opencl/OpenCLTools.h"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLToolsImage.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLToolsLibSVM.cpp"
@@ -2094,6 +2140,11 @@
       <item path="src/cpp/shadowdetection/opencl/OpenCLTools.h"
             ex="false"
             tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLToolsImage.cpp"
+            ex="false"
+            tool="1"
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLToolsLibSVM.cpp"
