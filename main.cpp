@@ -19,7 +19,7 @@
 #include "shadowdetection/tools/svm/libsvmopenmp/svm-train.h"
 #include "shadowdetection/util/libsvm/SvmPredict.h"
 #include "shadowdetection/util/image/ImageParameters.h"
-#include "shadowdetection/util/FileSaver.h"
+//#include "shadowdetection/util/FileSaver.h"
 #include "shadowdetection/util/Matrix.h"
 
 using namespace std;
@@ -34,6 +34,11 @@ using namespace shadowdetection::util::raii;
 using namespace shadowdetection::tools::svm;
 using namespace shadowdetection::util::libsvm;
 using namespace shadowdetection::util::image;
+
+void handleException(const SDException& exception){
+    const char* err = exception.what();
+    cout << "Error: " << err << endl;
+}
 
 void initOpenMP(){
 #if !defined _MAC && !defined _OPENCL
@@ -70,11 +75,6 @@ void initOpenCL(){
     }
 }
 #endif
-
-void handleException(const SDException& exception){
-    const char* err = exception.what();
-    cout << "Error: " << err << endl;
-}
 
 #ifndef _OPENCL
 /**
