@@ -181,6 +181,8 @@
         <gdb_interceptlist>
           <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
         </gdb_interceptlist>
+        <gdb_signals>
+        </gdb_signals>
         <gdb_options>
           <DebugOptions>
           </DebugOptions>
@@ -192,7 +194,6 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" -list</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -training data.svm </runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -training data.svm test_model3</runcommandpicklistitem>
@@ -202,8 +203,9 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}" -makeset ls.csv tmpData.svm</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -training bigData1.svm bigModel.model</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" 0.jpg 0Shadow1.jpg</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" tstList.csv</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" 0.jpg 0Shadow1.jpg</runcommand>
+        <runcommand>"${OUTPUT_PATH}" tstList.csv</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>

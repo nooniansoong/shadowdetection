@@ -29,6 +29,7 @@ namespace shadowdetection{
                 if (model == 0){
                     SDException e(SHADOW_READ_UNABLE, "SvmPredict::loadModel");
                 }
+                OpenclTools::getInstancePtr()->markModelChanged();
             }
             
             Matrix<svm_node>* convertToMatrix(const Matrix<float>* imagePixelsParameters, const int& pixCount, const int& parameterCount){

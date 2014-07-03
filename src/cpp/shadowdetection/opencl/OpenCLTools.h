@@ -207,9 +207,8 @@ namespace shadowdetection {
                                         svm_model* model, size_t& svsWidth);            
             void setKernelArgsPredict(  uint pixelCount, uint paramsPerPixel, 
                                         svm_model* model, size_t svsWidth);
-            size_t ukupno;
             
-            svm_model*      prevModel;
+            bool            modelChanged;
             cl_mem          clPixelParameters;
             cl_svm_node*    modelSVs;
             cl_mem          clModelSVs;
@@ -223,6 +222,7 @@ namespace shadowdetection {
         public:
             uchar* predict( svm_model* model, 
                             const shadowdetection::util::Matrix<svm_node>& parameters);
+            void markModelChanged();
         };
 
     }

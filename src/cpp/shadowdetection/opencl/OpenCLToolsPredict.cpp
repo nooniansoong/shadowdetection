@@ -84,42 +84,61 @@ namespace shadowdetection {
             cl_svm_node* pNodes = (cl_svm_node*)parameters.getVec();
             clPixelParameters = clCreateBuffer( context[2], flag2, size, 
                                                 pNodes, &err);
-            err_check(err, "OpenclTools::createBuffersPredict clPixelParameters", -1);
-            ukupno += size;
-                        
-            modelSVs = convertSVs(model, svsWidth);
-            size = svsWidth * model->l * sizeof(cl_svm_node);
-            clModelSVs = clCreateBuffer(context[2], flag2, size, (cl_svm_node*)modelSVs, &err);
-            err_check(err, "OpenclTools::createBuffersPredict clModelSVs", -1);
-            ukupno += size;
+            err_check(err, "OpenclTools::createBuffersPredict clPixelParameters", -1);            
             
-            svCoefs = convertSVCoefs(model);
-            size = (model->nr_class - 1) * (model->l) * sizeof(cl_double);
-            clModelSVCoefs = clCreateBuffer(context[2], flag2, size, (cl_double*)svCoefs, &err);
-            err_check(err, "OpenclTools::createBuffersPredict clModelSVCoefs", -1);
-            ukupno += size;
-            
-            size = (model->nr_class * (model->nr_class - 1) / 2) * sizeof(cl_double);
-            clModelRHO = clCreateBuffer(context[2], flag2, size, (cl_double*)model->rho, &err);
-            err_check(err, "OpenclTools::createBuffersPredict clModelRHO", -1);
-            ukupno += size;
-            
-            size = model->nr_class * sizeof(cl_int);
-            clModelLabel = clCreateBuffer(context[2], flag2, size, (cl_int*)model->label, &err);
-            err_check(err, "OpenclTools::createBuffersPredict clModelLabel", -1);
-            ukupno += size;
-            
-            size = model->nr_class * sizeof(cl_int);
-            clModelNsv = clCreateBuffer(context[2], flag2, size, (cl_int*)model->nSV, &err);
-            err_check(err, "OpenclTools::createBuffersPredict clModelNsv", -1);
-            ukupno += size;
+            //if (modelChanged){
+                if (modelSVs != 0)
+                    MemMenager::delocate(modelSVs);
+                modelSVs = convertSVs(model, svsWidth);
+                size = svsWidth * model->l * sizeof(cl_svm_node);
+                if (clModelSVs){
+                    err = clReleaseMemObject(clModelSVs);
+                    err_check(err, "OpenclTools::createBuffersPredict delete clModelSVs", -1);
+                }    
+                clModelSVs = clCreateBuffer(context[2], flag2, size, (cl_svm_node*)modelSVs, &err);
+                err_check(err, "OpenclTools::createBuffersPredict clModelSVs", -1);            
+                
+                if (svCoefs)
+                    MemMenager::delocate(svCoefs);
+                svCoefs = convertSVCoefs(model);
+                size = (model->nr_class - 1) * (model->l) * sizeof(cl_double);
+                    if (clModelSVCoefs){
+                    err = clReleaseMemObject(clModelSVCoefs);
+                    err_check(err, "OpenclTools::createBuffersPredict delete clModelSVCoefs", -1);
+                }
+                clModelSVCoefs = clCreateBuffer(context[2], flag2, size, (cl_double*)svCoefs, &err);
+                err_check(err, "OpenclTools::createBuffersPredict clModelSVCoefs", -1);            
+
+                size = (model->nr_class * (model->nr_class - 1) / 2) * sizeof(cl_double);
+                if (clModelRHO){
+                    err = clReleaseMemObject(clModelRHO);
+                    err_check(err, "OpenclTools::createBuffersPredict delete clModelRHO", -1);
+                }
+                clModelRHO = clCreateBuffer(context[2], flag2, size, (cl_double*)model->rho, &err);
+                err_check(err, "OpenclTools::createBuffersPredict clModelRHO", -1);            
+
+                size = model->nr_class * sizeof(cl_int);
+                if (clModelLabel){
+                    err = clReleaseMemObject(clModelLabel);
+                    err_check(err, "OpenclTools::createBuffersPredict delete clModelLabel", -1);
+                }
+                clModelLabel = clCreateBuffer(context[2], flag2, size, (cl_int*)model->label, &err);
+                err_check(err, "OpenclTools::createBuffersPredict clModelLabel", -1);            
+
+                size = model->nr_class * sizeof(cl_int);
+                if (clModelNsv){
+                    err = clReleaseMemObject(clModelNsv);
+                    err_check(err, "OpenclTools::createBuffersPredict delete clModelNsv", -1);
+                }
+                clModelNsv = clCreateBuffer(context[2], flag2, size, (cl_int*)model->nSV, &err);
+                err_check(err, "OpenclTools::createBuffersPredict clModelNsv", -1);
+                
+                modelChanged = false;
+            //}            
             
             size = parameters.getHeight() * sizeof(cl_uchar);
             clPredictResults = clCreateBuffer(context[2], flag1, size, 0, &err);
-            err_check(err, "OpenclTools::createBuffersPredict clPredictResults", -1);
-            ukupno += size;
-            int a = 0;
-            ++a;
+            err_check(err, "OpenclTools::createBuffersPredict clPredictResults", -1);            
         }                
         
         void OpenclTools::setKernelArgsPredict( uint pixelCount, uint paramsPerPixel, 
@@ -162,26 +181,13 @@ namespace shadowdetection {
             err = clSetKernelArg(kernel[5], 17, sizeof(cl_mem), &clPredictResults);
             err_check(err, "OpenclTools::setKernelArgsPredict clPredictResults", -1);
             //====
-//            cl_uint size = getDecValuesSize(model);
-//            err = clSetKernelArg(kernel[5], 18, size * sizeof(cl_double) * workGroupSize[5], 0);
-//            ukupno += size * sizeof(cl_double) * workGroupSize[5];
-//            err_check(err, "OpenclTools::setKernelArgsPredict dec_values", -1);
-//            err = clSetKernelArg(kernel[5], 19, sizeof(cl_uint), &size);
-//            err_check(err, "OpenclTools::setKernelArgsPredict dec_values_size", -1);
-//            size = model->l * sizeof(cl_double) * workGroupSize[5];
-//            err = clSetKernelArg(kernel[5], 20, size, 0);            
-//            err_check(err, "OpenclTools::setKernelArgsPredict kvalue", -1);
-//            ukupno += size;
             size_t size = model->nr_class * sizeof(cl_int) * workGroupSize[5];
-            err = clSetKernelArg(kernel[5], 18, size, 0);
-            ukupno += size;
+            err = clSetKernelArg(kernel[5], 18, size, 0);            
             err_check(err, "OpenclTools::setKernelArgsPredict start", -1);
+                        
             size = model->nr_class * sizeof(cl_int) * workGroupSize[5];
             err = clSetKernelArg(kernel[5], 19, size, 0);
-            err_check(err, "OpenclTools::setKernelArgsPredict vote", -1);
-            ukupno += size;
-            int a =0;
-            ++a;
+            err_check(err, "OpenclTools::setKernelArgsPredict vote", -1);            
         }
         
         uchar* OpenclTools::predict(svm_model* model, const Matrix<svm_node>& parameters){
@@ -202,6 +208,10 @@ namespace shadowdetection {
             clFlush(command_queue[2]);
             clFinish(command_queue[2]);
             return retVec;
+        }
+        
+        void OpenclTools::markModelChanged(){
+            modelChanged = true;
         }
         
     }

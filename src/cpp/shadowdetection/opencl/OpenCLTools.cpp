@@ -77,8 +77,7 @@ namespace shadowdetection {
             durrBuff = 0l;
             durrExec = 0l;
             durrReadBuff = 0l;
-            durrSetSrgs = 0l;
-            prevModel = 0;
+            durrSetSrgs = 0l;            
             
             //predict part
             modelSVs        = 0;
@@ -107,8 +106,8 @@ namespace shadowdetection {
         
         OpenclTools::OpenclTools() : Singleton<OpenclTools>(){            
             initialized = false;
-            initVars();
-            ukupno = 0;
+            modelChanged = true;
+            initVars();            
         }
 
         void OpenclTools::cleanWorkPart() {
@@ -206,7 +205,8 @@ namespace shadowdetection {
             if (clModelNsv){
                 err = clReleaseMemObject(clModelNsv);
                 err_check(err, "OpenclTools::cleanUp clModelNsv", -1);
-            }            
+            }
+            modelChanged = true;
                         
             cleanWorkPart();            
             initVars();            
