@@ -35,7 +35,7 @@
         
         <openMP>
             <threadNum>
-                2
+                4
             </threadNum>
         </openMP>
         

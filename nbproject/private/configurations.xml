@@ -194,7 +194,6 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -training data.svm </runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -training data.svm test_model3</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" 0.jpg 0Shadow.jpg</runcommandpicklistitem>
@@ -204,8 +203,9 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}" -training bigData1.svm bigModel.model</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" 0.jpg 0Shadow1.jpg</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" tstList.csv</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" tst.csv</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" tstList.csv</runcommand>
+        <runcommand>"${OUTPUT_PATH}" tst.csv</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>

@@ -28,6 +28,7 @@ namespace shadowdetection{
                 model = svm_load_model(path.c_str());
                 if (model == 0){
                     SDException e(SHADOW_READ_UNABLE, "SvmPredict::loadModel");
+                    throw e;
                 }
                 OpenclTools::getInstancePtr()->markModelChanged();
             }

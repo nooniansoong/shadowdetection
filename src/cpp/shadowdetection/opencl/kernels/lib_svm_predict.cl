@@ -71,39 +71,47 @@ double my_dot(const __global svm_node *px, const __global svm_node *py)
     return sum;
 }
 
-double kfunction_rbf(const __global svm_node* x, const __global svm_node* y, double gamma){
+double kfunction_rbf(   const __global svm_node* x, const size_t xLen,
+                        const __global svm_node* y, const size_t yLen,
+                        double gamma){
     double sum = 0;
-    while (x->index != -1 && y->index != -1) {
-        if (x->index == y->index) {
-            double d = x->value - y->value;
-            sum += d*d;
-            ++x;
-            ++y;
-        } else {
-            if (x->index > y->index) {
-                sum += y->value * y->value;
-                ++y;
-            } else {
-                sum += x->value * x->value;
-                ++x;
-            }
-        }
+    for (int i = 0; i < xLen; i++){
+        double d = x[i].value - y[i].value;
+        sum += d * d;
     }
-
-    while (x->index != -1) {
-        sum += x->value * x->value;
-        ++x;
-    }
-
-    while (y->index != -1) {
-        sum += y->value * y->value;
-        ++y;
-    }
+//    while (x->index != -1 && y->index != -1) {
+//        if (x->index == y->index) {
+//            double d = x->value - y->value;
+//            sum += d*d;
+//            ++x;
+//            ++y;
+//        } else {
+//            if (x->index > y->index) {
+//                sum += y->value * y->value;
+//                ++y;
+//            } else {
+//                sum += x->value * x->value;
+//                ++x;
+//            }
+//        }
+//    }
+//
+//    while (x->index != -1) {
+//        sum += x->value * x->value;
+//        ++x;
+//    }
+//
+//    while (y->index != -1) {
+//        sum += y->value * y->value;
+//        ++y;
+//    }
 
     return exp(-gamma * sum);
 }
 
-double k_function(const __global svm_node *x, __global const svm_node *y, const svm_parameter* param) {
+double k_function(  const __global svm_node *x, const size_t xLen,
+                    const __global svm_node *y, const size_t yLen, 
+                    const svm_parameter* param) {
     switch (param->kernel_type) {
         case LINEAR:
             return my_dot(x, y);
@@ -111,7 +119,7 @@ double k_function(const __global svm_node *x, __global const svm_node *y, const 
             return pow(param->gamma * my_dot(x, y) + param->coef0, param->degree);
         case RBF:
         {
-            return kfunction_rbf(x, y, param->gamma);
+            return kfunction_rbf(x, xLen, y, yLen, param->gamma);
         }
         case SIGMOID:
             return tanh(param->gamma * my_dot(x, y) + param->coef0);
@@ -123,7 +131,7 @@ double k_function(const __global svm_node *x, __global const svm_node *y, const 
 }
 
 double svm_predict_values(  const svm_model *model, const __global svm_node *x,
-                            __local int* start, __local int* vote)
+                            const size_t xlen, __local int* start, __local int* vote)
 {
     int i;
     if(model->param->svm_type == ONE_CLASS ||
@@ -133,8 +141,10 @@ double svm_predict_values(  const svm_model *model, const __global svm_node *x,
         //sv_coef[0] this is the same
         __global const double *sv_coef = model->sv_coef; 
         double sum = 0;
-        for(i =0 ; i < model->svsLength; i++)
-            sum += sv_coef[i] * k_function(x, &model->SV[i * model->svsWidth], model->param);
+        for(i =0 ; i < model->svsLength; i++){
+            double kVal = k_function(x, xlen, &model->SV[i * model->svsWidth], model->svsWidth, model->param);
+            sum += sv_coef[i] * kVal;
+        }
         sum -= model->rho[0];        
 
         if(model->param->svm_type == ONE_CLASS)
@@ -168,11 +178,17 @@ double svm_predict_values(  const svm_model *model, const __global svm_node *x,
                 __global const double *coef2 = &(model->sv_coef[i * model->svsLength]);                                                
                 
                 for(k = 0; k < ci; k++){
-                    double kval = k_function(x, &model->SV[(si + k) * model->svsWidth], model->param);                    
+                    double kval = k_function(   x, xlen, 
+                                                &model->SV[(si + k) * model->svsWidth], 
+                                                model->svsWidth, model->param);                    
                     sum += coef1[si + k] * kval;//kvalue[si + k];                
                 }
-                for(k = 0; k < cj; k++)
-                    sum += coef2[sj + k] * k_function(x, &model->SV[(sj + k) * model->svsWidth], model->param);//kvalue[sj + k];
+                for(k = 0; k < cj; k++){
+                    double kval = k_function(   x, xlen, 
+                                                &model->SV[(sj + k) * model->svsWidth], 
+                                                model->svsWidth, model->param);
+                    sum += coef2[sj + k] * kval;//kvalue[sj + k];
+                }
                 sum -= model->rho[p];                
 
                 if(sum > 0)
@@ -195,10 +211,10 @@ double svm_predict_values(  const svm_model *model, const __global svm_node *x,
 //kvalue size = svsLength, needs to be just allocated
 //start size = nr_class, needs to be just allocated
 //vote size = nr_class, needs to be just allocated
-double svm_predict( const svm_model *model, const __global svm_node *x,
+double svm_predict( const svm_model *model, const __global svm_node *x, const size_t xLen,
                     __local int* start, __local int* vote){
                         
-    double pred_result = svm_predict_values(model, x, start, vote);    
+    double pred_result = svm_predict_values(model, x, xLen, start, vote);    
     return pred_result;    
 }
 
@@ -244,6 +260,6 @@ __kernel void predict(  //input args
         __local int* start = startMat + (localIndex * nr_class);
         __local int* vote = voteMat + (localIndex * nr_class);
         
-        results[index] = svm_predict(&model, currX, start, vote);
+        results[index] = svm_predict(&model, currX, xNumOfParameters, start, vote);
     }
 }

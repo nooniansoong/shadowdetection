@@ -14,9 +14,9 @@ GREP=grep
 NM=nm
 CCADMIN=CCadmin
 RANLIB=ranlib
-CC=gcc
-CCC=g++
-CXX=g++
+CC=nvcc
+CCC=nvcc
+CXX=nvcc
 FC=gfortran
 AS=as
 
@@ -80,82 +80,82 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection: ${OBJECTFILES}
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 ${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLTools.o: src/cpp/shadowdetection/opencl/OpenCLTools.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/opencl
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLTools.o src/cpp/shadowdetection/opencl/OpenCLTools.cpp
+	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLTools.o src/cpp/shadowdetection/opencl/OpenCLTools.cpp
 
 ${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsImage.o: src/cpp/shadowdetection/opencl/OpenCLToolsImage.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/opencl
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsImage.o src/cpp/shadowdetection/opencl/OpenCLToolsImage.cpp
+	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsImage.o src/cpp/shadowdetection/opencl/OpenCLToolsImage.cpp
 
 ${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsLibSVM.o: src/cpp/shadowdetection/opencl/OpenCLToolsLibSVM.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/opencl
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsLibSVM.o src/cpp/shadowdetection/opencl/OpenCLToolsLibSVM.cpp
+	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsLibSVM.o src/cpp/shadowdetection/opencl/OpenCLToolsLibSVM.cpp
 
 ${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsPredict.o: src/cpp/shadowdetection/opencl/OpenCLToolsPredict.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/opencl
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsPredict.o src/cpp/shadowdetection/opencl/OpenCLToolsPredict.cpp
+	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsPredict.o src/cpp/shadowdetection/opencl/OpenCLToolsPredict.cpp
 
 ${OBJECTDIR}/src/cpp/shadowdetection/opencv/OpenCV2Tools.o: src/cpp/shadowdetection/opencv/OpenCV2Tools.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/opencv
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/opencv/OpenCV2Tools.o src/cpp/shadowdetection/opencv/OpenCV2Tools.cpp
+	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/opencv/OpenCV2Tools.o src/cpp/shadowdetection/opencv/OpenCV2Tools.cpp
 
 ${OBJECTDIR}/src/cpp/shadowdetection/opencv/OpenCVTools.o: src/cpp/shadowdetection/opencv/OpenCVTools.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/opencv
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/opencv/OpenCVTools.o src/cpp/shadowdetection/opencv/OpenCVTools.cpp
+	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/opencv/OpenCVTools.o src/cpp/shadowdetection/opencv/OpenCVTools.cpp
 
 ${OBJECTDIR}/src/cpp/shadowdetection/tools/svm/TrainingSet.o: src/cpp/shadowdetection/tools/svm/TrainingSet.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/tools/svm
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/tools/svm/TrainingSet.o src/cpp/shadowdetection/tools/svm/TrainingSet.cpp
+	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/tools/svm/TrainingSet.o src/cpp/shadowdetection/tools/svm/TrainingSet.cpp
 
 ${OBJECTDIR}/src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.o: src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/tools/svm/libsvmopenmp
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.o src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.cpp
+	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.o src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.cpp
 
 ${OBJECTDIR}/src/cpp/shadowdetection/util/Cofig.o: src/cpp/shadowdetection/util/Cofig.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/util
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/util/Cofig.o src/cpp/shadowdetection/util/Cofig.cpp
+	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/util/Cofig.o src/cpp/shadowdetection/util/Cofig.cpp
 
 ${OBJECTDIR}/src/cpp/shadowdetection/util/MemMenager.o: src/cpp/shadowdetection/util/MemMenager.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/util
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/util/MemMenager.o src/cpp/shadowdetection/util/MemMenager.cpp
+	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/util/MemMenager.o src/cpp/shadowdetection/util/MemMenager.cpp
 
 ${OBJECTDIR}/src/cpp/shadowdetection/util/TabParser.o: src/cpp/shadowdetection/util/TabParser.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/util
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/util/TabParser.o src/cpp/shadowdetection/util/TabParser.cpp
+	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/util/TabParser.o src/cpp/shadowdetection/util/TabParser.cpp
 
 ${OBJECTDIR}/src/cpp/shadowdetection/util/Timer.o: src/cpp/shadowdetection/util/Timer.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/util
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/util/Timer.o src/cpp/shadowdetection/util/Timer.cpp
+	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/util/Timer.o src/cpp/shadowdetection/util/Timer.cpp
 
 ${OBJECTDIR}/src/cpp/shadowdetection/util/image/ImageParameters.o: src/cpp/shadowdetection/util/image/ImageParameters.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/util/image
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/util/image/ImageParameters.o src/cpp/shadowdetection/util/image/ImageParameters.cpp
+	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/util/image/ImageParameters.o src/cpp/shadowdetection/util/image/ImageParameters.cpp
 
 ${OBJECTDIR}/src/cpp/shadowdetection/util/libsvm/SvmPredict.o: src/cpp/shadowdetection/util/libsvm/SvmPredict.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/util/libsvm
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/util/libsvm/SvmPredict.o src/cpp/shadowdetection/util/libsvm/SvmPredict.cpp
+	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/util/libsvm/SvmPredict.o src/cpp/shadowdetection/util/libsvm/SvmPredict.cpp
 
 ${OBJECTDIR}/src/cpp/thirdparty/lib_svm/svm.o: src/cpp/thirdparty/lib_svm/svm.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/thirdparty/lib_svm
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/thirdparty/lib_svm/svm.o src/cpp/thirdparty/lib_svm/svm.cpp
+	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/thirdparty/lib_svm/svm.o src/cpp/thirdparty/lib_svm/svm.cpp
 
 # Subprojects
 .build-subprojects:

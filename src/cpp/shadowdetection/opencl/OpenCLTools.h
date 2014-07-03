@@ -204,11 +204,12 @@ namespace shadowdetection {
             //======libsvm predict section
         private:
             void createBuffersPredict(  const shadowdetection::util::Matrix<svm_node>& parameters, 
-                                        svm_model* model, size_t& svsWidth);            
+                                        svm_model* model);            
             void setKernelArgsPredict(  uint pixelCount, uint paramsPerPixel, 
-                                        svm_model* model, size_t svsWidth);
+                                        svm_model* model);
             
             bool            modelChanged;
+            size_t          modelSvsWidth;
             cl_mem          clPixelParameters;
             cl_svm_node*    modelSVs;
             cl_mem          clModelSVs;
