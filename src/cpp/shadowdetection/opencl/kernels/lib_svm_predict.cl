@@ -119,7 +119,7 @@ double svm_predict_values(  const svm_model *model, const __global svm_node_floa
         __global const float* sv_coef = model->sv_coef; 
         double sum = 0;
         for(i =0 ; i < model->svsLength; i++){
-            double kVal = k_function(x, xlen, &model->SV[i * model->svsWidth], model->svsWidth, model->param);
+            float kVal = k_function(x, xlen, &model->SV[i * model->svsWidth], model->svsWidth, model->param);
             sum += sv_coef[i] * kVal;
         }
         sum -= model->rho[0];        
@@ -155,13 +155,13 @@ double svm_predict_values(  const svm_model *model, const __global svm_node_floa
                 __global const float* coef2 = &(model->sv_coef[i * model->svsLength]);                                                
                 
                 for(k = 0; k < ci; k++){
-                    double kval = k_function(   x, xlen, 
+                    float kval = k_function(   x, xlen, 
                                                 &model->SV[(si + k) * model->svsWidth], 
                                                 model->svsWidth, model->param);                    
                     sum += coef1[si + k] * kval;//kvalue[si + k];                
                 }
                 for(k = 0; k < cj; k++){
-                    double kval = k_function(   x, xlen, 
+                    float kval = k_function(   x, xlen, 
                                                 &model->SV[(sj + k) * model->svsWidth], 
                                                 model->svsWidth, model->param);
                     sum += coef2[sj + k] * kval;//kvalue[sj + k];
