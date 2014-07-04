@@ -202,7 +202,7 @@ namespace shadowdetection {
                 err_check(err, "OpenclTools::cleanUp clModelLabel", -1);
             }
             if (svCoefs)
-                MemMenager::delocate(svCoefs);            
+                delete svCoefs;            
             if (clModelNsv){
                 err = clReleaseMemObject(clModelNsv);
                 err_check(err, "OpenclTools::cleanUp clModelNsv", -1);

@@ -220,10 +220,10 @@ namespace shadowdetection {
             cl_mem          clModelRHO;
             cl_mem          clModelSVCoefs;
             cl_mem          clModelLabel;
-            cl_double*      svCoefs;
+            shadowdetection::util::Matrix<cl_float>*       svCoefs;
             cl_mem          clModelNsv;
             cl_mem          clPredictResults;
-            cl_double*      modelRHOs;
+            cl_float*       modelRHOs;
         protected:
         public:
             uchar* predict( svm_model* model, 

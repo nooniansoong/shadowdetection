@@ -32,9 +32,9 @@ typedef struct _svm_model
     __global const svm_node_float* SV;
     //switch to one dimension    
     //dimensions are l: nr_class - 1, w: svsLength
-    __global const double* sv_coef;
+    __global const float* sv_coef;
     //dimension is: nr_class * (nr_class - 1) / 2;
-    __global const double* rho;
+    __global const float* rho;
     //dimension is: nr_class * (nr_class - 1) / 2;
 //    double* probA;		/* pariwise probability information */
 //    //dimension is: nr_class * (nr_class - 1) / 2;
@@ -116,7 +116,7 @@ double svm_predict_values(  const svm_model *model, const __global svm_node_floa
        model->param->svm_type == NU_SVR)
     {       
         //sv_coef[0] this is the same
-        __global const double *sv_coef = model->sv_coef; 
+        __global const float* sv_coef = model->sv_coef; 
         double sum = 0;
         for(i =0 ; i < model->svsLength; i++){
             double kVal = k_function(x, xlen, &model->SV[i * model->svsWidth], model->svsWidth, model->param);
@@ -151,8 +151,8 @@ double svm_predict_values(  const svm_model *model, const __global svm_node_floa
                 int cj = model->nSV[j];                
 
                 int k;
-                __global const double *coef1 = &(model->sv_coef[(j - 1) * model->svsLength]);                
-                __global const double *coef2 = &(model->sv_coef[i * model->svsLength]);                                                
+                __global const float* coef1 = &(model->sv_coef[(j - 1) * model->svsLength]);                
+                __global const float* coef2 = &(model->sv_coef[i * model->svsLength]);                                                
                 
                 for(k = 0; k < ci; k++){
                     double kval = k_function(   x, xlen, 
@@ -200,7 +200,7 @@ __kernel void predict(  //input args
                         //model args
                         const int nr_class, const int svsLength,
                         const int svsWidth, __global const svm_node_float* SV,
-                        __global const double* sv_coef, __global const double* rho,
+                        __global const float* sv_coef, __global const float* rho,
                         __global const int* label, __global const int* nSV, const int free_sv,
                         //parameter args
                         const int svm_type, const int kernel_type, const int degree,

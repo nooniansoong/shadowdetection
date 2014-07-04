@@ -38,21 +38,23 @@ namespace shadowdetection {
             return matrix;            
         }
         
-        cl_double* convertSVCoefs(svm_model* model){
+        Matrix<cl_float>* convertSVCoefs(svm_model* model){
             int width = model->l;
             int height = model->nr_class - 1;
-            Matrix<cl_double> matrix(model->sv_coef, width, height);
-            cl_double* retVec = MemMenager::allocate<cl_double>(width * height);
-            const cl_double* vec = matrix;
-            memcpy(retVec, vec, width * height * sizeof(cl_double));
-            return retVec;
+            Matrix<cl_float>* matrix = new Matrix<cl_float>(width, height);
+            for (int i = 0; i < height; i++){
+                for (int j = 0; j < width; j++){
+                    (*matrix)[i][j] = model->sv_coef[i][j];
+                }
+            }
+            return matrix;
         }
         
-        cl_double* convertRHO(svm_model* model){
+        cl_float* convertRHO(svm_model* model){
             int count = model->nr_class * (model->nr_class - 1) / 2;
-            cl_double* retVec = MemMenager::allocate<cl_double>(count);
+            cl_float* retVec = MemMenager::allocate<cl_float>(count);
             for (int i =  0; i < count; i++){
-                retVec[i] = (cl_double)model->rho[i];
+                retVec[i] = model->rho[i];
             }
             return retVec;
         }
@@ -104,18 +106,18 @@ namespace shadowdetection {
                 err_check(err, "OpenclTools::createBuffersPredict clModelSVs", -1);            
                 
                 if (svCoefs)
-                    MemMenager::delocate(svCoefs);
+                    delete svCoefs;
                 svCoefs = convertSVCoefs(model);
-                size = (model->nr_class - 1) * (model->l) * sizeof(cl_double);
-                    if (clModelSVCoefs){
+                size = (model->nr_class - 1) * (model->l) * sizeof(cl_float);
+                if (clModelSVCoefs){
                     err = clReleaseMemObject(clModelSVCoefs);
                     err_check(err, "OpenclTools::createBuffersPredict delete clModelSVCoefs", -1);
                 }
-                clModelSVCoefs = clCreateBuffer(context[2], flag2, size, (cl_double*)svCoefs, &err);
+                clModelSVCoefs = clCreateBuffer(context[2], flag2, size, svCoefs->getVec(), &err);
                 err_check(err, "OpenclTools::createBuffersPredict clModelSVCoefs", -1);            
 
                 int count = model->nr_class * (model->nr_class - 1) / 2;
-                size = count * sizeof(cl_double);
+                size = count * sizeof(cl_float);
                 if (modelRHOs)
                     MemMenager::delocate(modelRHOs);
                 modelRHOs = convertRHO(model);
