@@ -61,7 +61,7 @@ float kfunction_rbf(const __global svm_node* x, const size_t xLen,
                     float gamma){    
     float sum = 0;
     for (int i = 0; i < 1; i++){
-        float d = y[i].value;
+        float d = x[i].value - y[i].value;
         sum += d * d;
     }    
     return exp(-gamma * sum);
