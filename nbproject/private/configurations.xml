@@ -202,17 +202,15 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}" -makeset ls.csv tmpData.svm</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -training bigData1.svm bigModel.model</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" 0.jpg 0Shadow1.jpg</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" tst.csv</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" tstList.csv</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" tst.csv</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" tstList.csv</runcommand>
+        <runcommand>"${OUTPUT_PATH}" tst.csv</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>
         <remove-instrumentation>0</remove-instrumentation>
         <environment>
-          <variable name="LD_LIBRARY_PATH"
-                    value="/opt/AMDAPP/lib/x86_64:/opt/AMDAPP/lib/x86:/usr/local/lib"/>
         </environment>
       </runprofile>
     </conf>

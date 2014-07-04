@@ -146,7 +146,7 @@ namespace shadowdetection {
              * @param deviceID
              * @param listOnly
              */
-            void init(uint platformID, uint deviceID, bool listOnly) throw (SDException&);
+            void init(int platformID, int deviceID, bool listOnly) throw (SDException&);
             /**
              * process image and returns binarized grayscale image with detected shadows (white color)
              * @param image
@@ -213,20 +213,17 @@ namespace shadowdetection {
             void setKernelArgsPredict(  uint pixelCount, uint paramsPerPixel, 
                                         svm_model* model);
             
-            bool            modelChanged;
-            size_t          modelSvsWidth;
-            cl_mem          clPixelParameters;            
+            bool            modelChanged;            
+            cl_mem          clPixelParameters;
+            shadowdetection::util::Matrix<cl_svm_node_float>*    modelSVs;
             cl_mem          clModelSVs;
             cl_mem          clModelRHO;
             cl_mem          clModelSVCoefs;
             cl_mem          clModelLabel;
-            cl_float*       svCoefs;
-            cl_float*       rhos;
+            cl_double*      svCoefs;
             cl_mem          clModelNsv;
             cl_mem          clPredictResults;
-            cl_float        paramGamma;
-            cl_float        paramCoef0;
-            shadowdetection::util::Matrix<cl_svm_node_float>* modelSVs;
+            cl_double*      modelRHOs;
         protected:
         public:
             uchar* predict( svm_model* model, 

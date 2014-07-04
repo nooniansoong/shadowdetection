@@ -39,7 +39,7 @@ namespace shadowdetection{
                     Matrix<cl_svm_node_float>::Vector row = (*nodes)[i];
                     for (int j = 0; j < parameterCount; j++){
                         row[j].index = j + 1;
-                        row[j].value = (float)(*imagePixelsParameters)[i][j];
+                        row[j].value = (*imagePixelsParameters)[i][j];
                     }
                     row[parameterCount].index = -1;
                     row[parameterCount].value = 0.;                    

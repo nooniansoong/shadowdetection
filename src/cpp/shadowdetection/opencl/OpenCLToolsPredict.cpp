@@ -23,30 +23,36 @@ namespace shadowdetection {
             return maxWidth;
         }
         
-        Matrix<cl_svm_node_float>* convertSVs(svm_model* model, size_t& svsWidth){
+        Matrix<cl_svm_node_float>* convertSVs(svm_model* model){
             int height = model->l;
-            int width = getSVsWidth(model);
-            svsWidth = width;
+            int width = getSVsWidth(model);            
             Matrix<cl_svm_node_float>* matrix = new Matrix<cl_svm_node_float>(width, height);
             for (int i = 0; i < height; i++){
                 for (int j = 0; j < width; j++){
                     (*matrix)[i][j].index = model->SV[i][j].index;
-                    (*matrix)[i][j].value = (float)model->SV[i][j].value;
+                    (*matrix)[i][j].value = model->SV[i][j].value;
                     if (model->SV[i][j].index == -1)
                         break;
                 }
             }
-            return matrix;
+            return matrix;            
         }
         
-        cl_float* convertSVCoefs(svm_model* model){
+        cl_double* convertSVCoefs(svm_model* model){
             int width = model->l;
             int height = model->nr_class - 1;
             Matrix<cl_double> matrix(model->sv_coef, width, height);
-            cl_float* retVec = MemMenager::allocate<cl_float>(width * height);
+            cl_double* retVec = MemMenager::allocate<cl_double>(width * height);
             const cl_double* vec = matrix;
-            for (int i = 0; i < width * height; i++){
-                retVec[i] = (cl_float)vec[i];
+            memcpy(retVec, vec, width * height * sizeof(cl_double));
+            return retVec;
+        }
+        
+        cl_double* convertRHO(svm_model* model){
+            int count = model->nr_class * (model->nr_class - 1) / 2;
+            cl_double* retVec = MemMenager::allocate<cl_double>(count);
+            for (int i =  0; i < count; i++){
+                retVec[i] = (cl_double)model->rho[i];
             }
             return retVec;
         }
@@ -58,14 +64,6 @@ namespace shadowdetection {
             else{
                 return model->nr_class * (model->nr_class - 1) / 2;
             }            
-        }
-        
-        cl_float* convertRHO(svm_model* model, size_t& count){
-            count = model->nr_class * (model->nr_class - 1) / 2;
-            cl_float* retArr = MemMenager::allocate<cl_float>(count);
-            for (int i = 0; i < count; i++)
-                retArr[i] = (cl_float)model->rho[i];
-            return retArr;            
         }
         
         void OpenclTools::createBuffersPredict( const Matrix<cl_svm_node_float>& parameters, 
@@ -96,8 +94,8 @@ namespace shadowdetection {
             if (modelChanged){
                 if (modelSVs != 0)
                     delete modelSVs;
-                modelSVs = convertSVs(model, modelSvsWidth);
-                size = modelSvsWidth * model->l * sizeof(cl_svm_node_float);
+                modelSVs = convertSVs(model);
+                size = modelSVs->getWidth() * model->l * sizeof(cl_svm_node_float);
                 if (clModelSVs){
                     err = clReleaseMemObject(clModelSVs);
                     err_check(err, "OpenclTools::createBuffersPredict delete clModelSVs", -1);
@@ -108,25 +106,24 @@ namespace shadowdetection {
                 if (svCoefs)
                     MemMenager::delocate(svCoefs);
                 svCoefs = convertSVCoefs(model);
-                size = (model->nr_class - 1) * (model->l) * sizeof(cl_float);
-                if (clModelSVCoefs){
+                size = (model->nr_class - 1) * (model->l) * sizeof(cl_double);
+                    if (clModelSVCoefs){
                     err = clReleaseMemObject(clModelSVCoefs);
                     err_check(err, "OpenclTools::createBuffersPredict delete clModelSVCoefs", -1);
                 }
-                clModelSVCoefs = clCreateBuffer(context[2], flag2, size, svCoefs, &err);
+                clModelSVCoefs = clCreateBuffer(context[2], flag2, size, (cl_double*)svCoefs, &err);
                 err_check(err, "OpenclTools::createBuffersPredict clModelSVCoefs", -1);            
 
-                //TODO: convert rho to cl_float
-                size_t count;
-                if (rhos)
-                    MemMenager::delocate(rhos);
-                rhos = convertRHO(model, count);
-                size = count * sizeof(cl_float);
+                int count = model->nr_class * (model->nr_class - 1) / 2;
+                size = count * sizeof(cl_double);
+                if (modelRHOs)
+                    MemMenager::delocate(modelRHOs);
+                modelRHOs = convertRHO(model);
                 if (clModelRHO){
                     err = clReleaseMemObject(clModelRHO);
                     err_check(err, "OpenclTools::createBuffersPredict delete clModelRHO", -1);
                 }
-                clModelRHO = clCreateBuffer(context[2], flag2, size, &rhos, &err);
+                clModelRHO = clCreateBuffer(context[2], flag2, size, modelRHOs, &err);
                 err_check(err, "OpenclTools::createBuffersPredict clModelRHO", -1);            
 
                 size = model->nr_class * sizeof(cl_int);
@@ -165,6 +162,7 @@ namespace shadowdetection {
             err_check(err, "OpenclTools::setKernelArgsPredict nr_class", -1);
             err = clSetKernelArg(kernel[5], 4, sizeof(cl_int), &model->l);
             err_check(err, "OpenclTools::setKernelArgsPredict l", -1);            
+            int modelSvsWidth = modelSVs->getWidth();
             err = clSetKernelArg(kernel[5], 5, sizeof(cl_int), &modelSvsWidth);
             err_check(err, "OpenclTools::setKernelArgsPredict svsWidth", -1);
             err = clSetKernelArg(kernel[5], 6, sizeof(cl_mem), &clModelSVs);
@@ -185,11 +183,11 @@ namespace shadowdetection {
             err_check(err, "OpenclTools::setKernelArgsPredict param.kernel_type", -1);
             err = clSetKernelArg(kernel[5], 14, sizeof(cl_int), &model->param.degree);
             err_check(err, "OpenclTools::setKernelArgsPredict param.degree", -1);
-            paramGamma = (cl_float)model->param.gamma;
-            err = clSetKernelArg(kernel[5], 15, sizeof(cl_float), &paramGamma);
+            cl_float gamma = model->param.gamma;
+            err = clSetKernelArg(kernel[5], 15, sizeof(cl_float), &gamma);
             err_check(err, "OpenclTools::setKernelArgsPredict param.gamma", -1);
-            paramCoef0 = (cl_float)model->param.coef0;
-            err = clSetKernelArg(kernel[5], 16, sizeof(cl_float), &paramCoef0);
+            cl_float coef0 = model->param.coef0;
+            err = clSetKernelArg(kernel[5], 16, sizeof(cl_float), &coef0);
             err_check(err, "OpenclTools::setKernelArgsPredict param.coef0", -1);
             //====
             err = clSetKernelArg(kernel[5], 17, sizeof(cl_mem), &clPredictResults);
@@ -214,7 +212,7 @@ namespace shadowdetection {
             err = clEnqueueNDRangeKernel(command_queue[2], kernel[5], 1, NULL, &global_ws, &local_ws, 0, NULL, NULL);
             err_check(err, "OpenclTools::predict clEnqueueNDRangeKernel", -1);
             size_t size = parameters.getHeight() * sizeof(cl_uchar);
-            uchar* retVec = MemMenager::allocate<uchar>(parameters.getHeight());
+            uchar* retVec = MemMenager::allocate<uchar>(numValues);
             err = clEnqueueReadBuffer(command_queue[2], clPredictResults, CL_TRUE, 0, size, retVec, 0, NULL, NULL);
             err_check(err, "OpenclTools::predict clEnqueueReadBuffer", -1);
             clFlush(command_queue[2]);
