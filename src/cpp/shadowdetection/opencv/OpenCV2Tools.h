@@ -81,7 +81,7 @@ namespace shadowdetection {
              * @param pid
              * @param device
              */
-            static void initOpenCL(int pid, int device) throw (SDException&);
+            static void initOpenCL(uint pid, uint device) throw (SDException&);
             //OTZU still not supported
             //static cv::Mat* binarizeOcl(const cv::Mat& image);
             /**

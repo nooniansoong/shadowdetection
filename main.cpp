@@ -340,7 +340,7 @@ int main(int argc, char **argv) {
                 handleException(exception);
                 exit(1);
             }
-            for (int i = 0; i < tp.size(); i++){
+            for (uint i = 0; i < tp.size(); i++){
                 string in = tp.get(i).getKey();
                 string out = tp.get(i).getVal();
                 try{

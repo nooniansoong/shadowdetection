@@ -87,6 +87,7 @@ namespace shadowdetection {
             clModelLabel    = 0;
             svCoefs         = 0;
             clModelNsv      = 0;
+            rhos            = 0;
             
             initWorkVars();
         }
@@ -183,7 +184,7 @@ namespace shadowdetection {
             
             //predict part
             if (modelSVs)
-                MemMenager::delocate(modelSVs);
+                delete modelSVs;
             if (clModelSVs){
                 err = clReleaseMemObject(clModelSVs);
                 err_check(err, "OpenclTools::cleanUp clModelSVs", -1);
@@ -206,6 +207,8 @@ namespace shadowdetection {
                 err = clReleaseMemObject(clModelNsv);
                 err_check(err, "OpenclTools::cleanUp clModelNsv", -1);
             }
+            if (rhos)
+                    MemMenager::delocate(rhos);
             modelChanged = true;
                         
             cleanWorkPart();            
@@ -369,7 +372,7 @@ namespace shadowdetection {
                 uchar**  buffer = 0;
                 buffer = MemMenager::allocate<uchar*>(nb_devices);                
                 if (buffer != 0){                    
-                    for (int i = 0; i < nb_devices; i++){
+                    for (uint i = 0; i < nb_devices; i++){
                         buffer[i] = MemMenager::allocate<uchar>(binarySize[i]);                        
                     }
                     MatrixRaii mRaii((void**)buffer, nb_devices);
@@ -400,7 +403,7 @@ namespace shadowdetection {
             return 0;
         }
         
-        void OpenclTools::init(int platformID, int deviceID, bool listOnly) throw (SDException&) {
+        void OpenclTools::init(uint platformID, uint deviceID, bool listOnly) throw (SDException&) {
             char info[256];
             cl_platform_id platform[MAX_PLATFORMS];
             cl_uint num_platforms;                        
@@ -409,7 +412,7 @@ namespace shadowdetection {
             err_check(err, "clGetPlatformIDs", -1);
             cout << "Found " << num_platforms << " platforms." << endl;                        
             cout << "=============" << endl;
-            for (int i = 0; i < num_platforms; i++) {
+            for (uint i = 0; i < num_platforms; i++) {
                 cl_device_id devices[MAX_DEVICES];
                 cl_uint num_devices;
                 err = clGetPlatformInfo(platform[i], CL_PLATFORM_NAME, 256, info, 0);
@@ -424,7 +427,7 @@ namespace shadowdetection {
                     err_check(err, "clGetDeviceIDs", -1);
                     cout << "Found " << num_devices << " devices" << endl;
 
-                    for (int j = 0; j < num_devices; j++) {
+                    for (uint j = 0; j < num_devices; j++) {
                         err = clGetDeviceInfo(devices[j], CL_DEVICE_NAME, 256, info, 0);
                         err_check(err, "clGetDeviceInfo", -1);
                         cl_device_type type;

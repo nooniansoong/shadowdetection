@@ -56,7 +56,7 @@ namespace shadowdetection {
                 if (file.is_open()) {
                     size_t size = images.size();
                     bool first = true;
-                    for (int i = 0; i < size; i++) {
+                    for (uint i = 0; i < size; i++) {
                         KeyVal<string> pair = images[i];
                         cout << "processing: " << pair.getKey() << endl;
                         int dimension = 0;

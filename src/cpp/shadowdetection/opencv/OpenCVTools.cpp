@@ -9,10 +9,10 @@ namespace shadowdetection {
         using namespace shadowdetection::util;
 
         void OpenCvTools::RGBtoHSI_1(unsigned char r, unsigned char g, unsigned char b, unsigned int& h, unsigned char& s, unsigned char& i) {
-            unsigned char min, max;// delta;
+            unsigned char min;//, max;// delta;
 
             min = minF(r, g, b);
-            max = maxF(r, g, b);
+            //max = maxF(r, g, b);
             i = (unsigned char) (((float) (r + g + b)) / 3.f);
 
             //delta = max - min;
@@ -52,13 +52,12 @@ namespace shadowdetection {
         }
 
         void OpenCvTools::RGBtoHSI_2(unsigned char r, unsigned char g, unsigned char b, unsigned int& h, unsigned char& s, unsigned char& i) {
-            float min, max, delta;
+            float min;//, max;
 
             min = minF(r, g, b);
-            max = maxF(r, g, b);
+            //max = maxF(r, g, b);
             i = (unsigned char) (((float) (r + g + b)) / 3.f);
-
-            delta = max - min;
+            
             float fS;
             float fH;
 
@@ -207,7 +206,7 @@ namespace shadowdetection {
                     int index = i * width * channels + j * channels;
 
                     uint H = inputHSI[index + 0];
-                    uint S = inputHSI[index + 1];
+                    //uint S = inputHSI[index + 1];
                     uint I = inputHSI[index + 2];
 
                     float ratio = (float) (H) / ((float) (I) + 1.f);
@@ -238,7 +237,7 @@ namespace shadowdetection {
         IplImage* OpenCvTools::binarize(IplImage* input) {
             IplImage* image = cvCreateImage(cvSize(input->width, input->height), input->depth, input->nChannels);
 
-            double thresh = cvThreshold(input, image, 0, 255, CV_THRESH_BINARY | CV_THRESH_OTSU);
+            cvThreshold(input, image, 0, 255, CV_THRESH_BINARY | CV_THRESH_OTSU);
             return image;
         }
 

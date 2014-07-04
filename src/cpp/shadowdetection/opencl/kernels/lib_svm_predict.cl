@@ -1,12 +1,10 @@
-#pragma OPENCL EXTENSION cl_khr_fp64: enable
-
 enum { C_SVC = 0, NU_SVC, ONE_CLASS, EPSILON_SVR, NU_SVR };	/* svm_type */
 enum { LINEAR = 0, POLY, RBF, SIGMOID, PRECOMPUTED };           /* kernel_type */
 
 typedef struct _svm_node
 {
     int index;
-    double value;
+    float value;
 }svm_node;
 
 typedef struct _svm_parameter
@@ -14,8 +12,8 @@ typedef struct _svm_parameter
     int svm_type;
     int kernel_type;
     int degree;	/* for poly */
-    double gamma;	/* for poly/rbf/sigmoid */
-    double coef0;	/* for poly/sigmoid */    
+    float gamma;	/* for poly/rbf/sigmoid */
+    float coef0;	/* for poly/sigmoid */    
 }svm_parameter;
 
 typedef struct _svm_model
@@ -28,13 +26,13 @@ typedef struct _svm_model
     __global const svm_node* SV;
     //switch to one dimension    
     //dimensions are l: nr_class - 1, w: svsLength
-    __global const double* sv_coef;
+    __global const float* sv_coef;
     //dimension is: nr_class * (nr_class - 1) / 2;
-    __global const double* rho;
+    __global const float* rho;
     //dimension is: nr_class * (nr_class - 1) / 2;
-//    double* probA;		/* pariwise probability information */
+//    float* probA;		/* pariwise probability information */
 //    //dimension is: nr_class * (nr_class - 1) / 2;
-//    double* probB;
+//    float* probB;
 //    //passing null
 //    int* sv_indices;        /* sv_indices[0,...,nSV-1] are values in [1,...,num_traning_data] to indicate SVs in the training set */
 
@@ -49,80 +47,40 @@ typedef struct _svm_model
                                 /* 0 if svm_model is created by svm_train */
 }svm_model;
 
-double my_dot(const __global svm_node *px, const __global svm_node *py)
-{
-    double sum = 0;
-    while(px->index != -1 && py->index != -1)
-    {
-        if(px->index == py->index)
-        {
-            sum += px->value * py->value;
-            ++px;
-            ++py;
-        }
-        else
-        {
-            if(px->index > py->index)
-                ++py;
-            else
-                ++px;
-        }
+float my_dot(const __global svm_node *px, const __global svm_node *py, const size_t len)
+{    
+    float sum = 0;
+    for (size_t i = 0; i < len; i++){        
+        sum += px[i].value * py[i].value;                    
     }
     return sum;
 }
 
-double kfunction_rbf(   const __global svm_node* x, const size_t xLen,
-                        const __global svm_node* y, const size_t yLen,
-                        double gamma){
-    double sum = 0;
-    for (int i = 0; i < xLen; i++){
-        double d = x[i].value - y[i].value;
+float kfunction_rbf(const __global svm_node* x, const size_t xLen,
+                    const __global svm_node* y, const size_t yLen,
+                    float gamma){    
+    float sum = 0;
+    for (int i = 0; i < 1; i++){
+        float d = y[i].value;
         sum += d * d;
-    }
-//    while (x->index != -1 && y->index != -1) {
-//        if (x->index == y->index) {
-//            double d = x->value - y->value;
-//            sum += d*d;
-//            ++x;
-//            ++y;
-//        } else {
-//            if (x->index > y->index) {
-//                sum += y->value * y->value;
-//                ++y;
-//            } else {
-//                sum += x->value * x->value;
-//                ++x;
-//            }
-//        }
-//    }
-//
-//    while (x->index != -1) {
-//        sum += x->value * x->value;
-//        ++x;
-//    }
-//
-//    while (y->index != -1) {
-//        sum += y->value * y->value;
-//        ++y;
-//    }
-
+    }    
     return exp(-gamma * sum);
 }
 
-double k_function(  const __global svm_node *x, const size_t xLen,
+float k_function(   const __global svm_node *x, const size_t xLen,
                     const __global svm_node *y, const size_t yLen, 
-                    const svm_parameter* param) {
+                    const svm_parameter* param) {    
     switch (param->kernel_type) {
         case LINEAR:
-            return my_dot(x, y);
+            return my_dot(x, y, xLen);
         case POLY:
-            return pow(param->gamma * my_dot(x, y) + param->coef0, param->degree);
+            return pow(param->gamma * my_dot(x, y, xLen) + param->coef0, param->degree);
         case RBF:
         {
             return kfunction_rbf(x, xLen, y, yLen, param->gamma);
         }
         case SIGMOID:
-            return tanh(param->gamma * my_dot(x, y) + param->coef0);
+            return tanh(param->gamma * my_dot(x, y, xLen) + param->coef0);
         case PRECOMPUTED: //x: test (validation), y: SV
             return x[(int)(y->value)].value;
         default:
@@ -130,19 +88,19 @@ double k_function(  const __global svm_node *x, const size_t xLen,
     }
 }
 
-double svm_predict_values(  const svm_model *model, const __global svm_node *x,
+float svm_predict_values(  const svm_model *model, const __global svm_node *x,
                             const size_t xlen, __local int* start, __local int* vote)
-{
+{    
     int i;
     if(model->param->svm_type == ONE_CLASS ||
        model->param->svm_type == EPSILON_SVR ||
        model->param->svm_type == NU_SVR)
     {       
         //sv_coef[0] this is the same
-        __global const double *sv_coef = model->sv_coef; 
-        double sum = 0;
+        __global const float *sv_coef = model->sv_coef; 
+        float sum = 0;
         for(i =0 ; i < model->svsLength; i++){
-            double kVal = k_function(x, xlen, &model->SV[i * model->svsWidth], model->svsWidth, model->param);
+            float kVal = k_function(x, xlen, &model->SV[i * model->svsWidth], model->svsWidth, model->param);
             sum += sv_coef[i] * kVal;
         }
         sum -= model->rho[0];        
@@ -167,24 +125,24 @@ double svm_predict_values(  const svm_model *model, const __global svm_node *x,
         for(i = 0; i < nr_class; i++)
             for(int j = i + 1; j < nr_class; j++)
             {
-                double sum = 0;
+                float sum = 0;
                 int si = start[i];                
                 int sj = start[j];                
                 int ci = model->nSV[i];                
                 int cj = model->nSV[j];                
 
                 int k;
-                __global const double *coef1 = &(model->sv_coef[(j - 1) * model->svsLength]);                
-                __global const double *coef2 = &(model->sv_coef[i * model->svsLength]);                                                
+                __global const float *coef1 = &(model->sv_coef[(j - 1) * model->svsLength]);                
+                __global const float *coef2 = &(model->sv_coef[i * model->svsLength]);                                                
                 
                 for(k = 0; k < ci; k++){
-                    double kval = k_function(   x, xlen, 
+                    float kval = k_function(    x, xlen, 
                                                 &model->SV[(si + k) * model->svsWidth], 
                                                 model->svsWidth, model->param);                    
                     sum += coef1[si + k] * kval;//kvalue[si + k];                
                 }
                 for(k = 0; k < cj; k++){
-                    double kval = k_function(   x, xlen, 
+                    float kval = k_function(    x, xlen, 
                                                 &model->SV[(sj + k) * model->svsWidth], 
                                                 model->svsWidth, model->param);
                     sum += coef2[sj + k] * kval;//kvalue[sj + k];
@@ -211,10 +169,10 @@ double svm_predict_values(  const svm_model *model, const __global svm_node *x,
 //kvalue size = svsLength, needs to be just allocated
 //start size = nr_class, needs to be just allocated
 //vote size = nr_class, needs to be just allocated
-double svm_predict( const svm_model *model, const __global svm_node *x, const size_t xLen,
+float svm_predict( const svm_model *model, const __global svm_node *x, const size_t xLen,
                     __local int* start, __local int* vote){
                         
-    double pred_result = svm_predict_values(model, x, xLen, start, vote);    
+    float pred_result = svm_predict_values(model, x, xLen, start, vote);    
     return pred_result;    
 }
 
@@ -223,11 +181,11 @@ __kernel void predict(  //input args
                         //model args
                         const int nr_class, const int svsLength,
                         const int svsWidth, __global const svm_node* SV,
-                        __global const double* sv_coef, __global const double* rho,
+                        __global const float* sv_coef, __global const float* rho,
                         __global const int* label, __global const int* nSV, const int free_sv,
                         //parameter args
                         const int svm_type, const int kernel_type, const int degree,
-                        const double gamma, const double coef0,
+                        const float gamma, const float coef0,
                         //return args
                         __global uchar* results,
                         //prealocated args, specified for work group                        
@@ -260,6 +218,6 @@ __kernel void predict(  //input args
         __local int* start = startMat + (localIndex * nr_class);
         __local int* vote = voteMat + (localIndex * nr_class);
         
-        results[index] = svm_predict(&model, currX, xNumOfParameters, start, vote);
+        results[index] = (uchar)svm_predict(&model, currX, xNumOfParameters, start, vote);
     }
 }
