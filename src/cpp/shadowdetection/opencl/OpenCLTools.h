@@ -208,14 +208,14 @@ namespace shadowdetection {
             int64_t durrReadBuff;
             //======libsvm predict section
         private:
-            void createBuffersPredict(  const shadowdetection::util::Matrix<cl_svm_node_float>& parameters, 
+            void createBuffersPredict(  const shadowdetection::util::Matrix<float>& parameters, 
                                         svm_model* model);            
             void setKernelArgsPredict(  uint pixelCount, uint paramsPerPixel, 
                                         svm_model* model);
             
             bool            modelChanged;            
             cl_mem          clPixelParameters;
-            shadowdetection::util::Matrix<cl_svm_node_float>*    modelSVs;
+            shadowdetection::util::Matrix<cl_float>*    modelSVs;
             cl_mem          clModelSVs;
             cl_mem          clModelRHO;
             cl_mem          clModelSVCoefs;
@@ -227,7 +227,7 @@ namespace shadowdetection {
         protected:
         public:
             uchar* predict( svm_model* model, 
-                            const shadowdetection::util::Matrix<cl_svm_node_float>& parameters);
+                            const shadowdetection::util::Matrix<float>& parameters);
             void markModelChanged();
         };
 

@@ -23,14 +23,14 @@ namespace shadowdetection {
             return maxWidth;
         }
         
-        Matrix<cl_svm_node_float>* convertSVs(svm_model* model){
+        Matrix<float>* convertSVs(svm_model* model){
             int height = model->l;
             int width = getSVsWidth(model);            
-            Matrix<cl_svm_node_float>* matrix = new Matrix<cl_svm_node_float>(width, height);
+            Matrix<float>* matrix = new Matrix<float>(width, height);
             for (int i = 0; i < height; i++){
                 for (int j = 0; j < width; j++){
-                    (*matrix)[i][j].index = model->SV[i][j].index;
-                    (*matrix)[i][j].value = model->SV[i][j].value;
+                    //(*matrix)[i][j].index = model->SV[i][j].index;
+                    (*matrix)[i][j] = model->SV[i][j].value;
                     if (model->SV[i][j].index == -1)
                         break;
                 }
@@ -68,7 +68,7 @@ namespace shadowdetection {
             }            
         }
         
-        void OpenclTools::createBuffersPredict( const Matrix<cl_svm_node_float>& parameters, 
+        void OpenclTools::createBuffersPredict( const Matrix<float>& parameters, 
                                                 svm_model* model){
             cl_device_type type;
             clGetDeviceInfo(device, CL_DEVICE_TYPE, sizeof(cl_device_type), &type, 0);
@@ -87,8 +87,8 @@ namespace shadowdetection {
                 throw exc;
             }
             
-            size_t size = parameters.getWidth() * parameters.getHeight() * sizeof(cl_svm_node_float);
-            cl_svm_node_float* pNodes = parameters.getVec();
+            size_t size = parameters.getWidth() * parameters.getHeight() * sizeof(cl_float);
+            cl_float* pNodes = parameters.getVec();
             clPixelParameters = clCreateBuffer( context[2], flag2, size, 
                                                 pNodes, &err);
             err_check(err, "OpenclTools::createBuffersPredict clPixelParameters", -1);            
@@ -97,7 +97,7 @@ namespace shadowdetection {
                 if (modelSVs != 0)
                     delete modelSVs;
                 modelSVs = convertSVs(model);
-                size = modelSVs->getWidth() * model->l * sizeof(cl_svm_node_float);
+                size = modelSVs->getWidth() * model->l * sizeof(cl_float);
                 if (clModelSVs){
                     err = clReleaseMemObject(clModelSVs);
                     err_check(err, "OpenclTools::createBuffersPredict delete clModelSVs", -1);
@@ -204,7 +204,7 @@ namespace shadowdetection {
             err_check(err, "OpenclTools::setKernelArgsPredict vote", -1);            
         }
         
-        uchar* OpenclTools::predict(svm_model* model, const Matrix<cl_svm_node_float>& parameters){            
+        uchar* OpenclTools::predict(svm_model* model, const Matrix<float>& parameters){            
             createBuffersPredict(parameters, model);            
             setKernelArgsPredict(parameters.getHeight(), parameters.getWidth(), model);
             

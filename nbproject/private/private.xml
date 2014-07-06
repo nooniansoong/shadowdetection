@@ -7,19 +7,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/marko/Dev/shadowdetection_tmp/src/cpp/shadowdetection/opencl/kernels/lib_svm_predict.cl</file>
-            <file>file:/home/marko/Dev/shadowdetection_tmp/src/cpp/shadowdetection/opencl/OpenCLToolsPredict.cpp</file>
-            <file>file:/home/marko/Dev/shadowdetection_tmp/src/cpp/shadowdetection/opencl/OpenCLTools.h</file>
-            <file>file:/home/marko/Dev/shadowdetection_tmp/src/cpp/shadowdetection/util/Matrix.h</file>
-            <file>file:/home/marko/Dev/shadowdetection_tmp/src/cpp/shadowdetection/opencl/OpenCLTools.cpp</file>
-            <file>file:/home/marko/Dev/shadowdetection_tmp/src/cpp/shadowdetection/util/libsvm/SvmPredict.cpp</file>
-            <file>file:/home/marko/Dev/shadowdetection_tmp/main.cpp</file>
-            <file>file:/home/marko/Dev/shadowdetection_tmp/src/cpp/shadowdetection/opencv/OpenCV2Tools.cpp</file>
-            <file>file:/home/marko/Dev/shadowdetection_tmp/ShadowDetectionConfig.xml</file>
-            <file>file:/home/marko/Dev/shadowdetection_tmp/src/cpp/typedefs.h</file>
-            <file>file:/home/marko/Dev/shadowdetection_tmp/src/cpp/shadowdetection/util/Singleton.h</file>
-            <file>file:/home/marko/Dev/shadowdetection_tmp/src/cpp/shadowdetection/util/raii/RAIIS.h</file>
-            <file>file:/home/marko/Dev/shadowdetection_tmp/src/cpp/shadowdetection/util/MemMenager.h</file>
+            <file>file:/data/Dev/shadowdetection_tmp/src/cpp/thirdparty/lib_svm/svm.cpp</file>
+            <file>file:/data/Dev/shadowdetection_tmp/ShadowDetectionConfig.xml</file>
+            <file>file:/data/Dev/shadowdetection_tmp/src/cpp/shadowdetection/opencl/OpenCLTools.h</file>
+            <file>file:/data/Dev/shadowdetection_tmp/src/cpp/shadowdetection/util/libsvm/SvmPredict.cpp</file>
+            <file>file:/data/Dev/shadowdetection_tmp/src/cpp/shadowdetection/opencl/OpenCLToolsPredict.cpp</file>
+            <file>file:/data/Dev/shadowdetection_tmp/src/cpp/shadowdetection/opencl/kernels/lib_svm.cl</file>
+            <file>file:/data/Dev/shadowdetection_tmp/src/cpp/shadowdetection/opencl/kernels/lib_svm_predict.cl</file>
+            <file>file:/data/Dev/shadowdetection_tmp/src/cpp/shadowdetection/opencl/OpenCLTools.cpp</file>
         </group>
     </open-files>
 </project-private>

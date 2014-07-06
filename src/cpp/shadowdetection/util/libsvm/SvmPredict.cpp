@@ -33,19 +33,19 @@ namespace shadowdetection{
                 OpenclTools::getInstancePtr()->markModelChanged();
             }
             
-            Matrix<cl_svm_node_float>* convertToMatrix(const Matrix<float>* imagePixelsParameters, const int& pixCount, const int& parameterCount){
-                Matrix<cl_svm_node_float>* nodes = new Matrix<cl_svm_node_float>(parameterCount + 1, pixCount);
-                for (int i = 0; i < pixCount; i++){
-                    Matrix<cl_svm_node_float>::Vector row = (*nodes)[i];
-                    for (int j = 0; j < parameterCount; j++){
-                        row[j].index = j + 1;
-                        row[j].value = (*imagePixelsParameters)[i][j];
-                    }
-                    row[parameterCount].index = -1;
-                    row[parameterCount].value = 0.;                    
-                }                                
-                return nodes;
-            }
+//            Matrix<float>* convertToMatrix(const Matrix<float>* imagePixelsParameters, const int& pixCount, const int& parameterCount){
+//                Matrix<cl_svm_node_float>* nodes = new Matrix<cl_svm_node_float>(parameterCount + 1, pixCount);
+//                for (int i = 0; i < pixCount; i++){
+//                    Matrix<cl_svm_node_float>::Vector row = (*nodes)[i];
+//                    for (int j = 0; j < parameterCount; j++){
+//                        row[j].index = j + 1;
+//                        row[j].value = (*imagePixelsParameters)[i][j];
+//                    }
+//                    row[parameterCount].index = -1;
+//                    row[parameterCount].value = 0.;                    
+//                }                                
+//                return nodes;
+//            }
             
             uchar* SvmPredict::predict(const Matrix<float>* imagePixelsParameters, const int& pixCount, const int& parameterCount) throw(SDException&){
                 if (model == 0){
@@ -78,9 +78,9 @@ namespace shadowdetection{
                     SDException e(SHADOW_OPENCL_TOOLS_NOT_INITIALIZED, "SvmPredict::predict");
                     throw e;
                 }
-                Matrix<cl_svm_node_float>* convertedParams = convertToMatrix(imagePixelsParameters, pixCount, parameterCount);
-                ret = OpenclTools::getInstancePtr()->predict(model, *convertedParams);
-                delete convertedParams;
+                //Matrix<cl_svm_node_float>* convertedParams = convertToMatrix(imagePixelsParameters, pixCount, parameterCount);
+                ret = OpenclTools::getInstancePtr()->predict(model, *imagePixelsParameters);
+                //delete convertedParams;
 #endif
                 return ret;
             }
