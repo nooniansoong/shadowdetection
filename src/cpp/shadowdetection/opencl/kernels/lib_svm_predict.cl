@@ -59,32 +59,45 @@ float my_dot(const __global float* px, const size_t xLen, const __global float *
     for (int i = 0; i < xLen; i++){
         sum += px[i] * py[i];
     }
-//    while(px->index != -1 && py->index != -1)
-//    {
-//        if(px->index == py->index)
-//        {
-//            sum += px->value * py->value;
-//            ++px;
-//            ++py;
-//        }
-//        else
-//        {
-//            if(px->index > py->index)
-//                ++py;
-//            else
-//                ++px;
-//        }
-//    }
     return sum;
 }
 
 float kfunction_rbf(    const __global float* x, const size_t xLen,
                         const __global float* y, const size_t yLen,
                         float gamma){
-    float sum = 0;
-    for (int i = 0; i < xLen; i++){
-        float d = x[i] - y[i];
-        sum += d * d;
+    float sum = 0;    
+    int i = 0;
+    while (i < xLen){
+        int remain = xLen - i;
+        if (remain >= 8){
+            float8 xv = vload8(i / 8, x);
+            float8 yv = vload8(i / 8, y);
+            float8 d = xv - yv;
+            d *= d;
+            sum += d.s0 + d.s1 + d.s2 + d.s3 + d.s4 + d.s5 + d.s6 + d.s7;
+            i += 8; 
+        }
+        else if (remain >= 4){
+            float4 xv = vload4(i / 4, x);
+            float4 yv = vload4(i / 4, y);
+            float4 d = xv - yv;            
+            d *= d;            
+            sum += d.x + d.y + d.z + d.w;
+            i += 4;
+        }
+        else if (remain >= 2){
+            float2 xv = vload2(i / 4, x);
+            float2 yv = vload2(i / 4, y);
+            float2 d = xv - yv;
+            d *= d;            
+            sum += d.x + d.y;
+            i += 2;
+        }
+        else if (remain >= 1){
+            float d = x[i]  - y[i];
+            sum += d * d;
+            i++;
+        }        
     }
     return exp(-gamma * sum);
 }
