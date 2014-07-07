@@ -111,7 +111,7 @@ namespace shadowdetection {
                 SDException exc(SHADOW_NO_MEM, "binarize");
                 throw exc;
             }
-            double thresh = threshold(*input, *image, 0, 255, CV_THRESH_BINARY | CV_THRESH_OTSU);
+            threshold(*input, *image, 0, 255, CV_THRESH_BINARY | CV_THRESH_OTSU);
             return image;
         }
         
@@ -127,7 +127,7 @@ namespace shadowdetection {
         }
         
 #ifdef _OPENCL 
-        void OpenCV2Tools::initOpenCL(int pid, int device) throw (SDException&) {
+        void OpenCV2Tools::initOpenCL(uint pid, uint device) throw (SDException&) {
 #if defined _AMD || defined _MAC
             int typeFlag = cv::ocl::CVCL_DEVICE_TYPE_ALL;
 #else
@@ -146,7 +146,8 @@ namespace shadowdetection {
 #else
             int devnums = cv::ocl::getOpenCLDevices(devicesInfo, typeFlag, (pid < 0) ? NULL : platformsInfo[pid]);
 #endif
-            if (device >= devnums) {
+            //trust me, I know what I'm doing :)
+            if ((int)device >= devnums) {
                 SDException exc(SHADOW_NO_OPENCL_DEVICE, "OpenCV Init OpenCL devices");
                 throw exc;
             }            

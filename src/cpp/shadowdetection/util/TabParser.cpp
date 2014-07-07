@@ -43,7 +43,7 @@ namespace shadowdetection {
             return container.size();
         }
         
-        KeyVal<std::string> TabParser::get(int i)throw (SDException&){
+        KeyVal<std::string> TabParser::get(uint i)throw (SDException&){
             if (i >= size()){
                 SDException exc(SHADOW_OUT_OF_BOUNDS, "Get Tab elemenent");
                 throw exc;

@@ -106,6 +106,7 @@ template<typename T> class KeyVal{
         KeyVal& operator= (KeyVal other){
             key = other.key;
             val = other.val;
+            return *this;
         }
         
         T getKey(){

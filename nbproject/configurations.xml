@@ -1022,6 +1022,7 @@
             <Elem>_AMD</Elem>
             <Elem>_OPENCL</Elem>
           </preprocessorList>
+          <warningLevel>2</warningLevel>
         </ccTool>
         <linkerTool>
           <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection</output>

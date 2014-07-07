@@ -107,8 +107,7 @@ namespace shadowdetection {
                     
                     void (*print_func)(const char*) = NULL;	// default printing to stdout
                     svm_set_print_string_function(print_func);
-                    
-                    const char *error_msg;
+                                        
                     cout << "Start read problem" << endl;
                     read_problem(input_file_name);
                     cout << "Finished read problem" << endl;

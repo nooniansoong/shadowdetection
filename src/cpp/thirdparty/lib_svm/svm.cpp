@@ -1314,7 +1314,9 @@ public:
         Qfloat *buf = buffer[next_buffer];
         next_buffer = 1 - next_buffer;
         schar si = sign[i];
+#ifndef _OPENCL
 #pragma omp parallel for private(j)
+#endif
         for (j = 0; j < len; j++)
             buf[j] = (Qfloat) si * (Qfloat) sign[j] * data[index[j]];
         return buf;

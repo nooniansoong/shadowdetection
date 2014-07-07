@@ -87,6 +87,7 @@ namespace shadowdetection {
             clModelLabel    = 0;
             svCoefs         = 0;
             clModelNsv      = 0;
+            modelRHOs       = 0;
             
             initWorkVars();
         }
@@ -183,7 +184,7 @@ namespace shadowdetection {
             
             //predict part
             if (modelSVs)
-                MemMenager::delocate(modelSVs);
+                delete modelSVs;
             if (clModelSVs){
                 err = clReleaseMemObject(clModelSVs);
                 err_check(err, "OpenclTools::cleanUp clModelSVs", -1);
@@ -201,11 +202,13 @@ namespace shadowdetection {
                 err_check(err, "OpenclTools::cleanUp clModelLabel", -1);
             }
             if (svCoefs)
-                MemMenager::delocate(svCoefs);            
+                delete svCoefs;            
             if (clModelNsv){
                 err = clReleaseMemObject(clModelNsv);
                 err_check(err, "OpenclTools::cleanUp clModelNsv", -1);
             }
+            if (modelRHOs)
+                MemMenager::delocate(modelRHOs);
             modelChanged = true;
                         
             cleanWorkPart();            

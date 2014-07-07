@@ -39,6 +39,11 @@ namespace shadowdetection {
             cl_int index;
             cl_double value;
         };
+        
+        struct cl_svm_node_float{
+            cl_int index;
+            cl_float value;
+        };
 
         class OpenclTools : public shadowdetection::util::Singleton<OpenclTools>{
             friend class shadowdetection::util::Singleton<OpenclTools>;
@@ -203,26 +208,26 @@ namespace shadowdetection {
             int64_t durrReadBuff;
             //======libsvm predict section
         private:
-            void createBuffersPredict(  const shadowdetection::util::Matrix<svm_node>& parameters, 
+            void createBuffersPredict(  const shadowdetection::util::Matrix<float>& parameters, 
                                         svm_model* model);            
             void setKernelArgsPredict(  uint pixelCount, uint paramsPerPixel, 
                                         svm_model* model);
             
-            bool            modelChanged;
-            size_t          modelSvsWidth;
+            bool            modelChanged;            
             cl_mem          clPixelParameters;
-            cl_svm_node*    modelSVs;
+            shadowdetection::util::Matrix<cl_float>*    modelSVs;
             cl_mem          clModelSVs;
             cl_mem          clModelRHO;
             cl_mem          clModelSVCoefs;
             cl_mem          clModelLabel;
-            cl_double*      svCoefs;
+            shadowdetection::util::Matrix<cl_float>*       svCoefs;
             cl_mem          clModelNsv;
             cl_mem          clPredictResults;
+            cl_float*       modelRHOs;
         protected:
         public:
             uchar* predict( svm_model* model, 
-                            const shadowdetection::util::Matrix<svm_node>& parameters);
+                            const shadowdetection::util::Matrix<float>& parameters);
             void markModelChanged();
         };
 

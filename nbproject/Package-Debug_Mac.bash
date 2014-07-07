@@ -6,16 +6,16 @@
 
 # Macros
 TOP=`pwd`
-CND_PLATFORM=GNU-MacOSX
+CND_PLATFORM=GNU-Linux-x86
 CND_CONF=Debug_Mac
 CND_DISTDIR=dist
 CND_BUILDDIR=build
-CND_DLIB_EXT=dylib
+CND_DLIB_EXT=so
 NBTMPDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection
-OUTPUT_BASENAME=shadowdetection
-PACKAGE_TOP_DIR=shadowdetection/
+OUTPUT_PATH=${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection_tmp
+OUTPUT_BASENAME=shadowdetection_tmp
+PACKAGE_TOP_DIR=shadowdetectiontmp/
 
 # Functions
 function checkReturnCode
@@ -60,15 +60,15 @@ mkdir -p ${NBTMPDIR}
 
 # Copy files and create directories and links
 cd "${TOP}"
-makeDirectory "${NBTMPDIR}/shadowdetection/bin"
+makeDirectory "${NBTMPDIR}/shadowdetectiontmp/bin"
 copyFileToTmpDir "${OUTPUT_PATH}" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}" 0755
 
 
 # Generate tar file
 cd "${TOP}"
-rm -f ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/shadowdetection.tar
+rm -f ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/shadowdetectiontmp.tar
 cd ${NBTMPDIR}
-tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/shadowdetection.tar *
+tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/shadowdetectiontmp.tar *
 checkReturnCode
 
 # Cleanup

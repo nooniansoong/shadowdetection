@@ -43,7 +43,7 @@ namespace shadowdetection {
              * @return 
              * pair at position i
              */
-            KeyVal<std::string> get(int i) throw (SDException&);
+            KeyVal<std::string> get(uint i) throw (SDException&);
         };
 
     }
