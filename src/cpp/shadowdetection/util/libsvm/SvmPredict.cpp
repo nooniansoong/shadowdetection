@@ -30,7 +30,9 @@ namespace shadowdetection{
                     SDException e(SHADOW_READ_UNABLE, "SvmPredict::loadModel");
                     throw e;
                 }
+#ifdef _OPENCL
                 OpenclTools::getInstancePtr()->markModelChanged();
+#endif
             }
             
 //            Matrix<float>* convertToMatrix(const Matrix<float>* imagePixelsParameters, const int& pixCount, const int& parameterCount){

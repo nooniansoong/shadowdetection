@@ -118,13 +118,11 @@ void processSingleCPU(const char* out, IplImage* image) {
             SvmPredict::getInstancePtr()->loadModel(modelFile);
         }
         uchar* predicted = SvmPredict::getInstancePtr()->predict(parameters, pixCount, parameterCount);
-        VectorRaii vraii(predicted);
-        //FileSaver<uchar>::saveToFile("myPredictedS1.out", predicted, pixCount);
+        VectorRaii vraii(predicted);        
         for (int i = 0; i < pixCount; i++)
             predicted[i] *= 255;
         IplImage* predictedImage = OpenCvTools::get8bitImage(predicted, height, width);
-        ImageRaii iraii2(predictedImage);
-        //cvSaveImage("predicted.jpg", predictedImage);
+        ImageRaii iraii2(predictedImage);        
         processedImage = OpenCvTools::joinTwo(pi, predictedImage);               
     }
     else{

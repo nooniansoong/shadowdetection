@@ -66,8 +66,6 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" 5.jpg out.jpg</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" deca.png out.jpg</runcommandpicklistitem>
           <runcommandpicklistitem>${OUTPUT_PATH}" files.tab</runcommandpicklistitem>
           <runcommandpicklistitem>${OUTPUT_PATH}" files.list</runcommandpicklistitem>
           <runcommandpicklistitem>${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
@@ -76,8 +74,10 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}" -makeset list.csv </runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -makeset list.csv data1.svm</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" 0.jpg 0Shadow1.jpg</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" trees.csv</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" park.csv</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" 0.jpg 0Shadow1.jpg</runcommand>
+        <runcommand>"${OUTPUT_PATH}" park.csv</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>
@@ -234,8 +234,6 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
-          <runcommandpicklistitem>${OUTPUT_PATH}" files.tab</runcommandpicklistitem>
-          <runcommandpicklistitem>${OUTPUT_PATH}" files.list</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" deca.png out.jpg</runcommandpicklistitem>
           <runcommandpicklistitem>${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -list</runcommandpicklistitem>
@@ -244,8 +242,10 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}" -training data.svm test_modelRBF3</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" 0.jpg 0Shadow1.jpg</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" tst.csv</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" trees.csv</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" park.csv</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" tst.csv</runcommand>
+        <runcommand>"${OUTPUT_PATH}" park.csv</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>
