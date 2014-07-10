@@ -214,7 +214,7 @@ namespace shadowdetection {
             err = clEnqueueNDRangeKernel(command_queue[2], kernel[5], 1, NULL, &global_ws, &local_ws, 0, NULL, NULL);
             err_check(err, "OpenclTools::predict clEnqueueNDRangeKernel", -1);
             size_t size = parameters.getHeight() * sizeof(cl_uchar);
-            uchar* retVec = MemMenager::allocate<uchar>(numValues);
+            uchar* retVec = MemMenager::allocate<uchar>(parameters.getHeight());
             err = clEnqueueReadBuffer(command_queue[2], clPredictResults, CL_TRUE, 0, size, retVec, 0, NULL, NULL);
             err_check(err, "OpenclTools::predict clEnqueueReadBuffer", -1);
             clFlush(command_queue[2]);

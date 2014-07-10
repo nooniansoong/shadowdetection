@@ -86,8 +86,8 @@ float kfunction_rbf(    const __global float* x, const size_t xLen,
             i += 4;
         }
         else if (remain >= 2){
-            float2 xv = vload2(i / 4, x);
-            float2 yv = vload2(i / 4, y);
+            float2 xv = vload2(i / 2, x);
+            float2 yv = vload2(i / 2, y);
             float2 d = xv - yv;
             d *= d;            
             sum += d.x + d.y;

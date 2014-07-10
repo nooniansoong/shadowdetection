@@ -7,10 +7,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/data/Dev/shadowdetection/main.cpp</file>
-            <file>file:/data/Dev/shadowdetection/src/cpp/shadowdetection/opencl/kernels/lib_svm_predict.cl</file>
-            <file>file:/data/Dev/shadowdetection/ShadowDetectionConfig.xml</file>
-            <file>file:/data/Dev/shadowdetection/src/cpp/shadowdetection/util/libsvm/SvmPredict.cpp</file>
+            <file>file:/home/marko/Dev/shadowdetection/src/cpp/shadowdetection/tools/svm/TrainingSet.cpp</file>
+            <file>file:/home/marko/Dev/shadowdetection/main.cpp</file>
+            <file>file:/home/marko/Dev/shadowdetection/src/cpp/shadowdetection/opencl/OpenCLToolsImage.cpp</file>
+            <file>file:/home/marko/Dev/shadowdetection/src/cpp/typedefs.h</file>
+            <file>file:/home/marko/Dev/shadowdetection/src/cpp/shadowdetection/util/FileSaver.h</file>
+            <file>file:/home/marko/Dev/shadowdetection/src/cpp/shadowdetection/opencl/OpenCLTools.h</file>
+            <file>file:/home/marko/Dev/shadowdetection/src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.cpp</file>
+            <file>file:/home/marko/Dev/shadowdetection/src/cpp/shadowdetection/opencl/OpenCLTools.cpp</file>
+            <file>file:/home/marko/Dev/shadowdetection/src/cpp/shadowdetection/opencl/OpenCLToolsPredict.cpp</file>
         </group>
     </open-files>
 </project-private>
