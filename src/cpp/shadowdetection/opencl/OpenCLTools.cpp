@@ -71,7 +71,8 @@ namespace shadowdetection {
             clX = 0;            
             clData = 0;
             newTask = true;
-            clXSquared = 0;            
+            clXSquared = 0;
+            xMatrix = 0;
             
             durrData = 0l;
             durrBuff = 0l;
@@ -175,6 +176,10 @@ namespace shadowdetection {
             if (clXSquared){
                 err = clReleaseMemObject(clXSquared);
                 err_check(err, "clReleaseMemObjectXSquared", -1);
+            }
+            
+            if (xMatrix){
+                delete xMatrix;
             }
             durrData = 0l;
             durrBuff = 0l;

@@ -7,6 +7,7 @@ namespace shadowdetection {
         
         using namespace shadowdetection::util;
         
+        /**!!!!!!!NOT TESTED*/
         uint32_t* OpenclTools::convertHSI1( uchar* image, u_int32_t width, u_int32_t height, 
                                             uchar channels) throw(SDException&){
             if (initialized == false){
@@ -31,6 +32,7 @@ namespace shadowdetection {
             return retArr;
         }
         
+        /**!!!!!!!NOT TESTED*/
         uint32_t* OpenclTools::convertHSI2( uchar* image, u_int32_t width, u_int32_t height, 
                                             uchar channels) throw(SDException&){
             if (initialized == false){

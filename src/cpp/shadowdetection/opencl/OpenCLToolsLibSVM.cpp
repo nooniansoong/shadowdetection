@@ -56,6 +56,16 @@ namespace shadowdetection {
             durrReadBuff += time.sinceLastCheck();
         }
         
+        Matrix<double>* getValuesFromNodes(Matrix<svm_node>& nodes){
+            Matrix<double>* retMat = new Matrix<double>(nodes.getWidth(), nodes.getHeight());
+            for (int i = 0; i < nodes.getHeight(); i++){
+                for (int j = 0; j < nodes.getWidth(); j++){
+                    (*retMat)[i][j] = nodes[i][j].value;
+                }
+            }
+            return retMat;
+        }
+        
         void OpenclTools::createBuffersSVM( float* data, int dataLen, int i,
                                             char* y, int yLen, Matrix<svm_node>* x, 
                                             int start, int steps, bool& clDataChanged,
@@ -130,19 +140,23 @@ namespace shadowdetection {
             //====X section
             //dimensions of x never changes for one task, so can do like this
             if (clX == 0 && x != 0){
-                size_t size = sizeof(cl_svm_node) * x->getWidth() * x->getHeight();
-                clX = clCreateBuffer(context[1], flag2, size, (cl_svm_node*)x->operator const svm_node*(), &err);
+                size_t size = sizeof(cl_double) * x->getWidth() * x->getHeight();
+                if (xMatrix)
+                    delete xMatrix;
+                xMatrix = getValuesFromNodes(*x);
+                clX = clCreateBuffer(context[1], flag2, size, (cl_double*)xMatrix->getVec(), &err);
                 err_check(err, "OpenclTools::createBuffersSVM clCreateBufferCLX", -1);
             }
-            else if (x != 0){
-                if (type == CL_DEVICE_TYPE_GPU){
-                    if (xChanged){                    
-                        size_t size = sizeof(cl_svm_node) * x->getWidth() * x->getHeight();
-                        err = clEnqueueWriteBuffer( command_queue[1], clX, CL_FALSE, 
-                                                    0, size, (cl_svm_node*)x->operator const svm_node*(), 0, 0, 0);
-                        err_check(err, "OpenclTools::createBuffersSVM clEnqueueWriteBufferCLX", -1);
-                    }
-                }
+            else if (x != 0){                
+                if (xChanged){
+                    if (xMatrix)
+                        delete xMatrix;
+                    xMatrix = getValuesFromNodes(*x);
+                    size_t size = sizeof(cl_double) * x->getWidth() * x->getHeight();
+                    err = clEnqueueWriteBuffer( command_queue[1], clX, CL_FALSE, 
+                                                0, size, (cl_double*)xMatrix->getVec(), 0, 0, 0);
+                    err_check(err, "OpenclTools::createBuffersSVM clEnqueueWriteBufferCLX", -1);
+                }                
             }
             else{
                 clX = 0;

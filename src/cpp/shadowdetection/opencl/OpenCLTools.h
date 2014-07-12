@@ -62,6 +62,7 @@ namespace shadowdetection {
             unsigned char* ratios1;
             unsigned char* ratios2;
             bool initialized;
+            shadowdetection::util::Matrix<double>* xMatrix;
             
             size_t shrRoundUp(size_t localSize, size_t allSize);
             /**
