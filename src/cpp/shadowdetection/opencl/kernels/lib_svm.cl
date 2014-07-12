@@ -11,45 +11,48 @@ typedef struct _svm_node
 enum { C_SVC = 0, NU_SVC, ONE_CLASS, EPSILON_SVR, NU_SVR };	/* svm_type */
 enum { LINEAR = 0, POLY, RBF, SIGMOID, PRECOMPUTED }; /* kernel_type */
 
-double my_dot(__global const svm_node *px, __global const svm_node *py)
+double my_dot(__global const svm_node *px, __global const svm_node *py, const int xW)
 {
     double sum = 0;
-    while(px->index != -1 && py->index != -1)
-    {
-        if(px->index == py->index)
-        {
-            sum += px->value * py->value;
-            ++px;
-            ++py;
-        }
-        else
-        {
-            if(px->index > py->index)
-                ++py;
-            else
-                ++px;
-        }
+    for (int i = 0; i < xW - 1; i++){
+        sum += px[i].value * py[i].value;
     }
+//    while(px->index != -1 && py->index != -1)
+//    {
+//        if(px->index == py->index)
+//        {
+//            sum += px->value * py->value;
+//            ++px;
+//            ++py;
+//        }
+//        else
+//        {
+//            if(px->index > py->index)
+//                ++py;
+//            else
+//                ++px;
+//        }
+//    }
     return sum;
 }
 
 double kernel_linear(const int i, const int j, __global const svm_node* x, const int xW){
-    return my_dot(&x[i * xW], &x[j * xW]);
+    return my_dot(&x[i * xW], &x[j * xW], xW);
 }
 
 double kernel_poly( const int i, const int j, __global const svm_node* x, const int xW, 
                     double gamma, double coef0, int degree){    
-    return pow(gamma * my_dot(&x[i * xW], &x[j * xW]) + coef0, degree);
+    return pow(gamma * my_dot(&x[i * xW], &x[j * xW], xW) + coef0, degree);
 }
 
 double kernel_rbf(  const int i, const int j, __global const svm_node* x, const int xW,
                     double gamma, __global double* x_square){   
-    return exp(-gamma * (x_square[i] + x_square[j] - 2 * my_dot(&x[i * xW], &x[j * xW])));
+    return exp(-gamma * (x_square[i] + x_square[j] - 2 * my_dot(&x[i * xW], &x[j * xW], xW)));
 }
 
 double kernel_sigmoid(const int i, const int j, __global const svm_node* x, 
                       const int xW, double gamma, double coef0){
-    return tanh(gamma * my_dot(&x[i * xW], &x[j * xW]) + coef0);
+    return tanh(gamma * my_dot(&x[i * xW], &x[j * xW], xW) + coef0);
 }
 
 double kernel_precomputed(int i, int j, __global const svm_node* x, const int xW){

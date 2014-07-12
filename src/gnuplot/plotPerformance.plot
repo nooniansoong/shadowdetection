@@ -10,7 +10,7 @@ set xtics   ()
 set ytics 100
 set ytics add ("30" 30)
 set xlabel "Resolution"
-set title "Prediction time (minutes)" 
+set title "Prediction time (seconds)" 
 set yrange [ 0.00000 : 2100. ] noreverse nowriteback
 x = 0.0
 i = 22

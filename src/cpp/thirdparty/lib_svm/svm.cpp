@@ -1180,27 +1180,19 @@ public:
     Qfloat *get_Q(int i, int len) const {
         Qfloat *data;
         int start;
-        if ((start = cache->get_data(i, &data, len)) < len) {
-            //printf ("%d\n", len);
-//            float* beta = new float[len];
-//            for (int k = 0; k < len; k++)
-//                beta[k] = data[k];
+        if ((start = cache->get_data(i, &data, len)) < len) {            
 #ifndef _OPENCL 
             int j;
 #pragma omp parallel for private(j)            
             for (j = start; j < len; j++)
                 data[j] = (Qfloat) (y[i] * y[j]*(this->*kernel_function)(i, j));
 #else       
-//            int j;
-//            for (j = start; j < len; j++)
-//                data[j] = (Qfloat) (y[i] * y[j]*(this->*kernel_function)(i, j));
             OpenclTools* oclt = OpenclTools::getInstancePtr();            
             oclt->get_Q(data, len, start, len, i, kernel_type, (char*)y, kL, x, 
                         SVC_Q_TYPE, gamma, coef0, degree, x_square);
             oclt->cleanWorkPart();
 #endif
-        }        
-        //printf("%f , %d , %d\n", data[5], i, len);
+        }
         return data;
     }
 
@@ -1241,8 +1233,12 @@ public:
         Qfloat *data;
         int start, j;
         if ((start = cache->get_data(i, &data, len)) < len) {
-            for (j = start; j < len; j++)
+#ifndef _OPENCL             
+#pragma omp parallel for private(j)
+#endif
+            for (j = start; j < len; j++){
                 data[j] = (Qfloat) (this->*kernel_function)(i, j);
+            }
         }
         return data;
     }
@@ -1275,8 +1271,12 @@ public:
         cache = new Cache(l, (long int) (param.cache_size * (1 << 20)));
         QD = new double[2 * l];
         sign = new schar[2 * l];
-        index = new int[2 * l];
-        for (int k = 0; k < l; k++) {
+        index = new int[2 * l];        
+        int k;
+#ifndef _OPENCL
+#pragma omp parallel for private(k)
+#endif
+        for (k = 0; k < l; k++) {
             sign[k] = 1;
             sign[k + l] = -1;
             index[k] = k;
@@ -2323,13 +2323,20 @@ double svm_get_svr_probability(const svm_model *model) {
 
 double svm_predict_values(const svm_model *model, const svm_node *x, double* dec_values) {
     int i;
+    int l = model->l; 
+    double *kvalue = Malloc(double, l);
     if (model->param.svm_type == ONE_CLASS ||
             model->param.svm_type == EPSILON_SVR ||
             model->param.svm_type == NU_SVR) {
         double *sv_coef = model->sv_coef[0];
         double sum = 0;
-        for (i = 0; i < model->l; i++)
-            sum += sv_coef[i] * Kernel::k_function(x, model->SV[i], model->param);
+#ifndef _OPENCL
+#pragma omp parallel for private(i)        
+#endif
+        for (i = 0; i < l; i++)
+            kvalue[i] = sv_coef[i] * Kernel::k_function(x, model->SV[i], model->param);
+        for (i = 0; i < l; i++)
+            sum += kvalue[i];
         sum -= model->rho[0];
         *dec_values = sum;
 
@@ -2338,10 +2345,7 @@ double svm_predict_values(const svm_model *model, const svm_node *x, double* dec
         else
             return sum;
     } else {
-        int nr_class = model->nr_class;
-        int l = model->l;
-
-        double *kvalue = Malloc(double, l);
+        int nr_class = model->nr_class;               
 #ifndef _OPENCL
 #pragma omp parallel for private(i)
 #endif

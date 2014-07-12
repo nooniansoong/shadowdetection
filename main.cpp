@@ -304,6 +304,8 @@ int main(int argc, char **argv) {
         }
 #ifdef _OPENCL
         OpenclTools::getInstancePtr()->cleanUp();
+        OpenclTools::destroy();
+        Config::destroy();
 #endif
         return 0;
     }

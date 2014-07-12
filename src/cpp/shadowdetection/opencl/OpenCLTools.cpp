@@ -173,7 +173,7 @@ namespace shadowdetection {
             }
             
             if (clXSquared){
-                err = clReleaseMemObject(clData);
+                err = clReleaseMemObject(clXSquared);
                 err_check(err, "clReleaseMemObjectXSquared", -1);
             }
             durrData = 0l;
