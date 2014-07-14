@@ -13,6 +13,8 @@
         <gdb_interceptlist>
           <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
         </gdb_interceptlist>
+        <gdb_signals>
+        </gdb_signals>
         <gdb_options>
           <DebugOptions>
           </DebugOptions>
@@ -24,8 +26,6 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" -train list.csv data.svm</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -training list.csv data.svm</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -training test_data.svm test_model2</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -training data.svm test_model2</runcommandpicklistitem>
@@ -34,8 +34,10 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}" -makeset ls.csv tmpData.svm</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -makeset list.csv bigData.svm</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" 0.jpg 0Shadow1.jpg</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -training testData.svm testModel3.model</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -training testData.svm testModel2.model</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" 0.jpg 0Shadow1.jpg</runcommand>
+        <runcommand>"${OUTPUT_PATH}" -training testData.svm testModel2.model</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>
@@ -211,8 +213,6 @@
         <terminal-type>0</terminal-type>
         <remove-instrumentation>0</remove-instrumentation>
         <environment>
-          <variable name="AMD_OCL_BUILD_OPTIONS_APPEND" value="&quot;-g -O0&quot;"/>
-          <variable name="CPU_MAX_COMPUTE_UNITS" value="1"/>
         </environment>
       </runprofile>
     </conf>

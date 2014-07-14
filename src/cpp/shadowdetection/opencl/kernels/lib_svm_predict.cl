@@ -53,11 +53,38 @@ typedef struct _svm_model
                                 /* 0 if svm_model is created by svm_train */
 }svm_model;
 
-float my_dot(const __global float* px, const size_t xLen, const __global float *py)
+float my_dot(__global const float* px, const size_t xLen, __global const float* py)
 {
     float sum = 0;
-    for (int i = 0; i < xLen; i++){
-        sum += px[i] * py[i];
+    int i = 0;
+    while (i < xLen - 1){
+        int remain = xLen - i;
+        if (remain >= 8){
+            float8 xv = vload8(i / 8, px);
+            float8 yv = vload8(i / 8, py);
+            float8 d = xv * yv;            
+            sum += d.s0 + d.s1 + d.s2 + d.s3 + d.s4 + d.s5 + d.s6 + d.s7;
+            i += 8; 
+        }
+        else if (remain >= 4){
+            float4 xv = vload4(i / 4, px);
+            float4 yv = vload4(i / 4, py);
+            float4 d = xv * yv;                
+            sum += d.x + d.y + d.z + d.w;
+            i += 4;
+        }
+        else if (remain >= 2){
+            float2 xv = vload2(i / 2, px);
+            float2 yv = vload2(i / 2, py);
+            float2 d = xv * yv;                
+            sum += d.x + d.y;
+            i += 2;
+        }
+        else if (remain >= 1){
+            float d = px[i] * py[i];
+            sum += d;
+            i++;
+        }        
     }
     return sum;
 }

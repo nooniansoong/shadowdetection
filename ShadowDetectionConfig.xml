@@ -42,11 +42,11 @@
         <svm>            
             <!-- 0=C-SVC, 1=nu-SVC, 2=one-class, 3=epsilon-SVR, 4=nu-SVR -->
             <svm_type>
-                0
+                4
             </svm_type>
             <!-- 0=linear, 1=polynomial, 2=radial basis function, 3=sigmoid, 4-not supported -->
             <kernel_type>
-                2
+                3
             </kernel_type>
         </svm>
         

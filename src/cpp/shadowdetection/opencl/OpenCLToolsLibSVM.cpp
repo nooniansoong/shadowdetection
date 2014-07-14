@@ -242,16 +242,16 @@ namespace shadowdetection {
             if (newTask){
                 err = clSetKernelArg(kernel[4], 6, sizeof(cl_mem), &clX);
                 err_check(err, "OpenclTools::setKernelArgsSVR setKernelArgCLX", -1);
-                err = clSetKernelArg(kernel[3], 11, sizeof(cl_mem), &clXSquared);
+                err = clSetKernelArg(kernel[4], 11, sizeof(cl_mem), &clXSquared);
                 err_check(err, "OpenclTools::setKernelArgsSVR clSetKernelArgCLXSQUARED", -1);                
             }
             err = clSetKernelArg(kernel[4], 7, sizeof(cl_int), &xW);
             err_check(err, "OpenclTools::setKernelArgsSVR clSetKernelArgXW", -1);
-            err = clSetKernelArg(kernel[3], 8, sizeof(cl_double), &gamma);
+            err = clSetKernelArg(kernel[4], 8, sizeof(cl_double), &gamma);
             err_check(err, "OpenclTools::setKernelArgsSVR clSetKernelArgGAMMA", -1);
-            err = clSetKernelArg(kernel[3], 9, sizeof(cl_double), &coef0);
+            err = clSetKernelArg(kernel[4], 9, sizeof(cl_double), &coef0);
             err_check(err, "OpenclTools::setKernelArgsSVR clSetKernelArgCOEF0", -1);
-            err = clSetKernelArg(kernel[3], 10, sizeof(cl_int), &degree);
+            err = clSetKernelArg(kernel[4], 10, sizeof(cl_int), &degree);
             err_check(err, "OpenclTools::setKernelArgsSVR clSetKernelArgDEGREE", -1);            
         }
         
