@@ -21,7 +21,7 @@
 
 #define MAX_DEVICES 100
 #define MAX_SRC_SIZE 5242800
-#define KERNEL_COUNT 6
+#define KERNEL_COUNT 7
 #define MAX_PLATFORMS 100
 #define PROGRAM_COUNT 3
 
@@ -183,6 +183,16 @@ namespace shadowdetection {
             cl_mem clX;
             cl_mem clXSquared;            
             bool newTask;
+            bool newSelectWorkingSet;
+            
+            cl_mem clGradDiff;
+            cl_mem clObjDiff;
+            cl_mem clAlphaStatus;
+            cl_mem clYSelectWorkingSet;
+            cl_mem clG;
+            cl_mem clQD;
+            cl_mem clQI;
+            
             void createBuffersSVM(  float* data, int dataLen, int i,
                                     char* y, int yLen,
                                     shadowdetection::util::Matrix<svm_node>* x,
@@ -195,12 +205,23 @@ namespace shadowdetection {
             void setKernelArgsSVR(  cl_int start, cl_int len, cl_int i, 
                                     cl_int kernel_type, cl_int xW, cl_int dataLen,
                                     cl_double gamma, cl_double coef0, cl_int degree,
-                                    bool clDataChanged);            
+                                    bool clDataChanged); 
+            void createBuffersWorkingSet(const int& activeSize, double* grad_diff,
+                                        double* obj_diff, const char* alpha_status, 
+                                        const int& l, const char* y, const double* G,
+                                        const double* QD, const float* Q_i);
+            void setKernelArgsWorkingSet(const int& activeSize, const int& i,
+                                        const double& Gmax);
         protected:
         public:
             void get_Q( float* data, int dataLen, int start, int len, int i, int kernel_type, 
                         char* y, int yLen, shadowdetection::util::Matrix<svm_node>* x, LIBSVM_CLASS_TYPE classType,
                         double gamma, double coef0, int degree, double *xSquared) throw (SDException);
+            
+            void selectWorkingSet(  const int& activeSize, const int& i, const char* y,
+                                    const char* alpha_status, const int& l, double* grad_diff,
+                                    const double& Gmax, const double* G, const double* QD, 
+                                    const float* Q_i, double* obj_diff) throw (SDException);
 
             int64_t durrData;
             int64_t durrSetSrgs;

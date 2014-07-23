@@ -67,18 +67,25 @@ namespace shadowdetection {
             }
             
             //libsvm part
-            clY = 0;
-            clX = 0;            
-            clData = 0;
-            newTask = true;
-            clXSquared = 0;
-            xMatrix = 0;
+            clY                 = 0;
+            clX                 = 0;            
+            clData              = 0;
+            newTask             = true;
+            newSelectWorkingSet = true;
+            clXSquared          = 0;
+            xMatrix             = 0;
             
-            durrData = 0l;
-            durrBuff = 0l;
-            durrExec = 0l;
-            durrReadBuff = 0l;
-            durrSetSrgs = 0l;            
+            durrData        = 0l;
+            durrBuff        = 0l;
+            durrExec        = 0l;
+            durrReadBuff    = 0l;
+            durrSetSrgs     = 0l;            
+            
+            //training part
+            clQD                = 0;
+            clAlphaStatus       = 0;
+            clYSelectWorkingSet = 0;
+            clG                 = 0;
             
             //predict part
             modelSVs        = 0;
@@ -100,6 +107,11 @@ namespace shadowdetection {
             tsaiOutput = 0;
             ratios1 = 0;
             ratios2 = 0;
+            
+            //train part            
+            clGradDiff = 0;
+            clObjDiff = 0;                        
+            clQI = 0;            
             
             //predict part
             clPixelParameters = 0;
@@ -126,7 +138,21 @@ namespace shadowdetection {
                 MemMenager::delocate(ratios1);
             if (ratios2)
                 MemMenager::delocate(ratios2);
-                
+            
+            //train part
+            if (clGradDiff){
+                clReleaseMemObject(clGradDiff);
+                err_check(err, "OpenclTools::cleanWorkPart clGradDiff", -1);
+            }
+            if (clObjDiff){
+                clReleaseMemObject(clObjDiff);
+                err_check(err, "OpenclTools::cleanWorkPart clObjDiff", -1);
+            }
+            if (clQI){
+                clReleaseMemObject(clQI);
+                err_check(err, "OpenclTools::cleanWorkPart clQI", -1);
+            }
+            
             //predict part
             if (clPixelParameters){
                 clReleaseMemObject(clPixelParameters);
@@ -180,7 +206,28 @@ namespace shadowdetection {
             
             if (xMatrix){
                 delete xMatrix;
+            }                        
+            
+            if (clQD){
+                clReleaseMemObject(clQD);
+                err_check(err, "OpenclTools::cleanUp clQD", -1);
             }
+            
+            if (clAlphaStatus){
+                clReleaseMemObject(clAlphaStatus);
+                err_check(err, "OpenclTools::cleanUp clAlphaStatus", -1);
+            }
+            
+            if (clYSelectWorkingSet){
+                clReleaseMemObject(clYSelectWorkingSet);
+                err_check(err, "OpenclTools::cleanUp clYSelectWorkingSet", -1);
+            }
+            
+            if (clG){
+                clReleaseMemObject(clG);
+                err_check(err, "OpenclTools::cleanWorkPart clG", -1);
+            } 
+            
             durrData = 0l;
             durrBuff = 0l;
             durrExec = 0l;
@@ -520,6 +567,8 @@ namespace shadowdetection {
                 err_check(err, "clCreateKernel4", index);
                 kernel[4] = clCreateKernel(program[index], "svrQgetQ", &err);
                 err_check(err, "clCreateKernel5", index);
+                kernel[6] = clCreateKernel(program[index], "selectWorkingSet", &err);
+                err_check(err, "clCreateKernel7", index);
             }
             else if (index == 2){
                 kernel[5] = clCreateKernel(program[index], "predict", &err);

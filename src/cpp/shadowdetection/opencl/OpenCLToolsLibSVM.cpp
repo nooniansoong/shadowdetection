@@ -255,7 +255,127 @@ namespace shadowdetection {
             err_check(err, "OpenclTools::setKernelArgsSVR clSetKernelArgDEGREE", -1);            
         }
         
-    }
+        void OpenclTools::selectWorkingSet( const int& activeSize, const int& i, const char* y,
+                                            const char* alpha_status, const int& l, double* grad_diff,
+                                            const double& Gmax, const double* G, const double* QD, 
+                                            const float* Q_i, double* obj_diff) throw (SDException){
+            createBuffersWorkingSet(activeSize, grad_diff, obj_diff, alpha_status, 
+                                    l, y, G, QD, Q_i);
+            setKernelArgsWorkingSet(activeSize, i, Gmax);
+            
+            size_t local_ws = workGroupSize[6];
+            size_t global_ws = shrRoundUp(local_ws, activeSize);
+            err = clEnqueueNDRangeKernel(command_queue[1], kernel[6], 1, NULL, &global_ws, &local_ws, 0, NULL, NULL);
+            err_check(err, "clEnqueueNDRangeKernelSELECTWORKINGSET", -1);
+            
+            cl_device_type type;
+            err = clGetDeviceInfo(device, CL_DEVICE_TYPE, sizeof(cl_device_type), &type, 0);
+            err_check(err, "OpenclTools::selectWorkingSet clGetDeviceInfo", -1);
+            if (type == CL_DEVICE_TYPE_GPU){
+                size_t size = sizeof(cl_double) * activeSize;
+                err = clEnqueueReadBuffer(command_queue[1], clGradDiff, CL_FALSE, 0, size, grad_diff, 0, NULL, NULL);
+                err_check(err, "OpenclTools::selectWorkingSet clEnqueueReadBufferclGradDiff", -1);
+                err = clEnqueueReadBuffer(command_queue[1], clObjDiff, CL_FALSE, 0, size, obj_diff, 0, NULL, NULL);
+                err_check(err, "OpenclTools::selectWorkingSet clEnqueueReadBufferclObjDiff", -1);
+            }
+            err = clFlush(command_queue[1]);
+            err |= clFinish(command_queue[1]);
+            err_check(err, "OpenclTools::get_Q clFlush clFinish", -1);
+            newSelectWorkingSet = false;
+        }
+        
+        void OpenclTools::createBuffersWorkingSet(  const int& activeSize, double* grad_diff,
+                                                    double* obj_diff, const char* alpha_status, 
+                                                    const int& l, const char* y, const double* G,
+                                                    const double* QD, const float* Q_i){
+            int flag1, flag2;
+            cl_device_type type;
+            err = clGetDeviceInfo(device, CL_DEVICE_TYPE, sizeof(cl_device_type), &type, 0);
+            err_check(err, "OpenclTools::createBuffersSVM clGetDeviceInfo", -1);            
+            if (type == CL_DEVICE_TYPE_GPU)
+            {                
+                flag1 = CL_MEM_WRITE_ONLY;
+                flag2 = CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR;                
+            }
+            else if (type == CL_DEVICE_TYPE_CPU){
+                flag1 = CL_MEM_WRITE_ONLY | CL_MEM_USE_HOST_PTR;
+                flag2 = CL_MEM_READ_ONLY | CL_MEM_USE_HOST_PTR;                
+            }
+            else{
+                SDException exc(SHADOW_NOT_SUPPORTED_DEVICE, "Init buffers, currently not supported device");
+                throw exc;
+            }
+            size_t size = sizeof(cl_double) * activeSize;
+            if (type == CL_DEVICE_TYPE_GPU){
+                clGradDiff = clCreateBuffer(context[1], flag1, size, 0, &err);
+                err_check(err, "OpenclTools::createBuffersWorkingSet clGradDiff", -1);
+                clObjDiff = clCreateBuffer(context[1], flag1, size, 0, &err);
+                err_check(err, "OpenclTools::createBuffersWorkingSet clGradDiff", -1);
+            }
+            else if (type == CL_DEVICE_TYPE_CPU){
+                clGradDiff = clCreateBuffer(context[1], flag1, size, grad_diff, &err);
+                err_check(err, "OpenclTools::createBuffersWorkingSet clGradDiff", -1);
+                clObjDiff = clCreateBuffer(context[1], flag1, size, obj_diff, &err);
+                err_check(err, "OpenclTools::createBuffersWorkingSet clGradDiff", -1);
+            }
+            size = sizeof(cl_char) * l;
+            if (clAlphaStatus == 0){
+                clAlphaStatus = clCreateBuffer(context[1], flag2, size, (cl_char*)alpha_status, &err);
+                err_check(err, "OpenclTools::createBuffersWorkingSet clAlphaStatus", -1);
+                clYSelectWorkingSet = clCreateBuffer(context[1], flag2, size, (cl_char*)y, &err);
+                err_check(err, "OpenclTools::createBuffersWorkingSet clYSelectWorkingSet", -1);
+                size = sizeof(cl_double) * l;
+                clG = clCreateBuffer(context[1], flag2, size, (cl_double*)G, &err);
+                err_check(err, "OpenclTools::createBuffersWorkingSet clG", -1);
+            }
+            else{
+                err = clEnqueueWriteBuffer(command_queue[1], clAlphaStatus, CL_FALSE, 0, size, alpha_status, 0, 0, 0);
+                err_check(err, "OpenclTools::createBuffersWorkingSet clEnqueueWriteBuffer clAlphaStatus", -1);
+                err = clEnqueueWriteBuffer(command_queue[1], clYSelectWorkingSet, CL_FALSE, 0, size, y, 0, 0, 0);
+                err_check(err, "OpenclTools::createBuffersWorkingSet clEnqueueWriteBuffer clYSelectWorkingSet", -1);
+                size = sizeof(cl_double) * l;
+                err = clEnqueueWriteBuffer(command_queue[1], clG, CL_FALSE, 0, size, G, 0, 0, 0);
+                err_check(err, "OpenclTools::createBuffersWorkingSet clEnqueueWriteBuffer clG", -1);
+            }
+                                    
+            size = sizeof(cl_float) * activeSize;
+            clQI = clCreateBuffer(context[1], flag2, size, (cl_float*)Q_i, &err);
+            err_check(err, "OpenclTools::createBuffersWorkingSet clQI", -1);
+            if (newSelectWorkingSet){                                
+                size = sizeof(cl_double) * l;
+                clQD = clCreateBuffer(context[1], flag2, size, (cl_double*)QD, &err);
+                err_check(err, "OpenclTools::createBuffersWorkingSet clQD", -1);                
+            }
+        }
+        
+        void OpenclTools::setKernelArgsWorkingSet(  const int& activeSize, const int& i,
+                                                    const double& Gmax){
+            err = clSetKernelArg(kernel[6], 0, sizeof(cl_int), &activeSize);
+            err_check(err, "OpenclTools::setKernelArgsWorkingSet setKernelArgACTIVESIZE", -1);
+            err = clSetKernelArg(kernel[6], 1, sizeof(cl_int), &i);
+            err_check(err, "OpenclTools::setKernelArgsWorkingSet setKernelArgI", -1);            
+            if (newSelectWorkingSet){
+                err = clSetKernelArg(kernel[6], 2, sizeof(cl_mem), &clYSelectWorkingSet);
+                err_check(err, "OpenclTools::setKernelArgsWorkingSet setKernelArgClYSelectWorkingSet", -1);            
+                err = clSetKernelArg(kernel[6], 3, sizeof(cl_mem), &clAlphaStatus);
+                err_check(err, "OpenclTools::setKernelArgsWorkingSet setKernelArgClAlphaStatus", -1);
+            }
+            err = clSetKernelArg(kernel[6], 4, sizeof(cl_mem), &clGradDiff);
+            err_check(err, "OpenclTools::setKernelArgsWorkingSet setKernelArgClGradDiff", -1);
+            err = clSetKernelArg(kernel[6], 5, sizeof(cl_double), &Gmax);
+            err_check(err, "OpenclTools::setKernelArgsWorkingSet setKernelArgGmax", -1);            
+            if (newSelectWorkingSet){
+                err = clSetKernelArg(kernel[6], 6, sizeof(cl_mem), &clG);
+                err_check(err, "OpenclTools::setKernelArgsWorkingSet setKernelArgClG", -1);
+                err = clSetKernelArg(kernel[6], 7, sizeof(cl_mem), &clQD);
+                err_check(err, "OpenclTools::setKernelArgsWorkingSet setKernelArgClQD", -1);
+            }
+            err = clSetKernelArg(kernel[6], 8, sizeof(cl_mem), &clQI);
+            err_check(err, "OpenclTools::setKernelArgsWorkingSet setKernelArgClQI", -1);
+            err = clSetKernelArg(kernel[6], 9, sizeof(cl_mem), &clObjDiff);
+            err_check(err, "OpenclTools::setKernelArgsWorkingSet setKernelArgClObjDiff", -1);
+        }
+    }        
 }
 
 #endif

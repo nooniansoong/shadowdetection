@@ -1018,7 +1018,7 @@
             <pElem>/opt/AMDAPP/include</pElem>
             <pElem>src/cpp</pElem>
           </incDir>
-          <commandLine>-O0</commandLine>
+          <commandLine>-O0 -fopenmp</commandLine>
           <preprocessorList>
             <Elem>_AMD</Elem>
             <Elem>_DEBUG</Elem>
@@ -1032,7 +1032,7 @@
             <pElem>/usr/local/lib</pElem>
             <pElem>/opt/AMDAPP/lib/x86_64</pElem>
           </linkerAddLib>
-          <commandLine>-lOpenCL -lopencv_highgui -lopencv_core -lopencv_imgproc -lopencv_ocl</commandLine>
+          <commandLine>-lOpenCL -lopencv_highgui -lopencv_core -lopencv_imgproc -lopencv_ocl -fopenmp</commandLine>
         </linkerTool>
       </compileType>
       <item path="ShadowDetectionConfig.xml" ex="false" tool="3" flavor2="0">
@@ -1245,6 +1245,7 @@
             <pElem>/opt/AMDAPP/include</pElem>
             <pElem>src/cpp</pElem>
           </incDir>
+          <commandLine>-fopenmp</commandLine>
           <preprocessorList>
             <Elem>_AMD</Elem>
             <Elem>_OPENCL</Elem>
@@ -1256,7 +1257,7 @@
             <pElem>/usr/local/lib</pElem>
             <pElem>/opt/AMDAPP/lib/x86_64</pElem>
           </linkerAddLib>
-          <commandLine>-lOpenCL -lopencv_highgui -lopencv_core -lopencv_imgproc -lopencv_ocl</commandLine>
+          <commandLine>-lOpenCL -lopencv_highgui -lopencv_core -lopencv_imgproc -lopencv_ocl -fopenmp</commandLine>
         </linkerTool>
       </compileType>
       <item path="ShadowDetectionConfig.xml" ex="false" tool="3" flavor2="0">

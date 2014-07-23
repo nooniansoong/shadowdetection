@@ -8,6 +8,10 @@
 #ifndef TYPEDEFS_H
 #define	TYPEDEFS_H
 
+#if !defined _OPENCL || defined _AMD
+#define _OPENMP_MY
+#endif
+
 #include <string>
 #ifndef _MAC
 #include <hash_fun.h>

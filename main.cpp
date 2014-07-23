@@ -6,9 +6,6 @@
  */
 
 #include <iostream>
-#if !defined _MAC && !defined _OPENCL
-#include <omp.h>
-#endif
 #include "shadowdetection/opencl/OpenCLTools.h"
 #include "shadowdetection/opencv/OpenCV2Tools.h"
 #include "shadowdetection/opencv/OpenCVTools.h"
@@ -19,8 +16,10 @@
 #include "shadowdetection/tools/svm/libsvmopenmp/svm-train.h"
 #include "shadowdetection/util/libsvm/SvmPredict.h"
 #include "shadowdetection/util/image/ImageParameters.h"
-//#include "shadowdetection/util/FileSaver.h"
 #include "shadowdetection/util/Matrix.h"
+#if defined _OPENMP_MY
+#include <omp.h>
+#endif
 
 using namespace std;
 #ifdef _OPENCL
@@ -41,7 +40,7 @@ void handleException(const SDException& exception){
 }
 
 void initOpenMP(){
-#if !defined _MAC && !defined _OPENCL
+#if defined _OPENMP_MY
     omp_set_dynamic(0);
     int numThreads = 4;                    
     string tnStr = Config::getInstancePtr()->getPropertyValue("settings.openMP.threadNum");
@@ -52,8 +51,9 @@ void initOpenMP(){
 #endif
 }
 
-#ifdef _OPENCL
+
 void initOpenCL(){
+#ifdef _OPENCL
     try{
         int platformId = 0;
         int deviceId = 0;
@@ -73,8 +73,9 @@ void initOpenCL(){
         handleException(exception);
         exit(1);
     }
-}
 #endif
+}
+
 
 #ifndef _OPENCL
 /**
@@ -261,13 +262,14 @@ int main(int argc, char **argv) {
 #endif
     
     initOpenMP();
-#ifdef _OPENCL
     initOpenCL();
-#endif
     
     if (argc >= 2 && strcmp(argv[1], "-makeset") == 0){
         if (argc < 4){
             cout << "makeset needs more parameters: input csv file, output file" << endl;
+#ifdef _OPENCL
+            OpenclTools::getInstancePtr()->cleanUp();
+#endif            
             return 0;
         }
         try{
@@ -281,6 +283,9 @@ int main(int argc, char **argv) {
         }
         catch (SDException& exc){
             handleException(exc);
+#ifdef _OPENCL
+            OpenclTools::getInstancePtr()->cleanUp();
+#endif            
             exit(1);
         }
 #ifdef _OPENCL
@@ -304,9 +309,9 @@ int main(int argc, char **argv) {
         }
 #ifdef _OPENCL
         OpenclTools::getInstancePtr()->cleanUp();
-        OpenclTools::destroy();
-        Config::destroy();
+        OpenclTools::destroy();        
 #endif
+        Config::destroy();
         return 0;
     }
     
@@ -321,10 +326,16 @@ int main(int argc, char **argv) {
             }
             catch (SDException& exception){
                 handleException(exception);
+#ifdef _OPENCL
+                OpenclTools::getInstancePtr()->cleanUp();
+#endif
                 exit(1);
             }
         }
         else{
+#ifdef _OPENCL
+            OpenclTools::getInstancePtr()->cleanUp();
+#endif            
             cout << "need two arguments: input image path, output image path" << endl;
             return 0;
         }
@@ -357,6 +368,9 @@ int main(int argc, char **argv) {
         }
         else{
             cout << "Needed parameter path to csv file" << endl;
+#ifdef _OPENCL
+    OpenclTools::getInstancePtr()->cleanUp();
+#endif
             return 0;
         }
     }

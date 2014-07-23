@@ -203,7 +203,7 @@ void Cache::swap_index(int i, int j) {
 
 class QMatrix {
 public:
-    virtual Qfloat *get_Q(int column, int len) const = 0;
+    virtual Qfloat *get_Q(int column, int len) = 0;
     virtual double *get_QD() const = 0;
     virtual void swap_index(int i, int j) const = 0;
 
@@ -218,7 +218,7 @@ public:
 
     static double k_function(const svm_node *x, const svm_node *y,
             const svm_parameter& param);
-    virtual Qfloat *get_Q(int column, int len) const = 0;
+    virtual Qfloat *get_Q(int column, int len) = 0;
     virtual double *get_QD() const = 0;
 
     virtual void swap_index(int i, int j) const // no so const...
@@ -411,7 +411,7 @@ public:
         double r; // for Solver_NU
     };
 
-    void Solve(int l, const QMatrix& Q, const double *p_, const schar *y_,
+    void Solve(int l, QMatrix& Q, const double *p_, const schar *y_,
             double *alpha_, double Cp, double Cn, double eps,
             SolutionInfo* si, int shrinking);
 protected:
@@ -424,7 +424,7 @@ protected:
     };
     char *alpha_status; // LOWER_BOUND, UPPER_BOUND, FREE
     double *alpha;
-    const QMatrix *Q;
+    QMatrix *Q;
     const double *QD;
     double eps;
     double Cp, Cn;
@@ -513,7 +513,7 @@ void Solver::reconstruct_gradient() {
     }
 }
 
-void Solver::Solve(int l, const QMatrix& Q, const double *p_, const schar *y_,
+void Solver::Solve(int l, QMatrix& Q, const double *p_, const schar *y_,
         double *alpha_, double Cp, double Cn, double eps,
         SolutionInfo* si, int shrinking) {
     this->l = l;
@@ -674,7 +674,8 @@ void Solver::Solve(int l, const QMatrix& Q, const double *p_, const schar *y_,
         double delta_alpha_i = alpha[i] - old_alpha_i;
         double delta_alpha_j = alpha[j] - old_alpha_j;
 
-        for (int k = 0; k < active_size; k++) {
+        int k;
+        for (k = 0; k < active_size; k++) {
             G[k] += Q_i[k] * delta_alpha_i + Q_j[k] * delta_alpha_j;
         }
 
@@ -688,7 +689,7 @@ void Solver::Solve(int l, const QMatrix& Q, const double *p_, const schar *y_,
             int k;
             if (ui != is_upper_bound(i)) {
                 Q_i = Q.get_Q(i, l);
-                if (ui)
+                if (ui)                    
                     for (k = 0; k < l; k++)
                         G_bar[k] -= C_i * Q_i[k];
                 else
@@ -701,7 +702,7 @@ void Solver::Solve(int l, const QMatrix& Q, const double *p_, const schar *y_,
                 if (uj)
                     for (k = 0; k < l; k++)
                         G_bar[k] -= C_j * Q_j[k];
-                else
+                else                  
                     for (k = 0; k < l; k++)
                         G_bar[k] += C_j * Q_j[k];
             }
@@ -725,7 +726,7 @@ void Solver::Solve(int l, const QMatrix& Q, const double *p_, const schar *y_,
     // calculate objective value
     {
         double v = 0;
-        int i;
+        int i;        
         for (i = 0; i < l; i++)
             v += alpha[i] * (G[i] + p[i]);
 
@@ -733,7 +734,7 @@ void Solver::Solve(int l, const QMatrix& Q, const double *p_, const schar *y_,
     }
 
     // put back the solution
-    {
+    {        
         for (int i = 0; i < l; i++)
             alpha_[active_set[i]] = alpha[i];
     }
@@ -794,48 +795,72 @@ int Solver::select_working_set(int &out_i, int &out_j) {
     const Qfloat *Q_i = NULL;
     if (i != -1) // NULL Q_i not accessed: Gmax=-INF if i=-1
         Q_i = Q->get_Q(i, active_size);
-
-    for (int j = 0; j < active_size; j++) {
+    
+    double* grad_diff = new double[active_size];
+    double* obj_diff = new double[active_size];
+    
+//#ifdef _OPENCL    
+//    OpenclTools* oclt = OpenclTools::getInstancePtr();
+//    oclt->selectWorkingSet(active_size, i, (const char*)y, alpha_status, l, grad_diff, Gmax, G, QD, Q_i, obj_diff);
+//    oclt->cleanWorkPart();
+//#else
+    int j;
+    for (j = 0; j < active_size; j++) {
         if (y[j] == +1) {
             if (!is_lower_bound(j)) {
-                double grad_diff = Gmax + G[j];
-                if (G[j] >= Gmax2)
-                    Gmax2 = G[j];
-                if (grad_diff > 0) {
-                    double obj_diff;
+                grad_diff[j] = Gmax + G[j];                
+                if (grad_diff[j] > 0) {                    
                     double quad_coef = QD[i] + QD[j] - 2.0 * y[i] * Q_i[j];
                     if (quad_coef > 0)
-                        obj_diff = -(grad_diff * grad_diff) / quad_coef;
+                        obj_diff[j] = -(grad_diff[j] * grad_diff[j]) / quad_coef;
                     else
-                        obj_diff = -(grad_diff * grad_diff) / TAU;
-
-                    if (obj_diff <= obj_diff_min) {
-                        Gmin_idx = j;
-                        obj_diff_min = obj_diff;
-                    }
+                        obj_diff[j] = -(grad_diff[j] * grad_diff[j]) / TAU;                    
                 }
             }
         } else {
             if (!is_upper_bound(j)) {
-                double grad_diff = Gmax - G[j];
-                if (-G[j] >= Gmax2)
-                    Gmax2 = -G[j];
-                if (grad_diff > 0) {
-                    double obj_diff;
+                grad_diff[j] = Gmax - G[j];                
+                if (grad_diff[j] > 0) {                    
                     double quad_coef = QD[i] + QD[j] + 2.0 * y[i] * Q_i[j];
                     if (quad_coef > 0)
-                        obj_diff = -(grad_diff * grad_diff) / quad_coef;
+                        obj_diff[j] = -(grad_diff[j] * grad_diff[j]) / quad_coef;
                     else
-                        obj_diff = -(grad_diff * grad_diff) / TAU;
-
-                    if (obj_diff <= obj_diff_min) {
+                        obj_diff[j] = -(grad_diff[j] * grad_diff[j]) / TAU;                    
+                }
+            }
+        }
+    }
+//#endif
+    
+    for (int j = 0; j < active_size; j++) {
+        if (y[j] == +1) {
+            if (!is_lower_bound(j)) {
+                if (G[j] >= Gmax2)
+                    Gmax2 = G[j];
+                if (grad_diff[j] > 0) {
+                    if (obj_diff[j] <= obj_diff_min) {
                         Gmin_idx = j;
-                        obj_diff_min = obj_diff;
+                        obj_diff_min = obj_diff[j];
+                    }
+                }
+            }
+        }
+        else{
+            if (!is_upper_bound(j)) {
+                if (-G[j] >= Gmax2)
+                    Gmax2 = -G[j];
+                if (grad_diff[j] > 0) {
+                    if (obj_diff[j] <= obj_diff_min) {
+                        Gmin_idx = j;
+                        obj_diff_min = obj_diff[j];
                     }
                 }
             }
         }
     }
+    
+    delete[] grad_diff;
+    delete[] obj_diff;
 
     if (Gmax + Gmax2 < eps)
         return 1;
@@ -951,7 +976,7 @@ public:
     Solver_NU() {
     }
 
-    void Solve(int l, const QMatrix& Q, const double *p, const schar *y,
+    void Solve(int l, QMatrix& Q, const double *p, const schar *y,
             double *alpha, double Cp, double Cn, double eps,
             SolutionInfo* si, int shrinking) {
         this->si = si;
@@ -1173,25 +1198,29 @@ public:
         clone(y, y_, prob.l);
         cache = new Cache(prob.l, (long int) (param.cache_size * (1 << 20)));
         QD = new double[prob.l];
-        for (int i = 0; i < prob.l; i++)
-            QD[i] = (this->*kernel_function)(i, i);
+        int i;
+#if defined _OPENMP_MY
+#pragma omp parallel for private(i)
+#endif        
+        for (i = 0; i < prob.l; i++)
+            QD[i] = (this->*kernel_function)(i, i);        
     }
 
-    Qfloat *get_Q(int i, int len) const {
+    Qfloat *get_Q(int i, int len){
         Qfloat *data;
         int start;
-        if ((start = cache->get_data(i, &data, len)) < len) {            
-#ifndef _OPENCL 
+        if ((start = cache->get_data(i, &data, len)) < len) {
+#ifndef _OPENCL         
             int j;
 #pragma omp parallel for private(j)            
             for (j = start; j < len; j++)
-                data[j] = (Qfloat) (y[i] * y[j]*(this->*kernel_function)(i, j));
-#else       
+                data[j] = (Qfloat) (y[i] * y[j]*(this->*kernel_function)(i, j));        
+#else         
             OpenclTools* oclt = OpenclTools::getInstancePtr();            
             oclt->get_Q(data, len, start, len, i, kernel_type, (char*)y, kL, x, 
                         SVC_Q_TYPE, gamma, coef0, degree, x_square);
             oclt->cleanWorkPart();
-#endif
+#endif  
         }
         return data;
     }
@@ -1215,7 +1244,7 @@ public:
 private:
     schar *y;
     Cache *cache;
-    double *QD;
+    double *QD;    
 };
 
 class ONE_CLASS_Q : public Kernel {
@@ -1225,15 +1254,19 @@ public:
     : Kernel(prob.l, prob.x, param) {
         cache = new Cache(prob.l, (long int) (param.cache_size * (1 << 20)));
         QD = new double[prob.l];
-        for (int i = 0; i < prob.l; i++)
+        int i;
+#if defined _OPENMP_MY
+#pragma omp parallel for private(i)
+#endif        
+        for (i = 0; i < prob.l; i++)
             QD[i] = (this->*kernel_function)(i, i);
     }
 
-    Qfloat *get_Q(int i, int len) const {
+    Qfloat *get_Q(int i, int len) {
         Qfloat *data;
         int start, j;
         if ((start = cache->get_data(i, &data, len)) < len) {
-#ifndef _OPENCL             
+#ifdef _OPENMP_MY             
 #pragma omp parallel for private(j)
 #endif
             for (j = start; j < len; j++){
@@ -1273,7 +1306,7 @@ public:
         sign = new schar[2 * l];
         index = new int[2 * l];        
         int k;
-#ifndef _OPENCL
+#ifdef _OPENMP_MY
 #pragma omp parallel for private(k)
 #endif
         for (k = 0; k < l; k++) {
@@ -1295,7 +1328,7 @@ public:
         swap(QD[i], QD[j]);
     }
 
-    Qfloat *get_Q(int i, int len) const {
+    Qfloat *get_Q(int i, int len) {
         Qfloat *data;
         int j, real_i = index[i];
         if (cache->get_data(real_i, &data, l) < l) {
@@ -1314,9 +1347,6 @@ public:
         Qfloat *buf = buffer[next_buffer];
         next_buffer = 1 - next_buffer;
         schar si = sign[i];
-#ifndef _OPENCL
-#pragma omp parallel for private(j)
-#endif
         for (j = 0; j < len; j++)
             buf[j] = (Qfloat) si * (Qfloat) sign[j] * data[index[j]];
         return buf;
@@ -1365,7 +1395,8 @@ static void solve_c_svc(
     }
 
     Solver s;
-    s.Solve(l, SVC_Q(*prob, *param, y), minus_ones, y,
+    SVC_Q svc(*prob, *param, y);
+    s.Solve(l, svc, minus_ones, y,
             alpha, Cp, Cn, param->eps, si, param->shrinking);
 
     double sum_alpha = 0;
@@ -1415,7 +1446,8 @@ static void solve_nu_svc(
         zeros[i] = 0;
 
     Solver_NU s;
-    s.Solve(l, SVC_Q(*prob, *param, y), zeros, y,
+    SVC_Q svc(*prob, *param, y);
+    s.Solve(l, svc, zeros, y,
             alpha, 1.0, 1.0, param->eps, si, param->shrinking);
     double r = si->r;
 
@@ -1456,7 +1488,8 @@ static void solve_one_class(
     }
 
     Solver s;
-    s.Solve(l, ONE_CLASS_Q(*prob, *param), zeros, ones,
+    ONE_CLASS_Q oc(*prob, *param);
+    s.Solve(l, oc, zeros, ones,
             alpha, 1.0, 1.0, param->eps, si, param->shrinking);
 
     delete[] zeros;
@@ -1483,7 +1516,8 @@ static void solve_epsilon_svr(
     }
 
     Solver s;
-    s.Solve(2 * l, SVR_Q(*prob, *param), linear_term, y,
+    SVR_Q svr(*prob, *param);
+    s.Solve(2 * l, svr, linear_term, y,
             alpha2, param->C, param->C, param->eps, si, param->shrinking);
 
     double sum_alpha = 0;
@@ -1521,7 +1555,8 @@ static void solve_nu_svr(
     }
 
     Solver_NU s;
-    s.Solve(2 * l, SVR_Q(*prob, *param), linear_term, y,
+    SVR_Q svr(*prob, *param);
+    s.Solve(2 * l, svr, linear_term, y,
             alpha2, C, C, param->eps, si, param->shrinking);
 
     info("epsilon = %f\n", -si->r);
