@@ -71,7 +71,7 @@ namespace shadowdetection{
                     nodes[parameterCount].index = -1;
                     nodes[parameterCount].value = 0.;
                     double val = svm_predict(model, nodes);
-                    ret[i] = (uchar)val;
+                    ret[i] = (uchar)round(val);
                     MemMenager::delocate(nodes);
                 }
 #else

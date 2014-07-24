@@ -47,7 +47,9 @@ namespace shadowdetection {
 
         class OpenclTools : public shadowdetection::util::Singleton<OpenclTools>{
             friend class shadowdetection::util::Singleton<OpenclTools>;
-        private:            
+        private:    
+            cl_int dummyInt;
+            
             cl_device_id device;
             cl_int err;
             cl_command_queue command_queue[PROGRAM_COUNT];

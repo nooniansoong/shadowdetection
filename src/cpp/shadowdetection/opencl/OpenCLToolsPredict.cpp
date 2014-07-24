@@ -133,17 +133,28 @@ namespace shadowdetection {
                     err = clReleaseMemObject(clModelLabel);
                     err_check(err, "OpenclTools::createBuffersPredict delete clModelLabel", -1);
                 }
-                clModelLabel = clCreateBuffer(context[2], flag2, size, (cl_int*)model->label, &err);
-                err_check(err, "OpenclTools::createBuffersPredict clModelLabel", -1);            
+                if (model->label){
+                    clModelLabel = clCreateBuffer(context[2], flag2, size, (cl_int*)model->label, &err);
+                    err_check(err, "OpenclTools::createBuffersPredict clModelLabel", -1);
+                }
+                else{
+                    clModelLabel = clCreateBuffer(context[2], flag2, sizeof(cl_int), &dummyInt, &err);
+                    err_check(err, "OpenclTools::createBuffersPredict clModelLabel", -1);
+                }                
 
                 size = model->nr_class * sizeof(cl_int);
                 if (clModelNsv){
                     err = clReleaseMemObject(clModelNsv);
                     err_check(err, "OpenclTools::createBuffersPredict delete clModelNsv", -1);
                 }
-                clModelNsv = clCreateBuffer(context[2], flag2, size, (cl_int*)model->nSV, &err);
-                err_check(err, "OpenclTools::createBuffersPredict clModelNsv", -1);
-                
+                if (model->nSV){
+                    clModelNsv = clCreateBuffer(context[2], flag2, size, (cl_int*)model->nSV, &err);
+                    err_check(err, "OpenclTools::createBuffersPredict clModelNsv", -1);
+                }
+                else{
+                    clModelNsv = clCreateBuffer(context[2], flag2, sizeof(cl_int), &dummyInt, &err);
+                    err_check(err, "OpenclTools::createBuffersPredict clModelLabel", -1);
+                }
                 modelChanged = false;
             }            
             
@@ -173,10 +184,22 @@ namespace shadowdetection {
             err_check(err, "OpenclTools::setKernelArgsPredict clModelSVCoefs", -1);
             err = clSetKernelArg(kernel[5], 8, sizeof(cl_mem), &clModelRHO);
             err_check(err, "OpenclTools::setKernelArgsPredict clModelRHO", -1);
-            err = clSetKernelArg(kernel[5], 9, sizeof(cl_mem), &clModelLabel);
-            err_check(err, "OpenclTools::setKernelArgsPredict clModelLabel", -1);
-            err = clSetKernelArg(kernel[5], 10, sizeof(cl_mem), &clModelNsv);
-            err_check(err, "OpenclTools::setKernelArgsPredict clModelNsv", -1);
+            if (clModelLabel){
+                err = clSetKernelArg(kernel[5], 9, sizeof(cl_mem), &clModelLabel);
+                err_check(err, "OpenclTools::setKernelArgsPredict clModelLabel", -1);
+            }
+            else{
+//                err = clSetKernelArg(kernel[5], 9, 0, 0);
+//                err_check(err, "OpenclTools::setKernelArgsPredict clModelLabel", -1);
+            }
+            if (clModelNsv){
+                err = clSetKernelArg(kernel[5], 10, sizeof(cl_mem), &clModelNsv);
+                err_check(err, "OpenclTools::setKernelArgsPredict clModelNsv", -1);
+            }
+            else{
+//                err = clSetKernelArg(kernel[5], 10, 0, 0);
+//                err_check(err, "OpenclTools::setKernelArgsPredict clModelNsv", -1);
+            }
             err = clSetKernelArg(kernel[5], 11, sizeof(cl_int), &model->free_sv);
             err_check(err, "OpenclTools::setKernelArgsPredict free_sv", -1);
             err = clSetKernelArg(kernel[5], 12, sizeof(cl_int), &model->param.svm_type);

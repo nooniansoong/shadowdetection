@@ -2372,6 +2372,7 @@ double svm_predict_values(const svm_model *model, const svm_node *x, double* dec
             kvalue[i] = sv_coef[i] * Kernel::k_function(x, model->SV[i], model->param);
         for (i = 0; i < l; i++)
             sum += kvalue[i];
+        free(kvalue);
         sum -= model->rho[0];
         *dec_values = sum;
 

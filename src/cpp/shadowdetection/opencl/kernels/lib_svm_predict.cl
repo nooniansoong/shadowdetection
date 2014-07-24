@@ -262,8 +262,10 @@ __kernel void predict(  //input args
         model.SV = SV;
         model.sv_coef = sv_coef;
         model.rho = rho;
-        model.label = label;
-        model.nSV = nSV;
+        if (label)
+            model.label = label;
+        if (nSV)
+            model.nSV = nSV;
         model.free_sv = free_sv;
 
         svm_parameter parameter;
@@ -280,6 +282,10 @@ __kernel void predict(  //input args
         __local int* start = startMat + (localIndex * nr_class);
         __local int* vote = voteMat + (localIndex * nr_class);
         
-        results[index] = svm_predict(&model, currX, xNumOfParameters, start, vote);
+        double res = svm_predict(&model, currX, xNumOfParameters, start, vote);
+        if (res > 0.500003)
+            results[index] = 1;
+        else
+            results[index] = 0;
     }
 }
