@@ -188,6 +188,32 @@ namespace shadowdetection {
                 SDException exc(SHADOW_NO_MEM, "Convert to HSV");
                 throw exc;
             }
+            
+//            Mat tmp;            
+//            cvtColor(*src, tmp, CV_BGR2HSV);
+//            for (int i = 0; i < src->cols; i++){
+//                for (int j = 0; j < src->rows; j++){
+//                    int index = (i * src->rows + j) * src->channels();
+//                    if (ret->data[index + 0] != tmp.data[index + 0]){
+//                        uchar val1 = ret->data[index];
+//                        uchar val2 = tmp.data[index];
+//                        int a = 0;
+//                        ++a;
+//                    }
+//                    if (ret->data[index + 1] != tmp.data[index + 1]){
+//                        uchar val1 = ret->data[index + 1];
+//                        uchar val2 = tmp.data[index + 1];
+//                        int a = 0;
+//                        ++a;
+//                    }
+//                    if (ret->data[index + 2] != tmp.data[index + 2]){
+//                        uchar val1 = ret->data[index + 2];
+//                        uchar val2 = tmp.data[index + 2];
+//                        int a = 0;
+//                        ++a;
+//                    }
+//                }
+//            }
 #else
             ret = new(nothrow) Mat();
             if (ret == 0){
@@ -210,6 +236,32 @@ namespace shadowdetection {
                 SDException exc(SHADOW_NO_MEM, "Convert to HSV");
                 throw exc;
             }
+            
+//            Mat tmp;            
+//            cvtColor(*src, tmp, CV_BGR2HLS);
+//            for (int i = 0; i < src->cols; i++){
+//                for (int j = 0; j < src->rows; j++){
+//                    int index = (i * src->rows + j) * src->channels();
+//                    if (ret->data[index + 0] != tmp.data[index + 0]){
+//                        uchar val1 = ret->data[index];
+//                        uchar val2 = tmp.data[index];
+//                        int a = 0;
+//                        ++a;
+//                    }
+//                    if (ret->data[index + 1] != tmp.data[index + 1]){
+//                        uchar val1 = ret->data[index + 1];
+//                        uchar val2 = tmp.data[index + 1];
+//                        int a = 0;
+//                        ++a;
+//                    }
+//                    if (ret->data[index + 2] != tmp.data[index + 2]){
+//                        uchar val1 = ret->data[index + 2];
+//                        uchar val2 = tmp.data[index + 2];
+//                        int a = 0;
+//                        ++a;
+//                    }
+//                }
+//            }
 #else
             ret = new(nothrow) Mat();
             if (ret == 0){

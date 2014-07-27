@@ -26,7 +26,6 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" -training test_data.svm test_model2</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -training data.svm test_model2</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -makeset list.csv data1.svm</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -makeset ls.csv</runcommandpicklistitem>
@@ -36,8 +35,9 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}" -training testData.svm testModel3.model</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -training testData.svm testModel2.model</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" trees.csv</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -makeset trees.csv tmpOut1.svm</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" trees.csv</runcommand>
+        <runcommand>"${OUTPUT_PATH}" -makeset trees.csv tmpOut1.svm</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>
@@ -183,6 +183,8 @@
         <gdb_interceptlist>
           <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
         </gdb_interceptlist>
+        <gdb_signals>
+        </gdb_signals>
         <gdb_options>
           <DebugOptions>
           </DebugOptions>
@@ -194,8 +196,6 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" 0.jpg 0Shadow.jpg</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" -makeset list.csv bigData.svm</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -makeset list.csv bigData1.svm</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -makeset ls.csv tmpData.svm</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -training bigData1.svm bigModel.model</runcommandpicklistitem>
@@ -204,8 +204,10 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}" -training testData.svm testModel3.model</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" tstList.csv</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" tst.csv</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -makeset </runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -makeset trees.csv tmpOut.svm</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" tst.csv</runcommand>
+        <runcommand>"${OUTPUT_PATH}" -makeset trees.csv tmpOut.svm</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>

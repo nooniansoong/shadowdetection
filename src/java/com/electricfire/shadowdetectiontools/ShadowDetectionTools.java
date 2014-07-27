@@ -7,7 +7,9 @@
 package com.electricfire.shadowdetectiontools;
 
 import com.electricfire.shadowdetectiontools.filetools.BinaryToText;
+import com.electricfire.shadowdetectiontools.filetools.ConvertSVMToCSV;
 import com.electricfire.shadowdetectiontools.filetools.CreateCSVFile;
+import com.electricfire.shadowdetectiontools.statistics.AnalyzeTrainingData;
 
 /**
  *
@@ -32,6 +34,24 @@ public class ShadowDetectionTools {
         else if (mode.compareTo("-makelist") == 0){
             try{
                 CreateCSVFile.createCSV(args[1], args[2]);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        else if (mode.compareTo("-convertsvm") == 0){
+            try{
+                ConvertSVMToCSV converter = new ConvertSVMToCSV();
+                converter.convert(args[1], args[2]);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        else if (mode.compareTo("-analyze") == 0){
+            try{
+                AnalyzeTrainingData analyzer = new AnalyzeTrainingData();
+                analyzer.analyze(args[1], args[2]);
             }
             catch (Exception e){
                 e.printStackTrace();
