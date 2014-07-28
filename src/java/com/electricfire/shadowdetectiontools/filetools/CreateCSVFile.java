@@ -6,10 +6,13 @@
 
 package com.electricfire.shadowdetectiontools.filetools;
 
-import java.io.BufferedReader;
+import com.electricfire.shadowdetectiontools.util.FilesCollector;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -17,45 +20,26 @@ import java.io.FileWriter;
  */
 public class CreateCSVFile {
     
-    public static void createCSV(String rootDir, String outFile) throws Exception{
-        File root = new File(rootDir);
+    public static void createCSV(String rootDir, String outFile) throws Exception{        
         BufferedWriter writer = new BufferedWriter(new FileWriter(outFile));
-        process(root, writer);
+        Set<String> extensions = new HashSet<>();
+        extensions.add("jpg"); extensions.add("jpeg"); extensions.add("png");
+        extensions.add("tif"); extensions.add("tiff");
+        List<File> files = FilesCollector.getAllFiles(rootDir, null, extensions, true);
+        if (files != null){
+            for (File file : files) {
+                writeFile(file, writer);
+            }
+        }
         writer.flush();
         writer.close();
     }
     
-    private static void writeFile(File file, BufferedWriter writer) throws Exception{
-        String name = file.getName();
-        int dotIndex = name.lastIndexOf('.');
-        if (dotIndex != -1){
-            String extension = name.substring(dotIndex + 1);
-            if (extension.compareToIgnoreCase("jpg") == 0 || extension.compareToIgnoreCase("jpeg") == 0 ||
-                extension.compareToIgnoreCase("png") == 0 || extension.compareToIgnoreCase("tif") == 0 ||
-                extension.compareToIgnoreCase("tiff") == 0){
-                name = name.substring(0, dotIndex);
-                writer.write(file.getAbsolutePath() + "\t" + name + "Shadow." + extension);
-                writer.newLine();
-            }
-        }
-    }
-    
-    private static void process(File root, BufferedWriter writer) throws Exception{
-        if (root.isFile()){
-            writeFile(root, writer);
-        }
-        else{
-            File[] subFiles = root.listFiles();
-            for (int i = 0; i < subFiles.length; i++){
-                File subFile = subFiles[i];
-                if (subFile.isFile()){
-                    writeFile(subFile, writer);
-                }
-                else{
-                    process(subFile, writer);
-                }
-            }
-        }
-    }
+    private static void writeFile(File file, BufferedWriter writer) throws Exception{        
+        String extension = FilesCollector.getFileExtension(file);
+        String name = FilesCollector.getFileName(file);
+        writer.write(file.getAbsolutePath() + "\t" + name + "Shadow." + extension);
+        writer.newLine();
+    }        
     
 }

@@ -10,6 +10,7 @@ import com.electricfire.shadowdetectiontools.filetools.BinaryToText;
 import com.electricfire.shadowdetectiontools.filetools.ConvertSVMToCSV;
 import com.electricfire.shadowdetectiontools.filetools.CreateCSVFile;
 import com.electricfire.shadowdetectiontools.statistics.AnalyzeTrainingData;
+import com.electricfire.shadowdetectiontools.statistics.GetDataPeaks;
 
 /**
  *
@@ -52,6 +53,19 @@ public class ShadowDetectionTools {
             try{
                 AnalyzeTrainingData analyzer = new AnalyzeTrainingData();
                 analyzer.analyze(args[1], args[2]);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        else if (mode.compareTo("-getpeaks") == 0){
+            try{
+                GetDataPeaks gdp = new GetDataPeaks();
+                String rootDir = args[1];
+                String prefix = args[2];
+                int diffPercentage = Integer.parseInt(args[3]);
+                String outFile = args[4];
+                gdp.getPeaks(rootDir, prefix, diffPercentage, outFile);
             }
             catch (Exception e){
                 e.printStackTrace();
