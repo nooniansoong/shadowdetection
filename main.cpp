@@ -279,7 +279,7 @@ int main(int argc, char **argv) {
             if (distributeStr.compare("false") == 0){
                 distribute = false;
             }
-            ts.process(argv[3], distribute);
+            ts.process(argv[3], !distribute);
         }
         catch (SDException& exc){
             handleException(exc);

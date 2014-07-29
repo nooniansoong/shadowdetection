@@ -9,8 +9,11 @@ package com.electricfire.shadowdetectiontools;
 import com.electricfire.shadowdetectiontools.filetools.BinaryToText;
 import com.electricfire.shadowdetectiontools.filetools.ConvertSVMToCSV;
 import com.electricfire.shadowdetectiontools.filetools.CreateCSVFile;
+import com.electricfire.shadowdetectiontools.filetools.RemoveFeaturesFromSVMFile;
 import com.electricfire.shadowdetectiontools.statistics.AnalyzeTrainingData;
 import com.electricfire.shadowdetectiontools.statistics.GetDataPeaks;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -66,6 +69,18 @@ public class ShadowDetectionTools {
                 int diffPercentage = Integer.parseInt(args[3]);
                 String outFile = args[4];
                 gdp.getPeaks(rootDir, prefix, diffPercentage, outFile);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        else if (mode.compareTo("-removefeatures") == 0){
+            try{
+                Set<Integer> featuresToRemove = new HashSet<>();
+                featuresToRemove.add(7); featuresToRemove.add(3);
+                featuresToRemove.add(8); featuresToRemove.add(9);
+                featuresToRemove.add(1); featuresToRemove.add(2);
+                RemoveFeaturesFromSVMFile.removeFeatures(args[1], featuresToRemove, args[2]);
             }
             catch (Exception e){
                 e.printStackTrace();
