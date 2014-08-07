@@ -10,6 +10,7 @@ import com.electricfire.shadowdetectiontools.filetools.BinaryToText;
 import com.electricfire.shadowdetectiontools.filetools.ConvertSVMToCSV;
 import com.electricfire.shadowdetectiontools.filetools.CreateCSVFile;
 import com.electricfire.shadowdetectiontools.filetools.RemoveFeaturesFromSVMFile;
+import com.electricfire.shadowdetectiontools.filetools.RemoveRecordsFromSvmFile;
 import com.electricfire.shadowdetectiontools.statistics.AnalyzeTrainingData;
 import com.electricfire.shadowdetectiontools.statistics.GetDataPeaks;
 import java.util.HashSet;
@@ -77,10 +78,20 @@ public class ShadowDetectionTools {
         else if (mode.compareTo("-removefeatures") == 0){
             try{
                 Set<Integer> featuresToRemove = new HashSet<>();
-                featuresToRemove.add(7); featuresToRemove.add(3);
-                featuresToRemove.add(8); featuresToRemove.add(9);
-                featuresToRemove.add(1); featuresToRemove.add(2);
+                for (int i = 3; i < args.length; i++){
+                    int featureIndex = Integer.parseInt(args[i]);
+                    featuresToRemove.add(featureIndex);
+                }
                 RemoveFeaturesFromSVMFile.removeFeatures(args[1], featuresToRemove, args[2]);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        else if (mode.compareTo("-removePairs") == 0){
+            try{
+                int n = Integer.parseInt(args[1]);                
+                RemoveRecordsFromSvmFile.removeEveryNthPair(n, args[2], args[3]);
             }
             catch (Exception e){
                 e.printStackTrace();

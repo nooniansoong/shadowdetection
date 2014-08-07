@@ -550,7 +550,7 @@ void Solver::Solve(int l, QMatrix& Q, const double *p_, const schar *y_,
         for (i = 0; i < l; i++) {
             G[i] = p[i];
             G_bar[i] = 0;
-        }
+        }        
         for (i = 0; i < l; i++)
             if (!is_lower_bound(i)) {
                 const Qfloat *Q_i = Q.get_Q(i, l);
@@ -674,6 +674,7 @@ void Solver::Solve(int l, QMatrix& Q, const double *p_, const schar *y_,
         double delta_alpha_i = alpha[i] - old_alpha_i;
         double delta_alpha_j = alpha[j] - old_alpha_j;
 
+        //TODO parallelize with OMP
         int k;
         for (k = 0; k < active_size; k++) {
             G[k] += Q_i[k] * delta_alpha_i + Q_j[k] * delta_alpha_j;
@@ -726,7 +727,8 @@ void Solver::Solve(int l, QMatrix& Q, const double *p_, const schar *y_,
     // calculate objective value
     {
         double v = 0;
-        int i;        
+        int i;
+        //TODO parallelize with OMP
         for (i = 0; i < l; i++)
             v += alpha[i] * (G[i] + p[i]);
 
@@ -804,6 +806,7 @@ int Solver::select_working_set(int &out_i, int &out_j) {
 //    oclt->selectWorkingSet(active_size, i, (const char*)y, alpha_status, l, grad_diff, Gmax, G, QD, Q_i, obj_diff);
 //    oclt->cleanWorkPart();
 //#else
+    //TODO parallelize with OMP
     int j;
     for (j = 0; j < active_size; j++) {
         if (y[j] == +1) {
@@ -1033,7 +1036,8 @@ int Solver_NU::select_working_set(int &out_i, int &out_j) {
         Q_ip = Q->get_Q(ip, active_size);
     if (in != -1)
         Q_in = Q->get_Q(in, active_size);
-
+    
+    //TODO make changes and parallelize with OMP
     for (int j = 0; j < active_size; j++) {
         if (y[j] == +1) {
             if (!is_lower_bound(j)) {

@@ -11,8 +11,7 @@ namespace shadowdetection {
         void OpenCvTools::RGBtoHSI_1(unsigned char r, unsigned char g, unsigned char b, unsigned int& h, unsigned char& s, unsigned char& i) {
             unsigned char min;//, max;// delta;
 
-            min = minF(r, g, b);
-            //max = maxF(r, g, b);
+            min = minFunc<unsigned char>(r, g, b);            
             i = (unsigned char) (((float) (r + g + b)) / 3.f);
 
             //delta = max - min;
@@ -54,8 +53,7 @@ namespace shadowdetection {
         void OpenCvTools::RGBtoHSI_2(unsigned char r, unsigned char g, unsigned char b, unsigned int& h, unsigned char& s, unsigned char& i) {
             float min;//, max;
 
-            min = minF(r, g, b);
-            //max = maxF(r, g, b);
+            min = minFunc<unsigned char>(r, g, b);            
             i = (unsigned char) (((float) (r + g + b)) / 3.f);
             
             float fS;

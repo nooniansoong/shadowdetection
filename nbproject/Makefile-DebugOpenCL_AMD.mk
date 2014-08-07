@@ -46,10 +46,12 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/util/Cofig.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/util/MemMenager.o \
+	${OBJECTDIR}/src/cpp/shadowdetection/util/PredictorManager.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/util/TabParser.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/util/Timer.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/util/image/ImageParameters.o \
-	${OBJECTDIR}/src/cpp/shadowdetection/util/libsvm/SvmPredict.o \
+	${OBJECTDIR}/src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.o \
+	${OBJECTDIR}/src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.o \
 	${OBJECTDIR}/src/cpp/thirdparty/lib_svm/svm.o
 
 
@@ -132,6 +134,11 @@ ${OBJECTDIR}/src/cpp/shadowdetection/util/MemMenager.o: src/cpp/shadowdetection/
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -D_AMD -D_DEBUG -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/util/MemMenager.o src/cpp/shadowdetection/util/MemMenager.cpp
 
+${OBJECTDIR}/src/cpp/shadowdetection/util/PredictorManager.o: src/cpp/shadowdetection/util/PredictorManager.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/util
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -D_AMD -D_DEBUG -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/util/PredictorManager.o src/cpp/shadowdetection/util/PredictorManager.cpp
+
 ${OBJECTDIR}/src/cpp/shadowdetection/util/TabParser.o: src/cpp/shadowdetection/util/TabParser.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/util
 	${RM} "$@.d"
@@ -147,10 +154,15 @@ ${OBJECTDIR}/src/cpp/shadowdetection/util/image/ImageParameters.o: src/cpp/shado
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -D_AMD -D_DEBUG -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/util/image/ImageParameters.o src/cpp/shadowdetection/util/image/ImageParameters.cpp
 
-${OBJECTDIR}/src/cpp/shadowdetection/util/libsvm/SvmPredict.o: src/cpp/shadowdetection/util/libsvm/SvmPredict.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/util/libsvm
+${OBJECTDIR}/src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.o: src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/util/predicition/libsvm
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Wall -D_AMD -D_DEBUG -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/util/libsvm/SvmPredict.o src/cpp/shadowdetection/util/libsvm/SvmPredict.cpp
+	$(COMPILE.cc) -g -Wall -D_AMD -D_DEBUG -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.o src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.cpp
+
+${OBJECTDIR}/src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.o: src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/util/predicition/regression
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -D_AMD -D_DEBUG -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.o src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.cpp
 
 ${OBJECTDIR}/src/cpp/thirdparty/lib_svm/svm.o: src/cpp/thirdparty/lib_svm/svm.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/thirdparty/lib_svm

@@ -14,9 +14,9 @@
 #include "shadowdetection/util/raii/RAIIS.h"
 #include "shadowdetection/tools/svm/TrainingSet.h"
 #include "shadowdetection/tools/svm/libsvmopenmp/svm-train.h"
-#include "shadowdetection/util/libsvm/SvmPredict.h"
 #include "shadowdetection/util/image/ImageParameters.h"
 #include "shadowdetection/util/Matrix.h"
+#include "shadowdetection/util/PredictorManager.h"
 #if defined _OPENMP_MY
 #include <omp.h>
 #endif
@@ -31,7 +31,7 @@ using namespace shadowdetection::util;
 using namespace cv;
 using namespace shadowdetection::util::raii;
 using namespace shadowdetection::tools::svm;
-using namespace shadowdetection::util::libsvm;
+using namespace shadowdetection::util::prediction;
 using namespace shadowdetection::util::image;
 
 void handleException(const SDException& exception){
@@ -161,14 +161,15 @@ void processSingleOpenCL(const char* out, const Mat& image) {
             ImageNewRaii imraiiPi(pi);
             int pixCount;
             int parameterCount;
-            Matrix<float>* parameters = ImageParameters::getImageParameters(image, parameterCount, pixCount);
+            ImageParameters ip;
+            Matrix<float>* parameters = ip.getImageParameters(image, parameterCount, pixCount);
             if (parameters){
                 PointerRaii< Matrix<float> > paramRaii(parameters);
-                if (SvmPredict::getInstancePtr()->hasLoadedModel() == false){
-                    string modelFile = Config::getInstancePtr()->getPropertyValue("process.Prediction.modelFile");
-                    SvmPredict::getInstancePtr()->loadModel(modelFile);
+                IPrediction* predictor = getPredictor();
+                if (predictor->hasLoadedModel() == false){                    
+                    predictor->loadModel();
                 }
-                uchar* predicted = SvmPredict::getInstancePtr()->predict(parameters, pixCount, parameterCount);
+                uchar* predicted = predictor->predict(parameters, pixCount, parameterCount);
                 if (predicted){
                     VectorRaii vraiiPred(predicted);
                     //FileSaver<uchar>::saveToFile("myPredictedOCL.out", predicted, pixCount);
@@ -351,7 +352,7 @@ int main(int argc, char **argv) {
                 handleException(exception);
                 exit(1);
             }
-            for (int i = 0; i < tp.size(); i++){
+            for (uint i = 0; i < tp.size(); i++){
                 string in = tp.get(i).getKey();
                 string out = tp.get(i).getVal();
                 try{

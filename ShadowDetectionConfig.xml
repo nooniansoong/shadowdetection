@@ -2,44 +2,62 @@
 
 <QsConfig>
     <process>
+        <!-- true, false -->
         <UseBatch>
             true
         </UseBatch>
         <Training>
+            <!-- true, false -->
             <distribute0and1>
                 true
             </distribute0and1>
         </Training>
-        <Prediction>
-            <modelFile>
-                bigModel.model
-            </modelFile>
+        <Prediction>            
+            <!-- true, false -->
             <usePrediction>
                 true
             </usePrediction>
+            <!--SVM for support vector machine, REG for regresion-->
+            <predictionType>
+                REG
+            </predictionType>            
         </Prediction>        
     </process>
     <settings>
+        <Parameters>
+            <!-- percents of image width -->
+            <numSegments>
+                16
+            </numSegments>
+        </Parameters>
         
         <openCL>            
+            <!-- true, false -->
             <UsePrecompiledKernels>
                 false
-            </UsePrecompiledKernels>            
+            </UsePrecompiledKernels>
+            <!-- index of platform -->
             <platformid>
                 0
             </platformid>
+            <!-- index of device -->
             <deviceid>
                 0
             </deviceid>    
         </openCL>
         
         <openMP>
+            <!-- openMP thread number -->
             <threadNum>
                 4
             </threadNum>
         </openMP>
         
-        <svm>            
+        <svm>
+            <!-- full file name -->
+            <modelFile>
+                bigModelNew.model
+            </modelFile>            
             <!-- 0=C-SVC, 1=nu-SVC, 2=one-class, 3=epsilon-SVR, 4=nu-SVR -->
             <svm_type>
                 0
@@ -49,6 +67,58 @@
                 2
             </kernel_type>
         </svm>
+        <regression>
+            <!-- number of coefficients used in regression classification, do not involve intercept -->
+            <coefNum>
+                13
+            </coefNum>
+            <!-- numerical value of coefficient -->
+            <coefNo1>
+                0.30211 
+            </coefNo1>
+            <coefNo2>
+                -1.54589 
+            </coefNo2>
+            <coefNo3>
+                -0.58595 
+            </coefNo3>
+            <coefNo4>
+                6.76279
+            </coefNo4>
+            <coefNo5>
+                2.05898 
+            </coefNo5>
+            <coefNo6>
+                0.81590 
+            </coefNo6>
+            <coefNo7>
+                0.21056 
+            </coefNo7>
+            <coefNo8>
+                -2.85318 
+            </coefNo8>
+            <coefNo9>
+                2.63038 
+            </coefNo9>
+            <coefNo10>
+                -0.09671 
+            </coefNo10>
+            <coefNo11>
+                0.22211
+            </coefNo11>
+            <coefNo12>
+                0.81328
+            </coefNo12>
+            <coefNo13>
+                -0.83885
+            </coefNo13>
+            <Intercept>
+                -0.42670
+            </Intercept>
+            <borderValue>
+                0.395
+            </borderValue>
+        </regression>
         
     </settings>
 </QsConfig>

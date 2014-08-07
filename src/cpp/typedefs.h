@@ -94,7 +94,7 @@ template<typename T> class KeyVal{
         KeyVal(){            
         }
         
-        KeyVal(std::string key, std::string val){
+        KeyVal(T key, T val){
             this->key = key;
             this->val = val;
         }
@@ -113,11 +113,11 @@ template<typename T> class KeyVal{
             return *this;
         }
         
-        T getKey(){
+        T getKey() const{
             return key;
         }
         
-        T getVal(){
+        T getVal() const{
             return val;
         }
 };
@@ -175,8 +175,8 @@ public:
     }
 };
 
-inline unsigned char maxF(unsigned char a, unsigned char b, unsigned char c) {
-    unsigned char max = a;
+template<typename T> inline T maxFunc(T a, T b, T c) {
+    T max = a;
     if (b > max)
         max = b;
     if (c > max)
@@ -185,8 +185,8 @@ inline unsigned char maxF(unsigned char a, unsigned char b, unsigned char c) {
     return max;
 }
 
-inline unsigned char minF(unsigned char a, unsigned char b, unsigned char c) {
-    unsigned char min = a;
+template<typename T> inline T minFunc(T a, T b, T c) {
+    T min = a;
     if (b < min)
         min = b;
     if (c < min)
@@ -201,7 +201,7 @@ inline float radToDegrees(float radians) {
     return radians * oneRad;
 }
 
-inline float clamp(float val, float min, float max) {
+template<typename T> inline T clamp(T val, T min, T max) {
     if (val > max)
         return max;
     if (val < min)

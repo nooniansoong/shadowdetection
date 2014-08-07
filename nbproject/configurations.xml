@@ -31,6 +31,15 @@
           <logicalFolder name="libsvm" displayName="libsvm" projectFiles="true">
             <itemPath>src/cpp/shadowdetection/util/libsvm/SvmPredict.h</itemPath>
           </logicalFolder>
+          <logicalFolder name="predicition" displayName="predicition" projectFiles="true">
+            <logicalFolder name="libsvm" displayName="libsvm" projectFiles="true">
+              <itemPath>src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="regression" displayName="regression" projectFiles="true">
+              <itemPath>src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.h</itemPath>
+            </logicalFolder>
+            <itemPath>src/cpp/shadowdetection/util/predicition/IPrediction.h</itemPath>
+          </logicalFolder>
           <logicalFolder name="raii" displayName="raii" projectFiles="true">
             <itemPath>src/cpp/shadowdetection/util/raii/RAIIS.h</itemPath>
           </logicalFolder>
@@ -38,6 +47,7 @@
           <itemPath>src/cpp/shadowdetection/util/FileSaver.h</itemPath>
           <itemPath>src/cpp/shadowdetection/util/Matrix.h</itemPath>
           <itemPath>src/cpp/shadowdetection/util/MemMenager.h</itemPath>
+          <itemPath>src/cpp/shadowdetection/util/PredictorManager.h</itemPath>
           <itemPath>src/cpp/shadowdetection/util/Singleton.h</itemPath>
           <itemPath>src/cpp/shadowdetection/util/TabParser.h</itemPath>
           <itemPath>src/cpp/shadowdetection/util/Timer.h</itemPath>
@@ -97,11 +107,17 @@
           <logicalFolder name="image" displayName="image" projectFiles="true">
             <itemPath>src/cpp/shadowdetection/util/image/ImageParameters.cpp</itemPath>
           </logicalFolder>
-          <logicalFolder name="libsvm" displayName="libsvm" projectFiles="true">
-            <itemPath>src/cpp/shadowdetection/util/libsvm/SvmPredict.cpp</itemPath>
+          <logicalFolder name="predicition" displayName="predicition" projectFiles="true">
+            <logicalFolder name="libsvm" displayName="libsvm" projectFiles="true">
+              <itemPath>src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.cpp</itemPath>
+            </logicalFolder>
+            <logicalFolder name="regression" displayName="regression" projectFiles="true">
+              <itemPath>src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.cpp</itemPath>
+            </logicalFolder>
           </logicalFolder>
           <itemPath>src/cpp/shadowdetection/util/Cofig.cpp</itemPath>
           <itemPath>src/cpp/shadowdetection/util/MemMenager.cpp</itemPath>
+          <itemPath>src/cpp/shadowdetection/util/PredictorManager.cpp</itemPath>
           <itemPath>src/cpp/shadowdetection/util/TabParser.cpp</itemPath>
           <itemPath>src/cpp/shadowdetection/util/Timer.cpp</itemPath>
         </logicalFolder>
@@ -267,6 +283,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/util/PredictorManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/PredictorManager.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/util/Singleton.h"
             ex="false"
             tool="3"
@@ -302,12 +328,32 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.cpp"
+      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/IPrediction.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
+      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -490,6 +536,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/util/PredictorManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/PredictorManager.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/util/Singleton.h"
             ex="false"
             tool="3"
@@ -525,12 +581,32 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.cpp"
+      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/IPrediction.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
+      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -706,6 +782,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/util/PredictorManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/PredictorManager.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/util/Singleton.h"
             ex="false"
             tool="3"
@@ -741,12 +827,32 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.cpp"
+      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/IPrediction.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
+      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -927,6 +1033,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/util/PredictorManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/PredictorManager.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/util/Singleton.h"
             ex="false"
             tool="3"
@@ -962,12 +1078,32 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.cpp"
+      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/IPrediction.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
+      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1149,6 +1285,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/util/PredictorManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/PredictorManager.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/util/Singleton.h"
             ex="false"
             tool="3"
@@ -1184,12 +1330,32 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.cpp"
+      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/IPrediction.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
+      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1374,6 +1540,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/util/PredictorManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/PredictorManager.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/util/Singleton.h"
             ex="false"
             tool="3"
@@ -1409,12 +1585,32 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.cpp"
+      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/IPrediction.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
+      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1591,6 +1787,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/util/PredictorManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/PredictorManager.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/util/Singleton.h"
             ex="false"
             tool="3"
@@ -1626,12 +1832,32 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.cpp"
+      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/IPrediction.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
+      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1812,6 +2038,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/util/PredictorManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/PredictorManager.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/util/Singleton.h"
             ex="false"
             tool="3"
@@ -1847,12 +2083,32 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.cpp"
+      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/IPrediction.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
+      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -2027,6 +2283,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/util/PredictorManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/PredictorManager.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/util/Singleton.h"
             ex="false"
             tool="3"
@@ -2062,12 +2328,32 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.cpp"
+      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/IPrediction.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
+      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -2246,6 +2532,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/util/PredictorManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/PredictorManager.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/util/Singleton.h"
             ex="false"
             tool="3"
@@ -2281,12 +2577,32 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.cpp"
+      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/IPrediction.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
+      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.h"
             ex="false"
             tool="3"
             flavor2="0">

@@ -5,27 +5,36 @@
 #include "typedefs.h"
 #include "shadowdetection/util/Matrix.h"
 
-#define SPACES_COUNT 2
-#define HSV_PARAMETERS 6
-#define HLS_PARAMETERS 6
-
-
 namespace shadowdetection{
     namespace util{
         namespace image{
             
             class ImageParameters{
             private:
-                static float* processHSV(uchar H, uchar S, uchar V, int& size);
-                static float* processHLS(uchar H, uchar L, uchar S, int& size);
+                shadowdetection::util::Matrix<float>* regionsAvgsSecondChannel;
+                int numOfSegments;
+                float segmentWidth;
+                float segmentHeight;
+                
+                static float* processHSV(   uchar H, uchar S, uchar V, int& size);
+                static float* processHLS(   uchar H, uchar L, uchar S, int& size);
+                static float* processBGR(   uchar B, uchar G, uchar R, int& size);
+                float* processROI(  KeyVal<uint> location, const cv::Mat* originalImage, 
+                                    int& size, uchar channelIndex) throw (SDException&);
+                shadowdetection::util::Matrix<float>* getAvgChannelValForRegions(const cv::Mat* originalImage,
+                                                                                uchar channelIndex);
             protected:
             public:
+                ImageParameters();
+                virtual ~ImageParameters();
+                
                 static float* merge(float** arrs, int arrsLen, int* arrSize, int& retSize);
                 static float* merge(float label, const float** arrs, int arrsLen, int* arrSize, int& retSize);
-                static shadowdetection::util::Matrix<float>* getImageParameters(  const cv::Mat& originalImage, 
+                shadowdetection::util::Matrix<float>* getImageParameters(  const cv::Mat& originalImage, 
                                                     int& rowDimension, int& pixelNum) throw (SDException&);
-                static shadowdetection::util::Matrix<float>* getImageParameters(  const cv::Mat& originalImage, const cv::Mat& maskImage,                                                     
-                                                    int& rowDimension, int& pixelNum) throw (SDException&);                
+                shadowdetection::util::Matrix<float>* getImageParameters(  const cv::Mat& originalImage, const cv::Mat& maskImage,                                                     
+                                                    int& rowDimension, int& pixelNum) throw (SDException&);
+                void reset();
             };
             
         }

@@ -75,6 +75,10 @@ namespace shadowdetection {
             static cv::Mat* joinTwo(const cv::Mat* src1, const cv::Mat* src2);
             static cv::Mat* convertToHSV(const cv::Mat* src) throw (SDException&);
             static cv::Mat* convertToHLS(const cv::Mat* src) throw (SDException&);
+            static cv::Mat* getImageROI(const cv::Mat* src, uint roiWidth, uint roiHeight,
+                                        const KeyVal<uint>& location) throw (SDException&);
+            static float getAvgChannelValue(const cv::Mat* src, 
+                                            uchar channelIndex) throw (SDException&);
 #ifdef _OPENCL
             /**
              * init global variables needed for openCV openCL processing

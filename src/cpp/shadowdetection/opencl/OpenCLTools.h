@@ -149,7 +149,7 @@ namespace shadowdetection {
              * @param deviceID
              * @param listOnly
              */
-            void init(int platformID, int deviceID, bool listOnly) throw (SDException&);
+            void init(uint platformID, uint deviceID, bool listOnly) throw (SDException&);
             /**
              * process image and returns binarized grayscale image with detected shadows (white color)
              * @param image

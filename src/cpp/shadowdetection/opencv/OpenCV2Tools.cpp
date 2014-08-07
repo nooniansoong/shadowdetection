@@ -12,7 +12,7 @@ namespace shadowdetection {
         
         unsigned int* OpenCV2Tools::convertImagetoHSI  (const Mat* image, int& height, int& width, int& channels,
                                              void (*convertFunc)(unsigned char, unsigned char, unsigned char, unsigned int&, unsigned char&, unsigned char&)){
-            if (image == 0){
+            if (image == 0 || image->data == 0){
                 return 0;
             }
             height = image->size().height;
@@ -47,7 +47,7 @@ namespace shadowdetection {
         }
                 
         unsigned char* OpenCV2Tools::convertImageToByteArray(const Mat* image, bool copy){
-            if (image == 0) {
+            if (image == 0 || image->data == 0) {
                 return 0;
             }
             if (copy == true){
@@ -95,6 +95,9 @@ namespace shadowdetection {
         }
         
         Mat* OpenCV2Tools::get8bitImage(unsigned char* input, int height, int width){
+            if (input == 0) {
+                return 0;
+            }
             Mat* image = 0;
             image = new(nothrow) Mat(height, width, CV_8U, input);
             if (image == 0){
@@ -105,6 +108,9 @@ namespace shadowdetection {
         }
         
         Mat* OpenCV2Tools::binarize(const Mat* input){
+            if (input == 0 || input->data == 0) {
+                return 0;
+            }
             Mat* image = 0;
             image = new(nothrow) Mat();
             if (image == 0){
@@ -116,6 +122,9 @@ namespace shadowdetection {
         }
         
         Mat* OpenCV2Tools::joinTwo(const Mat* src1, const Mat* src2){
+            if (src1 == 0 || src2 == 0 || src1->data == 0 || src2->data == 0) {
+                return 0;
+            }
             Mat* image = 0;
             image = new(nothrow) Mat();
             if (image == 0){
@@ -162,7 +171,10 @@ namespace shadowdetection {
             cout << "Device name:" << devicesInfo[device]->deviceName << endl;
         }        
 
-        Mat* OpenCV2Tools::joinTwoOcl(const cv::Mat& src1, const cv::Mat& src2) {
+        Mat* OpenCV2Tools::joinTwoOcl(const Mat& src1, const Mat& src2) {
+            if (src1.data == 0 || src2.data == 0){
+                return 0;
+            }
             oclMat oclSrc1(src1);
             oclMat oclSrc2(src2);
             oclMat res;
@@ -177,7 +189,7 @@ namespace shadowdetection {
         }
 #endif
         
-        cv::Mat* OpenCV2Tools::convertToHSV(const cv::Mat* src) throw (SDException&){
+        Mat* OpenCV2Tools::convertToHSV(const Mat* src) throw (SDException&){
             Mat* ret = 0;
 #ifdef _OPENCL
             oclMat oclSrc(*src);
@@ -187,33 +199,7 @@ namespace shadowdetection {
             if (ret == 0){
                 SDException exc(SHADOW_NO_MEM, "Convert to HSV");
                 throw exc;
-            }
-            
-//            Mat tmp;            
-//            cvtColor(*src, tmp, CV_BGR2HSV);
-//            for (int i = 0; i < src->cols; i++){
-//                for (int j = 0; j < src->rows; j++){
-//                    int index = (i * src->rows + j) * src->channels();
-//                    if (ret->data[index + 0] != tmp.data[index + 0]){
-//                        uchar val1 = ret->data[index];
-//                        uchar val2 = tmp.data[index];
-//                        int a = 0;
-//                        ++a;
-//                    }
-//                    if (ret->data[index + 1] != tmp.data[index + 1]){
-//                        uchar val1 = ret->data[index + 1];
-//                        uchar val2 = tmp.data[index + 1];
-//                        int a = 0;
-//                        ++a;
-//                    }
-//                    if (ret->data[index + 2] != tmp.data[index + 2]){
-//                        uchar val1 = ret->data[index + 2];
-//                        uchar val2 = tmp.data[index + 2];
-//                        int a = 0;
-//                        ++a;
-//                    }
-//                }
-//            }
+            }            
 #else
             ret = new(nothrow) Mat();
             if (ret == 0){
@@ -225,7 +211,7 @@ namespace shadowdetection {
             return ret;
         }
         
-        cv::Mat* OpenCV2Tools::convertToHLS(const cv::Mat* src) throw (SDException&){
+        Mat* OpenCV2Tools::convertToHLS(const Mat* src) throw (SDException&){
             Mat* ret = 0;
 #ifdef _OPENCL
             oclMat oclSrc(*src);
@@ -235,33 +221,7 @@ namespace shadowdetection {
             if (ret == 0){
                 SDException exc(SHADOW_NO_MEM, "Convert to HSV");
                 throw exc;
-            }
-            
-//            Mat tmp;            
-//            cvtColor(*src, tmp, CV_BGR2HLS);
-//            for (int i = 0; i < src->cols; i++){
-//                for (int j = 0; j < src->rows; j++){
-//                    int index = (i * src->rows + j) * src->channels();
-//                    if (ret->data[index + 0] != tmp.data[index + 0]){
-//                        uchar val1 = ret->data[index];
-//                        uchar val2 = tmp.data[index];
-//                        int a = 0;
-//                        ++a;
-//                    }
-//                    if (ret->data[index + 1] != tmp.data[index + 1]){
-//                        uchar val1 = ret->data[index + 1];
-//                        uchar val2 = tmp.data[index + 1];
-//                        int a = 0;
-//                        ++a;
-//                    }
-//                    if (ret->data[index + 2] != tmp.data[index + 2]){
-//                        uchar val1 = ret->data[index + 2];
-//                        uchar val2 = tmp.data[index + 2];
-//                        int a = 0;
-//                        ++a;
-//                    }
-//                }
-//            }
+            }            
 #else
             ret = new(nothrow) Mat();
             if (ret == 0){
@@ -271,6 +231,77 @@ namespace shadowdetection {
             cvtColor(*src, *ret, CV_BGR2HLS);
 #endif
             return ret;
+        }
+        
+        /**
+         * don't want this parallel
+         * @param src
+         * @param roiWidth
+         * @param location
+         * @return 
+         */
+        Mat* OpenCV2Tools::getImageROI( const Mat* src, uint roiWidth, uint roiHeight, 
+                                        const KeyVal<uint>& location) throw (SDException&){
+            if (src == 0 || src->data == 0){
+                return 0;
+            }
+            int startX = location.getKey();
+            int startY = location.getVal();
+                         
+            if (startX < 0)
+                startX = 0;
+            if (startX > src->cols - 1)
+                return 0;
+            
+            if (startY < 0)
+                startY = 0;
+            if (startY > src->rows - 1)
+                return 0;
+            
+            int endX = startX + roiWidth;
+            if (endX < 0)
+                return 0;
+            endX = clamp<int>(endX, 0, src->cols - 1U);
+            
+            int endY = startY + roiHeight;
+            if (endY < 0)
+                return 0;
+            endY = clamp<int>(endY, 0, src->rows - 1U);
+            int diffX = endX - startX;
+            int diffY = endY - startY;
+            if (diffX <= 0 || diffY <= 0)
+                return 0;
+            Mat* retMat = new Mat(*src, Rect(startX, startY, diffX, diffY));
+            return retMat;
+        }
+        
+        /**
+         * this also don't want parallel
+         * @param src
+         * @param channelIndex
+         * @return 
+         */
+        float OpenCV2Tools::getAvgChannelValue( const Mat* src, 
+                                                uchar channelIndex) throw (SDException&){
+            if (src == 0 || src->data == 0 || (src->channels() - 1 < channelIndex)){
+                SDException exc(SHADOW_INVALID_IMAGE_FORMAT, "OpenCV2Tools::getAvgChannelValue");
+                throw exc;
+            }
+            size_t step = src->step;
+            uint64 val = 0;
+            int channels = src->channels();            
+            uint rows = src->rows;
+            uint cols = src->cols;
+            for (uint i = 0; i < rows; i++){
+                for (uint j = 0; j < cols; j++){
+                    int index = (i * step) + (j * channels) + channelIndex;
+                    uchar chnVal = src->data[index];
+                    val += chnVal;
+                }
+            }
+            uint num = rows * cols;
+            float retVal = (float)val / (float)num;
+            return retVal;
         }
 
     }

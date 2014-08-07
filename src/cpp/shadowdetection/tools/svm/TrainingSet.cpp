@@ -115,7 +115,8 @@ namespace shadowdetection {
                 if (originalImage.data == 0 || maskImage.data == 0) {
                     return 0;
                 }
-                Matrix<float>* retVec = ImageParameters::getImageParameters(originalImage, maskImage, rowDimesion, pixelNum);
+                ImageParameters ip;
+                Matrix<float>* retVec = ip.getImageParameters(originalImage, maskImage, rowDimesion, pixelNum);
                 return retVec;
             }
 
