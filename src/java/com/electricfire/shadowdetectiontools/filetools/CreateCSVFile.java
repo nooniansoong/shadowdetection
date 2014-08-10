@@ -40,7 +40,7 @@ public class CreateCSVFile {
         String extension = FilesCollector.getFileExtension(file);
         String name = FilesCollector.getFileName(file);
         File parent = file.getParentFile();
-        writer.write(file.getAbsolutePath() + "\t" + parent.getAbsolutePath() + "/" + name + "Shadow." + extension);
+        writer.write(file.getAbsolutePath() + "\t" + parent.getAbsolutePath() + "/" + name + "Shadow.tif");
         writer.newLine();
     }        
     

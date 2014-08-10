@@ -7,7 +7,7 @@
 #define SPACES_COUNT 4
 #define HSV_PARAMETERS 5
 #define HLS_PARAMETERS 5
-#define BGR_PARAMETERS 2
+#define BGR_PARAMETERS 5
 #define ROI_PARAMETERS 1;
 
 namespace shadowdetection{
@@ -95,12 +95,28 @@ namespace shadowdetection{
                 int width = originalImage.size().width;
                 int noLabelDataRowDimension;
                 int pixelCount;
-                const Matrix<float>* noLabel = getImageParameters(originalImage, noLabelDataRowDimension, pixelCount);
+                
+                Mat* hsv = OpenCV2Tools::convertToHSV(&originalImage);
+                if (hsv == 0){
+                    return 0;
+                }
+                ImageNewRaii hsvRaii(hsv);
+                
+                Mat* hls = OpenCV2Tools::convertToHLS(&originalImage);
+                if (hls == 0){
+                    return 0;
+                }
+                ImageNewRaii hlsRaii(hls);
+                
+                const Matrix<float>* noLabel = getImageParameters(  originalImage, *hsv, *hls,
+                                                                    noLabelDataRowDimension, pixelCount);
                 if (noLabel != 0){
                     PointerRaii< const Matrix<float> > noLabelRaii(noLabel);
                     for (int i = 0; i < height; i++) {
                         for (int j = 0; j < width; j++) {
-                            float label = getLabel(maskImage.data[i * maskStep + j * maskChan]);
+                            float label = OpenCV2Tools::getChannelValue(maskImage, j, i, 0); //getLabel(maskImage.data[i * maskStep + j * maskChan]);
+                            label /= 255.f;
+                            
                             int sizes[1];
                             sizes[0] = noLabelDataRowDimension;
                             const float* procs[1];
@@ -131,41 +147,28 @@ namespace shadowdetection{
                 return ret;
             }
             
-            Matrix<float>* ImageParameters::getImageParameters(const Mat& originalImage, int& rowDimension,
-                                                        int& pixelNum) throw (SDException&){
-                if (originalImage.data == 0)
+            Matrix<float>* ImageParameters::getImageParameters( const Mat& originalImage, 
+                                                                const Mat& hsvImage,
+                                                                const Mat& hlsImage,
+                                                                int& rowDimension,
+                                                                int& pixelNum) throw (SDException&){
+                if (originalImage.data == 0 || hsvImage.data == 0 || hlsImage.data == 0)
                     return 0;
                 Matrix<float>* ret = 0;
                 PointerRaii< Matrix<float> > retRaii;
                 int height = originalImage.size().height;
-                int width = originalImage.size().width;
-                Mat* hsv = OpenCV2Tools::convertToHSV(&originalImage);
-                if (hsv->data == 0){
-                    return 0;
-                }
-                ImageNewRaii imhsvRaii(hsv);
-                size_t stepHsv = hsv->step;
-                int chanHSV = hsv->channels();
-                Mat* hls = OpenCV2Tools::convertToHLS(&originalImage);
-                if (hls->data == 0){
-                    return 0;
-                }
-                ImageNewRaii imhlsRaii(hls);
-                size_t stepHls = hls->step;
-                int chanHLS = hls->channels();                
-                
-                size_t stepBgr = originalImage.step;
-                int chanBGR = originalImage.channels();
+                int width = originalImage.size().width;                                                
                 
                 for (int i = 0; i < height; i++) {
                     for (int j = 0; j < width; j++) {
-                        uchar hHSV = hsv->data[i * stepHsv + j * chanHSV + 0];
-                        uchar sHSV = hsv->data[i * stepHsv + j * chanHSV + 1];
-                        uchar vHSV = hsv->data[i * stepHsv + j * chanHSV + 2];
+                        KeyVal<uint> location((uint)j, (uint)i);
+                        uchar hHSV = OpenCV2Tools::getChannelValue(hsvImage, location, 0);
+                        uchar sHSV = OpenCV2Tools::getChannelValue(hsvImage, location, 1);
+                        uchar vHSV = OpenCV2Tools::getChannelValue(hsvImage, location, 2);
 
-                        uchar hHLS = hls->data[i * stepHls + j * chanHLS + 0];
-                        uchar lHLS = hls->data[i * stepHls + j * chanHLS + 1];
-                        uchar sHLS = hls->data[i * stepHls + j * chanHLS + 2];
+                        uchar hHLS = OpenCV2Tools::getChannelValue(hlsImage, location, 0);
+                        uchar lHLS = OpenCV2Tools::getChannelValue(hlsImage, location, 1);
+                        uchar sHLS = OpenCV2Tools::getChannelValue(hlsImage, location, 2);
 
                         float* procs[SPACES_COUNT];
                         int size[SPACES_COUNT];
@@ -179,17 +182,16 @@ namespace shadowdetection{
                             return 0;
                         }
                         VectorRaii vraiiProc1(procs[1]);
-                        uchar B = originalImage.data[i * stepBgr + j * chanBGR + 0];
-                        uchar G = originalImage.data[i * stepBgr + j * chanBGR + 1];
-                        uchar R = originalImage.data[i * stepBgr + j * chanBGR + 2];
+                        uchar B = OpenCV2Tools::getChannelValue(originalImage, location, 0);
+                        uchar G = OpenCV2Tools::getChannelValue(originalImage, location, 1);
+                        uchar R = OpenCV2Tools::getChannelValue(originalImage, location, 2);
                         procs[2] = processBGR(B, G, R, size[2]);
                         if (procs[2] == 0){
                             return 0;
                         }
                         VectorRaii vraiiProc2(procs[2]);
-                        
-                        KeyVal<uint> location((uint)j, (uint)i);
-                        procs[3] = processROI(location, hls, size[3], 1);
+                                                
+                        procs[3] = processROI(location, &hlsImage, size[3], 1);
                         if (procs[3] == 0){
                             return 0;
                         }
@@ -273,6 +275,14 @@ namespace shadowdetection{
                     retArr[0] = clamp<float>(retArr[0], 0.f, 1.f);
                     retArr[1] = (float)(G + R) / (255.f + 255.f);
                     retArr[1] = clamp<float>(retArr[1], 0.f, 1.f);
+                    //normalized bgr values
+                    float bgrSum = (float)((int)B + (int)G + (int)R + 1);
+                    retArr[2] = (float)B / bgrSum;
+                    retArr[2] = clamp<float>(retArr[2], 0.f, 1.f);
+                    retArr[3] = (float)G / bgrSum;
+                    retArr[3] = clamp<float>(retArr[3], 0.f, 1.f);
+                    retArr[4] = (float)R / bgrSum;
+                    retArr[4] = clamp<float>(retArr[4], 0.f, 1.f);
                 }
                 return retArr;
             }
@@ -310,16 +320,12 @@ namespace shadowdetection{
                         numOfSegments = atoi(numSegmentsStr.c_str());
                     }
                     getAvgChannelValForRegions(originalImage, channelIndex);
-                }                 
-                int index = location.getVal() * originalImage->step + location.getKey() * originalImage->channels() + channelIndex;
-                float value = (float)originalImage->data[index];
+                }
+                
+                float value = (float)OpenCV2Tools::getChannelValue(*originalImage, location, channelIndex);
                 
                 int yAvgIndex = location.getVal() / segmentHeight;
-                int xAvgIndex = location.getKey() / segmentWidth;
-                if (yAvgIndex > 0 && xAvgIndex > 0){
-                    int a = 0;
-                    ++a;
-                }
+                int xAvgIndex = location.getKey() / segmentWidth;                
                     
                 float avg = (*regionsAvgsSecondChannel)[yAvgIndex][xAvgIndex];
                 float proportion = value / (avg + 1.f);                

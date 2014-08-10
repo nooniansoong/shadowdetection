@@ -181,6 +181,8 @@
         <gdb_interceptlist>
           <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
         </gdb_interceptlist>
+        <gdb_signals>
+        </gdb_signals>
         <gdb_options>
           <DebugOptions>
           </DebugOptions>
@@ -192,18 +194,18 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" tstList.csv</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" tst.csv</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" -makeset </runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -makeset trees.csv tmpOut.svm</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" -makeset sh.csv sh.svm</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -makeset list.csv bigDataNew.svm</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" listResized.csv</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" -makeset imagesNonResized_Filtered.csv bigDataNonResized.svm</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" makeset imagesNonResized_Filtered.csv bigDataNonResized.svm</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" imagesNonResized.csv</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -makeset imagesNonResized_Filtered.csv bigDataNonResized.svm</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" ap.sh</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -makeset sh.csv sh.svm</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" tst.csv</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" imagesNonResized.csv</runcommand>
+        <runcommand>"${OUTPUT_PATH}" tst.csv</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>
@@ -234,7 +236,6 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" -training data.svm test_model3</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -training data.svm test_modelRBF3</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" 0.jpg 0Shadow1.jpg</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" trees.csv</runcommandpicklistitem>
@@ -242,10 +243,11 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}" tst.csv</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -makeset list.csv bigDataNew.svm</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" list_or.csv</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" imagesNonResized.csv</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" imagesNonResized.csv</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" ap.sh</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" list.csv</runcommand>
+        <runcommand>"${OUTPUT_PATH}" ap.sh</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>

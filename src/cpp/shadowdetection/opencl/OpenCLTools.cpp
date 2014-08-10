@@ -24,7 +24,7 @@ namespace shadowdetection {
         using namespace shadowdetection::opencv;
         using namespace cv;
         using namespace shadowdetection::util;
-        using namespace shadowdetection::util::raii;
+        using namespace shadowdetection::util::raii;        
 
         size_t OpenclTools::shrRoundUp(size_t localSize, size_t allSize) {
             if (allSize % localSize == 0) {
@@ -756,7 +756,7 @@ namespace shadowdetection {
             
             Mat* processedImageMat = OpenCV2Tools::joinTwoOcl(*binarized1, *binarized2);
             delete binarized1;
-            delete binarized2;
+            delete binarized2;                        
             return processedImageMat;             
         }
         

@@ -15,6 +15,9 @@
           <itemPath>src/cpp/shadowdetection/opencv/OpenCVTools.h</itemPath>
         </logicalFolder>
         <logicalFolder name="tools" displayName="tools" projectFiles="true">
+          <logicalFolder name="image" displayName="image" projectFiles="true">
+            <itemPath>src/cpp/shadowdetection/tools/image/ResultFixer.h</itemPath>
+          </logicalFolder>
           <logicalFolder name="svm" displayName="svm" projectFiles="true">
             <logicalFolder name="libsvmopenmp"
                            displayName="libsvmopenmp"
@@ -47,7 +50,7 @@
           <itemPath>src/cpp/shadowdetection/util/FileSaver.h</itemPath>
           <itemPath>src/cpp/shadowdetection/util/Matrix.h</itemPath>
           <itemPath>src/cpp/shadowdetection/util/MemMenager.h</itemPath>
-          <itemPath>src/cpp/shadowdetection/util/PredictorManager.h</itemPath>
+          <itemPath>src/cpp/shadowdetection/util/PredictorFactory.h</itemPath>
           <itemPath>src/cpp/shadowdetection/util/Singleton.h</itemPath>
           <itemPath>src/cpp/shadowdetection/util/TabParser.h</itemPath>
           <itemPath>src/cpp/shadowdetection/util/Timer.h</itemPath>
@@ -96,6 +99,9 @@
           <itemPath>src/cpp/shadowdetection/opencv/OpenCVTools.cpp</itemPath>
         </logicalFolder>
         <logicalFolder name="tools" displayName="tools" projectFiles="true">
+          <logicalFolder name="image" displayName="image" projectFiles="true">
+            <itemPath>src/cpp/shadowdetection/tools/image/ResultFixer.cpp</itemPath>
+          </logicalFolder>
           <logicalFolder name="svm" displayName="svm" projectFiles="true">
             <logicalFolder name="libsvmopenmp"
                            displayName="libsvmopenmp"
@@ -119,7 +125,7 @@
           </logicalFolder>
           <itemPath>src/cpp/shadowdetection/util/Cofig.cpp</itemPath>
           <itemPath>src/cpp/shadowdetection/util/MemMenager.cpp</itemPath>
-          <itemPath>src/cpp/shadowdetection/util/PredictorManager.cpp</itemPath>
+          <itemPath>src/cpp/shadowdetection/util/PredictorFactory.cpp</itemPath>
           <itemPath>src/cpp/shadowdetection/util/TabParser.cpp</itemPath>
           <itemPath>src/cpp/shadowdetection/util/Timer.cpp</itemPath>
         </logicalFolder>
@@ -245,6 +251,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/tools/image/ResultFixer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ResultFixer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.cpp"
             ex="false"
             tool="1"
@@ -295,12 +311,12 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/PredictorManager.cpp"
+      <item path="src/cpp/shadowdetection/util/PredictorFactory.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/PredictorManager.h"
+      <item path="src/cpp/shadowdetection/util/PredictorFactory.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -508,6 +524,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/tools/image/ResultFixer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ResultFixer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.cpp"
             ex="false"
             tool="1"
@@ -558,12 +584,12 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/PredictorManager.cpp"
+      <item path="src/cpp/shadowdetection/util/PredictorFactory.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/PredictorManager.h"
+      <item path="src/cpp/shadowdetection/util/PredictorFactory.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -764,6 +790,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/tools/image/ResultFixer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ResultFixer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.cpp"
             ex="false"
             tool="1"
@@ -814,12 +850,12 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/PredictorManager.cpp"
+      <item path="src/cpp/shadowdetection/util/PredictorFactory.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/PredictorManager.h"
+      <item path="src/cpp/shadowdetection/util/PredictorFactory.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1025,6 +1061,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/tools/image/ResultFixer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ResultFixer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.cpp"
             ex="false"
             tool="1"
@@ -1075,12 +1121,12 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/PredictorManager.cpp"
+      <item path="src/cpp/shadowdetection/util/PredictorFactory.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/PredictorManager.h"
+      <item path="src/cpp/shadowdetection/util/PredictorFactory.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1287,6 +1333,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/tools/image/ResultFixer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ResultFixer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.cpp"
             ex="false"
             tool="1"
@@ -1337,12 +1393,12 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/PredictorManager.cpp"
+      <item path="src/cpp/shadowdetection/util/PredictorFactory.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/PredictorManager.h"
+      <item path="src/cpp/shadowdetection/util/PredictorFactory.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1552,6 +1608,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/tools/image/ResultFixer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ResultFixer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.cpp"
             ex="false"
             tool="1"
@@ -1602,12 +1668,12 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/PredictorManager.cpp"
+      <item path="src/cpp/shadowdetection/util/PredictorFactory.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/PredictorManager.h"
+      <item path="src/cpp/shadowdetection/util/PredictorFactory.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1809,6 +1875,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/tools/image/ResultFixer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ResultFixer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.cpp"
             ex="false"
             tool="1"
@@ -1859,12 +1935,12 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/PredictorManager.cpp"
+      <item path="src/cpp/shadowdetection/util/PredictorFactory.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/PredictorManager.h"
+      <item path="src/cpp/shadowdetection/util/PredictorFactory.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -2070,6 +2146,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/tools/image/ResultFixer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ResultFixer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.cpp"
             ex="false"
             tool="1"
@@ -2120,12 +2206,12 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/PredictorManager.cpp"
+      <item path="src/cpp/shadowdetection/util/PredictorFactory.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/PredictorManager.h"
+      <item path="src/cpp/shadowdetection/util/PredictorFactory.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -2325,6 +2411,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/tools/image/ResultFixer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ResultFixer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.cpp"
             ex="false"
             tool="1"
@@ -2375,12 +2471,12 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/PredictorManager.cpp"
+      <item path="src/cpp/shadowdetection/util/PredictorFactory.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/PredictorManager.h"
+      <item path="src/cpp/shadowdetection/util/PredictorFactory.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -2584,6 +2680,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/tools/image/ResultFixer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ResultFixer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.cpp"
             ex="false"
             tool="1"
@@ -2634,12 +2740,12 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/PredictorManager.cpp"
+      <item path="src/cpp/shadowdetection/util/PredictorFactory.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/util/PredictorManager.h"
+      <item path="src/cpp/shadowdetection/util/PredictorFactory.h"
             ex="false"
             tool="3"
             flavor2="0">

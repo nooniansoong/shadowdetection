@@ -79,6 +79,12 @@ namespace shadowdetection {
                                         const KeyVal<uint>& location) throw (SDException&);
             static float getAvgChannelValue(const cv::Mat* src, 
                                             uchar channelIndex) throw (SDException&);
+            static uchar getChannelValue(   const cv::Mat& image, uint x, uint y, 
+                                            uchar channelIndex) throw (SDException&);
+            static uchar getChannelValue(   const cv::Mat& image, KeyVal<uint> location, 
+                                            uchar channelIndex) throw (SDException&);
+            static void setChannelValue(cv::Mat& image, KeyVal<uint> location, 
+                                        uchar channelIndex, uchar newValue) throw (SDException&);
 #ifdef _OPENCL
             /**
              * init global variables needed for openCV openCL processing

@@ -88,7 +88,7 @@ public class ShadowDetectionTools {
                 e.printStackTrace();
             }
         }
-        else if (mode.compareTo("-removePairs") == 0){
+        else if (mode.compareTo("-removepairs") == 0){
             try{
                 int n = Integer.parseInt(args[1]);                
                 RemoveRecordsFromSvmFile.removeEveryNthPair(n, args[2], args[3]);

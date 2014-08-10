@@ -42,11 +42,12 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsPredict.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/opencv/OpenCV2Tools.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/opencv/OpenCVTools.o \
+	${OBJECTDIR}/src/cpp/shadowdetection/tools/image/ResultFixer.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/tools/svm/TrainingSet.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/util/Cofig.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/util/MemMenager.o \
-	${OBJECTDIR}/src/cpp/shadowdetection/util/PredictorManager.o \
+	${OBJECTDIR}/src/cpp/shadowdetection/util/PredictorFactory.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/util/TabParser.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/util/Timer.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/util/image/ImageParameters.o \
@@ -114,6 +115,11 @@ ${OBJECTDIR}/src/cpp/shadowdetection/opencv/OpenCVTools.o: src/cpp/shadowdetecti
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -D_AMD -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/opencv/OpenCVTools.o src/cpp/shadowdetection/opencv/OpenCVTools.cpp
 
+${OBJECTDIR}/src/cpp/shadowdetection/tools/image/ResultFixer.o: src/cpp/shadowdetection/tools/image/ResultFixer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/tools/image
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -D_AMD -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/tools/image/ResultFixer.o src/cpp/shadowdetection/tools/image/ResultFixer.cpp
+
 ${OBJECTDIR}/src/cpp/shadowdetection/tools/svm/TrainingSet.o: src/cpp/shadowdetection/tools/svm/TrainingSet.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/tools/svm
 	${RM} "$@.d"
@@ -134,10 +140,10 @@ ${OBJECTDIR}/src/cpp/shadowdetection/util/MemMenager.o: src/cpp/shadowdetection/
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -D_AMD -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/util/MemMenager.o src/cpp/shadowdetection/util/MemMenager.cpp
 
-${OBJECTDIR}/src/cpp/shadowdetection/util/PredictorManager.o: src/cpp/shadowdetection/util/PredictorManager.cpp 
+${OBJECTDIR}/src/cpp/shadowdetection/util/PredictorFactory.o: src/cpp/shadowdetection/util/PredictorFactory.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/util
 	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -D_AMD -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/util/PredictorManager.o src/cpp/shadowdetection/util/PredictorManager.cpp
+	$(COMPILE.cc) -O3 -D_AMD -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/util/PredictorFactory.o src/cpp/shadowdetection/util/PredictorFactory.cpp
 
 ${OBJECTDIR}/src/cpp/shadowdetection/util/TabParser.o: src/cpp/shadowdetection/util/TabParser.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/util

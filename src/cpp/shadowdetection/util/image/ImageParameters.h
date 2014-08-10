@@ -30,8 +30,10 @@ namespace shadowdetection{
                 
                 static float* merge(float** arrs, int arrsLen, int* arrSize, int& retSize);
                 static float* merge(float label, const float** arrs, int arrsLen, int* arrSize, int& retSize);
-                shadowdetection::util::Matrix<float>* getImageParameters(  const cv::Mat& originalImage, 
-                                                    int& rowDimension, int& pixelNum) throw (SDException&);
+                shadowdetection::util::Matrix<float>* getImageParameters(   const cv::Mat& originalImage,
+                                                                            const cv::Mat& hsvImage,
+                                                                            const cv::Mat& hlsImage,
+                                                                            int& rowDimension, int& pixelNum) throw (SDException&);
                 shadowdetection::util::Matrix<float>* getImageParameters(  const cv::Mat& originalImage, const cv::Mat& maskImage,                                                     
                                                     int& rowDimension, int& pixelNum) throw (SDException&);
                 void reset();

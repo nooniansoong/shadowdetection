@@ -303,6 +303,64 @@ namespace shadowdetection {
             float retVal = (float)val / (float)num;
             return retVal;
         }
+        
+        uchar OpenCV2Tools::getChannelValue(const Mat& image, uint x, uint y, 
+                                            uchar channelIndex) throw (SDException&){
+            if (image.data == 0){
+                SDException exc(SHADOW_INVALID_IMAGE_FORMAT, "OpenCV2Tools::getChannelValue");
+                throw exc;
+            }
+            size_t step = image.step;
+            int channels = image.channels();
+            if (channelIndex > channels - 1){
+                SDException exc(SHADOW_INVALID_IMAGE_FORMAT, "OpenCV2Tools::getChannelValue check index");
+                throw exc;
+            }
+            if (x >= image.cols){
+                SDException exc(SHADOW_OUT_OF_BOUNDS, "OpenCV2Tools::getChannelValue x");
+                throw exc;
+            }
+            if (y >= image.rows){
+                SDException exc(SHADOW_OUT_OF_BOUNDS, "OpenCV2Tools::getChannelValue y");
+                throw exc;
+            }
+            
+            int index = y * step + x * channels + channelIndex;
+            return image.data[index];
+        }
+        
+        uchar OpenCV2Tools::getChannelValue(const Mat& image, KeyVal<uint> location, 
+                                            uchar channelIndex) throw (SDException&){
+            uint x = location.getKey();
+            uint y = location.getVal();
+            return getChannelValue(image, x, y, channelIndex);
+        }
+        
+        void OpenCV2Tools::setChannelValue( Mat& image, KeyVal<uint> location, 
+                                            uchar channelIndex, uchar newValue) throw (SDException&){
+            if (image.data == 0){
+                SDException exc(SHADOW_INVALID_IMAGE_FORMAT, "OpenCV2Tools::setChannelValue");
+                throw exc;
+            }
+            size_t step = image.step;
+            int channels = image.channels();
+            if (channelIndex > channels - 1){
+                SDException exc(SHADOW_INVALID_IMAGE_FORMAT, "OpenCV2Tools::setChannelValue check index");
+                throw exc;
+            }
+            uint x = location.getKey();
+            uint y = location.getVal();
+            if (x >= image.cols){
+                SDException exc(SHADOW_OUT_OF_BOUNDS, "OpenCV2Tools::getChannelValue x");
+                throw exc;
+            }
+            if (y >= image.rows){
+                SDException exc(SHADOW_OUT_OF_BOUNDS, "OpenCV2Tools::getChannelValue y");
+                throw exc;
+            }
+            int index = y * step + x * channels + channelIndex;
+            image.data[index] = newValue;
+        }
 
     }
 }

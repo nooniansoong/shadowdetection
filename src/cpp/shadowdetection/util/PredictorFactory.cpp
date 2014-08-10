@@ -1,4 +1,4 @@
-#include "PredictorManager.h"
+#include "PredictorFactory.h"
 #include "shadowdetection/util/predicition/libsvm/SvmPredict.h"
 #include "shadowdetection/util/predicition/regression/RegressionPredict.h"
 #include "shadowdetection/util/Config.h"

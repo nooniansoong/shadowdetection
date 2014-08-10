@@ -16,10 +16,11 @@
 #include "shadowdetection/tools/svm/libsvmopenmp/svm-train.h"
 #include "shadowdetection/util/image/ImageParameters.h"
 #include "shadowdetection/util/Matrix.h"
-#include "shadowdetection/util/PredictorManager.h"
+#include "shadowdetection/util/PredictorFactory.h"
 #if defined _OPENMP_MY
 #include <omp.h>
 #endif
+#include "shadowdetection/tools/image/ResultFixer.h"
 
 using namespace std;
 #ifdef _OPENCL
@@ -33,6 +34,7 @@ using namespace shadowdetection::util::raii;
 using namespace shadowdetection::tools::svm;
 using namespace shadowdetection::util::prediction;
 using namespace shadowdetection::util::image;
+using namespace shadowdetection::tools::image;
 
 void handleException(const SDException& exception){
     const char* err = exception.what();
@@ -141,6 +143,11 @@ void processSingleCPU(const char* out, IplImage* image) {
  * @param imageNew
  */
 void processSingleOpenCL(const char* out, const Mat& image) {                
+    Mat* hls = OpenCV2Tools::convertToHLS(&image);
+    if (hls == 0){
+        return;
+    }
+    ImageNewRaii hlsRaii(hls);
     OpenclTools* oclt = OpenclTools::getInstancePtr();
     unsigned char* buffer = OpenCV2Tools::convertImageToByteArray(&image, true);    
     Mat* processedImage = 0;
@@ -150,7 +157,7 @@ void processSingleOpenCL(const char* out, const Mat& image) {
         usePrediction = true;
     if (usePrediction == false){
         try {
-            processedImage = oclt->processRGBImage(buffer, image.size().width, image.size().height, image.channels());
+            processedImage = oclt->processRGBImage(buffer, image.size().width, image.size().height, image.channels());            
         } catch (SDException& exception) {
             throw exception;
         }
@@ -158,11 +165,19 @@ void processSingleOpenCL(const char* out, const Mat& image) {
     else{
         Mat* pi = oclt->processRGBImage(buffer, image.size().width, image.size().height, image.channels());
         if (pi){
-            ImageNewRaii imraiiPi(pi);
+            ImageNewRaii imraiiPi(pi);                        
             int pixCount;
             int parameterCount;
             ImageParameters ip;
-            Matrix<float>* parameters = ip.getImageParameters(image, parameterCount, pixCount);
+            
+            Mat* hsv = OpenCV2Tools::convertToHSV(&image);
+            if (hsv == 0){
+                return;
+            }
+            ImageNewRaii hsvRaii(hsv);                        
+            
+            Matrix<float>* parameters = ip.getImageParameters(  image, *hsv, *hls, 
+                                                                parameterCount, pixCount);
             if (parameters){
                 PointerRaii< Matrix<float> > paramRaii(parameters);
                 IPrediction* predictor = getPredictor();
@@ -192,6 +207,8 @@ void processSingleOpenCL(const char* out, const Mat& image) {
         }        
     }
     if (processedImage != 0) {
+        ResultFixer rf;
+        rf.applyThreshholds(*processedImage, image, *hls);
         imwrite(out, *processedImage);
         delete processedImage;
     }    

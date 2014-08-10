@@ -19,9 +19,28 @@
             </usePrediction>
             <!--SVM for support vector machine, REG for regresion-->
             <predictionType>
-                REG
+                SVM
             </predictionType>            
-        </Prediction>        
+        </Prediction>
+        <Thresholds>
+            <Values>
+                <rValue>
+                    200
+                </rValue>
+                <gValue>
+                    200
+                </gValue>
+                <bValue>
+                    180
+                </bValue>
+                <lValue>
+                    180
+                </lValue>
+            </Values>
+            <UseThresh>
+                true;
+            </UseThresh>
+        </Thresholds>        
     </process>
     <settings>
         <Parameters>
@@ -56,7 +75,7 @@
         <svm>
             <!-- full file name -->
             <modelFile>
-                bigModelNonResized_ReducedThree.model
+                bigModel_RemovedThree.model
             </modelFile>            
             <!-- 0=C-SVC, 1=nu-SVC, 2=one-class, 3=epsilon-SVR, 4=nu-SVR -->
             <svm_type>
