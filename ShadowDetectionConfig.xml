@@ -25,16 +25,16 @@
         <Thresholds>
             <Values>
                 <rValue>
-                    200
+                    33
                 </rValue>
                 <gValue>
-                    200
+                    90
                 </gValue>
                 <bValue>
-                    180
+                    135
                 </bValue>
                 <lValue>
-                    180
+                    170
                 </lValue>
             </Values>
             <UseThresh>
@@ -46,7 +46,7 @@
         <Parameters>
             <!-- percents of image width -->
             <numSegments>
-                16
+                1
             </numSegments>
         </Parameters>
         

@@ -4,7 +4,7 @@
 #include "shadowdetection/util/raii/RAIIS.h"
 #include "shadowdetection/util/Config.h"
 
-#define SPACES_COUNT 4
+#define SPACES_COUNT 3
 #define HSV_PARAMETERS 5
 #define HLS_PARAMETERS 5
 #define BGR_PARAMETERS 5
@@ -191,11 +191,11 @@ namespace shadowdetection{
                         }
                         VectorRaii vraiiProc2(procs[2]);
                                                 
-                        procs[3] = processROI(location, &hlsImage, size[3], 1);
-                        if (procs[3] == 0){
-                            return 0;
-                        }
-                        VectorRaii vraiiProcs3(procs[3]);
+//                        procs[3] = processROI(location, &hlsImage, size[3], 1);
+//                        if (procs[3] == 0){
+//                            return 0;
+//                        }
+//                        VectorRaii vraiiProcs3(procs[3]);
                         
                         int mergedSize = 0;
                         float* merged = ImageParameters::merge(procs, SPACES_COUNT, size, mergedSize);
