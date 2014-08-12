@@ -11,7 +11,7 @@ namespace shadowdetection{
             class ResultFixer{
             private:
                 uchar rThresh;
-                uchar gThresh;
+                //uchar gThresh;
                 uchar bThresh;
                 uchar lThresh;
                 bool useThresh;

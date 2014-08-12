@@ -22,18 +22,16 @@ namespace shadowdetection{
                 Config* conf = Config::getInstancePtr();
                 string rThreshStr = conf->getPropertyValue("process.Thresholds.Values.rValue");
                 rThresh = (uchar)atoi(rThreshStr.c_str());
-                string gThreshStr = conf->getPropertyValue("process.Thresholds.Values.gValue");
-                gThresh = (uchar)atoi(gThreshStr.c_str());
+//                string gThreshStr = conf->getPropertyValue("process.Thresholds.Values.gValue");
+//                gThresh = (uchar)atoi(gThreshStr.c_str());
                 string bThreshStr = conf->getPropertyValue("process.Thresholds.Values.bValue");
-                bThresh = (uchar)atoi(bThreshStr.c_str());
+                bThresh = (uchar)atoi(bThreshStr.c_str());                
                 string lThreshStr = conf->getPropertyValue("process.Thresholds.Values.lValue");
                 lThresh = (uchar)atoi(lThreshStr.c_str());
                 string useThreshStr = conf->getPropertyValue("process.Thresholds.UseThresh");
                 useThresh = true;
                 if (useThreshStr == "false")
-                    useThresh = false;
-                int a = 0;
-                ++a;
+                    useThresh = false;                
             }
             
             void ResultFixer::applyThreshholds( Mat& image, const Mat& originalImage, 
@@ -64,7 +62,10 @@ namespace shadowdetection{
                             if (lValue >= lThresh){                                
                                 OpenCV2Tools::setChannelValue(image, location, 0, 0);
                             }
-                            else if (rValue <= rThresh && gValue <= gThresh && bValue >= bThresh){
+                            //sky detection
+                            else if (rValue <= rThresh && (gValue >= bValue / 4U) && 
+                                    gValue <= bValue && bValue >= bThresh && 
+                                    lValue >= lThresh / 3){
                                 OpenCV2Tools::setChannelValue(image, location, 0, 0);
                             }
                         }

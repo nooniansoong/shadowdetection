@@ -7,7 +7,7 @@
 #define SPACES_COUNT 3
 #define HSV_PARAMETERS 5
 #define HLS_PARAMETERS 5
-#define BGR_PARAMETERS 5
+#define BGR_PARAMETERS 2
 #define ROI_PARAMETERS 1;
 
 namespace shadowdetection{
@@ -276,13 +276,13 @@ namespace shadowdetection{
                     retArr[1] = (float)(G + R) / (255.f + 255.f);
                     retArr[1] = clamp<float>(retArr[1], 0.f, 1.f);
                     //normalized bgr values
-                    float bgrSum = (float)((int)B + (int)G + (int)R + 1);
-                    retArr[2] = (float)B / bgrSum;
-                    retArr[2] = clamp<float>(retArr[2], 0.f, 1.f);
-                    retArr[3] = (float)G / bgrSum;
-                    retArr[3] = clamp<float>(retArr[3], 0.f, 1.f);
-                    retArr[4] = (float)R / bgrSum;
-                    retArr[4] = clamp<float>(retArr[4], 0.f, 1.f);
+//                    float bgrSum = (float)((int)B + (int)G + (int)R + 1);
+//                    retArr[2] = (float)B / bgrSum;
+//                    retArr[2] = clamp<float>(retArr[2], 0.f, 1.f);
+//                    retArr[3] = (float)G / bgrSum;
+//                    retArr[3] = clamp<float>(retArr[3], 0.f, 1.f);
+//                    retArr[4] = (float)R / bgrSum;
+//                    retArr[4] = clamp<float>(retArr[4], 0.f, 1.f);
                 }
                 return retArr;
             }

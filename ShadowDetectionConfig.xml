@@ -19,19 +19,19 @@
             </usePrediction>
             <!--SVM for support vector machine, REG for regresion-->
             <predictionType>
-                SVM
+                REG
             </predictionType>            
         </Prediction>
         <Thresholds>
             <Values>
                 <rValue>
-                    33
+                    51
                 </rValue>
                 <gValue>
-                    90
+                    105
                 </gValue>
                 <bValue>
-                    135
+                    127
                 </bValue>
                 <lValue>
                     170
@@ -89,53 +89,50 @@
         <regression>
             <!-- number of coefficients used in regression classification, do not involve intercept -->
             <coefNum>
-                13
+                12
             </coefNum>
             <!-- numerical value of coefficient -->
             <coefNo1>
-                0.30211 
+                -0.78317 
             </coefNo1>
             <coefNo2>
-                -1.54589 
+                -0.32998 
             </coefNo2>
             <coefNo3>
-                -0.58595 
+                6.30192 
             </coefNo3>
             <coefNo4>
-                6.76279
+                8.70635
             </coefNo4>
             <coefNo5>
-                2.05898 
+                -3.11831 
             </coefNo5>
             <coefNo6>
-                0.81590 
+                -2.51965 
             </coefNo6>
             <coefNo7>
-                0.21056 
+                1.49102 
             </coefNo7>
             <coefNo8>
-                -2.85318 
+                -2.45055 
             </coefNo8>
             <coefNo9>
-                2.63038 
+                5.74217 
             </coefNo9>
             <coefNo10>
-                -0.09671 
+                -6.24504 
             </coefNo10>
             <coefNo11>
-                0.22211
+                1.18127
             </coefNo11>
             <coefNo12>
-                0.81328
-            </coefNo12>
-            <coefNo13>
-                -0.83885
-            </coefNo13>
+                -0.36501
+            </coefNo12>            
             <Intercept>
-                -0.42670
+                -0.52834
             </Intercept>
             <borderValue>
-                0.395
+                0.385
             </borderValue>
         </regression>
         
