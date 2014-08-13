@@ -16,8 +16,8 @@
 #include <OpenCL/opencl.h>
 #endif
 #include "typedefs.h"
-#include "shadowdetection/util/Singleton.h"
-#include "shadowdetection/util/Matrix.h"
+#include "core/util/Singleton.h"
+#include "core/util/Matrix.h"
 
 #define MAX_DEVICES 100
 #define MAX_SRC_SIZE 5242800
@@ -45,8 +45,8 @@ namespace shadowdetection {
             cl_float value;
         };
 
-        class OpenclTools : public shadowdetection::util::Singleton<OpenclTools>{
-            friend class shadowdetection::util::Singleton<OpenclTools>;
+        class OpenclTools : public core::util::Singleton<OpenclTools>{
+            friend class core::util::Singleton<OpenclTools>;
         private:    
             cl_int dummyInt;
             
@@ -64,7 +64,7 @@ namespace shadowdetection {
             unsigned char* ratios1;
             unsigned char* ratios2;
             bool initialized;
-            shadowdetection::util::Matrix<double>* xMatrix;
+            core::util::Matrix<double>* xMatrix;
             
             size_t shrRoundUp(size_t localSize, size_t allSize);
             /**
@@ -197,7 +197,7 @@ namespace shadowdetection {
             
             void createBuffersSVM(  float* data, int dataLen, int i,
                                     char* y, int yLen,
-                                    shadowdetection::util::Matrix<svm_node>* x,
+                                    core::util::Matrix<svm_node>* x,
                                     int start, int steps, bool& clDataChanged,
                                     double* xSquared);
             void setKernelArgsSVC( cl_int start, cl_int len, cl_int i, 
@@ -217,7 +217,7 @@ namespace shadowdetection {
         protected:
         public:
             void get_Q( float* data, int dataLen, int start, int len, int i, int kernel_type, 
-                        char* y, int yLen, shadowdetection::util::Matrix<svm_node>* x, LIBSVM_CLASS_TYPE classType,
+                        char* y, int yLen, core::util::Matrix<svm_node>* x, LIBSVM_CLASS_TYPE classType,
                         double gamma, double coef0, int degree, double *xSquared) throw (SDException);
             
             void selectWorkingSet(  const int& activeSize, const int& i, const char* y,
@@ -232,26 +232,26 @@ namespace shadowdetection {
             int64_t durrReadBuff;
             //======libsvm predict section
         private:
-            void createBuffersPredict(  const shadowdetection::util::Matrix<float>& parameters, 
+            void createBuffersPredict(  const core::util::Matrix<float>& parameters, 
                                         svm_model* model);            
             void setKernelArgsPredict(  uint pixelCount, uint paramsPerPixel, 
                                         svm_model* model);
             
             bool            modelChanged;            
             cl_mem          clPixelParameters;
-            shadowdetection::util::Matrix<cl_float>*    modelSVs;
+            core::util::Matrix<cl_float>*    modelSVs;
             cl_mem          clModelSVs;
             cl_mem          clModelRHO;
             cl_mem          clModelSVCoefs;
             cl_mem          clModelLabel;
-            shadowdetection::util::Matrix<cl_float>*       svCoefs;
+            core::util::Matrix<cl_float>*       svCoefs;
             cl_mem          clModelNsv;
             cl_mem          clPredictResults;
             cl_float*       modelRHOs;
         protected:
         public:
             uchar* predict( svm_model* model, 
-                            const shadowdetection::util::Matrix<float>& parameters);
+                            const core::util::Matrix<float>& parameters);
             void markModelChanged();
         };
 

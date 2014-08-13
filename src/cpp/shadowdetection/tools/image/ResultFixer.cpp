@@ -1,14 +1,14 @@
 #include "ResultFixer.h"
-#include "shadowdetection/opencv/OpenCV2Tools.h"
-#include "shadowdetection/util/Config.h"
+#include "core/opencv/OpenCV2Tools.h"
+#include "core/util/Config.h"
 
 namespace shadowdetection{
     namespace tools{
         namespace image{
             
             using namespace cv;
-            using namespace shadowdetection::opencv2;
-            using namespace shadowdetection::util;
+            using namespace core::opencv2;
+            using namespace core::util;
         
             ResultFixer::ResultFixer(){
                 init();

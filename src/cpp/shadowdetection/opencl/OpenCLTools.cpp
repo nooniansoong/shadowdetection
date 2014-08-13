@@ -3,11 +3,11 @@
 
 #include <iostream>
 
-#include "shadowdetection/opencv/OpenCV2Tools.h"
-#include "shadowdetection/opencv/OpenCVTools.h"
+#include "core/opencv/OpenCV2Tools.h"
+#include "core/opencv/OpenCVTools.h"
 #include "typedefs.h"
-#include "shadowdetection/util/Config.h"
-#include "shadowdetection/util/raii/RAIIS.h"
+#include "core/util/Config.h"
+#include "core/util/raii/RAIIS.h"
 #include "thirdparty/lib_svm/svm.h"
 
 #define KERNEL_FILE_1 "image_hci_convert_kernel"
@@ -20,11 +20,11 @@ namespace shadowdetection {
     namespace opencl {
 
         using namespace std;
-        using namespace shadowdetection::opencv2;
-        using namespace shadowdetection::opencv;
+        using namespace core::opencv2;
+        using namespace core::opencv;
         using namespace cv;
-        using namespace shadowdetection::util;
-        using namespace shadowdetection::util::raii;        
+        using namespace core::util;
+        using namespace core::util::raii;        
 
         size_t OpenclTools::shrRoundUp(size_t localSize, size_t allSize) {
             if (allSize % localSize == 0) {

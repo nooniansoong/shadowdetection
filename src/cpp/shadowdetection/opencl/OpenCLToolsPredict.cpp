@@ -6,7 +6,7 @@
 namespace shadowdetection {
     namespace opencl {
         
-        using namespace shadowdetection::util;
+        using namespace core::util;
         
         size_t getSVsWidth(svm_model* model){
             size_t maxWidth = 0;

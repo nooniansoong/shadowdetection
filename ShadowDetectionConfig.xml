@@ -19,7 +19,7 @@
             </usePrediction>
             <!--SVM for support vector machine, REG for regresion-->
             <predictionType>
-                SVM
+                REG
             </predictionType>            
         </Prediction>
         <Thresholds>

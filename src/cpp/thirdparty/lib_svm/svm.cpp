@@ -9,13 +9,13 @@
 #include <locale.h>
 #include "svm.h"
 #include "shadowdetection/opencl/OpenCLTools.h"
-#include "shadowdetection/util/Matrix.h"
+#include "core/util/Matrix.h"
 
 #ifdef _OPENCL
 using namespace shadowdetection::opencl;
 #endif
 
-using namespace shadowdetection::util;
+using namespace core::util;
 
 int libsvm_version = LIBSVM_VERSION;
 typedef float Qfloat;

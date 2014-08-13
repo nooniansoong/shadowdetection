@@ -7,16 +7,16 @@
 
 #include <iostream>
 #include "shadowdetection/opencl/OpenCLTools.h"
-#include "shadowdetection/opencv/OpenCV2Tools.h"
-#include "shadowdetection/opencv/OpenCVTools.h"
-#include "shadowdetection/util/Config.h"
-#include "shadowdetection/util/TabParser.h"
-#include "shadowdetection/util/raii/RAIIS.h"
-#include "shadowdetection/tools/svm/TrainingSet.h"
-#include "shadowdetection/tools/svm/libsvmopenmp/svm-train.h"
-#include "shadowdetection/util/image/ImageParameters.h"
-#include "shadowdetection/util/Matrix.h"
-#include "shadowdetection/util/PredictorFactory.h"
+#include "core/opencv/OpenCV2Tools.h"
+#include "core/opencv/OpenCVTools.h"
+#include "core/util/Config.h"
+#include "core/util/TabParser.h"
+#include "core/util/raii/RAIIS.h"
+#include "core/tools/svm/TrainingSet.h"
+#include "core/tools/svm/libsvmopenmp/svm-train.h"
+#include "core/util/image/ImageParameters.h"
+#include "core/util/Matrix.h"
+#include "core/util/PredictorFactory.h"
 #if defined _OPENMP_MY
 #include <omp.h>
 #endif
@@ -26,15 +26,16 @@ using namespace std;
 #ifdef _OPENCL
 using namespace shadowdetection::opencl;
 #endif
-using namespace shadowdetection::opencv;
-using namespace shadowdetection::opencv2;
-using namespace shadowdetection::util;
+using namespace core::opencv;
+using namespace core::opencv2;
+using namespace core::util;
 using namespace cv;
-using namespace shadowdetection::util::raii;
-using namespace shadowdetection::tools::svm;
-using namespace shadowdetection::util::prediction;
-using namespace shadowdetection::util::image;
+using namespace core::util::raii;
+using namespace core::tools::svm;
+using namespace core::util::prediction;
+using namespace core::util::image;
 using namespace shadowdetection::tools::image;
+using namespace core::tools::svm::libsvmopenmp;
 
 void handleException(const SDException& exception){
     const char* err = exception.what();
@@ -318,7 +319,7 @@ int main(int argc, char **argv) {
             return 0;
         }
         try{
-            int val = shadowdetection::tools::svm::libsvmopenmp::train(argv[2], argv[3]);
+            int val = train(argv[2], argv[3]);
             cout << val << endl;
         }
         catch (SDException& e){

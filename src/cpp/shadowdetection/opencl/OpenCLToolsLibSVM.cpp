@@ -1,6 +1,6 @@
 #include "OpenCLTools.h"
 #include "thirdparty/lib_svm/svm.h"
-#include "shadowdetection/util/Timer.h"
+#include "core/util/Timer.h"
 
 #ifdef _OPENCL
 
@@ -8,7 +8,7 @@ namespace shadowdetection {
     namespace opencl {
         
         using namespace std;
-        using namespace shadowdetection::util;                
+        using namespace core::util;                
         
         void OpenclTools::get_Q(float* data, int dataLen, int start, int len, int i, int kernel_type, 
                                 char* y, int yLen, Matrix<svm_node>* x, LIBSVM_CLASS_TYPE classType,

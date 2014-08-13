@@ -1,11 +1,11 @@
 #ifdef _OPENCL
 #include "OpenCLTools.h"
-#include "shadowdetection/util/MemMenager.h"
+#include "core/util/MemMenager.h"
 
 namespace shadowdetection {
     namespace opencl {
         
-        using namespace shadowdetection::util;
+        using namespace core::util;
         
         /**!!!!!!!NOT TESTED*/
         uint32_t* OpenclTools::convertHSI1( uchar* image, u_int32_t width, u_int32_t height, 

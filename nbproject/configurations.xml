@@ -4,58 +4,58 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <logicalFolder name="core" displayName="core" projectFiles="true">
+        <logicalFolder name="opencv" displayName="opencv" projectFiles="true">
+          <itemPath>src/cpp/core/opencv/OpenCV2Tools.h</itemPath>
+          <itemPath>src/cpp/core/opencv/OpenCVTools.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="tools" displayName="tools" projectFiles="true">
+          <logicalFolder name="svm" displayName="svm" projectFiles="true">
+            <logicalFolder name="libsvmopenmp"
+                           displayName="libsvmopenmp"
+                           projectFiles="true">
+              <itemPath>src/cpp/core/tools/svm/libsvmopenmp/svm-train.h</itemPath>
+            </logicalFolder>
+            <itemPath>src/cpp/core/tools/svm/TrainingSet.h</itemPath>
+          </logicalFolder>
+        </logicalFolder>
+        <logicalFolder name="util" displayName="util" projectFiles="true">
+          <logicalFolder name="image" displayName="image" projectFiles="true">
+            <itemPath>src/cpp/core/util/image/ImageParameters.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="predicition" displayName="predicition" projectFiles="true">
+            <logicalFolder name="libsvm" displayName="libsvm" projectFiles="true">
+              <itemPath>src/cpp/core/util/predicition/libsvm/SvmPredict.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="regression" displayName="regression" projectFiles="true">
+              <itemPath>src/cpp/core/util/predicition/regression/RegressionPredict.h</itemPath>
+            </logicalFolder>
+            <itemPath>src/cpp/core/util/predicition/IPrediction.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="raii" displayName="raii" projectFiles="true">
+            <itemPath>src/cpp/core/util/raii/RAIIS.h</itemPath>
+          </logicalFolder>
+          <itemPath>src/cpp/core/util/Config.h</itemPath>
+          <itemPath>src/cpp/core/util/FileSaver.h</itemPath>
+          <itemPath>src/cpp/core/util/Matrix.h</itemPath>
+          <itemPath>src/cpp/core/util/MemMenager.h</itemPath>
+          <itemPath>src/cpp/core/util/PredictorFactory.h</itemPath>
+          <itemPath>src/cpp/core/util/Singleton.h</itemPath>
+          <itemPath>src/cpp/core/util/TabParser.h</itemPath>
+          <itemPath>src/cpp/core/util/Timer.h</itemPath>
+        </logicalFolder>
+      </logicalFolder>
       <logicalFolder name="shadowdetection"
                      displayName="shadowdetection"
                      projectFiles="true">
         <logicalFolder name="opencl" displayName="opencl" projectFiles="true">
           <itemPath>src/cpp/shadowdetection/opencl/OpenCLTools.h</itemPath>
         </logicalFolder>
-        <logicalFolder name="opencv" displayName="opencv" projectFiles="true">
-          <itemPath>src/cpp/shadowdetection/opencv/OpenCV2Tools.h</itemPath>
-          <itemPath>src/cpp/shadowdetection/opencv/OpenCVTools.h</itemPath>
-        </logicalFolder>
         <logicalFolder name="tools" displayName="tools" projectFiles="true">
           <logicalFolder name="image" displayName="image" projectFiles="true">
             <itemPath>src/cpp/shadowdetection/tools/image/ResultFixer.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="svm" displayName="svm" projectFiles="true">
-            <logicalFolder name="libsvmopenmp"
-                           displayName="libsvmopenmp"
-                           projectFiles="true">
-              <itemPath>src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.h</itemPath>
-            </logicalFolder>
-            <itemPath>src/cpp/shadowdetection/tools/svm/TrainingSet.h</itemPath>
-          </logicalFolder>
         </logicalFolder>
-        <logicalFolder name="util" displayName="util" projectFiles="true">
-          <logicalFolder name="image" displayName="image" projectFiles="true">
-            <itemPath>src/cpp/shadowdetection/util/image/ImageParameters.h</itemPath>
-          </logicalFolder>
-          <logicalFolder name="libsvm" displayName="libsvm" projectFiles="true">
-            <itemPath>src/cpp/shadowdetection/util/libsvm/SvmPredict.h</itemPath>
-          </logicalFolder>
-          <logicalFolder name="predicition" displayName="predicition" projectFiles="true">
-            <logicalFolder name="libsvm" displayName="libsvm" projectFiles="true">
-              <itemPath>src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.h</itemPath>
-            </logicalFolder>
-            <logicalFolder name="regression" displayName="regression" projectFiles="true">
-              <itemPath>src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.h</itemPath>
-            </logicalFolder>
-            <itemPath>src/cpp/shadowdetection/util/predicition/IPrediction.h</itemPath>
-          </logicalFolder>
-          <logicalFolder name="raii" displayName="raii" projectFiles="true">
-            <itemPath>src/cpp/shadowdetection/util/raii/RAIIS.h</itemPath>
-          </logicalFolder>
-          <itemPath>src/cpp/shadowdetection/util/Config.h</itemPath>
-          <itemPath>src/cpp/shadowdetection/util/FileSaver.h</itemPath>
-          <itemPath>src/cpp/shadowdetection/util/Matrix.h</itemPath>
-          <itemPath>src/cpp/shadowdetection/util/MemMenager.h</itemPath>
-          <itemPath>src/cpp/shadowdetection/util/PredictorFactory.h</itemPath>
-          <itemPath>src/cpp/shadowdetection/util/Singleton.h</itemPath>
-          <itemPath>src/cpp/shadowdetection/util/TabParser.h</itemPath>
-          <itemPath>src/cpp/shadowdetection/util/Timer.h</itemPath>
-        </logicalFolder>
-        <itemPath>src/cpp/typedefs.h</itemPath>
       </logicalFolder>
       <logicalFolder name="thirdparty" displayName="thirdparty" projectFiles="true">
         <logicalFolder name="lib_svm" displayName="lib_svm" projectFiles="true">
@@ -70,6 +70,7 @@
           <itemPath>src/cpp/thirdparty/rapidxml-1.13/rapidxml_utils.hpp</itemPath>
         </logicalFolder>
       </logicalFolder>
+      <itemPath>src/cpp/typedefs.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -78,6 +79,42 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <logicalFolder name="core" displayName="core" projectFiles="true">
+        <logicalFolder name="opencv" displayName="opencv" projectFiles="true">
+          <itemPath>src/cpp/core/opencv/OpenCV2Tools.cpp</itemPath>
+          <itemPath>src/cpp/core/opencv/OpenCVTools.cpp</itemPath>
+        </logicalFolder>
+        <logicalFolder name="tools" displayName="tools" projectFiles="true">
+          <logicalFolder name="svm" displayName="svm" projectFiles="true">
+            <logicalFolder name="libsvmopenmp"
+                           displayName="libsvmopenmp"
+                           projectFiles="true">
+              <itemPath>src/cpp/core/tools/svm/libsvmopenmp/svm-train.cpp</itemPath>
+            </logicalFolder>
+            <itemPath>src/cpp/core/tools/svm/TrainingSet.cpp</itemPath>
+          </logicalFolder>
+        </logicalFolder>
+        <logicalFolder name="util" displayName="util" projectFiles="true">
+          <logicalFolder name="image" displayName="image" projectFiles="true">
+            <itemPath>src/cpp/core/util/image/ImageParameters.cpp</itemPath>
+          </logicalFolder>
+          <logicalFolder name="predicition" displayName="predicition" projectFiles="true">
+            <logicalFolder name="libsvm" displayName="libsvm" projectFiles="true">
+              <itemPath>src/cpp/core/util/predicition/libsvm/SvmPredict.cpp</itemPath>
+            </logicalFolder>
+            <logicalFolder name="regression" displayName="regression" projectFiles="true">
+              <itemPath>src/cpp/core/util/predicition/regression/RegressionPredict.cpp</itemPath>
+            </logicalFolder>
+          </logicalFolder>
+          <logicalFolder name="raii" displayName="raii" projectFiles="true">
+          </logicalFolder>
+          <itemPath>src/cpp/core/util/Cofig.cpp</itemPath>
+          <itemPath>src/cpp/core/util/MemMenager.cpp</itemPath>
+          <itemPath>src/cpp/core/util/PredictorFactory.cpp</itemPath>
+          <itemPath>src/cpp/core/util/TabParser.cpp</itemPath>
+          <itemPath>src/cpp/core/util/Timer.cpp</itemPath>
+        </logicalFolder>
+      </logicalFolder>
       <logicalFolder name="shadowdetection"
                      displayName="shadowdetection"
                      projectFiles="true">
@@ -94,40 +131,10 @@
           <itemPath>src/cpp/shadowdetection/opencl/OpenCLToolsLibSVM.cpp</itemPath>
           <itemPath>src/cpp/shadowdetection/opencl/OpenCLToolsPredict.cpp</itemPath>
         </logicalFolder>
-        <logicalFolder name="opencv" displayName="opencv" projectFiles="true">
-          <itemPath>src/cpp/shadowdetection/opencv/OpenCV2Tools.cpp</itemPath>
-          <itemPath>src/cpp/shadowdetection/opencv/OpenCVTools.cpp</itemPath>
-        </logicalFolder>
         <logicalFolder name="tools" displayName="tools" projectFiles="true">
           <logicalFolder name="image" displayName="image" projectFiles="true">
             <itemPath>src/cpp/shadowdetection/tools/image/ResultFixer.cpp</itemPath>
           </logicalFolder>
-          <logicalFolder name="svm" displayName="svm" projectFiles="true">
-            <logicalFolder name="libsvmopenmp"
-                           displayName="libsvmopenmp"
-                           projectFiles="true">
-              <itemPath>src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.cpp</itemPath>
-            </logicalFolder>
-            <itemPath>src/cpp/shadowdetection/tools/svm/TrainingSet.cpp</itemPath>
-          </logicalFolder>
-        </logicalFolder>
-        <logicalFolder name="util" displayName="util" projectFiles="true">
-          <logicalFolder name="image" displayName="image" projectFiles="true">
-            <itemPath>src/cpp/shadowdetection/util/image/ImageParameters.cpp</itemPath>
-          </logicalFolder>
-          <logicalFolder name="predicition" displayName="predicition" projectFiles="true">
-            <logicalFolder name="libsvm" displayName="libsvm" projectFiles="true">
-              <itemPath>src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.cpp</itemPath>
-            </logicalFolder>
-            <logicalFolder name="regression" displayName="regression" projectFiles="true">
-              <itemPath>src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.cpp</itemPath>
-            </logicalFolder>
-          </logicalFolder>
-          <itemPath>src/cpp/shadowdetection/util/Cofig.cpp</itemPath>
-          <itemPath>src/cpp/shadowdetection/util/MemMenager.cpp</itemPath>
-          <itemPath>src/cpp/shadowdetection/util/PredictorFactory.cpp</itemPath>
-          <itemPath>src/cpp/shadowdetection/util/TabParser.cpp</itemPath>
-          <itemPath>src/cpp/shadowdetection/util/Timer.cpp</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="thirdparty" displayName="thirdparty" projectFiles="true">
@@ -181,6 +188,109 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCV2Tools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCVTools.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/TrainingSet.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/libsvmopenmp/svm-train.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/libsvmopenmp/svm-train.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Cofig.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Config.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/FileSaver.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Matrix.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/MemMenager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/PredictorFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/PredictorFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Singleton.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/TabParser.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/TabParser.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Timer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Timer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/image/ImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/image/ImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/IPrediction.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/libsvm/SvmPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/regression/RegressionPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/regression/RegressionPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -231,162 +341,12 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCV2Tools.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCV2Tools.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCVTools.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCVTools.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/cpp/shadowdetection/tools/image/ResultFixer.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/tools/image/ResultFixer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Cofig.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Config.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/FileSaver.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Matrix.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/MemMenager.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/MemMenager.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/PredictorFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/PredictorFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Singleton.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/TabParser.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/TabParser.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Timer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Timer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/image/ImageParameters.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/image/ImageParameters.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/IPrediction.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/raii/RAIIS.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -454,6 +414,109 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCV2Tools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCVTools.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/TrainingSet.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/libsvmopenmp/svm-train.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/libsvmopenmp/svm-train.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Cofig.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Config.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/FileSaver.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Matrix.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/MemMenager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/PredictorFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/PredictorFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Singleton.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/TabParser.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/TabParser.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Timer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Timer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/image/ImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/image/ImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/IPrediction.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/libsvm/SvmPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/regression/RegressionPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/regression/RegressionPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -504,162 +567,12 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCV2Tools.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCV2Tools.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCVTools.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCVTools.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/cpp/shadowdetection/tools/image/ResultFixer.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/tools/image/ResultFixer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Cofig.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Config.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/FileSaver.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Matrix.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/MemMenager.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/MemMenager.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/PredictorFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/PredictorFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Singleton.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/TabParser.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/TabParser.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Timer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Timer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/image/ImageParameters.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/image/ImageParameters.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/IPrediction.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/raii/RAIIS.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -720,6 +633,109 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCV2Tools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCVTools.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/TrainingSet.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/libsvmopenmp/svm-train.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/libsvmopenmp/svm-train.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Cofig.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Config.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/FileSaver.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Matrix.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/MemMenager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/PredictorFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/PredictorFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Singleton.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/TabParser.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/TabParser.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Timer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Timer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/image/ImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/image/ImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/IPrediction.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/libsvm/SvmPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/regression/RegressionPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/regression/RegressionPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -770,162 +786,12 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCV2Tools.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCV2Tools.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCVTools.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCVTools.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/cpp/shadowdetection/tools/image/ResultFixer.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/tools/image/ResultFixer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Cofig.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Config.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/FileSaver.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Matrix.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/MemMenager.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/MemMenager.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/PredictorFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/PredictorFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Singleton.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/TabParser.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/TabParser.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Timer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Timer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/image/ImageParameters.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/image/ImageParameters.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/IPrediction.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/raii/RAIIS.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -991,6 +857,109 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
       </item>
+      <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCV2Tools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCVTools.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/TrainingSet.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/libsvmopenmp/svm-train.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/libsvmopenmp/svm-train.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Cofig.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Config.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/FileSaver.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Matrix.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/MemMenager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/PredictorFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/PredictorFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Singleton.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/TabParser.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/TabParser.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Timer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Timer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/image/ImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/image/ImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/IPrediction.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/libsvm/SvmPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/regression/RegressionPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/regression/RegressionPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -1041,162 +1010,12 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCV2Tools.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCV2Tools.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCVTools.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCVTools.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/cpp/shadowdetection/tools/image/ResultFixer.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/tools/image/ResultFixer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Cofig.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Config.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/FileSaver.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Matrix.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/MemMenager.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/MemMenager.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/PredictorFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/PredictorFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Singleton.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/TabParser.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/TabParser.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Timer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Timer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/image/ImageParameters.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/image/ImageParameters.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/IPrediction.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/raii/RAIIS.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1263,6 +1082,109 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
       </item>
+      <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCV2Tools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCVTools.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/TrainingSet.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/libsvmopenmp/svm-train.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/libsvmopenmp/svm-train.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Cofig.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Config.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/FileSaver.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Matrix.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/MemMenager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/PredictorFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/PredictorFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Singleton.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/TabParser.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/TabParser.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Timer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Timer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/image/ImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/image/ImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/IPrediction.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/libsvm/SvmPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/regression/RegressionPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/regression/RegressionPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -1313,162 +1235,12 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCV2Tools.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCV2Tools.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCVTools.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCVTools.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/cpp/shadowdetection/tools/image/ResultFixer.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/tools/image/ResultFixer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Cofig.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Config.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/FileSaver.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Matrix.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/MemMenager.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/MemMenager.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/PredictorFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/PredictorFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Singleton.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/TabParser.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/TabParser.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Timer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Timer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/image/ImageParameters.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/image/ImageParameters.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/IPrediction.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/raii/RAIIS.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1538,6 +1310,109 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
       </item>
+      <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCV2Tools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCVTools.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/TrainingSet.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/libsvmopenmp/svm-train.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/libsvmopenmp/svm-train.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Cofig.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Config.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/FileSaver.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Matrix.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/MemMenager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/PredictorFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/PredictorFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Singleton.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/TabParser.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/TabParser.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Timer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Timer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/image/ImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/image/ImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/IPrediction.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/libsvm/SvmPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/regression/RegressionPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/regression/RegressionPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -1588,162 +1463,12 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCV2Tools.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCV2Tools.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCVTools.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCVTools.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/cpp/shadowdetection/tools/image/ResultFixer.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/tools/image/ResultFixer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Cofig.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Config.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/FileSaver.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Matrix.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/MemMenager.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/MemMenager.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/PredictorFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/PredictorFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Singleton.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/TabParser.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/TabParser.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Timer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Timer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/image/ImageParameters.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/image/ImageParameters.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/IPrediction.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/raii/RAIIS.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1805,6 +1530,109 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
       </item>
+      <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCV2Tools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCVTools.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/TrainingSet.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/libsvmopenmp/svm-train.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/libsvmopenmp/svm-train.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Cofig.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Config.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/FileSaver.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Matrix.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/MemMenager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/PredictorFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/PredictorFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Singleton.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/TabParser.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/TabParser.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Timer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Timer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/image/ImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/image/ImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/IPrediction.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/libsvm/SvmPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/regression/RegressionPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/regression/RegressionPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -1855,162 +1683,12 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCV2Tools.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCV2Tools.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCVTools.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCVTools.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/cpp/shadowdetection/tools/image/ResultFixer.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/tools/image/ResultFixer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Cofig.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Config.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/FileSaver.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Matrix.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/MemMenager.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/MemMenager.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/PredictorFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/PredictorFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Singleton.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/TabParser.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/TabParser.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Timer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Timer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/image/ImageParameters.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/image/ImageParameters.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/IPrediction.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/raii/RAIIS.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -2076,6 +1754,109 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
       </item>
+      <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCV2Tools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCVTools.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/TrainingSet.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/libsvmopenmp/svm-train.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/libsvmopenmp/svm-train.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Cofig.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Config.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/FileSaver.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Matrix.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/MemMenager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/PredictorFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/PredictorFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Singleton.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/TabParser.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/TabParser.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Timer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Timer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/image/ImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/image/ImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/IPrediction.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/libsvm/SvmPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/regression/RegressionPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/regression/RegressionPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -2126,162 +1907,12 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCV2Tools.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCV2Tools.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCVTools.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCVTools.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/cpp/shadowdetection/tools/image/ResultFixer.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/tools/image/ResultFixer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Cofig.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Config.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/FileSaver.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Matrix.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/MemMenager.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/MemMenager.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/PredictorFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/PredictorFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Singleton.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/TabParser.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/TabParser.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Timer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Timer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/image/ImageParameters.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/image/ImageParameters.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/IPrediction.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/raii/RAIIS.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -2341,6 +1972,109 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
       </item>
+      <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCV2Tools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCVTools.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/TrainingSet.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/libsvmopenmp/svm-train.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/libsvmopenmp/svm-train.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Cofig.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Config.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/FileSaver.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Matrix.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/MemMenager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/PredictorFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/PredictorFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Singleton.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/TabParser.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/TabParser.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Timer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Timer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/image/ImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/image/ImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/IPrediction.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/libsvm/SvmPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/regression/RegressionPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/regression/RegressionPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -2391,162 +2125,12 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCV2Tools.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCV2Tools.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCVTools.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCVTools.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/cpp/shadowdetection/tools/image/ResultFixer.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/tools/image/ResultFixer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Cofig.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Config.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/FileSaver.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Matrix.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/MemMenager.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/MemMenager.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/PredictorFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/PredictorFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Singleton.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/TabParser.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/TabParser.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Timer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Timer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/image/ImageParameters.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/image/ImageParameters.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/IPrediction.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/raii/RAIIS.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -2610,6 +2194,109 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
       </item>
+      <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCV2Tools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCVTools.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/TrainingSet.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/TrainingSet.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/libsvmopenmp/svm-train.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/tools/svm/libsvmopenmp/svm-train.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Cofig.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Config.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/FileSaver.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Matrix.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/MemMenager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/PredictorFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/PredictorFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Singleton.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/TabParser.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/TabParser.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Timer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/Timer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/image/ImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/image/ImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/IPrediction.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/libsvm/SvmPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/libsvm/SvmPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/regression/RegressionPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/predicition/regression/RegressionPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -2660,162 +2347,12 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCV2Tools.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCV2Tools.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCVTools.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencv/OpenCVTools.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/cpp/shadowdetection/tools/image/ResultFixer.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/tools/image/ResultFixer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/TrainingSet.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/tools/svm/libsvmopenmp/svm-train.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Cofig.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Config.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/FileSaver.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Matrix.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/MemMenager.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/MemMenager.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/PredictorFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/PredictorFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Singleton.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/TabParser.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/TabParser.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Timer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/Timer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/image/ImageParameters.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/image/ImageParameters.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/libsvm/SvmPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/IPrediction.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/libsvm/SvmPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/predicition/regression/RegressionPredict.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/util/raii/RAIIS.h"
             ex="false"
             tool="3"
             flavor2="0">
