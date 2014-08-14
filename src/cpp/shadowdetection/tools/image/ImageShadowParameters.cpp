@@ -1,4 +1,4 @@
-#include "ImageParameters.h"
+#include "ImageShadowParameters.h"
 #include "core/opencv/OpenCV2Tools.h"
 #include "core/util/MemMenager.h"
 #include "core/util/raii/RAIIS.h"
@@ -10,8 +10,8 @@
 #define BGR_PARAMETERS 2
 #define ROI_PARAMETERS 1;
 
-namespace core{
-    namespace util{
+namespace shadowdetection{
+    namespace tools{
         namespace image{
             using namespace std;
             using namespace cv;
@@ -19,16 +19,16 @@ namespace core{
             using namespace core::util;
             using namespace core::util::raii;
             
-            ImageParameters::ImageParameters(){
+            ImageShadowParameters::ImageShadowParameters(){
                 regionsAvgsSecondChannel = 0;
                 numOfSegments = 1;
             }
             
-            ImageParameters::~ImageParameters(){
+            ImageShadowParameters::~ImageShadowParameters(){
                 reset();
             }
             
-            float* ImageParameters::merge(float label, const float** arrs, int arrsLen, int* arrSize, int& retSize) {
+            float* ImageShadowParameters::merge(float label, const float** arrs, int arrsLen, int* arrSize, int& retSize) {
                 retSize = 1;
                 for (int i = 0; i < arrsLen; i++) {
                     retSize += arrSize[i];
@@ -48,7 +48,7 @@ namespace core{
                 return retArr;
             }
             
-            float* ImageParameters::merge(float** arrs, int arrsLen, int* arrSize, int& retSize){
+            float* ImageShadowParameters::merge(float** arrs, int arrsLen, int* arrSize, int& retSize){
                 retSize = 0;
                 for (int i = 0; i < arrsLen; i++) {
                     retSize += arrSize[i];
@@ -74,7 +74,7 @@ namespace core{
                     return 1.f;
             }
             
-            Matrix<float>* ImageParameters::getImageParameters(const Mat& originalImage, const Mat& maskImage, 
+            Matrix<float>* ImageShadowParameters::getImageParameters(const Mat& originalImage, const Mat& maskImage, 
                                                         int& rowDimension, int& pixelNum) throw (SDException&){
                 if (originalImage.data == 0 || maskImage.data == 0)
                     return 0;
@@ -147,7 +147,7 @@ namespace core{
                 return ret;
             }
             
-            Matrix<float>* ImageParameters::getImageParameters( const Mat& originalImage, 
+            Matrix<float>* ImageShadowParameters::getImageParameters( const Mat& originalImage, 
                                                                 const Mat& hsvImage,
                                                                 const Mat& hlsImage,
                                                                 int& rowDimension,
@@ -198,7 +198,7 @@ namespace core{
 //                        VectorRaii vraiiProcs3(procs[3]);
                         
                         int mergedSize = 0;
-                        float* merged = ImageParameters::merge(procs, SPACES_COUNT, size, mergedSize);
+                        float* merged = ImageShadowParameters::merge(procs, SPACES_COUNT, size, mergedSize);
                         if (merged == 0){                            
                             return 0;
                         }
@@ -219,7 +219,7 @@ namespace core{
                 return ret;
             }
             
-            float* ImageParameters::processHSV(uchar H, uchar S, uchar V, int& size) {
+            float* ImageShadowParameters::processHSV(uchar H, uchar S, uchar V, int& size) {
                 size = HSV_PARAMETERS;
                 float* retArr = MemMenager::allocate<float>(size);
                 if (retArr != 0){
@@ -243,7 +243,7 @@ namespace core{
                 return retArr;
             }
 
-            float* ImageParameters::processHLS(uchar H, uchar L, uchar S, int& size) {
+            float* ImageShadowParameters::processHLS(uchar H, uchar L, uchar S, int& size) {
                 size = HLS_PARAMETERS;
                 float* retArr = MemMenager::allocate<float>(size);
                 if (retArr != 0){
@@ -267,7 +267,7 @@ namespace core{
                 return retArr;                
             }
             
-            float* ImageParameters::processBGR(uchar B, uchar G, uchar R, int& size){
+            float* ImageShadowParameters::processBGR(uchar B, uchar G, uchar R, int& size){
                 size = BGR_PARAMETERS;
                 float* retArr = MemMenager::allocate<float>(size);
                 if (retArr != 0){
@@ -287,7 +287,7 @@ namespace core{
                 return retArr;
             }
             
-            Matrix<float>* ImageParameters::getAvgChannelValForRegions(const Mat* originalImage, uchar channelIndex){                                                
+            Matrix<float>* ImageShadowParameters::getAvgChannelValForRegions(const Mat* originalImage, uchar channelIndex){                                                
                 regionsAvgsSecondChannel = new Matrix<float>(numOfSegments, numOfSegments);
                 segmentWidth = (float)originalImage->cols / (float)numOfSegments;
                 segmentHeight = (float)originalImage->rows / (float)numOfSegments;
@@ -306,7 +306,7 @@ namespace core{
                 return regionsAvgsSecondChannel;
             }
             
-            float* ImageParameters::processROI( KeyVal<uint> location, const Mat* originalImage, 
+            float* ImageShadowParameters::processROI( KeyVal<uint> location, const Mat* originalImage, 
                                                 int& size, uchar channelIndex) throw (SDException&){
                 if (originalImage == 0 || originalImage->data == 0){
                     SDException exc(SHADOW_INVALID_IMAGE_FORMAT, "ImageParameters::processROI");
@@ -338,7 +338,7 @@ namespace core{
                 return ret;
             }
             
-            void ImageParameters::reset(){
+            void ImageShadowParameters::reset(){
                 if (regionsAvgsSecondChannel)
                     delete regionsAvgsSecondChannel;
                 regionsAvgsSecondChannel = 0;

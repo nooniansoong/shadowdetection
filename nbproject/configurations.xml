@@ -10,6 +10,9 @@
           <itemPath>src/cpp/core/opencv/OpenCVTools.h</itemPath>
         </logicalFolder>
         <logicalFolder name="tools" displayName="tools" projectFiles="true">
+          <logicalFolder name="image" displayName="image" projectFiles="true">
+            <itemPath>src/cpp/core/tools/image/IImageParameters.h</itemPath>
+          </logicalFolder>
           <logicalFolder name="svm" displayName="svm" projectFiles="true">
             <logicalFolder name="libsvmopenmp"
                            displayName="libsvmopenmp"
@@ -20,9 +23,6 @@
           </logicalFolder>
         </logicalFolder>
         <logicalFolder name="util" displayName="util" projectFiles="true">
-          <logicalFolder name="image" displayName="image" projectFiles="true">
-            <itemPath>src/cpp/core/util/image/ImageParameters.h</itemPath>
-          </logicalFolder>
           <logicalFolder name="predicition" displayName="predicition" projectFiles="true">
             <logicalFolder name="libsvm" displayName="libsvm" projectFiles="true">
               <itemPath>src/cpp/core/util/predicition/libsvm/SvmPredict.h</itemPath>
@@ -39,6 +39,7 @@
           <itemPath>src/cpp/core/util/FileSaver.h</itemPath>
           <itemPath>src/cpp/core/util/Matrix.h</itemPath>
           <itemPath>src/cpp/core/util/MemMenager.h</itemPath>
+          <itemPath>src/cpp/core/util/ParametersFactory.h</itemPath>
           <itemPath>src/cpp/core/util/PredictorFactory.h</itemPath>
           <itemPath>src/cpp/core/util/Singleton.h</itemPath>
           <itemPath>src/cpp/core/util/TabParser.h</itemPath>
@@ -53,6 +54,7 @@
         </logicalFolder>
         <logicalFolder name="tools" displayName="tools" projectFiles="true">
           <logicalFolder name="image" displayName="image" projectFiles="true">
+            <itemPath>src/cpp/shadowdetection/tools/image/ImageShadowParameters.h</itemPath>
             <itemPath>src/cpp/shadowdetection/tools/image/ResultFixer.h</itemPath>
           </logicalFolder>
         </logicalFolder>
@@ -95,9 +97,6 @@
           </logicalFolder>
         </logicalFolder>
         <logicalFolder name="util" displayName="util" projectFiles="true">
-          <logicalFolder name="image" displayName="image" projectFiles="true">
-            <itemPath>src/cpp/core/util/image/ImageParameters.cpp</itemPath>
-          </logicalFolder>
           <logicalFolder name="predicition" displayName="predicition" projectFiles="true">
             <logicalFolder name="libsvm" displayName="libsvm" projectFiles="true">
               <itemPath>src/cpp/core/util/predicition/libsvm/SvmPredict.cpp</itemPath>
@@ -110,6 +109,7 @@
           </logicalFolder>
           <itemPath>src/cpp/core/util/Cofig.cpp</itemPath>
           <itemPath>src/cpp/core/util/MemMenager.cpp</itemPath>
+          <itemPath>src/cpp/core/util/ParametersFactory.cpp</itemPath>
           <itemPath>src/cpp/core/util/PredictorFactory.cpp</itemPath>
           <itemPath>src/cpp/core/util/TabParser.cpp</itemPath>
           <itemPath>src/cpp/core/util/Timer.cpp</itemPath>
@@ -133,6 +133,7 @@
         </logicalFolder>
         <logicalFolder name="tools" displayName="tools" projectFiles="true">
           <logicalFolder name="image" displayName="image" projectFiles="true">
+            <itemPath>src/cpp/shadowdetection/tools/image/ImageShadowParameters.cpp</itemPath>
             <itemPath>src/cpp/shadowdetection/tools/image/ResultFixer.cpp</itemPath>
           </logicalFolder>
         </logicalFolder>
@@ -202,6 +203,11 @@
       </item>
       <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/tools/image/IImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/tools/svm/TrainingSet.cpp"
             ex="false"
             tool="1"
@@ -234,6 +240,16 @@
       </item>
       <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/util/ParametersFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/ParametersFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/util/PredictorFactory.cpp"
             ex="false"
             tool="1"
@@ -253,16 +269,6 @@
       <item path="src/cpp/core/util/Timer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/cpp/core/util/Timer.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/image/ImageParameters.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/image/ImageParameters.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
       </item>
       <item path="src/cpp/core/util/predicition/IPrediction.h"
             ex="false"
@@ -337,6 +343,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/regression_predict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ImageShadowParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ImageShadowParameters.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -428,6 +444,11 @@
       </item>
       <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/tools/image/IImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/tools/svm/TrainingSet.cpp"
             ex="false"
             tool="1"
@@ -460,6 +481,16 @@
       </item>
       <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/util/ParametersFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/ParametersFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/util/PredictorFactory.cpp"
             ex="false"
             tool="1"
@@ -479,16 +510,6 @@
       <item path="src/cpp/core/util/Timer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/cpp/core/util/Timer.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/image/ImageParameters.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/image/ImageParameters.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
       </item>
       <item path="src/cpp/core/util/predicition/IPrediction.h"
             ex="false"
@@ -563,6 +584,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/regression_predict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ImageShadowParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ImageShadowParameters.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -647,6 +678,11 @@
       </item>
       <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/tools/image/IImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/tools/svm/TrainingSet.cpp"
             ex="false"
             tool="1"
@@ -679,6 +715,16 @@
       </item>
       <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/util/ParametersFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/ParametersFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/util/PredictorFactory.cpp"
             ex="false"
             tool="1"
@@ -698,16 +744,6 @@
       <item path="src/cpp/core/util/Timer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/cpp/core/util/Timer.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/image/ImageParameters.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/image/ImageParameters.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
       </item>
       <item path="src/cpp/core/util/predicition/IPrediction.h"
             ex="false"
@@ -782,6 +818,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/regression_predict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ImageShadowParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ImageShadowParameters.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -871,6 +917,11 @@
       </item>
       <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/tools/image/IImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/tools/svm/TrainingSet.cpp"
             ex="false"
             tool="1"
@@ -903,6 +954,16 @@
       </item>
       <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/util/ParametersFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/ParametersFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/util/PredictorFactory.cpp"
             ex="false"
             tool="1"
@@ -922,16 +983,6 @@
       <item path="src/cpp/core/util/Timer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/cpp/core/util/Timer.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/image/ImageParameters.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/image/ImageParameters.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
       </item>
       <item path="src/cpp/core/util/predicition/IPrediction.h"
             ex="false"
@@ -1006,6 +1057,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/regression_predict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ImageShadowParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ImageShadowParameters.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1096,6 +1157,11 @@
       </item>
       <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/tools/image/IImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/tools/svm/TrainingSet.cpp"
             ex="false"
             tool="1"
@@ -1128,6 +1194,16 @@
       </item>
       <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/util/ParametersFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/ParametersFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/util/PredictorFactory.cpp"
             ex="false"
             tool="1"
@@ -1147,16 +1223,6 @@
       <item path="src/cpp/core/util/Timer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/cpp/core/util/Timer.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/image/ImageParameters.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/image/ImageParameters.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
       </item>
       <item path="src/cpp/core/util/predicition/IPrediction.h"
             ex="false"
@@ -1231,6 +1297,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/regression_predict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ImageShadowParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ImageShadowParameters.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1324,6 +1400,11 @@
       </item>
       <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/tools/image/IImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/tools/svm/TrainingSet.cpp"
             ex="false"
             tool="1"
@@ -1356,6 +1437,16 @@
       </item>
       <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/util/ParametersFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/ParametersFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/util/PredictorFactory.cpp"
             ex="false"
             tool="1"
@@ -1375,16 +1466,6 @@
       <item path="src/cpp/core/util/Timer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/cpp/core/util/Timer.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/image/ImageParameters.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/image/ImageParameters.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
       </item>
       <item path="src/cpp/core/util/predicition/IPrediction.h"
             ex="false"
@@ -1459,6 +1540,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/regression_predict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ImageShadowParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ImageShadowParameters.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1544,6 +1635,11 @@
       </item>
       <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/tools/image/IImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/tools/svm/TrainingSet.cpp"
             ex="false"
             tool="1"
@@ -1576,6 +1672,16 @@
       </item>
       <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/util/ParametersFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/ParametersFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/util/PredictorFactory.cpp"
             ex="false"
             tool="1"
@@ -1595,16 +1701,6 @@
       <item path="src/cpp/core/util/Timer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/cpp/core/util/Timer.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/image/ImageParameters.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/image/ImageParameters.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
       </item>
       <item path="src/cpp/core/util/predicition/IPrediction.h"
             ex="false"
@@ -1679,6 +1775,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/regression_predict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ImageShadowParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ImageShadowParameters.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1768,6 +1874,11 @@
       </item>
       <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/tools/image/IImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/tools/svm/TrainingSet.cpp"
             ex="false"
             tool="1"
@@ -1800,6 +1911,16 @@
       </item>
       <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/util/ParametersFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/ParametersFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/util/PredictorFactory.cpp"
             ex="false"
             tool="1"
@@ -1819,16 +1940,6 @@
       <item path="src/cpp/core/util/Timer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/cpp/core/util/Timer.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/image/ImageParameters.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/image/ImageParameters.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
       </item>
       <item path="src/cpp/core/util/predicition/IPrediction.h"
             ex="false"
@@ -1903,6 +2014,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/regression_predict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ImageShadowParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ImageShadowParameters.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1986,6 +2107,11 @@
       </item>
       <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/tools/image/IImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/tools/svm/TrainingSet.cpp"
             ex="false"
             tool="1"
@@ -2018,6 +2144,16 @@
       </item>
       <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/util/ParametersFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/ParametersFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/util/PredictorFactory.cpp"
             ex="false"
             tool="1"
@@ -2037,16 +2173,6 @@
       <item path="src/cpp/core/util/Timer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/cpp/core/util/Timer.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/image/ImageParameters.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/image/ImageParameters.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
       </item>
       <item path="src/cpp/core/util/predicition/IPrediction.h"
             ex="false"
@@ -2121,6 +2247,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/regression_predict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ImageShadowParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ImageShadowParameters.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -2208,6 +2344,11 @@
       </item>
       <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/tools/image/IImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/tools/svm/TrainingSet.cpp"
             ex="false"
             tool="1"
@@ -2240,6 +2381,16 @@
       </item>
       <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/util/ParametersFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/ParametersFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/util/PredictorFactory.cpp"
             ex="false"
             tool="1"
@@ -2259,16 +2410,6 @@
       <item path="src/cpp/core/util/Timer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/cpp/core/util/Timer.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/image/ImageParameters.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/image/ImageParameters.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
       </item>
       <item path="src/cpp/core/util/predicition/IPrediction.h"
             ex="false"
@@ -2343,6 +2484,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/regression_predict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ImageShadowParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/tools/image/ImageShadowParameters.h"
             ex="false"
             tool="3"
             flavor2="0">

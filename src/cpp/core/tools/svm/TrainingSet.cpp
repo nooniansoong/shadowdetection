@@ -3,7 +3,7 @@
 #include <iostream>
 #include "core/util/raii/RAIIS.h"
 #include "typedefs.h"
-#include "core/util/image/ImageParameters.h"
+#include "core/util/ParametersFactory.h"
 #include "core/opencv/OpenCV2Tools.h"
 
 namespace core{
@@ -12,7 +12,7 @@ namespace core{
 
             using namespace std;
             using namespace core::util::raii;
-            using namespace core::util::image;
+            using namespace core::tools::image;
             using namespace cv;
             using namespace core::opencv2;
             using namespace core::util;
@@ -115,8 +115,10 @@ namespace core{
                 if (originalImage.data == 0 || maskImage.data == 0) {
                     return 0;
                 }
-                ImageParameters ip;
-                Matrix<float>* retVec = ip.getImageParameters(originalImage, maskImage, rowDimesion, pixelNum);
+                IImageParameteres* ip = createImageParameters();
+                PointerRaii<IImageParameteres> ipRaii(ip);
+                Matrix<float>* retVec = ip->getImageParameters( originalImage, maskImage, 
+                                                                rowDimesion, pixelNum);                
                 return retVec;
             }
 

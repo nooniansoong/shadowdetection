@@ -4,12 +4,13 @@
 #include "opencv2/core/core.hpp"
 #include "typedefs.h"
 #include "core/util/Matrix.h"
+#include "core/tools/image/IImageParameters.h"
 
-namespace core{
-    namespace util{
+namespace shadowdetection{
+    namespace tools{
         namespace image{
             
-            class ImageParameters{
+            class ImageShadowParameters : public core::tools::image::IImageParameteres{
             private:
                 core::util::Matrix<float>* regionsAvgsSecondChannel;
                 int numOfSegments;
@@ -25,18 +26,19 @@ namespace core{
                                                                                 uchar channelIndex);
             protected:
             public:
-                ImageParameters();
-                virtual ~ImageParameters();
+                ImageShadowParameters();
+                virtual ~ImageShadowParameters();
                 
                 static float* merge(float** arrs, int arrsLen, int* arrSize, int& retSize);
                 static float* merge(float label, const float** arrs, int arrsLen, int* arrSize, int& retSize);
-                core::util::Matrix<float>* getImageParameters(   const cv::Mat& originalImage,
-                                                                            const cv::Mat& hsvImage,
-                                                                            const cv::Mat& hlsImage,
-                                                                            int& rowDimension, int& pixelNum) throw (SDException&);
-                core::util::Matrix<float>* getImageParameters(  const cv::Mat& originalImage, const cv::Mat& maskImage,                                                     
-                                                    int& rowDimension, int& pixelNum) throw (SDException&);
-                void reset();
+                virtual core::util::Matrix<float>* getImageParameters(  const cv::Mat& originalImage,
+                                                                        const cv::Mat& hsvImage,
+                                                                        const cv::Mat& hlsImage,
+                                                                        int& rowDimension, int& pixelNum) throw (SDException&);
+                virtual core::util::Matrix<float>* getImageParameters(  const cv::Mat& originalImage, 
+                                                                        const cv::Mat& maskImage,                                                     
+                                                                        int& rowDimension, int& pixelNum) throw (SDException&);
+                virtual void reset();
             };
             
         }

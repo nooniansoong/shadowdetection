@@ -15,7 +15,7 @@
         <Prediction>            
             <!-- true, false -->
             <usePrediction>
-                true
+                false
             </usePrediction>
             <!--SVM for support vector machine, REG for regresion-->
             <predictionType>
@@ -25,16 +25,16 @@
         <Thresholds>
             <Values>
                 <rValue>
-                    51
+                    30
                 </rValue>
                 <gValue>
-                    105
+                    93
                 </gValue>
                 <bValue>
-                    127
+                    130
                 </bValue>
                 <lValue>
-                    170
+                    150
                 </lValue>
             </Values>
             <UseThresh>

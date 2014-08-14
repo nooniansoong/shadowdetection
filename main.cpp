@@ -14,13 +14,14 @@
 #include "core/util/raii/RAIIS.h"
 #include "core/tools/svm/TrainingSet.h"
 #include "core/tools/svm/libsvmopenmp/svm-train.h"
-#include "core/util/image/ImageParameters.h"
+#include "core/tools/image/IImageParameters.h"
 #include "core/util/Matrix.h"
 #include "core/util/PredictorFactory.h"
 #if defined _OPENMP_MY
 #include <omp.h>
 #endif
 #include "shadowdetection/tools/image/ResultFixer.h"
+#include "core/util/ParametersFactory.h"
 
 using namespace std;
 #ifdef _OPENCL
@@ -33,9 +34,9 @@ using namespace cv;
 using namespace core::util::raii;
 using namespace core::tools::svm;
 using namespace core::util::prediction;
-using namespace core::util::image;
-using namespace shadowdetection::tools::image;
+using namespace core::tools::image;
 using namespace core::tools::svm::libsvmopenmp;
+using namespace shadowdetection::tools::image;
 
 void handleException(const SDException& exception){
     const char* err = exception.what();
@@ -116,7 +117,7 @@ void processSingleCPU(const char* out, IplImage* image) {
         Mat* imageMat = new Mat(image);
         int pixCount;
         int parameterCount;
-        Matrix<float>* parameters = ImageParameters::getImageParameters(*imageMat, parameterCount, pixCount);
+        Matrix<float>* parameters = ImageShadowParameters::getImageParameters(*imageMat, parameterCount, pixCount);
         if (SvmPredict::getInstancePtr()->hasLoadedModel() == false){
             string modelFile = Config::getInstancePtr()->getPropertyValue("process.Prediction.modelFile");
             SvmPredict::getInstancePtr()->loadModel(modelFile);
@@ -169,7 +170,8 @@ void processSingleOpenCL(const char* out, const Mat& image) {
             ImageNewRaii imraiiPi(pi);                        
             int pixCount;
             int parameterCount;
-            ImageParameters ip;
+            IImageParameteres* ip = createImageParameters();
+            PointerRaii<IImageParameteres> ipRaii(ip);
             
             Mat* hsv = OpenCV2Tools::convertToHSV(&image);
             if (hsv == 0){
@@ -177,7 +179,7 @@ void processSingleOpenCL(const char* out, const Mat& image) {
             }
             ImageNewRaii hsvRaii(hsv);                        
             
-            Matrix<float>* parameters = ip.getImageParameters(  image, *hsv, *hls, 
+            Matrix<float>* parameters = ip->getImageParameters( image, *hsv, *hls, 
                                                                 parameterCount, pixCount);
             if (parameters){
                 PointerRaii< Matrix<float> > paramRaii(parameters);
