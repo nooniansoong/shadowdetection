@@ -54,6 +54,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsPredict.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/tools/image/ImageShadowParameters.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/tools/image/ResultFixer.o \
+	${OBJECTDIR}/src/cpp/skydetection/SkyDetection.o \
 	${OBJECTDIR}/src/cpp/thirdparty/lib_svm/svm.o
 
 
@@ -175,6 +176,11 @@ ${OBJECTDIR}/src/cpp/shadowdetection/tools/image/ResultFixer.o: src/cpp/shadowde
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/tools/image
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -D_AMD -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/tools/image/ResultFixer.o src/cpp/shadowdetection/tools/image/ResultFixer.cpp
+
+${OBJECTDIR}/src/cpp/skydetection/SkyDetection.o: src/cpp/skydetection/SkyDetection.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/cpp/skydetection
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -D_AMD -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/skydetection/SkyDetection.o src/cpp/skydetection/SkyDetection.cpp
 
 ${OBJECTDIR}/src/cpp/thirdparty/lib_svm/svm.o: src/cpp/thirdparty/lib_svm/svm.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/thirdparty/lib_svm

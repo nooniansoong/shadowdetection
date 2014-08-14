@@ -42,17 +42,19 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/cpp/core/tools/svm/libsvmopenmp/svm-train.o \
 	${OBJECTDIR}/src/cpp/core/util/Cofig.o \
 	${OBJECTDIR}/src/cpp/core/util/MemMenager.o \
+	${OBJECTDIR}/src/cpp/core/util/ParametersFactory.o \
 	${OBJECTDIR}/src/cpp/core/util/PredictorFactory.o \
 	${OBJECTDIR}/src/cpp/core/util/TabParser.o \
 	${OBJECTDIR}/src/cpp/core/util/Timer.o \
-	${OBJECTDIR}/src/cpp/core/util/image/ImageParameters.o \
 	${OBJECTDIR}/src/cpp/core/util/predicition/libsvm/SvmPredict.o \
 	${OBJECTDIR}/src/cpp/core/util/predicition/regression/RegressionPredict.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLTools.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsImage.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsLibSVM.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsPredict.o \
+	${OBJECTDIR}/src/cpp/shadowdetection/tools/image/ImageShadowParameters.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/tools/image/ResultFixer.o \
+	${OBJECTDIR}/src/cpp/skydetection/SkyDetection.o \
 	${OBJECTDIR}/src/cpp/thirdparty/lib_svm/svm.o
 
 
@@ -115,6 +117,11 @@ ${OBJECTDIR}/src/cpp/core/util/MemMenager.o: src/cpp/core/util/MemMenager.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/core/util/MemMenager.o src/cpp/core/util/MemMenager.cpp
 
+${OBJECTDIR}/src/cpp/core/util/ParametersFactory.o: src/cpp/core/util/ParametersFactory.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/util
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/core/util/ParametersFactory.o src/cpp/core/util/ParametersFactory.cpp
+
 ${OBJECTDIR}/src/cpp/core/util/PredictorFactory.o: src/cpp/core/util/PredictorFactory.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/util
 	${RM} "$@.d"
@@ -129,11 +136,6 @@ ${OBJECTDIR}/src/cpp/core/util/Timer.o: src/cpp/core/util/Timer.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/util
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/core/util/Timer.o src/cpp/core/util/Timer.cpp
-
-${OBJECTDIR}/src/cpp/core/util/image/ImageParameters.o: src/cpp/core/util/image/ImageParameters.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/util/image
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/core/util/image/ImageParameters.o src/cpp/core/util/image/ImageParameters.cpp
 
 ${OBJECTDIR}/src/cpp/core/util/predicition/libsvm/SvmPredict.o: src/cpp/core/util/predicition/libsvm/SvmPredict.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/util/predicition/libsvm
@@ -165,10 +167,20 @@ ${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsPredict.o: src/cpp/shadow
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsPredict.o src/cpp/shadowdetection/opencl/OpenCLToolsPredict.cpp
 
+${OBJECTDIR}/src/cpp/shadowdetection/tools/image/ImageShadowParameters.o: src/cpp/shadowdetection/tools/image/ImageShadowParameters.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/tools/image
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/tools/image/ImageShadowParameters.o src/cpp/shadowdetection/tools/image/ImageShadowParameters.cpp
+
 ${OBJECTDIR}/src/cpp/shadowdetection/tools/image/ResultFixer.o: src/cpp/shadowdetection/tools/image/ResultFixer.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/tools/image
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/tools/image/ResultFixer.o src/cpp/shadowdetection/tools/image/ResultFixer.cpp
+
+${OBJECTDIR}/src/cpp/skydetection/SkyDetection.o: src/cpp/skydetection/SkyDetection.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/cpp/skydetection
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/skydetection/SkyDetection.o src/cpp/skydetection/SkyDetection.cpp
 
 ${OBJECTDIR}/src/cpp/thirdparty/lib_svm/svm.o: src/cpp/thirdparty/lib_svm/svm.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/thirdparty/lib_svm

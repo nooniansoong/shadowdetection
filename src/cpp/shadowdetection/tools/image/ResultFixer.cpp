@@ -1,6 +1,7 @@
 #include "ResultFixer.h"
 #include "core/opencv/OpenCV2Tools.h"
 #include "core/util/Config.h"
+#include "skydetection/SkyDetection.h"
 
 namespace shadowdetection{
     namespace tools{
@@ -9,6 +10,7 @@ namespace shadowdetection{
             using namespace cv;
             using namespace core::opencv2;
             using namespace core::util;
+            using namespace skydetection;
         
             ResultFixer::ResultFixer(){
                 init();
@@ -19,16 +21,10 @@ namespace shadowdetection{
             }
             
             void ResultFixer::init() throw(SDException&){
-                Config* conf = Config::getInstancePtr();
-                string rThreshStr = conf->getPropertyValue("process.Thresholds.Values.rValue");
-                rThresh = (uchar)atoi(rThreshStr.c_str());
-//                string gThreshStr = conf->getPropertyValue("process.Thresholds.Values.gValue");
-//                gThresh = (uchar)atoi(gThreshStr.c_str());
-                string bThreshStr = conf->getPropertyValue("process.Thresholds.Values.bValue");
-                bThresh = (uchar)atoi(bThreshStr.c_str());                
-                string lThreshStr = conf->getPropertyValue("process.Thresholds.Values.lValue");
+                Config* conf = Config::getInstancePtr();                                
+                string lThreshStr = conf->getPropertyValue("process.Thresholds.shadow.lValue");
                 lThresh = (uchar)atoi(lThreshStr.c_str());
-                string useThreshStr = conf->getPropertyValue("process.Thresholds.UseThresh");
+                string useThreshStr = conf->getPropertyValue("process.Thresholds.shadow.useThresh");
                 useThresh = true;
                 if (useThreshStr == "false")
                     useThresh = false;                
@@ -50,22 +46,20 @@ namespace shadowdetection{
                     throw exc;
                 }
                 
+                SkyDetection skyDetection(originalImage);
+                skyDetection.process();
+                
                 for (int i = 0; i < image.rows; i++){
                     for (int j = 0; j < image.cols; j++){
                         KeyVal<uint> location((uint)j, (uint)i);
                         uchar shadowValue = OpenCV2Tools::getChannelValue(image, location, 0);
-                        if (shadowValue > 0){
-                            uchar rValue = OpenCV2Tools::getChannelValue(originalImage, location, 2);
-                            uchar gValue = OpenCV2Tools::getChannelValue(originalImage, location, 1);
-                            uchar bValue = OpenCV2Tools::getChannelValue(originalImage, location, 0);
+                        if (shadowValue > 0){                            
                             uchar lValue = OpenCV2Tools::getChannelValue(hlsImage, location, 1);
                             if (lValue >= lThresh){                                
                                 OpenCV2Tools::setChannelValue(image, location, 0, 0);
                             }
                             //sky detection
-                            else if (rValue <= rThresh && (gValue >= bValue / 4U) && 
-                                    gValue <= bValue && bValue >= bThresh && 
-                                    lValue >= lThresh / 3){
+                            else if (skyDetection.isSky(location) == true){
                                 OpenCV2Tools::setChannelValue(image, location, 0, 0);
                             }
                         }

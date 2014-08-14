@@ -59,6 +59,11 @@
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
+      <logicalFolder name="skydetection"
+                     displayName="skydetection"
+                     projectFiles="true">
+        <itemPath>src/cpp/skydetection/SkyDetection.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="thirdparty" displayName="thirdparty" projectFiles="true">
         <logicalFolder name="lib_svm" displayName="lib_svm" projectFiles="true">
           <itemPath>src/cpp/thirdparty/lib_svm/svm.h</itemPath>
@@ -105,8 +110,6 @@
               <itemPath>src/cpp/core/util/predicition/regression/RegressionPredict.cpp</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="raii" displayName="raii" projectFiles="true">
-          </logicalFolder>
           <itemPath>src/cpp/core/util/Cofig.cpp</itemPath>
           <itemPath>src/cpp/core/util/MemMenager.cpp</itemPath>
           <itemPath>src/cpp/core/util/ParametersFactory.cpp</itemPath>
@@ -137,6 +140,11 @@
             <itemPath>src/cpp/shadowdetection/tools/image/ResultFixer.cpp</itemPath>
           </logicalFolder>
         </logicalFolder>
+      </logicalFolder>
+      <logicalFolder name="skydetection"
+                     displayName="skydetection"
+                     projectFiles="true">
+        <itemPath>src/cpp/skydetection/SkyDetection.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="thirdparty" displayName="thirdparty" projectFiles="true">
         <logicalFolder name="lib_svm" displayName="lib_svm" projectFiles="true">
@@ -363,6 +371,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/tools/image/ResultFixer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/skydetection/SkyDetection.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/skydetection/SkyDetection.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -608,6 +626,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/skydetection/SkyDetection.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/skydetection/SkyDetection.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/thirdparty/lib_svm/svm.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/cpp/thirdparty/lib_svm/svm.h" ex="false" tool="3" flavor2="0">
@@ -838,6 +866,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/tools/image/ResultFixer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/skydetection/SkyDetection.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/skydetection/SkyDetection.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1081,6 +1119,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/skydetection/SkyDetection.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/skydetection/SkyDetection.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/thirdparty/lib_svm/svm.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/cpp/thirdparty/lib_svm/svm.h" ex="false" tool="3" flavor2="0">
@@ -1317,6 +1365,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/tools/image/ResultFixer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/skydetection/SkyDetection.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/skydetection/SkyDetection.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1564,6 +1622,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/skydetection/SkyDetection.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/skydetection/SkyDetection.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/thirdparty/lib_svm/svm.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/cpp/thirdparty/lib_svm/svm.h" ex="false" tool="3" flavor2="0">
@@ -1795,6 +1863,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/tools/image/ResultFixer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/skydetection/SkyDetection.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/skydetection/SkyDetection.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -2038,6 +2116,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/skydetection/SkyDetection.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/skydetection/SkyDetection.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/thirdparty/lib_svm/svm.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/cpp/thirdparty/lib_svm/svm.h" ex="false" tool="3" flavor2="0">
@@ -2267,6 +2355,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/tools/image/ResultFixer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/skydetection/SkyDetection.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/skydetection/SkyDetection.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -2504,6 +2602,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/tools/image/ResultFixer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/skydetection/SkyDetection.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/skydetection/SkyDetection.h"
             ex="false"
             tool="3"
             flavor2="0">

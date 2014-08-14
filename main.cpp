@@ -88,6 +88,13 @@ void initOpenCL(){
  * @param image
  */
 void processSingleCPU(const char* out, IplImage* image) {    
+    Mat imageMat(image);
+    Mat* hls = OpenCV2Tools::convertToHLS(&imageMat);
+    if (hls == 0){
+        return;
+    }
+    ImageNewRaii hlsRaii(hls);
+    
     IplImage* processedImage = 0;
     int height, width, channels;
     unsigned int* hsi1 = OpenCvTools::convertImagetoHSI(image, height, width, channels, &OpenCvTools::RGBtoHSI_1);
@@ -113,16 +120,24 @@ void processSingleCPU(const char* out, IplImage* image) {
         usePrediction = true;
     if (usePrediction){
         IplImage* pi = OpenCvTools::joinTwo(binarized1, binarized2);
-        ImageRaii iraii(pi);
-        Mat* imageMat = new Mat(image);
+        ImageRaii iraii(pi);        
         int pixCount;
         int parameterCount;
-        Matrix<float>* parameters = ImageShadowParameters::getImageParameters(*imageMat, parameterCount, pixCount);
-        if (SvmPredict::getInstancePtr()->hasLoadedModel() == false){
-            string modelFile = Config::getInstancePtr()->getPropertyValue("process.Prediction.modelFile");
-            SvmPredict::getInstancePtr()->loadModel(modelFile);
+        
+        Mat* hsv = OpenCV2Tools::convertToHSV(&imageMat);
+        if (hsv == 0){
+            return;
         }
-        uchar* predicted = SvmPredict::getInstancePtr()->predict(parameters, pixCount, parameterCount);
+        ImageNewRaii hsvRaii(hsv);
+        
+        IImageParameteres* imageParameters = createImageParameters();
+        Matrix<float>* parameters = imageParameters->getImageParameters(imageMat, *hsv, *hls, 
+                                                                        parameterCount, pixCount);
+        IPrediction* predictor = getPredictor();
+        if (predictor->hasLoadedModel() == false){            
+            predictor->loadModel();
+        }
+        uchar* predicted = predictor->predict(parameters, pixCount, parameterCount);
         VectorRaii vraii(predicted);        
         for (int i = 0; i < pixCount; i++)
             predicted[i] *= 255;
@@ -133,8 +148,13 @@ void processSingleCPU(const char* out, IplImage* image) {
     else{
         processedImage = OpenCvTools::joinTwo(binarized1, binarized2);
     }
-    ImageRaii iraii(processedImage);                
-    cvSaveImage(out, processedImage);    
+    if (processedImage){
+        ImageRaii iraii(processedImage);
+        ResultFixer rf;
+        Mat processedImageMat(processedImage);
+        rf.applyThreshholds(processedImageMat, imageMat, *hls);
+        cvSaveImage(out, processedImage);
+    }
 }
 #endif
 

@@ -9,10 +9,7 @@ namespace shadowdetection{
         namespace image{
             
             class ResultFixer{
-            private:
-                uchar rThresh;
-                //uchar gThresh;
-                uchar bThresh;
+            private:                
                 uchar lThresh;
                 bool useThresh;
                 

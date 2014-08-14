@@ -107,6 +107,16 @@ namespace core{
             return image;
         }
         
+        Mat* OpenCV2Tools::get8bitImage(int height, int width){
+            Mat* image = 0;
+            image = new(nothrow) Mat(height, width, CV_8U);
+            if (image == 0){
+                SDException exc(SHADOW_NO_MEM, "Get 8bit image");
+                throw exc;
+            }
+            return image;
+        }
+        
         Mat* OpenCV2Tools::binarize(const Mat* input){
             if (input == 0 || input->data == 0) {
                 return 0;
@@ -316,11 +326,11 @@ namespace core{
                 SDException exc(SHADOW_INVALID_IMAGE_FORMAT, "OpenCV2Tools::getChannelValue check index");
                 throw exc;
             }
-            if (x >= image.cols){
+            if (x >= (uint)image.cols){
                 SDException exc(SHADOW_OUT_OF_BOUNDS, "OpenCV2Tools::getChannelValue x");
                 throw exc;
             }
-            if (y >= image.rows){
+            if (y >= (uint)image.rows){
                 SDException exc(SHADOW_OUT_OF_BOUNDS, "OpenCV2Tools::getChannelValue y");
                 throw exc;
             }
@@ -350,11 +360,11 @@ namespace core{
             }
             uint x = location.getKey();
             uint y = location.getVal();
-            if (x >= image.cols){
+            if (x >= (uint)image.cols){
                 SDException exc(SHADOW_OUT_OF_BOUNDS, "OpenCV2Tools::getChannelValue x");
                 throw exc;
             }
-            if (y >= image.rows){
+            if (y >= (uint)image.rows){
                 SDException exc(SHADOW_OUT_OF_BOUNDS, "OpenCV2Tools::getChannelValue y");
                 throw exc;
             }

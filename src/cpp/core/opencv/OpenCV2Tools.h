@@ -61,6 +61,11 @@ namespace core{
              */
             static cv::Mat* get8bitImage(unsigned char* input, int height, int width);
             /**
+             * creates empty one channel 8bit image             
+             * @return 
+             */
+            static cv::Mat* get8bitImage(int height, int width);
+            /**
              * binarize image using otzu
              * @param input
              * @return 

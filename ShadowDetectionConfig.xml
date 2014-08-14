@@ -15,7 +15,7 @@
         <Prediction>            
             <!-- true, false -->
             <usePrediction>
-                false
+                true
             </usePrediction>
             <!--SVM for support vector machine, REG for regresion-->
             <predictionType>
@@ -23,23 +23,25 @@
             </predictionType>            
         </Prediction>
         <Thresholds>
-            <Values>
-                <rValue>
-                    30
-                </rValue>
-                <gValue>
-                    93
-                </gValue>
-                <bValue>
-                    130
-                </bValue>
+            <shadow>                
                 <lValue>
                     150
                 </lValue>
-            </Values>
-            <UseThresh>
-                true;
-            </UseThresh>
+                <useThresh>
+                    true;
+                </useThresh>
+            </shadow>            
+            <sky>
+                <rValue>
+                    51
+                </rValue>                
+                <bValue>
+                    127
+                </bValue>
+                <lValue>
+                    50
+                </lValue>
+            </sky>
         </Thresholds>        
     </process>
     <settings>

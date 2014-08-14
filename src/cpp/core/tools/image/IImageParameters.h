@@ -12,6 +12,9 @@ namespace core{
             private:
             protected:
             public:
+                IImageParameteres(){}
+                virtual ~IImageParameteres(){}
+                
                 virtual core::util::Matrix<float>* getImageParameters(  const cv::Mat& originalImage,
                                                                         const cv::Mat& hsvImage,
                                                                         const cv::Mat& hlsImage,
@@ -19,7 +22,7 @@ namespace core{
                 virtual core::util::Matrix<float>* getImageParameters(  const cv::Mat& originalImage, 
                                                                         const cv::Mat& maskImage,                                                     
                                                                         int& rowDimension, int& pixelNum) throw (SDException&) = 0;
-                virtual void reset() = 0;
+                virtual void reset() = 0;                
             };
             
         }

@@ -84,8 +84,7 @@ namespace shadowdetection{
                     throw exc;    
                 }
                 Matrix<float>* ret = 0;
-                PointerRaii< Matrix<float> > retRaii;
-                size_t maskStep = maskImage.step;
+                PointerRaii< Matrix<float> > retRaii;                
                 int maskChan = maskImage.channels();
                 if (maskChan > 1){
                     SDException exc(SHADOW_INVALID_IMAGE_FORMAT, "ImageParameters::getImageParameters, MaskImage");
