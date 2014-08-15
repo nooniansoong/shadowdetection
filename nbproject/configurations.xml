@@ -5,6 +5,9 @@
                    displayName="Header Files"
                    projectFiles="true">
       <logicalFolder name="core" displayName="core" projectFiles="true">
+        <logicalFolder name="opencl" displayName="opencl" projectFiles="true">
+          <itemPath>src/cpp/core/opencl/OpenClToolsBase.h</itemPath>
+        </logicalFolder>
         <logicalFolder name="opencv" displayName="opencv" projectFiles="true">
           <itemPath>src/cpp/core/opencv/OpenCV2Tools.h</itemPath>
           <itemPath>src/cpp/core/opencv/OpenCVTools.h</itemPath>
@@ -87,6 +90,9 @@
                    displayName="Source Files"
                    projectFiles="true">
       <logicalFolder name="core" displayName="core" projectFiles="true">
+        <logicalFolder name="opencl" displayName="opencl" projectFiles="true">
+          <itemPath>src/cpp/core/opencl/OpenClToolsBase.cpp</itemPath>
+        </logicalFolder>
         <logicalFolder name="opencv" displayName="opencv" projectFiles="true">
           <itemPath>src/cpp/core/opencv/OpenCV2Tools.cpp</itemPath>
           <itemPath>src/cpp/core/opencv/OpenCVTools.cpp</itemPath>
@@ -196,6 +202,16 @@
       <item path="ShadowDetectionConfig.xml" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/OpenClToolsBase.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/OpenClToolsBase.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
             ex="false"
@@ -448,6 +464,16 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/cpp/core/opencl/OpenClToolsBase.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/OpenClToolsBase.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
             ex="false"
             tool="1"
@@ -691,6 +717,16 @@
       <item path="ShadowDetectionConfig.xml" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/OpenClToolsBase.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/OpenClToolsBase.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
             ex="false"
@@ -941,6 +977,16 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
       </item>
+      <item path="src/cpp/core/opencl/OpenClToolsBase.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/OpenClToolsBase.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
             ex="false"
             tool="1"
@@ -1190,6 +1236,16 @@
       <item path="ShadowDetectionConfig.xml" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="src/cpp/core/opencl/OpenClToolsBase.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/OpenClToolsBase.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
             ex="false"
@@ -1444,6 +1500,16 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
       </item>
+      <item path="src/cpp/core/opencl/OpenClToolsBase.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/OpenClToolsBase.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
             ex="false"
             tool="1"
@@ -1688,6 +1754,16 @@
       <item path="ShadowDetectionConfig.xml" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="src/cpp/core/opencl/OpenClToolsBase.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/OpenClToolsBase.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
             ex="false"
@@ -1938,6 +2014,16 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
       </item>
+      <item path="src/cpp/core/opencl/OpenClToolsBase.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/OpenClToolsBase.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
             ex="false"
             tool="1"
@@ -2180,6 +2266,16 @@
       <item path="ShadowDetectionConfig.xml" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="src/cpp/core/opencl/OpenClToolsBase.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/OpenClToolsBase.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
             ex="false"
@@ -2427,6 +2523,16 @@
       <item path="ShadowDetectionConfig.xml" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="src/cpp/core/opencl/OpenClToolsBase.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/OpenClToolsBase.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
             ex="false"

@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/src/cpp/core/opencl/OpenClToolsBase.o \
 	${OBJECTDIR}/src/cpp/core/opencv/OpenCV2Tools.o \
 	${OBJECTDIR}/src/cpp/core/opencv/OpenCVTools.o \
 	${OBJECTDIR}/src/cpp/core/tools/svm/TrainingSet.o \
@@ -86,6 +87,11 @@ ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -I/usr/local/include/opencv -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+
+${OBJECTDIR}/src/cpp/core/opencl/OpenClToolsBase.o: src/cpp/core/opencl/OpenClToolsBase.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/opencl
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/local/include/opencv -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/core/opencl/OpenClToolsBase.o src/cpp/core/opencl/OpenClToolsBase.cpp
 
 ${OBJECTDIR}/src/cpp/core/opencv/OpenCV2Tools.o: src/cpp/core/opencv/OpenCV2Tools.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/opencv

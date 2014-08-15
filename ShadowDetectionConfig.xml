@@ -137,6 +137,32 @@
                 0.39
             </borderValue>
         </regression>
+        <classes>
+            <shadowdetection::opencl::OpenclTools>
+                <kernels>
+                    <kernelCount>
+                        3
+                    </kernelCount>
+                    <kernelNo1>
+                        
+                    </kernelNo1>
+                    <kernelNo2>
+                        
+                    </kernelNo2>
+                    <kernelNo3>
+                        
+                    </kernelNo3>
+                </kernels>
+                <programs>
+                    <programFile>
+                        image_hci_convert_kernel
+                    </programFile>
+                    <rootDir>
+                        src/cpp/shadowdetection/opencl/kernels/
+                    </rootDir>
+                </programs>
+            </shadowdetection::opencl::OpenclTools>
+        </classes>
         
     </settings>
 </QsConfig>

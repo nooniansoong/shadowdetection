@@ -10,20 +10,8 @@
 
 #ifdef _OPENCL
 
-#ifndef _MAC
-#include <CL/cl.h>
-#else
-#include <OpenCL/opencl.h>
-#endif
-#include "typedefs.h"
+#include "core/opencl/OpenClToolsBase.h"
 #include "core/util/Singleton.h"
-#include "core/util/Matrix.h"
-
-#define MAX_DEVICES 100
-#define MAX_SRC_SIZE 5242800
-#define KERNEL_COUNT 7
-#define MAX_PLATFORMS 100
-#define PROGRAM_COUNT 3
 
 struct svm_node;
 struct svm_model;
@@ -32,55 +20,27 @@ namespace cv{
     class Mat;
 }
 
+namespace core{
+    namespace util{
+        template<typename T> class Matrix;
+    }
+}
+
 namespace shadowdetection {
-    namespace opencl {
+    namespace opencl {        
 
-        struct cl_svm_node{
-            cl_int index;
-            cl_double value;
-        };
-        
-        struct cl_svm_node_float{
-            cl_int index;
-            cl_float value;
-        };
-
-        class OpenclTools : public core::util::Singleton<OpenclTools>{
+        class OpenclTools : public core::opencl::OpenClBase, public core::util::Singleton<OpenclTools>{
             friend class core::util::Singleton<OpenclTools>;
         private:    
-            cl_int dummyInt;
-            
-            cl_device_id device;
-            cl_int err;
-            cl_command_queue command_queue[PROGRAM_COUNT];
-            cl_program program[PROGRAM_COUNT];
-            cl_kernel kernel[KERNEL_COUNT];
-            cl_context context[PROGRAM_COUNT];
-            size_t workGroupSize[KERNEL_COUNT];
+            cl_int dummyInt;                                                
             cl_mem inputImage;
             cl_mem hsi1Converted;
             cl_mem hsi2Converted;
             cl_mem tsaiOutput;
             unsigned char* ratios1;
-            unsigned char* ratios2;
-            bool initialized;
-            core::util::Matrix<double>* xMatrix;
-            
-            size_t shrRoundUp(size_t localSize, size_t allSize);
-            /**
-             * check for openCL error
-             * @param err
-             * @param err_code
-             */
-            void err_check(int err, std::string err_code, int programIndex) throw (SDException&);
-            /**
-             * create openCL kernels from program
-             */
-            void createKernels(int index);
-            /**
-             * calculate work group sizes for each kernel
-             */
-            void createWorkGroupSizes();
+            unsigned char* ratios2;            
+            core::util::Matrix<double>* xMatrix;                        
+                                    
             /**
              * create memory buffers for each kernel function
              * @param image
@@ -92,11 +52,11 @@ namespace shadowdetection {
             /**
              * init global openCL variables
              */
-            void initVars();
+            virtual void initVars();
             /**
              * init openCL variables necessary for one image processing
              */
-            void initWorkVars();
+            virtual void initWorkVars();
             /**
              * set arguments for kernel function1
              * @param height
@@ -117,39 +77,12 @@ namespace shadowdetection {
              * @param width
              * @param channels
              */
-            void setKernelArgs3(u_int32_t height, u_int32_t width, unsigned char channels);
-            
-            /**
-             * global function for load program
-             * @param kernelFileName
-             */
-            void loadKernelFile(std::string& kernelFileName, int index);
-            /**
-             * load program from source
-             * @param kernelFileName
-             */
-            void loadKernelFileFromSource(std::string& kernelFileName, int index);
-            /**
-             * load program from precompiled binary
-             * @param kernelFileName
-             * @return 
-             */
-            bool loadKernelFileFromBinary(std::string& kernelFileName, int index);
-            /**
-             * saves program binary loaded from source
-             */
-            char* saveKernelBinary(std::string& kernelFileName, int index);
+            void setKernelArgs3(u_int32_t height, u_int32_t width, unsigned char channels);                        
         protected:
             OpenclTools();
+            virtual std::string getClassName();
         public:            
-            virtual ~OpenclTools();
-            /**
-             * init variables for OpenclTools class instances
-             * @param platformID
-             * @param deviceID
-             * @param listOnly
-             */
-            void init(uint platformID, uint deviceID, bool listOnly) throw (SDException&);
+            virtual ~OpenclTools();            
             /**
              * process image and returns binarized grayscale image with detected shadows (white color)
              * @param image
@@ -162,16 +95,11 @@ namespace shadowdetection {
             /**
              * clean up global variables
              */
-            void cleanUp();
+            virtual void cleanUp();
             /**
              * clean up variables used for single image processing
              */
-            void cleanWorkPart();
-            /**
-             * return is called init method;
-             * @return 
-             */
-            bool hasInitialized();
+            virtual void cleanWorkPart();            
             //Image part
             uint32_t* convertHSI1(  uchar* image, u_int32_t width, u_int32_t height, 
                                     uchar channels) throw(SDException&);
