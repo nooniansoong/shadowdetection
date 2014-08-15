@@ -6,7 +6,7 @@
 #include <iostream>
 #include "svm-train.h"
 #include "core/util/Config.h"
-#include "shadowdetection/opencl/OpenCLTools.h"
+#include "core/opencl/libsvm/OpenCLToolsTrain.h"
 
 
 #define Malloc(type,n) (type *)malloc((n)*sizeof(type))
@@ -17,9 +17,9 @@ namespace core{
             namespace libsvmopenmp {
 
                 using namespace std;
-                using namespace core::util;
-#ifdef _OPENCL
-                using namespace shadowdetection::opencl;
+                using namespace core::util;                
+#ifdef _OPENCL                
+                using namespace core::opencl::libsvm;
 #endif
                 
                 void print_null(const char *s) {
@@ -63,7 +63,7 @@ namespace core{
                 int train(char* input_file_name, char* model_file_name) throw(SDException&){
                     cout << "Start training" << endl;
 #ifdef _OPENCL
-                    OpenclTools* oclt = OpenclTools::getInstancePtr();
+                    OpenCLToolsTrain* oclt = OpenCLToolsTrain::getInstancePtr();
                     if (oclt->hasInitialized() == false){
                         SDException exc(SHADOW_OPENCL_TOOLS_NOT_INITIALIZED, "libsvm train");
                         throw exc;
@@ -124,8 +124,7 @@ namespace core{
                     free(x_space);
                     free(line);
 
-#ifdef _OPENCL                    
-                    oclt = OpenclTools::getInstancePtr();
+#ifdef _OPENCL                                        
                     cout << "data durr: " << oclt->durrData << " buff durr: " << oclt->durrBuff << " durr exec: " << oclt->durrExec;
                     cout << " durr set args: " << oclt->durrSetSrgs << " durr readbuff: " << oclt->durrReadBuff << endl;
 #endif

@@ -36,6 +36,9 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/src/cpp/core/opencl/OpenClToolsBase.o \
+	${OBJECTDIR}/src/cpp/core/opencl/libsvm/OpenCLToolsPredict.o \
+	${OBJECTDIR}/src/cpp/core/opencl/libsvm/OpenCLToolsTrain.o \
 	${OBJECTDIR}/src/cpp/core/opencv/OpenCV2Tools.o \
 	${OBJECTDIR}/src/cpp/core/opencv/OpenCVTools.o \
 	${OBJECTDIR}/src/cpp/core/tools/svm/TrainingSet.o \
@@ -50,8 +53,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/cpp/core/util/predicition/regression/RegressionPredict.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLTools.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsImage.o \
-	${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsLibSVM.o \
-	${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsPredict.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/tools/image/ImageShadowParameters.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/tools/image/ResultFixer.o \
 	${OBJECTDIR}/src/cpp/skydetection/SkyDetection.o \
@@ -86,6 +87,21 @@ ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/main.o main.cpp
+
+${OBJECTDIR}/src/cpp/core/opencl/OpenClToolsBase.o: src/cpp/core/opencl/OpenClToolsBase.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/opencl
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/core/opencl/OpenClToolsBase.o src/cpp/core/opencl/OpenClToolsBase.cpp
+
+${OBJECTDIR}/src/cpp/core/opencl/libsvm/OpenCLToolsPredict.o: src/cpp/core/opencl/libsvm/OpenCLToolsPredict.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/opencl/libsvm
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/core/opencl/libsvm/OpenCLToolsPredict.o src/cpp/core/opencl/libsvm/OpenCLToolsPredict.cpp
+
+${OBJECTDIR}/src/cpp/core/opencl/libsvm/OpenCLToolsTrain.o: src/cpp/core/opencl/libsvm/OpenCLToolsTrain.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/opencl/libsvm
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/core/opencl/libsvm/OpenCLToolsTrain.o src/cpp/core/opencl/libsvm/OpenCLToolsTrain.cpp
 
 ${OBJECTDIR}/src/cpp/core/opencv/OpenCV2Tools.o: src/cpp/core/opencv/OpenCV2Tools.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/opencv
@@ -156,16 +172,6 @@ ${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsImage.o: src/cpp/shadowde
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/opencl
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsImage.o src/cpp/shadowdetection/opencl/OpenCLToolsImage.cpp
-
-${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsLibSVM.o: src/cpp/shadowdetection/opencl/OpenCLToolsLibSVM.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/opencl
-	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsLibSVM.o src/cpp/shadowdetection/opencl/OpenCLToolsLibSVM.cpp
-
-${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsPredict.o: src/cpp/shadowdetection/opencl/OpenCLToolsPredict.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/opencl
-	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsPredict.o src/cpp/shadowdetection/opencl/OpenCLToolsPredict.cpp
 
 ${OBJECTDIR}/src/cpp/shadowdetection/tools/image/ImageShadowParameters.o: src/cpp/shadowdetection/tools/image/ImageShadowParameters.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/tools/image

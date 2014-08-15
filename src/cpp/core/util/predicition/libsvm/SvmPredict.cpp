@@ -2,7 +2,7 @@
 #include "thirdparty/lib_svm/svm.h"
 #include "SvmPredict.h"
 #ifdef _OPENCL
-#include "shadowdetection/opencl/OpenCLTools.h"
+#include "core/opencl/libsvm/OpenCLToolsPredict.h"
 #endif
 #include "core/util/Matrix.h"
 #include "core/util/Config.h"
@@ -14,7 +14,7 @@ namespace core{
                 using namespace std;
                 using namespace core::util;
 #ifdef _OPENCL
-                using namespace shadowdetection::opencl;
+                using namespace core::opencl::libsvm;
 #endif
 
                 SvmPredict::SvmPredict() {
@@ -34,7 +34,7 @@ namespace core{
                         throw e;
                     }
 #ifdef _OPENCL
-                    OpenclTools::getInstancePtr()->markModelChanged();
+                    OpenCLToolsPredict::getInstancePtr()->markModelChanged();
 #endif
                 }
 
@@ -64,11 +64,11 @@ namespace core{
                         MemMenager::delocate(nodes);
                     }
 #else
-                    if (OpenclTools::getInstancePtr()->hasInitialized() == false) {
+                    if (OpenCLToolsPredict::getInstancePtr()->hasInitialized() == false) {
                         SDException e(SHADOW_OPENCL_TOOLS_NOT_INITIALIZED, "SvmPredict::predict");
                         throw e;
                     }
-                    ret = OpenclTools::getInstancePtr()->predict(model, *imagePixelsParameters);
+                    ret = OpenCLToolsPredict::getInstancePtr()->predict(model, imagePixelsParameters);
 #endif
                     return ret;
                 }

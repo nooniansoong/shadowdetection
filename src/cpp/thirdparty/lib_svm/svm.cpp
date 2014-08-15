@@ -8,11 +8,11 @@
 #include <limits.h>
 #include <locale.h>
 #include "svm.h"
-#include "shadowdetection/opencl/OpenCLTools.h"
+#include "core/opencl/libsvm/OpenCLToolsTrain.h"
 #include "core/util/Matrix.h"
 
 #ifdef _OPENCL
-using namespace shadowdetection::opencl;
+using namespace core::opencl::libsvm;
 #endif
 
 using namespace core::util;
@@ -1220,7 +1220,7 @@ public:
             for (j = start; j < len; j++)
                 data[j] = (Qfloat) (y[i] * y[j]*(this->*kernel_function)(i, j));        
 #else         
-            OpenclTools* oclt = OpenclTools::getInstancePtr();            
+            OpenCLToolsTrain* oclt = OpenCLToolsTrain::getInstancePtr();            
             oclt->get_Q(data, len, start, len, i, kernel_type, (char*)y, kL, x, 
                         SVC_Q_TYPE, gamma, coef0, degree, x_square);
             oclt->cleanWorkPart();
@@ -1341,7 +1341,7 @@ public:
             for (j = 0; j < l; j++)
                 data[j] = (Qfloat) (this->*kernel_function)(real_i, j);        
 #else            
-            OpenclTools* oclt = OpenclTools::getInstancePtr();
+            OpenCLToolsTrain* oclt = OpenCLToolsTrain::getInstancePtr();
             oclt->get_Q(data, l, 0, l, real_i, kernel_type, 0, 0, x, 
                         SVR_Q_TYPE, gamma, coef0, degree, x_square);            
             oclt->cleanWorkPart();

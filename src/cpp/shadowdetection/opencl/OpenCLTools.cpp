@@ -22,38 +22,7 @@ namespace shadowdetection {
         
         void OpenclTools::initVars(){          
             OpenClBase::initVars();
-            
-            //libsvm part
-            clY                 = 0;
-            clX                 = 0;            
-            clData              = 0;
-            newTask             = true;
-            newSelectWorkingSet = true;
-            clXSquared          = 0;
-            xMatrix             = 0;
-            
-            durrData        = 0l;
-            durrBuff        = 0l;
-            durrExec        = 0l;
-            durrReadBuff    = 0l;
-            durrSetSrgs     = 0l;            
-            
-            //training part
-            clQD                = 0;
-            clAlphaStatus       = 0;
-            clYSelectWorkingSet = 0;
-            clG                 = 0;
-            
-            //predict part
-            modelSVs        = 0;
-            clModelSVs      = 0;
-            clModelRHO      = 0;
-            clModelSVCoefs  = 0;
-            clModelLabel    = 0;
-            svCoefs         = 0;
-            clModelNsv      = 0;
-            modelRHOs       = 0;
-            
+                        
             initWorkVars();
         }
         
@@ -63,22 +32,10 @@ namespace shadowdetection {
             hsi2Converted = 0;
             tsaiOutput = 0;
             ratios1 = 0;
-            ratios2 = 0;
-            
-            //train part            
-            clGradDiff = 0;
-            clObjDiff = 0;                        
-            clQI = 0;            
-            
-            //predict part
-            clPixelParameters = 0;
-            clPredictResults = 0;
+            ratios2 = 0;                                    
         }
         
-        OpenclTools::OpenclTools() : Singleton<OpenclTools>(){            
-            initialized = false;
-            modelChanged = true;
-            initVars();            
+        OpenclTools::OpenclTools() : OpenClBase(), Singleton<OpenclTools>(){
         }
 
         void OpenclTools::cleanWorkPart() {
@@ -94,117 +51,13 @@ namespace shadowdetection {
             if (ratios1)
                 MemMenager::delocate(ratios1);
             if (ratios2)
-                MemMenager::delocate(ratios2);
-            
-            //train part
-            if (clGradDiff){
-                clReleaseMemObject(clGradDiff);
-                err_check(err, "OpenclTools::cleanWorkPart clGradDiff");
-            }
-            if (clObjDiff){
-                clReleaseMemObject(clObjDiff);
-                err_check(err, "OpenclTools::cleanWorkPart clObjDiff");
-            }
-            if (clQI){
-                clReleaseMemObject(clQI);
-                err_check(err, "OpenclTools::cleanWorkPart clQI");
-            }
-            
-            //predict part
-            if (clPixelParameters){
-                clReleaseMemObject(clPixelParameters);
-                err_check(err, "OpenclTools::cleanWorkPart clPredictResults");
-            }
-            if (clPredictResults){
-                err = clReleaseMemObject(clPredictResults);
-                err_check(err, "OpenclTools::cleanWorkPart clPredictResults");
-            }    
+                MemMenager::delocate(ratios2);                                    
+                                        
             initWorkVars();           
         }
 
         void OpenclTools::cleanUp(){
-            OpenClBase::cleanUp();
-            
-            //train part
-            if (clY){
-                err = clReleaseMemObject(clY);
-                err_check(err, "OpenclTools::cleanUp clReleaseMemObject2");
-            }
-                
-            if (clX){
-                err = clReleaseMemObject(clX);
-                err_check(err, "OpenclTools::cleanUp clReleaseMemObject3");
-            }
-                        
-            if (clData){
-                err = clReleaseMemObject(clData);
-                err_check(err, "OpenclTools::cleanUp clReleaseMemObject1");
-            }
-            
-            if (clXSquared){
-                err = clReleaseMemObject(clXSquared);
-                err_check(err, "OpenclTools::cleanUp clReleaseMemObjectXSquared");
-            }
-            
-            if (xMatrix){
-                delete xMatrix;
-            }                        
-            
-            if (clQD){
-                clReleaseMemObject(clQD);
-                err_check(err, "OpenclTools::cleanUp clQD");
-            }
-            
-            if (clAlphaStatus){
-                clReleaseMemObject(clAlphaStatus);
-                err_check(err, "OpenclTools::cleanUp clAlphaStatus");
-            }
-            
-            if (clYSelectWorkingSet){
-                clReleaseMemObject(clYSelectWorkingSet);
-                err_check(err, "OpenclTools::cleanUp clYSelectWorkingSet");
-            }
-            
-            if (clG){
-                clReleaseMemObject(clG);
-                err_check(err, "OpenclTools::cleanWorkPart clG");
-            } 
-            
-            durrData = 0l;
-            durrBuff = 0l;
-            durrExec = 0l;
-            durrReadBuff = 0l;
-            durrSetSrgs = 0l;
-            
-            //predict part
-            if (modelSVs)
-                delete modelSVs;
-            if (clModelSVs){
-                err = clReleaseMemObject(clModelSVs);
-                err_check(err, "OpenclTools::cleanUp clModelSVs");
-            }
-            if (clModelRHO){
-                err = clReleaseMemObject(clModelRHO);
-                err_check(err, "OpenclTools::cleanUp clModelRHO");
-            }
-            if (clModelSVCoefs){
-                err = clReleaseMemObject(clModelSVCoefs);
-                err_check(err, "OpenclTools::cleanUp clModelSVCoefs");
-            }            
-            if (clModelLabel){
-                err = clReleaseMemObject(clModelLabel);
-                err_check(err, "OpenclTools::cleanUp clModelLabel");
-            }
-            if (svCoefs)
-                delete svCoefs;            
-            if (clModelNsv){
-                err = clReleaseMemObject(clModelNsv);
-                err_check(err, "OpenclTools::cleanUp clModelNsv");
-            }
-            if (modelRHOs)
-                MemMenager::delocate(modelRHOs);
-            modelChanged = true;
-                        
+            OpenClBase::cleanUp();                             
             cleanWorkPart();            
             initVars();            
         }

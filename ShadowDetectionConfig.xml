@@ -144,13 +144,13 @@
                         3
                     </kernelCount>
                     <kernelNo1>
-                        
+                        image_hsi_convert1
                     </kernelNo1>
                     <kernelNo2>
-                        
+                        image_hsi_convert2
                     </kernelNo2>
                     <kernelNo3>
-                        
+                        image_simple_tsai
                     </kernelNo3>
                 </kernels>
                 <programs>

@@ -41,8 +41,8 @@ namespace core{
              * get kernel function names used in class from config
              * @return 
              */
-            virtual std::vector<std::string> getKernelNamesForClass();
-            virtual std::vector<std::string> getProgramFilesForClass();
+            std::vector<std::string> getKernelNamesForClass();
+            std::vector<std::string> getProgramFilesForClass();
         protected:
             cl_device_id device;
             cl_int err;
@@ -124,7 +124,7 @@ namespace core{
              * @param deviceID
              * @param listOnly
              */
-            virtual void init(uint platformID, uint deviceID, bool listOnly) throw (SDException&);
+            void init(uint platformID, uint deviceID, bool listOnly) throw (SDException&);
         };
         
     }
