@@ -143,15 +143,15 @@
                     <kernelCount>
                         3
                     </kernelCount>
-                    <kernelNo1>
+                    <kernelNo0>
                         image_hsi_convert1
+                    </kernelNo0>
+                    <kernelNo1>
+                        image_hsi_convert2
                     </kernelNo1>
                     <kernelNo2>
-                        image_hsi_convert2
-                    </kernelNo2>
-                    <kernelNo3>
                         image_simple_tsai
-                    </kernelNo3>
+                    </kernelNo2>
                 </kernels>
                 <programs>
                     <programFile>
@@ -162,6 +162,48 @@
                     </rootDir>
                 </programs>
             </shadowdetection::opencl::OpenclTools>
+            <core::opencl::libsvm::OpenCLToolsTrain>
+                <kernels>
+                    <kernelCount>
+                        3
+                    </kernelCount>
+                    <kernelNo0>
+                        svcQgetQ
+                    </kernelNo0>
+                    <kernelNo1>
+                        svrQgetQ
+                    </kernelNo1>
+                    <kernelNo2>
+                        selectWorkingSet
+                    </kernelNo2>
+                </kernels>
+                <programs>
+                    <programFile>
+                        libSvmTrain
+                    </programFile>
+                    <rootDir>
+                        src/cpp/core/opencl/libsvm/kernels/
+                    </rootDir>
+                </programs>
+            </core::opencl::libsvm::OpenCLToolsTrain>
+            <core::opencl::libsvm::OpenCLToolsPredict>
+                <kernels>
+                    <kernelCount>
+                        1
+                    </kernelCount>
+                    <kernelNo0>
+                        predict
+                    </kernelNo0>                    
+                </kernels>
+                <programs>
+                    <programFile>
+                        libSvmPredict
+                    </programFile>
+                    <rootDir>
+                        src/cpp/core/opencl/libsvm/kernels/
+                    </rootDir>
+                </programs>
+            </core::opencl::libsvm::OpenCLToolsPredict>
         </classes>
         
     </settings>

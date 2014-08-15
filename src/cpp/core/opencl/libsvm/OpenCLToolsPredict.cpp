@@ -239,63 +239,63 @@ namespace core {
 
             void OpenCLToolsPredict::setKernelArgs(uint pixelCount, uint paramsPerPixel,
                     svm_model* model) {
-                err = clSetKernelArg(kernel[5], 0, sizeof (cl_mem), &clPixelParameters);
+                err = clSetKernelArg(kernel[0], 0, sizeof (cl_mem), &clPixelParameters);
                 err_check(err, "OpenclTools::setKernelArgsPredict clPixelParameters");
-                err = clSetKernelArg(kernel[5], 1, sizeof (cl_uint), &pixelCount);
+                err = clSetKernelArg(kernel[0], 1, sizeof (cl_uint), &pixelCount);
                 err_check(err, "OpenclTools::setKernelArgsPredict pixelCount");
-                err = clSetKernelArg(kernel[5], 2, sizeof (cl_uint), &paramsPerPixel);
+                err = clSetKernelArg(kernel[0], 2, sizeof (cl_uint), &paramsPerPixel);
                 err_check(err, "OpenclTools::setKernelArgsPredict paramsPerPixel");
-                err = clSetKernelArg(kernel[5], 3, sizeof (cl_int), &model->nr_class);
+                err = clSetKernelArg(kernel[0], 3, sizeof (cl_int), &model->nr_class);
                 err_check(err, "OpenclTools::setKernelArgsPredict nr_class");
-                err = clSetKernelArg(kernel[5], 4, sizeof (cl_int), &model->l);
+                err = clSetKernelArg(kernel[0], 4, sizeof (cl_int), &model->l);
                 err_check(err, "OpenclTools::setKernelArgsPredict l");
                 int modelSvsWidth = modelSVs->getWidth();
-                err = clSetKernelArg(kernel[5], 5, sizeof (cl_int), &modelSvsWidth);
+                err = clSetKernelArg(kernel[0], 5, sizeof (cl_int), &modelSvsWidth);
                 err_check(err, "OpenclTools::setKernelArgsPredict svsWidth");
-                err = clSetKernelArg(kernel[5], 6, sizeof (cl_mem), &clModelSVs);
+                err = clSetKernelArg(kernel[0], 6, sizeof (cl_mem), &clModelSVs);
                 err_check(err, "OpenclTools::setKernelArgsPredict clModelSVs");
-                err = clSetKernelArg(kernel[5], 7, sizeof (cl_mem), &clModelSVCoefs);
+                err = clSetKernelArg(kernel[0], 7, sizeof (cl_mem), &clModelSVCoefs);
                 err_check(err, "OpenclTools::setKernelArgsPredict clModelSVCoefs");
-                err = clSetKernelArg(kernel[5], 8, sizeof (cl_mem), &clModelRHO);
+                err = clSetKernelArg(kernel[0], 8, sizeof (cl_mem), &clModelRHO);
                 err_check(err, "OpenclTools::setKernelArgsPredict clModelRHO");
                 if (clModelLabel) {
-                    err = clSetKernelArg(kernel[5], 9, sizeof (cl_mem), &clModelLabel);
+                    err = clSetKernelArg(kernel[0], 9, sizeof (cl_mem), &clModelLabel);
                     err_check(err, "OpenclTools::setKernelArgsPredict clModelLabel");
                 } else {
-                    //                err = clSetKernelArg(kernel[5], 9, 0, 0);
+                    //                err = clSetKernelArg(kernel[0], 9, 0, 0);
                     //                err_check(err, "OpenclTools::setKernelArgsPredict clModelLabel", -1);
                 }
                 if (clModelNsv) {
-                    err = clSetKernelArg(kernel[5], 10, sizeof (cl_mem), &clModelNsv);
+                    err = clSetKernelArg(kernel[0], 10, sizeof (cl_mem), &clModelNsv);
                     err_check(err, "OpenclTools::setKernelArgsPredict clModelNsv");
                 } else {
-                    //                err = clSetKernelArg(kernel[5], 10, 0, 0);
+                    //                err = clSetKernelArg(kernel[0], 10, 0, 0);
                     //                err_check(err, "OpenclTools::setKernelArgsPredict clModelNsv", -1);
                 }
-                err = clSetKernelArg(kernel[5], 11, sizeof (cl_int), &model->free_sv);
+                err = clSetKernelArg(kernel[0], 11, sizeof (cl_int), &model->free_sv);
                 err_check(err, "OpenclTools::setKernelArgsPredict free_sv");
-                err = clSetKernelArg(kernel[5], 12, sizeof (cl_int), &model->param.svm_type);
+                err = clSetKernelArg(kernel[0], 12, sizeof (cl_int), &model->param.svm_type);
                 err_check(err, "OpenclTools::setKernelArgsPredict param.svm_type");
-                err = clSetKernelArg(kernel[5], 13, sizeof (cl_int), &model->param.kernel_type);
+                err = clSetKernelArg(kernel[0], 13, sizeof (cl_int), &model->param.kernel_type);
                 err_check(err, "OpenclTools::setKernelArgsPredict param.kernel_type");
-                err = clSetKernelArg(kernel[5], 14, sizeof (cl_int), &model->param.degree);
+                err = clSetKernelArg(kernel[0], 14, sizeof (cl_int), &model->param.degree);
                 err_check(err, "OpenclTools::setKernelArgsPredict param.degree");
                 cl_float gamma = model->param.gamma;
-                err = clSetKernelArg(kernel[5], 15, sizeof (cl_float), &gamma);
+                err = clSetKernelArg(kernel[0], 15, sizeof (cl_float), &gamma);
                 err_check(err, "OpenclTools::setKernelArgsPredict param.gamma");
                 cl_float coef0 = model->param.coef0;
-                err = clSetKernelArg(kernel[5], 16, sizeof (cl_float), &coef0);
+                err = clSetKernelArg(kernel[0], 16, sizeof (cl_float), &coef0);
                 err_check(err, "OpenclTools::setKernelArgsPredict param.coef0");
                 //====
-                err = clSetKernelArg(kernel[5], 17, sizeof (cl_mem), &clPredictResults);
+                err = clSetKernelArg(kernel[0], 17, sizeof (cl_mem), &clPredictResults);
                 err_check(err, "OpenclTools::setKernelArgsPredict clPredictResults");
                 //====
-                size_t size = model->nr_class * sizeof (cl_int) * workGroupSize[5];
-                err = clSetKernelArg(kernel[5], 18, size, 0);
+                size_t size = model->nr_class * sizeof (cl_int) * workGroupSize[0];
+                err = clSetKernelArg(kernel[0], 18, size, 0);
                 err_check(err, "OpenclTools::setKernelArgsPredict start");
 
-                size = model->nr_class * sizeof (cl_int) * workGroupSize[5];
-                err = clSetKernelArg(kernel[5], 19, size, 0);
+                size = model->nr_class * sizeof (cl_int) * workGroupSize[0];
+                err = clSetKernelArg(kernel[0], 19, size, 0);
                 err_check(err, "OpenclTools::setKernelArgsPredict vote");
             }
 
@@ -303,10 +303,10 @@ namespace core {
                 createBuffers(parameters, model);
                 setKernelArgs(parameters->getHeight(), parameters->getWidth(), model);
 
-                size_t local_ws = workGroupSize[5];
+                size_t local_ws = workGroupSize[0];
                 int numValues = parameters->getHeight() * parameters->getWidth();
                 size_t global_ws = shrRoundUp(local_ws, numValues);
-                err = clEnqueueNDRangeKernel(command_queue, kernel[5], 1, NULL, &global_ws, &local_ws, 0, NULL, NULL);
+                err = clEnqueueNDRangeKernel(command_queue, kernel[0], 1, NULL, &global_ws, &local_ws, 0, NULL, NULL);
                 err_check(err, "OpenclTools::predict clEnqueueNDRangeKernel");
                 size_t size = parameters->getHeight() * sizeof(cl_uchar);
                 uchar* retVec = MemMenager::allocate<uchar>(parameters->getHeight());

@@ -147,13 +147,13 @@ namespace core {
                 if (classType == SVC_Q_TYPE) {
                     setKernelArgsSVC(start, len, i, kernel_type, x->getWidth(), dataLen, gamma,
                             coef0, degree, clDataChaned);
-                    local_ws = workGroupSize[3];
-                    activeKernel = kernel[3];
+                    local_ws = workGroupSize[0];
+                    activeKernel = kernel[0];
                 } else {
                     setKernelArgsSVR(start, len, i, kernel_type, x->getWidth(), dataLen, gamma,
                             coef0, degree, clDataChaned);
-                    local_ws = workGroupSize[4];
-                    activeKernel = kernel[4];
+                    local_ws = workGroupSize[1];
+                    activeKernel = kernel[1];
                 }
                 durrSetSrgs += time.sinceLastCheck();
                 size_t global_ws = shrRoundUp(local_ws, steps);
@@ -298,34 +298,34 @@ namespace core {
                     cl_double gamma, cl_double coef0, cl_int degree,
                     bool clDataChanged) {
                 if (clDataChanged) {
-                    err = clSetKernelArg(kernel[3], 0, sizeof (cl_mem), &clData);
+                    err = clSetKernelArg(kernel[0], 0, sizeof (cl_mem), &clData);
                     err_check(err, "OpenCLToolsTrain::setKernelArgsSVC setKernelArgsCLDATA");
                 }
-                err = clSetKernelArg(kernel[3], 1, sizeof (cl_int), &dataLen);
+                err = clSetKernelArg(kernel[0], 1, sizeof (cl_int), &dataLen);
                 err_check(err, "OpenCLToolsTrain::setKernelArgsSVC clSetKernelArgDATALEN");
-                err = clSetKernelArg(kernel[3], 2, sizeof (cl_int), &start);
+                err = clSetKernelArg(kernel[0], 2, sizeof (cl_int), &start);
                 err_check(err, "OpenCLToolsTrain::setKernelArgsSVC clSetKernelArgSTART");
-                err = clSetKernelArg(kernel[3], 3, sizeof (cl_int), &len);
+                err = clSetKernelArg(kernel[0], 3, sizeof (cl_int), &len);
                 err_check(err, "OpenCLToolsTrain::setKernelArgsSVC clSetKernelArgLEN");
-                err = clSetKernelArg(kernel[3], 4, sizeof (cl_int), &i);
+                err = clSetKernelArg(kernel[0], 4, sizeof (cl_int), &i);
                 err_check(err, "OpenCLToolsTrain::setKernelArgsSVC clSetKernelArgI");
-                err = clSetKernelArg(kernel[3], 5, sizeof (cl_int), &kernel_type);
+                err = clSetKernelArg(kernel[0], 5, sizeof (cl_int), &kernel_type);
                 err_check(err, "OpenCLToolsTrain::setKernelArgsSVC clSetKernelArgKERNEL_TYPE");
                 if (newTask) {
-                    err = clSetKernelArg(kernel[3], 6, sizeof (cl_mem), &clY);
+                    err = clSetKernelArg(kernel[0], 6, sizeof (cl_mem), &clY);
                     err_check(err, "OpenCLToolsTrain::setKernelArgsSVC setKernelArgCLY");
-                    err = clSetKernelArg(kernel[3], 7, sizeof (cl_mem), &clX);
+                    err = clSetKernelArg(kernel[0], 7, sizeof (cl_mem), &clX);
                     err_check(err, "OpenCLToolsTrain::setKernelArgsSVC setKernelArgCLX");
-                    err = clSetKernelArg(kernel[3], 12, sizeof (cl_mem), &clXSquared);
+                    err = clSetKernelArg(kernel[0], 12, sizeof (cl_mem), &clXSquared);
                     err_check(err, "OpenCLToolsTrain::setKernelArgsSVC clSetKernelArgCLXSQUARED");
                 }
-                err = clSetKernelArg(kernel[3], 8, sizeof (cl_int), &xW);
+                err = clSetKernelArg(kernel[0], 8, sizeof (cl_int), &xW);
                 err_check(err, "OpenCLToolsTrain::setKernelArgsSVC clSetKernelArgXW");
-                err = clSetKernelArg(kernel[3], 9, sizeof (cl_double), &gamma);
+                err = clSetKernelArg(kernel[0], 9, sizeof (cl_double), &gamma);
                 err_check(err, "OpenCLToolsTrain::setKernelArgsSVC clSetKernelArgGAMMA");
-                err = clSetKernelArg(kernel[3], 10, sizeof (cl_double), &coef0);
+                err = clSetKernelArg(kernel[0], 10, sizeof (cl_double), &coef0);
                 err_check(err, "OpenCLToolsTrain::setKernelArgsSVC clSetKernelArgCOEF0");
-                err = clSetKernelArg(kernel[3], 11, sizeof (cl_int), &degree);
+                err = clSetKernelArg(kernel[0], 11, sizeof (cl_int), &degree);
                 err_check(err, "OpenCLToolsTrain::setKernelArgsSVC clSetKernelArgDEGREE");
             }
 
@@ -334,32 +334,32 @@ namespace core {
                     cl_double gamma, cl_double coef0, cl_int degree,
                     bool clDataChanged) {
                 if (clDataChanged) {
-                    err = clSetKernelArg(kernel[4], 0, sizeof (cl_mem), &clData);
+                    err = clSetKernelArg(kernel[1], 0, sizeof (cl_mem), &clData);
                     err_check(err, "OpenCLToolsTrain::setKernelArgsSVR setKernelArgCLDATA");
                 }
-                err = clSetKernelArg(kernel[4], 1, sizeof (cl_int), &dataLen);
+                err = clSetKernelArg(kernel[1], 1, sizeof (cl_int), &dataLen);
                 err_check(err, "OpenCLToolsTrain::setKernelArgsSVR clSetKernelArgDATALEN");
-                err = clSetKernelArg(kernel[4], 2, sizeof (cl_int), &start);
+                err = clSetKernelArg(kernel[1], 2, sizeof (cl_int), &start);
                 err_check(err, "OpenCLToolsTrain::setKernelArgsSVR clSetKernelArgSTART");
-                err = clSetKernelArg(kernel[4], 3, sizeof (cl_int), &len);
+                err = clSetKernelArg(kernel[1], 3, sizeof (cl_int), &len);
                 err_check(err, "OpenCLToolsTrain::setKernelArgsSVR clSetKernelArgLEN");
-                err = clSetKernelArg(kernel[4], 4, sizeof (cl_int), &i);
+                err = clSetKernelArg(kernel[1], 4, sizeof (cl_int), &i);
                 err_check(err, "OpenCLToolsTrain::setKernelArgsSVR clSetKernelArgI");
-                err = clSetKernelArg(kernel[4], 5, sizeof (cl_int), &kernel_type);
+                err = clSetKernelArg(kernel[1], 5, sizeof (cl_int), &kernel_type);
                 err_check(err, "OpenCLToolsTrain::setKernelArgsSVR clSetKernelArgKERNEL_TYPE");
                 if (newTask) {
-                    err = clSetKernelArg(kernel[4], 6, sizeof (cl_mem), &clX);
+                    err = clSetKernelArg(kernel[1], 6, sizeof (cl_mem), &clX);
                     err_check(err, "OpenCLToolsTrain::setKernelArgsSVR setKernelArgCLX");
-                    err = clSetKernelArg(kernel[4], 11, sizeof (cl_mem), &clXSquared);
+                    err = clSetKernelArg(kernel[1], 11, sizeof (cl_mem), &clXSquared);
                     err_check(err, "OpenCLToolsTrain::setKernelArgsSVR clSetKernelArgCLXSQUARED");
                 }
-                err = clSetKernelArg(kernel[4], 7, sizeof (cl_int), &xW);
+                err = clSetKernelArg(kernel[1], 7, sizeof (cl_int), &xW);
                 err_check(err, "OpenCLToolsTrain::setKernelArgsSVR clSetKernelArgXW");
-                err = clSetKernelArg(kernel[4], 8, sizeof (cl_double), &gamma);
+                err = clSetKernelArg(kernel[1], 8, sizeof (cl_double), &gamma);
                 err_check(err, "OpenCLToolsTrain::setKernelArgsSVR clSetKernelArgGAMMA");
-                err = clSetKernelArg(kernel[4], 9, sizeof (cl_double), &coef0);
+                err = clSetKernelArg(kernel[1], 9, sizeof (cl_double), &coef0);
                 err_check(err, "OpenCLToolsTrain::setKernelArgsSVR clSetKernelArgCOEF0");
-                err = clSetKernelArg(kernel[4], 10, sizeof (cl_int), &degree);
+                err = clSetKernelArg(kernel[1], 10, sizeof (cl_int), &degree);
                 err_check(err, "OpenCLToolsTrain::setKernelArgsSVR clSetKernelArgDEGREE");
             }
 
@@ -371,9 +371,9 @@ namespace core {
                         l, y, G, QD, Q_i);
                 setKernelArgsWorkingSet(activeSize, i, Gmax);
 
-                size_t local_ws = workGroupSize[6];
+                size_t local_ws = workGroupSize[2];
                 size_t global_ws = shrRoundUp(local_ws, activeSize);
-                err = clEnqueueNDRangeKernel(command_queue, kernel[6], 1, NULL, &global_ws, &local_ws, 0, NULL, NULL);
+                err = clEnqueueNDRangeKernel(command_queue, kernel[2], 1, NULL, &global_ws, &local_ws, 0, NULL, NULL);
                 err_check(err, "clEnqueueNDRangeKernelSELECTWORKINGSET");
 
                 cl_device_type type;
@@ -453,29 +453,29 @@ namespace core {
 
             void OpenCLToolsTrain::setKernelArgsWorkingSet(const int& activeSize, const int& i,
                     const double& Gmax) {
-                err = clSetKernelArg(kernel[6], 0, sizeof (cl_int), &activeSize);
+                err = clSetKernelArg(kernel[2], 0, sizeof (cl_int), &activeSize);
                 err_check(err, "OpenCLToolsTrain::setKernelArgsWorkingSet setKernelArgACTIVESIZE");
-                err = clSetKernelArg(kernel[6], 1, sizeof (cl_int), &i);
+                err = clSetKernelArg(kernel[2], 1, sizeof (cl_int), &i);
                 err_check(err, "OpenCLToolsTrain::setKernelArgsWorkingSet setKernelArgI");
                 if (newSelectWorkingSet) {
-                    err = clSetKernelArg(kernel[6], 2, sizeof (cl_mem), &clYSelectWorkingSet);
+                    err = clSetKernelArg(kernel[2], 2, sizeof (cl_mem), &clYSelectWorkingSet);
                     err_check(err, "OpenCLToolsTrain::setKernelArgsWorkingSet setKernelArgClYSelectWorkingSet");
-                    err = clSetKernelArg(kernel[6], 3, sizeof (cl_mem), &clAlphaStatus);
+                    err = clSetKernelArg(kernel[2], 3, sizeof (cl_mem), &clAlphaStatus);
                     err_check(err, "OpenCLToolsTrain::setKernelArgsWorkingSet setKernelArgClAlphaStatus");
                 }
-                err = clSetKernelArg(kernel[6], 4, sizeof (cl_mem), &clGradDiff);
+                err = clSetKernelArg(kernel[2], 4, sizeof (cl_mem), &clGradDiff);
                 err_check(err, "OpenCLToolsTrain::setKernelArgsWorkingSet setKernelArgClGradDiff");
-                err = clSetKernelArg(kernel[6], 5, sizeof (cl_double), &Gmax);
+                err = clSetKernelArg(kernel[2], 5, sizeof (cl_double), &Gmax);
                 err_check(err, "OpenCLToolsTrain::setKernelArgsWorkingSet setKernelArgGmax");
                 if (newSelectWorkingSet) {
-                    err = clSetKernelArg(kernel[6], 6, sizeof (cl_mem), &clG);
+                    err = clSetKernelArg(kernel[2], 6, sizeof (cl_mem), &clG);
                     err_check(err, "OpenCLToolsTrain::setKernelArgsWorkingSet setKernelArgClG");
-                    err = clSetKernelArg(kernel[6], 7, sizeof (cl_mem), &clQD);
+                    err = clSetKernelArg(kernel[2], 7, sizeof (cl_mem), &clQD);
                     err_check(err, "OpenCLToolsTrain::setKernelArgsWorkingSet setKernelArgClQD");
                 }
-                err = clSetKernelArg(kernel[6], 8, sizeof (cl_mem), &clQI);
+                err = clSetKernelArg(kernel[2], 8, sizeof (cl_mem), &clQI);
                 err_check(err, "OpenCLToolsTrain::setKernelArgsWorkingSet setKernelArgClQI");
-                err = clSetKernelArg(kernel[6], 9, sizeof (cl_mem), &clObjDiff);
+                err = clSetKernelArg(kernel[2], 9, sizeof (cl_mem), &clObjDiff);
                 err_check(err, "OpenCLToolsTrain::setKernelArgsWorkingSet setKernelArgClObjDiff");
             }
 
