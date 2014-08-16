@@ -57,6 +57,7 @@
                      displayName="shadowdetection"
                      projectFiles="true">
         <logicalFolder name="opencl" displayName="opencl" projectFiles="true">
+          <itemPath>src/cpp/shadowdetection/opencl/OpenCLImageParameters.h</itemPath>
           <itemPath>src/cpp/shadowdetection/opencl/OpenCLTools.h</itemPath>
         </logicalFolder>
         <logicalFolder name="tools" displayName="tools" projectFiles="true">
@@ -96,6 +97,10 @@
       <logicalFolder name="core" displayName="core" projectFiles="true">
         <logicalFolder name="opencl" displayName="opencl" projectFiles="true">
           <logicalFolder name="libsvm" displayName="libsvm" projectFiles="true">
+            <logicalFolder name="kernels" displayName="kernels" projectFiles="true">
+              <itemPath>src/cpp/core/opencl/libsvm/kernels/libSvmPredict.cl</itemPath>
+              <itemPath>src/cpp/core/opencl/libsvm/kernels/libSvmTrain.cl</itemPath>
+            </logicalFolder>
             <itemPath>src/cpp/core/opencl/libsvm/OpenCLToolsPredict.cpp</itemPath>
             <itemPath>src/cpp/core/opencl/libsvm/OpenCLToolsTrain.cpp</itemPath>
           </logicalFolder>
@@ -137,12 +142,11 @@
                      projectFiles="true">
         <logicalFolder name="opencl" displayName="opencl" projectFiles="true">
           <logicalFolder name="kernels" displayName="kernels" projectFiles="true">
-            <itemPath>src/cpp/shadowdetection/opencl/kernels/image_coefficients.cl</itemPath>
+            <itemPath>src/cpp/shadowdetection/opencl/kernels/imageShadowParameters.cl</itemPath>
             <itemPath>src/cpp/shadowdetection/opencl/kernels/image_hci_convert_kernel.cl</itemPath>
-            <itemPath>src/cpp/shadowdetection/opencl/kernels/lib_svm.cl</itemPath>
-            <itemPath>src/cpp/shadowdetection/opencl/kernels/lib_svm_predict.cl</itemPath>
             <itemPath>src/cpp/shadowdetection/opencl/kernels/regression_predict.cl</itemPath>
           </logicalFolder>
+          <itemPath>src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp</itemPath>
           <itemPath>src/cpp/shadowdetection/opencl/OpenCLTools.cpp</itemPath>
           <itemPath>src/cpp/shadowdetection/opencl/OpenCLToolsImage.cpp</itemPath>
         </logicalFolder>
@@ -235,6 +239,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/core/opencl/libsvm/OpenCLToolsTrain.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/libsvm/kernels/libSvmPredict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/libsvm/kernels/libSvmTrain.cl"
             ex="false"
             tool="3"
             flavor2="0">
@@ -347,6 +361,16 @@
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -362,22 +386,12 @@
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/image_coefficients.cl"
+      <item path="src/cpp/shadowdetection/opencl/kernels/imageShadowParameters.cl"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/image_hci_convert_kernel.cl"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/lib_svm.cl"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/lib_svm_predict.cl"
             ex="false"
             tool="3"
             flavor2="0">
@@ -510,6 +524,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/core/opencl/libsvm/kernels/libSvmPredict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/libsvm/kernels/libSvmTrain.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
             ex="false"
             tool="1"
@@ -618,6 +642,16 @@
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -633,22 +667,12 @@
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/image_coefficients.cl"
+      <item path="src/cpp/shadowdetection/opencl/kernels/imageShadowParameters.cl"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/image_hci_convert_kernel.cl"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/lib_svm.cl"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/lib_svm_predict.cl"
             ex="false"
             tool="3"
             flavor2="0">
@@ -774,6 +798,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/core/opencl/libsvm/kernels/libSvmPredict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/libsvm/kernels/libSvmTrain.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
             ex="false"
             tool="1"
@@ -882,6 +916,16 @@
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -897,22 +941,12 @@
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/image_coefficients.cl"
+      <item path="src/cpp/shadowdetection/opencl/kernels/imageShadowParameters.cl"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/image_hci_convert_kernel.cl"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/lib_svm.cl"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/lib_svm_predict.cl"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1043,6 +1077,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/core/opencl/libsvm/kernels/libSvmPredict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/libsvm/kernels/libSvmTrain.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
             ex="false"
             tool="1"
@@ -1151,6 +1195,16 @@
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -1166,22 +1220,12 @@
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/image_coefficients.cl"
+      <item path="src/cpp/shadowdetection/opencl/kernels/imageShadowParameters.cl"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/image_hci_convert_kernel.cl"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/lib_svm.cl"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/lib_svm_predict.cl"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1313,6 +1357,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/core/opencl/libsvm/kernels/libSvmPredict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/libsvm/kernels/libSvmTrain.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
             ex="false"
             tool="1"
@@ -1421,6 +1475,16 @@
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -1436,22 +1500,12 @@
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/image_coefficients.cl"
+      <item path="src/cpp/shadowdetection/opencl/kernels/imageShadowParameters.cl"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/image_hci_convert_kernel.cl"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/lib_svm.cl"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/lib_svm_predict.cl"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1526,7 +1580,7 @@
       </toolsSet>
       <compileType>
         <cTool>
-          <developmentMode>5</developmentMode>
+          <developmentMode>6</developmentMode>
           <architecture>2</architecture>
         </cTool>
         <ccTool>
@@ -1582,6 +1636,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/core/opencl/libsvm/OpenCLToolsTrain.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/libsvm/kernels/libSvmPredict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/libsvm/kernels/libSvmTrain.cl"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1694,6 +1758,16 @@
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -1709,22 +1783,12 @@
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/image_coefficients.cl"
+      <item path="src/cpp/shadowdetection/opencl/kernels/imageShadowParameters.cl"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/image_hci_convert_kernel.cl"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/lib_svm.cl"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/lib_svm_predict.cl"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1851,6 +1915,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/core/opencl/libsvm/kernels/libSvmPredict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/libsvm/kernels/libSvmTrain.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
             ex="false"
             tool="1"
@@ -1959,6 +2033,16 @@
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -1974,22 +2058,12 @@
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/image_coefficients.cl"
+      <item path="src/cpp/shadowdetection/opencl/kernels/imageShadowParameters.cl"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/image_hci_convert_kernel.cl"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/lib_svm.cl"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/lib_svm_predict.cl"
             ex="false"
             tool="3"
             flavor2="0">
@@ -2120,6 +2194,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/core/opencl/libsvm/kernels/libSvmPredict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/libsvm/kernels/libSvmTrain.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
             ex="false"
             tool="1"
@@ -2228,6 +2312,16 @@
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -2243,22 +2337,12 @@
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/image_coefficients.cl"
+      <item path="src/cpp/shadowdetection/opencl/kernels/imageShadowParameters.cl"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/image_hci_convert_kernel.cl"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/lib_svm.cl"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/lib_svm_predict.cl"
             ex="false"
             tool="3"
             flavor2="0">
@@ -2383,6 +2467,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/core/opencl/libsvm/kernels/libSvmPredict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/libsvm/kernels/libSvmTrain.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
             ex="false"
             tool="1"
@@ -2491,6 +2585,16 @@
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -2506,22 +2610,12 @@
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/image_coefficients.cl"
+      <item path="src/cpp/shadowdetection/opencl/kernels/imageShadowParameters.cl"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/image_hci_convert_kernel.cl"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/lib_svm.cl"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/lib_svm_predict.cl"
             ex="false"
             tool="3"
             flavor2="0">
@@ -2650,6 +2744,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/core/opencl/libsvm/kernels/libSvmPredict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/libsvm/kernels/libSvmTrain.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
             ex="false"
             tool="1"
@@ -2758,6 +2862,16 @@
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLTools.cpp"
             ex="false"
             tool="1"
@@ -2773,22 +2887,12 @@
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/image_coefficients.cl"
+      <item path="src/cpp/shadowdetection/opencl/kernels/imageShadowParameters.cl"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/image_hci_convert_kernel.cl"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/lib_svm.cl"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/shadowdetection/opencl/kernels/lib_svm_predict.cl"
             ex="false"
             tool="3"
             flavor2="0">

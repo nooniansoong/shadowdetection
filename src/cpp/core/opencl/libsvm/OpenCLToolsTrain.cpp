@@ -12,8 +12,8 @@ namespace core {
             using namespace std;
             using namespace core::util;
 
-            OpenCLToolsTrain::OpenCLToolsTrain() : OpenClBase(), Singleton<OpenCLToolsTrain>(){
-                
+            OpenCLToolsTrain::OpenCLToolsTrain() : Singleton<OpenCLToolsTrain>(){
+                initVars();
             }
             
             OpenCLToolsTrain::~OpenCLToolsTrain(){

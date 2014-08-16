@@ -16,7 +16,6 @@ namespace core{
         using namespace core::util;
         
         OpenClBase::OpenClBase(){
-            initVars();
         }
         
         OpenClBase::~OpenClBase(){

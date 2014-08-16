@@ -181,6 +181,8 @@
         <gdb_interceptlist>
           <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
         </gdb_interceptlist>
+        <gdb_signals>
+        </gdb_signals>
         <gdb_options>
           <DebugOptions>
           </DebugOptions>
@@ -223,6 +225,8 @@
         <gdb_interceptlist>
           <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
         </gdb_interceptlist>
+        <gdb_signals>
+        </gdb_signals>
         <gdb_options>
           <DebugOptions>
           </DebugOptions>
@@ -241,11 +245,11 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}" -makeset list.csv bigDataNew.svm</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" list_or.csv</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" imagesNonResized.csv</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" ap.sh</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" imagesResized.csv</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" imagesNonResized.csv</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" imagesResized.csv</runcommand>
+        <runcommand>"${OUTPUT_PATH}" imagesNonResized.csv</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>

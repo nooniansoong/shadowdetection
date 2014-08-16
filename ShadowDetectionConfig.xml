@@ -204,6 +204,24 @@
                     </rootDir>
                 </programs>
             </core::opencl::libsvm::OpenCLToolsPredict>
+            <shadowdetection::opencl::OpenCLImageParameters>
+                <kernels>
+                    <kernelCount>
+                        1
+                    </kernelCount>
+                    <kernelNo0>
+                        imageShadowParameters
+                    </kernelNo0>                    
+                </kernels>
+                <programs>
+                    <programFile>
+                        imageShadowParameters
+                    </programFile>
+                    <rootDir>
+                        src/cpp/shadowdetection/opencl/kernels/
+                    </rootDir>
+                </programs>
+            </shadowdetection::opencl::OpenCLImageParameters>
         </classes>
         
     </settings>

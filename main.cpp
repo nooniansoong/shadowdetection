@@ -22,10 +22,13 @@
 #endif
 #include "shadowdetection/tools/image/ResultFixer.h"
 #include "core/util/ParametersFactory.h"
+#include "core/opencl/libsvm/OpenCLToolsPredict.h"
+#include "shadowdetection/opencl/OpenCLImageParameters.h"
 
 using namespace std;
 #ifdef _OPENCL
 using namespace shadowdetection::opencl;
+using namespace core::opencl::libsvm;
 #endif
 using namespace core::opencv;
 using namespace core::opencv2;
@@ -71,7 +74,9 @@ void initOpenCL(){
         if (tmp != 0)
             deviceId = tmp;
         OpenclTools::getInstancePtr()->init(platformId, deviceId, false);
-        OpenCV2Tools::initOpenCL(platformId, deviceId);        
+        OpenCV2Tools::initOpenCL(platformId, deviceId);
+        OpenCLToolsPredict::getInstancePtr()->init(platformId, deviceId, false);
+        OpenCLImageParameters::getInstancePtr()->init(platformId, deviceId, false);
     }
     catch (SDException& exception){
         handleException(exception);
@@ -171,7 +176,8 @@ void processSingleOpenCL(const char* out, const Mat& image) {
     }
     ImageNewRaii hlsRaii(hls);
     OpenclTools* oclt = OpenclTools::getInstancePtr();
-    unsigned char* buffer = OpenCV2Tools::convertImageToByteArray(&image, true);    
+    unsigned char* buffer = OpenCV2Tools::convertImageToByteArray(&image, true);
+    VectorRaii bufferRaii(buffer);
     Mat* processedImage = 0;
     bool usePrediction = false;
     string usePredStr = Config::getInstancePtr()->getPropertyValue("process.Prediction.usePrediction");

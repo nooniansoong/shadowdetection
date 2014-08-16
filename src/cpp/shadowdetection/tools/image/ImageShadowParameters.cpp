@@ -3,6 +3,9 @@
 #include "core/util/MemMenager.h"
 #include "core/util/raii/RAIIS.h"
 #include "core/util/Config.h"
+#ifdef _OPENCL
+#include "shadowdetection/opencl/OpenCLImageParameters.h"
+#endif
 
 #define SPACES_COUNT 3
 #define HSV_PARAMETERS 5
@@ -18,6 +21,7 @@ namespace shadowdetection{
             using namespace core::opencv2;
             using namespace core::util;
             using namespace core::util::raii;
+            using namespace shadowdetection::opencl;
             
             ImageShadowParameters::ImageShadowParameters(){
                 regionsAvgsSecondChannel = 0;
@@ -153,10 +157,19 @@ namespace shadowdetection{
                                                                 int& pixelNum) throw (SDException&){
                 if (originalImage.data == 0 || hsvImage.data == 0 || hlsImage.data == 0)
                     return 0;
-                Matrix<float>* ret = 0;
-                PointerRaii< Matrix<float> > retRaii;
                 int height = originalImage.size().height;
-                int width = originalImage.size().width;                                                
+                int width = originalImage.size().width;                
+#ifdef _OPENCL
+                pixelNum = width * height;
+                uint parameterCount = HSV_PARAMETERS + HLS_PARAMETERS + BGR_PARAMETERS;
+                Matrix<float>* ret = OpenCLImageParameters::getInstancePtr()->getImageParameters(&originalImage, 
+                                                                            &hsvImage, &hlsImage, parameterCount);
+                OpenCLImageParameters::getInstancePtr()->cleanWorkPart();
+                rowDimension = parameterCount;
+                return ret;
+#else
+                Matrix<float>* ret = 0;
+                PointerRaii< Matrix<float> > retRaii;                                                                
                 
                 for (int i = 0; i < height; i++) {
                     for (int j = 0; j < width; j++) {
@@ -188,13 +201,7 @@ namespace shadowdetection{
                         if (procs[2] == 0){
                             return 0;
                         }
-                        VectorRaii vraiiProc2(procs[2]);
-                                                
-//                        procs[3] = processROI(location, &hlsImage, size[3], 1);
-//                        if (procs[3] == 0){
-//                            return 0;
-//                        }
-//                        VectorRaii vraiiProcs3(procs[3]);
+                        VectorRaii vraiiProc2(procs[2]);                                                
                         
                         int mergedSize = 0;
                         float* merged = ImageShadowParameters::merge(procs, SPACES_COUNT, size, mergedSize);
@@ -216,6 +223,7 @@ namespace shadowdetection{
                 }
                 retRaii.deactivate();
                 return ret;
+#endif
             }
             
             float* ImageShadowParameters::processHSV(uchar H, uchar S, uchar V, int& size) {

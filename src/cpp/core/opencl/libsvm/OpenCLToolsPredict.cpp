@@ -10,7 +10,8 @@ namespace core {
             using namespace core::util;
             using namespace std;
             
-            OpenCLToolsPredict::OpenCLToolsPredict(): OpenClBase(), Singleton<OpenCLToolsPredict>(){                
+            OpenCLToolsPredict::OpenCLToolsPredict(): Singleton<OpenCLToolsPredict>(){
+                initVars();
             }
             
             OpenCLToolsPredict::~OpenCLToolsPredict(){                

@@ -35,7 +35,8 @@ namespace shadowdetection {
             ratios2 = 0;                                    
         }
         
-        OpenclTools::OpenclTools() : OpenClBase(), Singleton<OpenclTools>(){
+        OpenclTools::OpenclTools() : Singleton<OpenclTools>(){
+            initVars();
         }
 
         void OpenclTools::cleanWorkPart() {
