@@ -3,6 +3,7 @@
 
 #include "typedefs.h"
 #include "core/opencv/OpenCV2Tools.h"
+#include "hash_set"
 
 namespace skydetection{
     
@@ -15,10 +16,13 @@ namespace skydetection{
         uchar bThresh;
         uchar lThresh;
         
-        cv::Mat* originalImage;
+        cv::Mat* originalImage;        
         cv::Mat* detectedImage;
         
         void initBaseVariables();
+        void processSegments();
+        Triple<float> getMeanBGRValuesOfSegment(__gnu_cxx::hash_set< Pair<uint> >* segment);
+        void reduceInSegment(__gnu_cxx::hash_set< Pair<uint> >* segment, const Triple<float>& thresHold);
     protected:
     public:
         SkyDetection();
@@ -26,7 +30,7 @@ namespace skydetection{
         virtual ~SkyDetection();
         
         void process() throw (SDException&);
-        bool isSky(KeyVal<uint> location) throw (SDException&);
+        bool isSky(Pair<uint> location) throw (SDException&);
         /**
          * keep insatnce until using detected image
          * @return 

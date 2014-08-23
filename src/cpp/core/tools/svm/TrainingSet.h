@@ -11,7 +11,7 @@ namespace core{
             class TrainingSet{
             private:
                 std::string filePath;
-                std::vector< KeyVal<std::string> > images;
+                std::vector< Pair<std::string> > images;
 
                 void readFile() throw (SDException&);
                 void processImages(std::string output, bool outputAll) throw (SDException&);

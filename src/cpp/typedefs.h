@@ -22,7 +22,7 @@
 #include <cstring>
 #include <stdint.h>
 #include <cstdlib>
-
+#include <cmath>
 
 enum SHADOW_EXCEPTIONS {
     SHADOW_SUCC = 0,
@@ -45,6 +45,7 @@ enum SHADOW_EXCEPTIONS {
     SHADOW_OPENCL_TOOLS_NOT_INITIALIZED,
     SHADOW_NOT_INITIALIZED_BY_MENAGER_OR_DELETED,
     SHADOW_CANT_ADD_TO_MEM_MENAGER,
+    SHADOW_NULL_POINTER,
     SHADOW_OTHER,
 };
 
@@ -69,58 +70,129 @@ static std::string ExceptionStrings[] = {
     "SHADOW_OPENCL_TOOLS_NOT_INITIALIZED",
     "SHADOW_NOT_INITIALIZED_BY_MENAGER_OR_DELETED",
     "SHADOW_CANT_ADD_TO_MEM_MENAGER",
+    "SHADOW_NULL_POINTER",
     "SHADOW_OTHER"
+};
+
+template<typename T> class Pair{
+    private:        
+    protected:
+        T first;
+        T second;
+    public:
+        Pair(){            
+        }
+        
+        Pair(T first, T second){
+            this->first = first;
+            this->second = second;
+        }
+        
+        Pair(const Pair& other){
+            first = other.first;
+            second = other.second;
+        }
+        
+        virtual ~Pair(){            
+        }
+        
+        Pair& operator=(Pair other){
+            first = other.first;
+            second = other.second;
+            return *this;
+        }
+        
+        T getFirst(){
+            return first;
+        }
+        
+        T getSecond(){
+            return second;
+        }
+        
+        const T& getFirst() const{
+            return first;
+        }
+        
+        const T& getSecond() const{
+            return second;
+        }
+        
+        bool operator==(const Pair &other) const{
+            return (first == other.first && second == other.second);
+        }                
+        
+        operator size_t() const{
+            size_t hash = 7U;
+            hash = 97U * hash + first;
+            hash = 97U * hash + second;
+            return hash;
+        }
+};
+
+template<typename T> class Triple : public Pair<T>{
+    private:
+        T third;
+    protected:
+    public:
+        Triple(){
+        }
+        
+        Triple(T first, T second, T third) : Pair<T>(first, second){
+            this->third = third;            
+        }
+        
+        Triple(const Triple& other) : Pair<T>(other.first, other.second){
+            third = other.third;
+        }
+        
+        virtual ~Triple(){            
+        }
+        
+        T getThird(){
+            return third;
+        }
+        
+        const T& getThird() const{
+            return third;
+        }
 };
 
 #ifndef _MAC
 namespace __gnu_cxx {
-  template<> struct hash<std::string>
-  {
-    hash<char*> h;
-    size_t operator()(const std::string &s) const
-    {
-      return h(s.c_str());
+
+    template<> struct hash<std::string> {
+        hash<char*> h;
+
+        size_t operator()(const std::string &s) const {
+            return h(s.c_str());
+        };
     };
-  };
+
+    template<typename T> struct hash< Pair<T> > {
+
+        size_t operator()(const Pair<T> &kv) const {
+            size_t retVal = kv;
+            return retVal;
+        };
+    };
+
+    template<typename T> struct hash< Pair<T>* > {
+
+        size_t operator()(const Pair<T>* kv) const {
+            size_t retVal = *kv;
+            return retVal;
+        };
+    };
+
+    struct eqKeyVal{
+        template<typename T> bool operator()(Pair<T>* kv1, Pair<T>* kv2) const {
+            return (kv1->getFirst() == kv2->getFirst() && kv1->getSecond() == kv2->getSecond());
+        }
+    };
+
 }
 #endif
-
-template<typename T> class KeyVal{
-    private:
-        T key;
-        T val;
-    protected:
-    public:
-        KeyVal(){            
-        }
-        
-        KeyVal(T key, T val){
-            this->key = key;
-            this->val = val;
-        }
-        
-        KeyVal (const KeyVal& other){
-            key = other.key;
-            val = other.val;
-        }
-        
-        virtual ~KeyVal(){            
-        }
-        
-        KeyVal& operator= (KeyVal other){
-            key = other.key;
-            val = other.val;
-            return *this;
-        }
-        
-        T getKey() const{
-            return key;
-        }
-        
-        T getVal() const{
-            return val;
-        }
-};
 
 inline std::string trim(const std::string& input, bool trimCommas = true) {
     std::string whitespaces = " \t\f\v\n\r";
@@ -207,7 +279,13 @@ template<typename T> inline T clamp(T val, T min, T max) {
     if (val < min)
         return min;
     return val;
-} 
+}
+
+template<typename T> inline T inEpsilonRange(T val, const T& reperVal, const T& epsilon) {
+    if (abs(val - reperVal) <= epsilon)
+        return true;
+    return false;
+}
 
 enum LIBSVM_CLASS_TYPE{
     SVC_Q_TYPE,

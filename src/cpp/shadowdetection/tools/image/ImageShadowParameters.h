@@ -20,7 +20,7 @@ namespace shadowdetection{
                 static float* processHSV(   uchar H, uchar S, uchar V, int& size);
                 static float* processHLS(   uchar H, uchar L, uchar S, int& size);
                 static float* processBGR(   uchar B, uchar G, uchar R, int& size);
-                float* processROI(  KeyVal<uint> location, const cv::Mat* originalImage, 
+                float* processROI(  Pair<uint> location, const cv::Mat* originalImage, 
                                     int& size, uchar channelIndex) throw (SDException&);
                 core::util::Matrix<float>* getAvgChannelValForRegions(const cv::Mat* originalImage,
                                                                                 uchar channelIndex);

@@ -399,8 +399,8 @@ int main(int argc, char **argv) {
                 exit(1);
             }
             for (uint i = 0; i < tp.size(); i++){
-                string in = tp.get(i).getKey();
-                string out = tp.get(i).getVal();
+                string in = tp.get(i).getFirst();
+                string out = tp.get(i).getSecond();
                 try{
                     processSingle(in.c_str(), out.c_str());
                 }

@@ -1,6 +1,7 @@
 #include <iostream>
 #include "OpenCV2Tools.h"
 #include "core/util/Config.h"
+#include <vector>
 
 namespace core{
     namespace opencv2 {
@@ -9,6 +10,7 @@ namespace core{
         using namespace cv;
         using namespace cv::ocl;
         using namespace core::util;
+        using namespace __gnu_cxx;
         
         unsigned int* OpenCV2Tools::convertImagetoHSI  (const Mat* image, int& height, int& width, int& channels,
                                              void (*convertFunc)(unsigned char, unsigned char, unsigned char, unsigned int&, unsigned char&, unsigned char&)){
@@ -112,6 +114,16 @@ namespace core{
             image = new(nothrow) Mat(height, width, CV_8U);
             if (image == 0){
                 SDException exc(SHADOW_NO_MEM, "Get 8bit image");
+                throw exc;
+            }
+            return image;
+        }
+        
+        Mat* OpenCV2Tools::get24bitImage(int height, int width){
+            Mat* image = 0;
+            image = new(nothrow) Mat(height, width, CV_8UC3);
+            if (image == 0){
+                SDException exc(SHADOW_NO_MEM, "Get 24bit image");
                 throw exc;
             }
             return image;
@@ -251,12 +263,12 @@ namespace core{
          * @return 
          */
         Mat* OpenCV2Tools::getImageROI( const Mat* src, uint roiWidth, uint roiHeight, 
-                                        const KeyVal<uint>& location) throw (SDException&){
+                                        const Pair<uint>& location) throw (SDException&){
             if (src == 0 || src->data == 0){
                 return 0;
             }
-            int startX = location.getKey();
-            int startY = location.getVal();
+            int startX = location.getFirst();
+            int startY = location.getSecond();
                          
             if (startX < 0)
                 startX = 0;
@@ -339,14 +351,14 @@ namespace core{
             return image.data[index];
         }
         
-        uchar OpenCV2Tools::getChannelValue(const Mat& image, KeyVal<uint> location, 
+        uchar OpenCV2Tools::getChannelValue(const Mat& image, Pair<uint> location, 
                                             uchar channelIndex) throw (SDException&){
-            uint x = location.getKey();
-            uint y = location.getVal();
+            uint x = location.getFirst();
+            uint y = location.getSecond();
             return getChannelValue(image, x, y, channelIndex);
         }
         
-        void OpenCV2Tools::setChannelValue( Mat& image, KeyVal<uint> location, 
+        void OpenCV2Tools::setChannelValue( Mat& image, Pair<uint> location, 
                                             uchar channelIndex, uchar newValue) throw (SDException&){
             if (image.data == 0){
                 SDException exc(SHADOW_INVALID_IMAGE_FORMAT, "OpenCV2Tools::setChannelValue");
@@ -358,8 +370,8 @@ namespace core{
                 SDException exc(SHADOW_INVALID_IMAGE_FORMAT, "OpenCV2Tools::setChannelValue check index");
                 throw exc;
             }
-            uint x = location.getKey();
-            uint y = location.getVal();
+            uint x = location.getFirst();
+            uint y = location.getSecond();
             if (x >= (uint)image.cols){
                 SDException exc(SHADOW_OUT_OF_BOUNDS, "OpenCV2Tools::getChannelValue x");
                 throw exc;
@@ -370,6 +382,168 @@ namespace core{
             }
             int index = y * step + x * channels + channelIndex;
             image.data[index] = newValue;
+        }
+        
+        struct List{
+            hash_set< Pair<uint>*, hash< Pair<uint>* >, eqKeyVal> container;
+            
+            List(){}
+            
+            ~List() {
+                hash_set< Pair<uint>*, hash< Pair<uint>* >, eqKeyVal >::iterator iter = container.begin();
+                while (iter != container.end()) {
+                    Pair<uint>* location = *iter;
+                    delete location;
+                    iter++;
+                }
+            }
+            
+            Pair<uint>* pop(){
+                hash_set< Pair<uint>*, hash< Pair<uint>* >, eqKeyVal >::iterator iter = container.begin();
+                Pair<uint>* retVal = *iter;
+                container.erase(iter);
+                return retVal;
+            }
+            
+            void push(Pair<uint>* element){
+                container.insert(element);
+            }
+            
+            bool contains(Pair<uint>* element) const{
+                hash_set< Pair<uint>*, hash< Pair<uint>* >, eqKeyVal>::iterator iter = container.find(element);
+                return !(iter == container.end());
+            }
+            
+            size_t size(){
+                return container.size();
+            }
+            
+            vector< Pair<uint>* > getElements(){
+                vector< Pair<uint>* > retVec;
+                 hash_set< Pair<uint>*, hash< Pair<uint>* >, eqKeyVal >::iterator iter = container.begin();
+                 while (iter != container.end()){
+                     Pair<uint>* location = *iter;
+                     retVec.push_back(location);
+                     iter++;
+                 }
+                 return retVec;
+            }
+        };
+        
+        vector< Pair<uint>* >* getNeighbours(Pair<uint>* location, const Mat& image,
+                const List& openList, const List& closedList, const uint& color){
+            int startX = location->getFirst() - 1;
+            startX = clamp<int>(startX, 0, image.cols - 1);
+            int endX = location->getFirst() + 1;
+            endX = clamp<int>(endX, 0, image.cols - 1);
+            int startY = location->getSecond() - 1;
+            startY = clamp<int>(startY, 0, image.rows - 1);
+            int endY = location->getSecond() + 1U;
+            endY = clamp<int>(endY, 0, image.rows - 1);
+            vector< Pair<uint>* >* retVec = new vector< Pair<uint>* >();
+            for (int i = startX; i <= endX; i++){
+                for (int j = startY; j <= endY; j++){
+                    if ((uint)i != location->getFirst() || (uint)j != location->getSecond()){
+                        uchar currentColor = OpenCV2Tools::getChannelValue(image, i, j, 0);
+                        if (currentColor == color){
+                            Pair<uint>* nLocation = new Pair<uint>((uint)i, (uint)j);
+                            if (openList.contains(nLocation) == false && closedList.contains(nLocation) == false){
+                                retVec->push_back(nLocation);
+                            }
+                            else{
+                                delete nLocation;
+                            }
+                        }
+                    }
+                }
+            }
+            return retVec;
+        }                
+        
+        void doFloodFill(Pair<uint>& location, const Mat& image, const uint& color,
+                        List& openList, List& closedList){
+            uint pixel = OpenCV2Tools::getChannelValue(image, location, 0);
+            if (pixel == color){
+                if (openList.contains(&location) == false && closedList.contains(&location) == false){
+                    Pair<uint>* locationCopy = new Pair<uint>(location);
+                    openList.push(locationCopy);
+                    while (openList.size() > 0){
+                        Pair<uint>* loc = openList.pop();
+                        closedList.push(loc);
+                        vector< Pair<uint>* >* neighbours = getNeighbours(loc, image, openList, 
+                                                                            closedList, color);
+                        for (uint i = 0; i < neighbours->size(); i++){
+                            Pair<uint>* neighbour = (*neighbours)[i];
+                            openList.push(neighbour);
+                        }
+                    }
+                }
+            }            
+        }
+        
+        bool alreadyProcessed(Pair<uint>& location, const list< hash_set< Pair<uint> >* >* processedRegions){
+            list< hash_set< Pair<uint> >* >::const_iterator iter = processedRegions->begin();
+            while (iter != processedRegions->end()){
+                hash_set< Pair<uint> >* locationsSet = *iter;
+                hash_set< Pair<uint> >::iterator foundIter = locationsSet->find(location);
+                if (foundIter != locationsSet->end()){
+                    return true;
+                }
+                ++iter;
+            }
+            return false;
+        }
+        
+        bool compareSets(const hash_set< Pair<uint> >* first, const hash_set< Pair<uint> >* second){
+            return first->size() > second->size();
+        }
+        
+        list< hash_set< Pair<uint> >* >* OpenCV2Tools::getRegionsOfColor(const cv::Mat& image, const uint& color) throw (SDException&){
+            if (image.data == 0){
+                SDException exc(SHADOW_INVALID_IMAGE_FORMAT, "OpenCV2Tools::getRegionsOfColor");
+                throw exc;
+            }
+            list< hash_set< Pair<uint> >* >* retList = new list< hash_set< Pair<uint> >* >();
+            uint rows = image.rows;
+            uint cols = image.cols;
+            for (uint i = 0; i < rows; i++){
+                for (uint j = 0; j < cols; j++){
+                    Pair<uint> location(j, i);
+                    uint pixel = getChannelValue(image, location, 0);
+                    if (pixel == color && alreadyProcessed(location, retList) == false){
+                        List openList;
+                        List closedList;
+                        doFloodFill(location, image, color, openList, closedList);
+                        hash_set< Pair<uint> >* region = new hash_set< Pair<uint> >();
+                        vector< Pair<uint>* > regionLocations = closedList.getElements();
+                        for (uint k = 0; k < regionLocations.size(); k++){
+                            region->insert(*regionLocations[k]);
+                        }
+                        retList->push_back(region);
+                    }
+                }
+            }
+            retList->sort(compareSets);
+            return retList;
+        }
+        
+        void OpenCV2Tools::destroySegments(list< hash_set< Pair<uint> >* >* segments) throw (SDException&){
+            if (segments == 0){
+                SDException exc(SHADOW_NULL_POINTER, "OpenCV2Tools::destroySegments");
+                throw exc;
+            }
+            list< hash_set< Pair<uint> >* >::iterator iter = segments->begin();
+            while (iter != segments->end()){
+                hash_set< Pair<uint> >* segment = *iter;
+                if (segment == 0){
+                    SDException exc(SHADOW_NULL_POINTER, "OpenCV2Tools::destroySegments segment");
+                    throw exc;
+                }
+                delete segment;
+                iter++;
+            }
+            segments->clear();
+            delete segments;
         }
 
     }

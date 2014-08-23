@@ -12,7 +12,8 @@
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
-
+#include <list>
+#include <hash_set>
 #include "typedefs.h"
 
 namespace core{
@@ -66,6 +67,11 @@ namespace core{
              */
             static cv::Mat* get8bitImage(int height, int width);
             /**
+             * creates empty three channel 8bit image             
+             * @return 
+             */
+            static cv::Mat* get24bitImage(int height, int width);
+            /**
              * binarize image using otzu
              * @param input
              * @return 
@@ -81,15 +87,18 @@ namespace core{
             static cv::Mat* convertToHSV(const cv::Mat* src) throw (SDException&);
             static cv::Mat* convertToHLS(const cv::Mat* src) throw (SDException&);
             static cv::Mat* getImageROI(const cv::Mat* src, uint roiWidth, uint roiHeight,
-                                        const KeyVal<uint>& location) throw (SDException&);
+                                        const Pair<uint>& location) throw (SDException&);
             static float getAvgChannelValue(const cv::Mat* src, 
                                             uchar channelIndex) throw (SDException&);
             static uchar getChannelValue(   const cv::Mat& image, uint x, uint y, 
                                             uchar channelIndex) throw (SDException&);
-            static uchar getChannelValue(   const cv::Mat& image, KeyVal<uint> location, 
+            static uchar getChannelValue(   const cv::Mat& image, Pair<uint> location, 
                                             uchar channelIndex) throw (SDException&);
-            static void setChannelValue(cv::Mat& image, KeyVal<uint> location, 
+            static void setChannelValue(cv::Mat& image, Pair<uint> location, 
                                         uchar channelIndex, uchar newValue) throw (SDException&);
+            static std::list< __gnu_cxx::hash_set< Pair<uint> >* >* getRegionsOfColor(const cv::Mat& image, 
+                                                                                        const uint& color) throw (SDException&);
+            static void destroySegments(std::list< __gnu_cxx::hash_set< Pair<uint> >* >* segments) throw (SDException&);
 #ifdef _OPENCL
             /**
              * init global variables needed for openCV openCL processing

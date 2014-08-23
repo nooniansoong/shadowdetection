@@ -26,7 +26,7 @@ namespace core{
                     while (getline(file, line)) {
                         vector<string> tokens = split(line, '\t');
                         if (tokens.size() >= 2) {
-                            KeyVal<string> pair(tokens[0], tokens[1]);
+                            Pair<string> pair(tokens[0], tokens[1]);
                             images.push_back(pair);
                         }
                     }
@@ -57,11 +57,11 @@ namespace core{
                     size_t size = images.size();
                     bool first = true;
                     for (uint i = 0; i < size; i++) {
-                        KeyVal<string> pair = images[i];
-                        cout << "processing: " << pair.getKey() << endl;
+                        Pair<string> pair = images[i];
+                        cout << "processing: " << pair.getFirst() << endl;
                         int dimension = 0;
                         int pixelNum = 0;
-                        const Matrix<float>* processed = processImage(pair.getKey(), pair.getVal(), dimension, pixelNum);
+                        const Matrix<float>* processed = processImage(pair.getFirst(), pair.getSecond(), dimension, pixelNum);
                         cout << "Size: " << pixelNum;
                         if (processed != 0) {
                             //to have same number of 1s and 0s

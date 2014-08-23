@@ -51,7 +51,7 @@ namespace shadowdetection{
                 
                 for (int i = 0; i < image.rows; i++){
                     for (int j = 0; j < image.cols; j++){
-                        KeyVal<uint> location((uint)j, (uint)i);
+                        Pair<uint> location((uint)j, (uint)i);
                         uchar shadowValue = OpenCV2Tools::getChannelValue(image, location, 0);
                         if (shadowValue > 0){                            
                             uchar lValue = OpenCV2Tools::getChannelValue(hlsImage, location, 1);

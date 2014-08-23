@@ -21,7 +21,7 @@ namespace core{
             /**
              * container
              */
-            std::vector< KeyVal<std::string> > container;
+            std::vector< Pair<std::string> > container;
         protected:
         public:
             TabParser();
@@ -43,7 +43,7 @@ namespace core{
              * @return 
              * pair at position i
              */
-            KeyVal<std::string> get(uint i) throw (SDException&);
+            Pair<std::string> get(uint i) throw (SDException&);
         };
 
     }

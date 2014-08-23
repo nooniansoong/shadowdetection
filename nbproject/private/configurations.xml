@@ -202,10 +202,10 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}" -makeset imagesNonResized_Filtered.csv bigDataNonResized.svm</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" ap.sh</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -makeset sh.csv sh.svm</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" tst.csv</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" imagesResized.csv</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" tst.csv</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" imagesResized.csv</runcommand>
+        <runcommand>"${OUTPUT_PATH}" tst.csv</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>
@@ -225,8 +225,6 @@
         <gdb_interceptlist>
           <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
         </gdb_interceptlist>
-        <gdb_signals>
-        </gdb_signals>
         <gdb_options>
           <DebugOptions>
           </DebugOptions>
@@ -246,178 +244,10 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}" list_or.csv</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" ap.sh</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" imagesResized.csv</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" imagesNonResized.csv</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" imagesResized.csv</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" imagesNonResized.csv</runcommand>
-        <rundir></rundir>
-        <buildfirst>true</buildfirst>
-        <terminal-type>0</terminal-type>
-        <remove-instrumentation>0</remove-instrumentation>
-        <environment>
-        </environment>
-      </runprofile>
-    </conf>
-    <conf name="DebugOpenCL_Mac" type="1">
-      <toolsSet>
-        <developmentServer>localhost</developmentServer>
-        <platform>4</platform>
-      </toolsSet>
-      <dbx_gdbdebugger version="1">
-        <gdb_pathmaps>
-        </gdb_pathmaps>
-        <gdb_interceptlist>
-          <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
-        </gdb_interceptlist>
-        <gdb_options>
-          <DebugOptions>
-          </DebugOptions>
-        </gdb_options>
-        <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
-      </dbx_gdbdebugger>
-      <nativedebugger version="1">
-        <engine>gdb</engine>
-      </nativedebugger>
-      <runprofile version="9">
-        <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" deca.jpg out.jpg</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" 5.jpg out.jpg</runcommandpicklistitem>
-          <runcommandpicklistitem>${OUTPUT_PATH}" files.tab</runcommandpicklistitem>
-          <runcommandpicklistitem>${OUTPUT_PATH}" files.list</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" deca.png out.jpg</runcommandpicklistitem>
-          <runcommandpicklistitem>${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" -list</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" files.tab</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" tst.csv</runcommandpicklistitem>
-        </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" tst.csv</runcommand>
-        <rundir></rundir>
-        <buildfirst>true</buildfirst>
-        <terminal-type>0</terminal-type>
-        <remove-instrumentation>0</remove-instrumentation>
-        <environment>
-        </environment>
-      </runprofile>
-    </conf>
-    <conf name="ReleaseOpenCL_Mac" type="1">
-      <toolsSet>
-        <developmentServer>localhost</developmentServer>
-        <platform>4</platform>
-      </toolsSet>
-      <dbx_gdbdebugger version="1">
-        <gdb_pathmaps>
-        </gdb_pathmaps>
-        <gdb_interceptlist>
-          <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
-        </gdb_interceptlist>
-        <gdb_options>
-          <DebugOptions>
-          </DebugOptions>
-        </gdb_options>
-        <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
-      </dbx_gdbdebugger>
-      <nativedebugger version="1">
-        <engine>gdb</engine>
-      </nativedebugger>
-      <runprofile version="9">
-        <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" camel.jpg out.jpg</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" deca.jpg out.jpg</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" 5.jpg out.jpg</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" files.tab</runcommandpicklistitem>
-          <runcommandpicklistitem>${OUTPUT_PATH}" files.tab</runcommandpicklistitem>
-          <runcommandpicklistitem>${OUTPUT_PATH}" files.list</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" deca.png out.jpg</runcommandpicklistitem>
-          <runcommandpicklistitem>${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" -list</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
-        </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" list.csv</runcommand>
-        <rundir></rundir>
-        <buildfirst>true</buildfirst>
-        <terminal-type>0</terminal-type>
-        <remove-instrumentation>0</remove-instrumentation>
-        <environment>
-        </environment>
-      </runprofile>
-    </conf>
-    <conf name="Debug_Mac" type="1">
-      <toolsSet>
-        <developmentServer>localhost</developmentServer>
-        <platform>4</platform>
-      </toolsSet>
-      <dbx_gdbdebugger version="1">
-        <gdb_pathmaps>
-        </gdb_pathmaps>
-        <gdb_interceptlist>
-          <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
-        </gdb_interceptlist>
-        <gdb_options>
-          <DebugOptions>
-          </DebugOptions>
-        </gdb_options>
-        <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
-      </dbx_gdbdebugger>
-      <nativedebugger version="1">
-        <engine>gdb</engine>
-      </nativedebugger>
-      <runprofile version="9">
-        <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" camel.jpg out.jpg</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" deca.jpg out.jpg</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" 5.jpg out.jpg</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" sh.jpg out.jpg</runcommandpicklistitem>
-          <runcommandpicklistitem>${OUTPUT_PATH}" files.tab</runcommandpicklistitem>
-          <runcommandpicklistitem>${OUTPUT_PATH}" files.list</runcommandpicklistitem>
-          <runcommandpicklistitem>${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" deca.png out.jpg</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" -makeset tst.csv tst.svm</runcommandpicklistitem>
-        </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" -makeset tst.csv tst.svm</runcommand>
-        <rundir></rundir>
-        <buildfirst>true</buildfirst>
-        <terminal-type>0</terminal-type>
-        <remove-instrumentation>0</remove-instrumentation>
-        <environment>
-        </environment>
-      </runprofile>
-    </conf>
-    <conf name="Release_Mac" type="1">
-      <toolsSet>
-        <developmentServer>localhost</developmentServer>
-        <platform>4</platform>
-      </toolsSet>
-      <dbx_gdbdebugger version="1">
-        <gdb_pathmaps>
-        </gdb_pathmaps>
-        <gdb_interceptlist>
-          <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
-        </gdb_interceptlist>
-        <gdb_options>
-          <DebugOptions>
-          </DebugOptions>
-        </gdb_options>
-        <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
-      </dbx_gdbdebugger>
-      <nativedebugger version="1">
-        <engine>gdb</engine>
-      </nativedebugger>
-      <runprofile version="9">
-        <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" 0.jpg out.jpg</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" camel.jpg out.jpg</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" deca.jpg out.jpg</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" 5.jpg out.jpg</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" sh.jpg out.jpg</runcommandpicklistitem>
-          <runcommandpicklistitem>${OUTPUT_PATH}" files.tab</runcommandpicklistitem>
-          <runcommandpicklistitem>${OUTPUT_PATH}" files.list</runcommandpicklistitem>
-          <runcommandpicklistitem>${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" deca.png out.jpg</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" list.csv</runcommandpicklistitem>
-        </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" list.csv</runcommand>
+        <runcommand>"${OUTPUT_PATH}" imagesResized.csv</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>

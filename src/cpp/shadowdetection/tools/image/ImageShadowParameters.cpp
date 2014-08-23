@@ -173,7 +173,7 @@ namespace shadowdetection{
                 
                 for (int i = 0; i < height; i++) {
                     for (int j = 0; j < width; j++) {
-                        KeyVal<uint> location((uint)j, (uint)i);
+                        Pair<uint> location((uint)j, (uint)i);
                         uchar hHSV = OpenCV2Tools::getChannelValue(hsvImage, location, 0);
                         uchar sHSV = OpenCV2Tools::getChannelValue(hsvImage, location, 1);
                         uchar vHSV = OpenCV2Tools::getChannelValue(hsvImage, location, 2);
@@ -302,7 +302,7 @@ namespace shadowdetection{
                     for (int j = 0; j < numOfSegments; j++){                
                         float xStart = j * segmentWidth;
                         float yStart = i * segmentHeight;
-                        KeyVal<uint> location((uint)xStart, (uint)yStart);
+                        Pair<uint> location((uint)xStart, (uint)yStart);
                         Mat* roi = OpenCV2Tools::getImageROI(originalImage, segmentWidth, 
                                                             segmentHeight, location);                                                
                         float avg = OpenCV2Tools::getAvgChannelValue(roi, channelIndex);
@@ -313,7 +313,7 @@ namespace shadowdetection{
                 return regionsAvgsSecondChannel;
             }
             
-            float* ImageShadowParameters::processROI( KeyVal<uint> location, const Mat* originalImage, 
+            float* ImageShadowParameters::processROI( Pair<uint> location, const Mat* originalImage, 
                                                 int& size, uchar channelIndex) throw (SDException&){
                 if (originalImage == 0 || originalImage->data == 0){
                     SDException exc(SHADOW_INVALID_IMAGE_FORMAT, "ImageParameters::processROI");
@@ -331,8 +331,8 @@ namespace shadowdetection{
                 
                 float value = (float)OpenCV2Tools::getChannelValue(*originalImage, location, channelIndex);
                 
-                int yAvgIndex = location.getVal() / segmentHeight;
-                int xAvgIndex = location.getKey() / segmentWidth;                
+                int yAvgIndex = location.getSecond() / segmentHeight;
+                int xAvgIndex = location.getFirst() / segmentWidth;                
                     
                 float avg = (*regionsAvgsSecondChannel)[yAvgIndex][xAvgIndex];
                 float proportion = value / (avg + 1.f);                

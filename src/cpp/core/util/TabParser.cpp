@@ -27,7 +27,7 @@ namespace core{
                     if (tokens.size() > 1){
                         string key = tokens[0];
                         string val = tokens[1];
-                        KeyVal<string> kv(key, val);
+                        Pair<string> kv(key, val);
                         container.push_back(kv);
                     }
                 }
@@ -43,7 +43,7 @@ namespace core{
             return container.size();
         }
         
-        KeyVal<std::string> TabParser::get(uint i)throw (SDException&){
+        Pair<std::string> TabParser::get(uint i)throw (SDException&){
             if (i >= size()){
                 SDException exc(SHADOW_OUT_OF_BOUNDS, "Get Tab elemenent");
                 throw exc;
