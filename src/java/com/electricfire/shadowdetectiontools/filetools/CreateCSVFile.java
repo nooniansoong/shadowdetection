@@ -24,13 +24,14 @@ public class CreateCSVFile {
         BufferedWriter writer = new BufferedWriter(new FileWriter(outFile));
         Set<String> extensions = new HashSet<>();
         extensions.add("jpg"); extensions.add("jpeg"); extensions.add("png");
-        extensions.add("tif"); extensions.add("tiff");
+        extensions.add("tif"); extensions.add("tiff"); extensions.add("JPG");
+        extensions.add("JPEG");
         List<File> files = FilesCollector.getAllFiles(rootDir, null, extensions, true);
         if (files != null){
             for (File file : files) {
                 writeFile(file, writer);
             }
-        }
+        }        
         writer.flush();
         writer.close();
     }
@@ -38,8 +39,9 @@ public class CreateCSVFile {
     private static void writeFile(File file, BufferedWriter writer) throws Exception{        
         String extension = FilesCollector.getFileExtension(file);
         String name = FilesCollector.getFileName(file);
-        writer.write(file.getAbsolutePath() + "\t" + name + "Shadow." + extension);
+        File parent = file.getParentFile();
+        writer.write(file.getAbsolutePath() + "\t" + parent.getAbsolutePath() + "/" + name + "Shadow.tif");
         writer.newLine();
-    }        
+    }
     
 }

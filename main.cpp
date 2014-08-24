@@ -7,32 +7,39 @@
 
 #include <iostream>
 #include "shadowdetection/opencl/OpenCLTools.h"
-#include "shadowdetection/opencv/OpenCV2Tools.h"
-#include "shadowdetection/opencv/OpenCVTools.h"
-#include "shadowdetection/util/Config.h"
-#include "shadowdetection/util/TabParser.h"
-#include "shadowdetection/util/raii/RAIIS.h"
-#include "shadowdetection/tools/svm/TrainingSet.h"
-#include "shadowdetection/tools/svm/libsvmopenmp/svm-train.h"
-#include "shadowdetection/util/libsvm/SvmPredict.h"
-#include "shadowdetection/util/image/ImageParameters.h"
-#include "shadowdetection/util/Matrix.h"
+#include "core/opencv/OpenCV2Tools.h"
+#include "core/opencv/OpenCVTools.h"
+#include "core/util/Config.h"
+#include "core/util/TabParser.h"
+#include "core/util/raii/RAIIS.h"
+#include "core/tools/svm/TrainingSet.h"
+#include "core/tools/svm/libsvmopenmp/svm-train.h"
+#include "core/tools/image/IImageParameters.h"
+#include "core/util/Matrix.h"
+#include "core/util/PredictorFactory.h"
 #if defined _OPENMP_MY
 #include <omp.h>
 #endif
+#include "shadowdetection/tools/image/ResultFixer.h"
+#include "core/util/ParametersFactory.h"
+#include "core/opencl/libsvm/OpenCLToolsPredict.h"
+#include "shadowdetection/opencl/OpenCLImageParameters.h"
 
 using namespace std;
 #ifdef _OPENCL
 using namespace shadowdetection::opencl;
+using namespace core::opencl::libsvm;
 #endif
-using namespace shadowdetection::opencv;
-using namespace shadowdetection::opencv2;
-using namespace shadowdetection::util;
+using namespace core::opencv;
+using namespace core::opencv2;
+using namespace core::util;
 using namespace cv;
-using namespace shadowdetection::util::raii;
-using namespace shadowdetection::tools::svm;
-using namespace shadowdetection::util::libsvm;
-using namespace shadowdetection::util::image;
+using namespace core::util::raii;
+using namespace core::tools::svm;
+using namespace core::util::prediction;
+using namespace core::tools::image;
+using namespace core::tools::svm::libsvmopenmp;
+using namespace shadowdetection::tools::image;
 
 void handleException(const SDException& exception){
     const char* err = exception.what();
@@ -67,7 +74,9 @@ void initOpenCL(){
         if (tmp != 0)
             deviceId = tmp;
         OpenclTools::getInstancePtr()->init(platformId, deviceId, false);
-        OpenCV2Tools::initOpenCL(platformId, deviceId);        
+        OpenCV2Tools::initOpenCL(platformId, deviceId);
+        OpenCLToolsPredict::getInstancePtr()->init(platformId, deviceId, false);
+        OpenCLImageParameters::getInstancePtr()->init(platformId, deviceId, false);
     }
     catch (SDException& exception){
         handleException(exception);
@@ -84,6 +93,13 @@ void initOpenCL(){
  * @param image
  */
 void processSingleCPU(const char* out, IplImage* image) {    
+    Mat imageMat(image);
+    Mat* hls = OpenCV2Tools::convertToHLS(&imageMat);
+    if (hls == 0){
+        return;
+    }
+    ImageNewRaii hlsRaii(hls);
+    
     IplImage* processedImage = 0;
     int height, width, channels;
     unsigned int* hsi1 = OpenCvTools::convertImagetoHSI(image, height, width, channels, &OpenCvTools::RGBtoHSI_1);
@@ -109,16 +125,24 @@ void processSingleCPU(const char* out, IplImage* image) {
         usePrediction = true;
     if (usePrediction){
         IplImage* pi = OpenCvTools::joinTwo(binarized1, binarized2);
-        ImageRaii iraii(pi);
-        Mat* imageMat = new Mat(image);
+        ImageRaii iraii(pi);        
         int pixCount;
         int parameterCount;
-        Matrix<float>* parameters = ImageParameters::getImageParameters(*imageMat, parameterCount, pixCount);
-        if (SvmPredict::getInstancePtr()->hasLoadedModel() == false){
-            string modelFile = Config::getInstancePtr()->getPropertyValue("process.Prediction.modelFile");
-            SvmPredict::getInstancePtr()->loadModel(modelFile);
+        
+        Mat* hsv = OpenCV2Tools::convertToHSV(&imageMat);
+        if (hsv == 0){
+            return;
         }
-        uchar* predicted = SvmPredict::getInstancePtr()->predict(parameters, pixCount, parameterCount);
+        ImageNewRaii hsvRaii(hsv);
+        
+        IImageParameteres* imageParameters = createImageParameters();
+        Matrix<float>* parameters = imageParameters->getImageParameters(imageMat, *hsv, *hls, 
+                                                                        parameterCount, pixCount);
+        IPrediction* predictor = getPredictor();
+        if (predictor->hasLoadedModel() == false){            
+            predictor->loadModel();
+        }
+        uchar* predicted = predictor->predict(parameters, pixCount, parameterCount);
         VectorRaii vraii(predicted);        
         for (int i = 0; i < pixCount; i++)
             predicted[i] *= 255;
@@ -129,8 +153,13 @@ void processSingleCPU(const char* out, IplImage* image) {
     else{
         processedImage = OpenCvTools::joinTwo(binarized1, binarized2);
     }
-    ImageRaii iraii(processedImage);                
-    cvSaveImage(out, processedImage);    
+    if (processedImage){
+        ImageRaii iraii(processedImage);
+        ResultFixer rf;
+        Mat processedImageMat(processedImage);
+        rf.applyThreshholds(processedImageMat, imageMat, *hls);
+        cvSaveImage(out, processedImage);
+    }
 }
 #endif
 
@@ -141,8 +170,14 @@ void processSingleCPU(const char* out, IplImage* image) {
  * @param imageNew
  */
 void processSingleOpenCL(const char* out, const Mat& image) {                
+    Mat* hls = OpenCV2Tools::convertToHLS(&image);
+    if (hls == 0){
+        return;
+    }
+    ImageNewRaii hlsRaii(hls);
     OpenclTools* oclt = OpenclTools::getInstancePtr();
-    unsigned char* buffer = OpenCV2Tools::convertImageToByteArray(&image, true);    
+    unsigned char* buffer = OpenCV2Tools::convertImageToByteArray(&image, true);
+    VectorRaii bufferRaii(buffer);
     Mat* processedImage = 0;
     bool usePrediction = false;
     string usePredStr = Config::getInstancePtr()->getPropertyValue("process.Prediction.usePrediction");
@@ -150,7 +185,7 @@ void processSingleOpenCL(const char* out, const Mat& image) {
         usePrediction = true;
     if (usePrediction == false){
         try {
-            processedImage = oclt->processRGBImage(buffer, image.size().width, image.size().height, image.channels());
+            processedImage = oclt->processRGBImage(buffer, image.size().width, image.size().height, image.channels());            
         } catch (SDException& exception) {
             throw exception;
         }
@@ -158,17 +193,27 @@ void processSingleOpenCL(const char* out, const Mat& image) {
     else{
         Mat* pi = oclt->processRGBImage(buffer, image.size().width, image.size().height, image.channels());
         if (pi){
-            ImageNewRaii imraiiPi(pi);
+            ImageNewRaii imraiiPi(pi);                        
             int pixCount;
             int parameterCount;
-            Matrix<float>* parameters = ImageParameters::getImageParameters(image, parameterCount, pixCount);
+            IImageParameteres* ip = createImageParameters();
+            PointerRaii<IImageParameteres> ipRaii(ip);
+            
+            Mat* hsv = OpenCV2Tools::convertToHSV(&image);
+            if (hsv == 0){
+                return;
+            }
+            ImageNewRaii hsvRaii(hsv);                        
+            
+            Matrix<float>* parameters = ip->getImageParameters( image, *hsv, *hls, 
+                                                                parameterCount, pixCount);
             if (parameters){
                 PointerRaii< Matrix<float> > paramRaii(parameters);
-                if (SvmPredict::getInstancePtr()->hasLoadedModel() == false){
-                    string modelFile = Config::getInstancePtr()->getPropertyValue("process.Prediction.modelFile");
-                    SvmPredict::getInstancePtr()->loadModel(modelFile);
+                IPrediction* predictor = getPredictor();
+                if (predictor->hasLoadedModel() == false){                    
+                    predictor->loadModel();
                 }
-                uchar* predicted = SvmPredict::getInstancePtr()->predict(parameters, pixCount, parameterCount);
+                uchar* predicted = predictor->predict(parameters, pixCount, parameterCount);
                 if (predicted){
                     VectorRaii vraiiPred(predicted);
                     //FileSaver<uchar>::saveToFile("myPredictedOCL.out", predicted, pixCount);
@@ -191,6 +236,8 @@ void processSingleOpenCL(const char* out, const Mat& image) {
         }        
     }
     if (processedImage != 0) {
+        ResultFixer rf;
+        rf.applyThreshholds(*processedImage, image, *hls);
         imwrite(out, *processedImage);
         delete processedImage;
     }    
@@ -300,7 +347,7 @@ int main(int argc, char **argv) {
             return 0;
         }
         try{
-            int val = shadowdetection::tools::svm::libsvmopenmp::train(argv[2], argv[3]);
+            int val = train(argv[2], argv[3]);
             cout << val << endl;
         }
         catch (SDException& e){
@@ -351,9 +398,9 @@ int main(int argc, char **argv) {
                 handleException(exception);
                 exit(1);
             }
-            for (int i = 0; i < tp.size(); i++){
-                string in = tp.get(i).getKey();
-                string out = tp.get(i).getVal();
+            for (uint i = 0; i < tp.size(); i++){
+                string in = tp.get(i).getFirst();
+                string out = tp.get(i).getSecond();
                 try{
                     processSingle(in.c_str(), out.c_str());
                 }

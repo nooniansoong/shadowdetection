@@ -37,22 +37,6 @@
                     <name>ReleaseOpenCL_AMD</name>
                     <type>1</type>
                 </confElem>
-                <confElem>
-                    <name>DebugOpenCL_Mac</name>
-                    <type>1</type>
-                </confElem>
-                <confElem>
-                    <name>ReleaseOpenCL_Mac</name>
-                    <type>1</type>
-                </confElem>
-                <confElem>
-                    <name>Debug_Mac</name>
-                    <type>1</type>
-                </confElem>
-                <confElem>
-                    <name>Release_Mac</name>
-                    <type>1</type>
-                </confElem>
             </confList>
             <formatting>
                 <project-formatting-style>false</project-formatting-style>
