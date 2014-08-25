@@ -24,10 +24,10 @@ namespace shadowdetection{
                 Config* conf = Config::getInstancePtr();                                
                 string lThreshStr = conf->getPropertyValue("process.Thresholds.shadow.lValue");
                 lThresh = (uchar)atoi(lThreshStr.c_str());
-                string useThreshStr = conf->getPropertyValue("process.Thresholds.shadow.useThresh");
-                useThresh = true;
-                if (useThreshStr == "false")
-                    useThresh = false;                
+//                string useThreshStr = conf->getPropertyValue("process.Thresholds.shadow.useThresh");
+//                useThresh = true;
+//                if (useThreshStr == "false")
+//                    useThresh = false;                
             }
             
             void ResultFixer::applyThreshholds( Mat& image, const Mat& originalImage, 

@@ -11,7 +11,7 @@ namespace shadowdetection{
             class ResultFixer{
             private:                
                 uchar lThresh;
-                bool useThresh;
+                //bool useThresh;
                 
                 void init() throw(SDException&);
             protected:
