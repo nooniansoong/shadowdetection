@@ -138,6 +138,7 @@ void processSingleCPU(const char* out, IplImage* image) {
         ImageNewRaii hsvRaii(hsv);
         
         IImageParameteres* imageParameters = createImageParameters();
+        PointerRaii<IImageParameteres> imParametersRaii(imageParameters);
         Matrix<float>* parameters = imageParameters->getImageParameters(imageMat, *hsv, *hls, 
                                                                         parameterCount, pixCount);
         IPrediction* predictor = getPredictor();

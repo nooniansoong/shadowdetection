@@ -25,12 +25,12 @@ namespace shadowdetection{
                 core::util::Matrix<float>* getAvgChannelValForRegions(const cv::Mat* originalImage,
                                                                                 uchar channelIndex);
             protected:
+                static float* merge(float** arrs, int arrsLen, int* arrSize, int& retSize);
+                static float* merge(float label, const float** arrs, int arrsLen, int* arrSize, int& retSize);
             public:
                 ImageShadowParameters();
                 virtual ~ImageShadowParameters();
-                
-                static float* merge(float** arrs, int arrsLen, int* arrSize, int& retSize);
-                static float* merge(float label, const float** arrs, int arrsLen, int* arrSize, int& retSize);
+                                
                 virtual core::util::Matrix<float>* getImageParameters(  const cv::Mat& originalImage,
                                                                         const cv::Mat& hsvImage,
                                                                         const cv::Mat& hlsImage,
