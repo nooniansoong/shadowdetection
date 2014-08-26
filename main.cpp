@@ -24,6 +24,7 @@
 #include "core/util/ParametersFactory.h"
 #include "core/opencl/libsvm/OpenCLToolsPredict.h"
 #include "shadowdetection/opencl/OpenCLImageParameters.h"
+#include "core/opencl/libsvm/OpenCLToolsTrain.h"
 
 using namespace std;
 #ifdef _OPENCL
@@ -77,6 +78,7 @@ void initOpenCL(){
         OpenCV2Tools::initOpenCL(platformId, deviceId);
         OpenCLToolsPredict::getInstancePtr()->init(platformId, deviceId, false);
         OpenCLImageParameters::getInstancePtr()->init(platformId, deviceId, false);
+        OpenCLToolsTrain::getInstancePtr()->init(platformId, deviceId, false);
     }
     catch (SDException& exception){
         handleException(exception);

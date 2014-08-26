@@ -15,7 +15,7 @@
         <Prediction>            
             <!-- true, false -->
             <usePrediction>
-                true
+                false
             </usePrediction>
             <!--SVM for support vector machine, REG for regresion-->
             <predictionType>
