@@ -79,11 +79,11 @@ LDLIBSOPTIONS=-L/usr/local/lib
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection_0.7.0
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection_0.7.0: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection ${OBJECTFILES} ${LDLIBSOPTIONS} -lopencv_highgui -lopencv_core -lopencv_imgproc -lopencv_ocl -fopenmp
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection_0.7.0 ${OBJECTFILES} ${LDLIBSOPTIONS} -lopencv_highgui -lopencv_core -lopencv_imgproc -lopencv_ocl -fopenmp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -211,7 +211,7 @@ ${OBJECTDIR}/src/cpp/thirdparty/lib_svm/svm.o: src/cpp/thirdparty/lib_svm/svm.cp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection_0.7.0
 
 # Subprojects
 .clean-subprojects:
