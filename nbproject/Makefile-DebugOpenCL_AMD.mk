@@ -51,6 +51,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/cpp/core/util/Timer.o \
 	${OBJECTDIR}/src/cpp/core/util/predicition/libsvm/SvmPredict.o \
 	${OBJECTDIR}/src/cpp/core/util/predicition/regression/RegressionPredict.o \
+	${OBJECTDIR}/src/cpp/core/util/rtti/RTTI.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLImageParameters.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLTools.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsImage.o \
@@ -163,6 +164,11 @@ ${OBJECTDIR}/src/cpp/core/util/predicition/regression/RegressionPredict.o: src/c
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/util/predicition/regression
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -D_AMD -D_DEBUG -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/core/util/predicition/regression/RegressionPredict.o src/cpp/core/util/predicition/regression/RegressionPredict.cpp
+
+${OBJECTDIR}/src/cpp/core/util/rtti/RTTI.o: src/cpp/core/util/rtti/RTTI.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/util/rtti
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -D_AMD -D_DEBUG -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/core/util/rtti/RTTI.o src/cpp/core/util/rtti/RTTI.cpp
 
 ${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLImageParameters.o: src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/opencl

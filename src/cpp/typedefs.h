@@ -13,9 +13,7 @@
 #endif
 
 #include <string>
-#ifndef _MAC
-#include <hash_fun.h>
-#endif
+#include <functional>
 #include <vector>
 #include <sstream>
 #include <exception>
@@ -159,15 +157,15 @@ template<typename T> class Triple : public Pair<T>{
 };
 
 #ifndef _MAC
-namespace __gnu_cxx {
+namespace std {
 
-    template<> struct hash<std::string> {
-        hash<char*> h;
-
-        size_t operator()(const std::string &s) const {
-            return h(s.c_str());
-        };
-    };
+//    template<> struct hash<std::string> {
+//        hash<char*> h;
+//
+//        size_t operator()(const std::string &s) const {
+//            return h(s.c_str());
+//        };
+//    };
 
     template<typename T> struct hash< Pair<T> > {
 

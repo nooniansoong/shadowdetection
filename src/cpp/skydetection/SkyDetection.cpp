@@ -9,8 +9,7 @@ namespace skydetection{
     using namespace core::util;
     using namespace std;
     using namespace core::opencv2;
-    using namespace core::util::raii;
-    using namespace __gnu_cxx;
+    using namespace core::util::raii;    
     
     void SkyDetection::initBaseVariables(){
         originalImage = 0;        
@@ -41,9 +40,9 @@ namespace skydetection{
             delete detectedImage;
     }
     
-    Triple<float> SkyDetection::getMeanBGRValuesOfSegment(hash_set< Pair<uint> >* segment){
+    Triple<float> SkyDetection::getMeanBGRValuesOfSegment(unordered_set< Pair<uint> >* segment){
         float avgB = 0.f, avgG = 0.f, avgR = 0.f;
-        hash_set< Pair<uint> >::iterator iter = segment->begin();
+        unordered_set< Pair<uint> >::iterator iter = segment->begin();
         while (iter != segment->end()){
             Pair<uint> location = *iter;
             avgB += (float)OpenCV2Tools::getChannelValue(*originalImage, location, 0);
@@ -59,11 +58,11 @@ namespace skydetection{
     }
     
     void SkyDetection::processSegments(){
-        list< hash_set< Pair<uint> >* >* segments = OpenCV2Tools::getRegionsOfColor(*detectedImage, 255);
+        list< unordered_set< Pair<uint> >* >* segments = OpenCV2Tools::getRegionsOfColor(*detectedImage, 255);
         if (segments->size() > 1){
-            list< hash_set< Pair<uint> >* >::iterator iter = segments->begin();
+            list< unordered_set< Pair<uint> >* >::iterator iter = segments->begin();
             //largest segment
-            hash_set< Pair<uint> >* segment = *iter;
+            unordered_set< Pair<uint> >* segment = *iter;
             Triple<float> meanValues = getMeanBGRValuesOfSegment(segment);
             while (iter != segments->end()){
                 segment = *iter;
@@ -74,8 +73,8 @@ namespace skydetection{
         OpenCV2Tools::destroySegments(segments);
     }
     
-    void SkyDetection::reduceInSegment(hash_set< Pair<uint> >* segment, const Triple<float>& thresHold){
-        hash_set< Pair<uint> >::iterator iter = segment->begin();
+    void SkyDetection::reduceInSegment(unordered_set< Pair<uint> >* segment, const Triple<float>& thresHold){
+        unordered_set< Pair<uint> >::iterator iter = segment->begin();
         while (iter != segment->end()){
             Pair<uint> location = *iter;
             uint bValue = OpenCV2Tools::getChannelValue(*originalImage, location, 0);

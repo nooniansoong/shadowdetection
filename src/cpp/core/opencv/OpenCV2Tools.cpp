@@ -9,8 +9,7 @@ namespace core{
         using namespace std;
         using namespace cv;
         using namespace cv::ocl;
-        using namespace core::util;
-        using namespace __gnu_cxx;
+        using namespace core::util;        
         
         unsigned int* OpenCV2Tools::convertImagetoHSI  (const Mat* image, int& height, int& width, int& channels,
                                              void (*convertFunc)(unsigned char, unsigned char, unsigned char, unsigned int&, unsigned char&, unsigned char&)){
@@ -385,12 +384,12 @@ namespace core{
         }
         
         struct List{
-            hash_set< Pair<uint>*, hash< Pair<uint>* >, eqKeyVal> container;
+            unordered_set< Pair<uint>*, hash< Pair<uint>* >, eqKeyVal> container;
             
             List(){}
             
             ~List() {
-                hash_set< Pair<uint>*, hash< Pair<uint>* >, eqKeyVal >::iterator iter = container.begin();
+                unordered_set< Pair<uint>*, hash< Pair<uint>* >, eqKeyVal >::iterator iter = container.begin();
                 while (iter != container.end()) {
                     Pair<uint>* location = *iter;
                     delete location;
@@ -399,7 +398,7 @@ namespace core{
             }
             
             Pair<uint>* pop(){
-                hash_set< Pair<uint>*, hash< Pair<uint>* >, eqKeyVal >::iterator iter = container.begin();
+                unordered_set< Pair<uint>*, hash< Pair<uint>* >, eqKeyVal >::iterator iter = container.begin();
                 Pair<uint>* retVal = *iter;
                 container.erase(iter);
                 return retVal;
@@ -410,7 +409,7 @@ namespace core{
             }
             
             bool contains(Pair<uint>* element) const{
-                hash_set< Pair<uint>*, hash< Pair<uint>* >, eqKeyVal>::iterator iter = container.find(element);
+                unordered_set< Pair<uint>*, hash< Pair<uint>* >, eqKeyVal>::const_iterator iter = container.find(element);
                 return !(iter == container.end());
             }
             
@@ -420,7 +419,7 @@ namespace core{
             
             vector< Pair<uint>* > getElements(){
                 vector< Pair<uint>* > retVec;
-                 hash_set< Pair<uint>*, hash< Pair<uint>* >, eqKeyVal >::iterator iter = container.begin();
+                 unordered_set< Pair<uint>*, hash< Pair<uint>* >, eqKeyVal >::iterator iter = container.begin();
                  while (iter != container.end()){
                      Pair<uint>* location = *iter;
                      retVec.push_back(location);
@@ -481,11 +480,11 @@ namespace core{
             }            
         }
         
-        bool alreadyProcessed(Pair<uint>& location, const list< hash_set< Pair<uint> >* >* processedRegions){
-            list< hash_set< Pair<uint> >* >::const_iterator iter = processedRegions->begin();
+        bool alreadyProcessed(Pair<uint>& location, const list< unordered_set< Pair<uint> >* >* processedRegions){
+            list< unordered_set< Pair<uint> >* >::const_iterator iter = processedRegions->begin();
             while (iter != processedRegions->end()){
-                hash_set< Pair<uint> >* locationsSet = *iter;
-                hash_set< Pair<uint> >::iterator foundIter = locationsSet->find(location);
+                unordered_set< Pair<uint> >* locationsSet = *iter;
+                unordered_set< Pair<uint> >::iterator foundIter = locationsSet->find(location);
                 if (foundIter != locationsSet->end()){
                     return true;
                 }
@@ -494,16 +493,16 @@ namespace core{
             return false;
         }
         
-        bool compareSets(const hash_set< Pair<uint> >* first, const hash_set< Pair<uint> >* second){
+        bool compareSets(const unordered_set< Pair<uint> >* first, const unordered_set< Pair<uint> >* second){
             return first->size() > second->size();
         }
         
-        list< hash_set< Pair<uint> >* >* OpenCV2Tools::getRegionsOfColor(const cv::Mat& image, const uint& color) throw (SDException&){
+        list< unordered_set< Pair<uint> >* >* OpenCV2Tools::getRegionsOfColor(const cv::Mat& image, const uint& color) throw (SDException&){
             if (image.data == 0){
                 SDException exc(SHADOW_INVALID_IMAGE_FORMAT, "OpenCV2Tools::getRegionsOfColor");
                 throw exc;
             }
-            list< hash_set< Pair<uint> >* >* retList = new list< hash_set< Pair<uint> >* >();
+            list< unordered_set< Pair<uint> >* >* retList = new list< unordered_set< Pair<uint> >* >();
             uint rows = image.rows;
             uint cols = image.cols;
             for (uint i = 0; i < rows; i++){
@@ -514,7 +513,7 @@ namespace core{
                         List openList;
                         List closedList;
                         doFloodFill(location, image, color, openList, closedList);
-                        hash_set< Pair<uint> >* region = new hash_set< Pair<uint> >();
+                        unordered_set< Pair<uint> >* region = new unordered_set< Pair<uint> >();
                         vector< Pair<uint>* > regionLocations = closedList.getElements();
                         for (uint k = 0; k < regionLocations.size(); k++){
                             region->insert(*regionLocations[k]);
@@ -527,14 +526,14 @@ namespace core{
             return retList;
         }
         
-        void OpenCV2Tools::destroySegments(list< hash_set< Pair<uint> >* >* segments) throw (SDException&){
+        void OpenCV2Tools::destroySegments(list< unordered_set< Pair<uint> >* >* segments) throw (SDException&){
             if (segments == 0){
                 SDException exc(SHADOW_NULL_POINTER, "OpenCV2Tools::destroySegments");
                 throw exc;
             }
-            list< hash_set< Pair<uint> >* >::iterator iter = segments->begin();
+            list< unordered_set< Pair<uint> >* >::iterator iter = segments->begin();
             while (iter != segments->end()){
-                hash_set< Pair<uint> >* segment = *iter;
+                unordered_set< Pair<uint> >* segment = *iter;
                 if (segment == 0){
                     SDException exc(SHADOW_NULL_POINTER, "OpenCV2Tools::destroySegments segment");
                     throw exc;

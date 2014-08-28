@@ -42,6 +42,10 @@
           <logicalFolder name="raii" displayName="raii" projectFiles="true">
             <itemPath>src/cpp/core/util/raii/RAIIS.h</itemPath>
           </logicalFolder>
+          <logicalFolder name="rtti" displayName="rtti" projectFiles="true">
+            <itemPath>src/cpp/core/util/rtti/ObjectFactory.h</itemPath>
+            <itemPath>src/cpp/core/util/rtti/RTTI.h</itemPath>
+          </logicalFolder>
           <itemPath>src/cpp/core/util/Config.h</itemPath>
           <itemPath>src/cpp/core/util/FileSaver.h</itemPath>
           <itemPath>src/cpp/core/util/Matrix.h</itemPath>
@@ -129,6 +133,9 @@
               <itemPath>src/cpp/core/util/predicition/regression/RegressionPredict.cpp</itemPath>
             </logicalFolder>
           </logicalFolder>
+          <logicalFolder name="rtti" displayName="rtti" projectFiles="true">
+            <itemPath>src/cpp/core/util/rtti/RTTI.cpp</itemPath>
+          </logicalFolder>
           <itemPath>src/cpp/core/util/Cofig.cpp</itemPath>
           <itemPath>src/cpp/core/util/MemMenager.cpp</itemPath>
           <itemPath>src/cpp/core/util/ParametersFactory.cpp</itemPath>
@@ -200,7 +207,7 @@
             <pElem>/usr/local/include/opencv</pElem>
             <pElem>src/cpp</pElem>
           </incDir>
-          <commandLine>-fopenmp</commandLine>
+          <commandLine>-fopenmp -std=c++11</commandLine>
         </ccTool>
         <linkerTool>
           <linkerAddLib>
@@ -360,6 +367,15 @@
             flavor2="0">
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/ObjectFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTI.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTI.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp"
             ex="false"
@@ -642,6 +658,15 @@
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/util/rtti/ObjectFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTI.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTI.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp"
             ex="false"
             tool="1"
@@ -915,6 +940,15 @@
             flavor2="0">
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/ObjectFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTI.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTI.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp"
             ex="false"
@@ -1195,6 +1229,15 @@
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/util/rtti/ObjectFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTI.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTI.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp"
             ex="false"
             tool="1"
@@ -1474,6 +1517,15 @@
             flavor2="0">
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/ObjectFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTI.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTI.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp"
             ex="false"
@@ -1757,6 +1809,15 @@
             flavor2="0">
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/ObjectFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTI.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTI.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp"
             ex="false"

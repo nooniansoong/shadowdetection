@@ -13,7 +13,7 @@
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
 #include <list>
-#include <hash_set>
+#include <unordered_set>
 #include "typedefs.h"
 
 namespace core{
@@ -96,9 +96,9 @@ namespace core{
                                             uchar channelIndex) throw (SDException&);
             static void setChannelValue(cv::Mat& image, Pair<uint> location, 
                                         uchar channelIndex, uchar newValue) throw (SDException&);
-            static std::list< __gnu_cxx::hash_set< Pair<uint> >* >* getRegionsOfColor(const cv::Mat& image, 
+            static std::list< std::unordered_set< Pair<uint> >* >* getRegionsOfColor(const cv::Mat& image, 
                                                                                         const uint& color) throw (SDException&);
-            static void destroySegments(std::list< __gnu_cxx::hash_set< Pair<uint> >* >* segments) throw (SDException&);
+            static void destroySegments(std::list< std::unordered_set< Pair<uint> >* >* segments) throw (SDException&);
 #ifdef _OPENCL
             /**
              * init global variables needed for openCV openCL processing
