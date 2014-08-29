@@ -156,17 +156,8 @@ template<typename T> class Triple : public Pair<T>{
         }
 };
 
-#ifndef _MAC
 namespace std {
-
-//    template<> struct hash<std::string> {
-//        hash<char*> h;
-//
-//        size_t operator()(const std::string &s) const {
-//            return h(s.c_str());
-//        };
-//    };
-
+    
     template<typename T> struct hash< Pair<T> > {
 
         size_t operator()(const Pair<T> &kv) const {
@@ -190,7 +181,6 @@ namespace std {
     };
 
 }
-#endif
 
 inline std::string trim(const std::string& input, bool trimCommas = true) {
     std::string whitespaces = " \t\f\v\n\r";

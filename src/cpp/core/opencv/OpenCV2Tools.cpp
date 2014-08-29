@@ -158,7 +158,7 @@ namespace core{
         
 #ifdef _OPENCL 
         void OpenCV2Tools::initOpenCL(uint pid, uint device) throw (SDException&) {
-#if defined _AMD || defined _MAC
+#if defined _AMD
             int typeFlag = cv::ocl::CVCL_DEVICE_TYPE_ALL;
 #else
             int typeFlag = cv::ocl::CVCL_DEVICE_TYPE_GPU;
@@ -171,7 +171,7 @@ namespace core{
                 throw exc;
             }
             cv::ocl::DevicesInfo devicesInfo;
-#if defined _AMD || defined _MAC
+#if defined _AMD
             int devnums = cv::ocl::getOpenCLDevices(devicesInfo, typeFlag, NULL);
 #else
             int devnums = cv::ocl::getOpenCLDevices(devicesInfo, typeFlag, (pid < 0) ? NULL : platformsInfo[pid]);

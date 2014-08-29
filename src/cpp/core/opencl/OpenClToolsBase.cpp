@@ -324,7 +324,7 @@ namespace core{
                 err_check(err, "OpenclTools::init clGetPlatformInfo");
                 cout << "Platform name: " << info << endl;
                 try {
-#if defined _AMD || defined _MAC
+#if defined _AMD
                     err = clGetDeviceIDs(platform[i], CL_DEVICE_TYPE_ALL, MAX_DEVICES, devices, &num_devices);
 #else
                     err = clGetDeviceIDs(platform[i], CL_DEVICE_TYPE_GPU, MAX_DEVICES, devices, &num_devices);
@@ -366,7 +366,7 @@ namespace core{
             
             cl_device_id devices[MAX_DEVICES];
             cl_uint num_devices;
-#if defined _AMD || defined _MAC
+#if defined _AMD
                 err = clGetDeviceIDs(platform[platformID], CL_DEVICE_TYPE_ALL, MAX_DEVICES, devices, &num_devices);
 #else
                 err = clGetDeviceIDs(platform[platformID], CL_DEVICE_TYPE_GPU, MAX_DEVICES, devices, &num_devices);
