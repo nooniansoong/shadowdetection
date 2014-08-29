@@ -302,21 +302,21 @@ namespace core{
          * @param channelIndex
          * @return 
          */
-        float OpenCV2Tools::getAvgChannelValue( const Mat* src, 
+        float OpenCV2Tools::getAvgChannelValue( const Mat& src, 
                                                 uchar channelIndex) throw (SDException&){
-            if (src == 0 || src->data == 0 || (src->channels() - 1 < channelIndex)){
+            if (src.data == 0 || (src.channels() - 1 < channelIndex)){
                 SDException exc(SHADOW_INVALID_IMAGE_FORMAT, "OpenCV2Tools::getAvgChannelValue");
                 throw exc;
             }
-            size_t step = src->step;
+            size_t step = src.step;
             uint64 val = 0;
-            int channels = src->channels();            
-            uint rows = src->rows;
-            uint cols = src->cols;
+            int channels = src.channels();            
+            uint rows = src.rows;
+            uint cols = src.cols;
             for (uint i = 0; i < rows; i++){
                 for (uint j = 0; j < cols; j++){
                     int index = (i * step) + (j * channels) + channelIndex;
-                    uchar chnVal = src->data[index];
+                    uchar chnVal = src.data[index];
                     val += chnVal;
                 }
             }

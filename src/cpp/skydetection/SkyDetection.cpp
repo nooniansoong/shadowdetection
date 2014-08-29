@@ -2,6 +2,7 @@
 #include "core/util/Config.h"
 #include <string>
 #include "core/util/raii/RAIIS.h"
+#include <memory>
 
 namespace skydetection{
     
@@ -100,19 +101,18 @@ namespace skydetection{
             SDException exc(SHADOW_INVALID_IMAGE_FORMAT, "SkyDetection::isSky");
             throw exc;
         }
-        Mat* hlsImage = OpenCV2Tools::convertToHLS(originalImage);
-        if (hlsImage == 0 || hlsImage->data == 0){
+        unique_ptr<Mat> hlsImagePtr(OpenCV2Tools::convertToHLS(originalImage));
+        if (hlsImagePtr.get() == 0 || hlsImagePtr->data == 0){
             SDException exc(SHADOW_INVALID_IMAGE_FORMAT, "SkyDetection::isSky");
             throw exc;
-        }
-        ImageNewRaii imageRaii(hlsImage);
+        }        
         for (int i = 0; i < originalImage->rows; i++){
             for (int j = 0; j < originalImage->cols; j++){
                 Pair<uint> location((uint)j, (uint)i);
                 uchar rValue = OpenCV2Tools::getChannelValue(*originalImage, location, 2);
                 uchar gValue = OpenCV2Tools::getChannelValue(*originalImage, location, 1);
                 uchar bValue = OpenCV2Tools::getChannelValue(*originalImage, location, 0);
-                uchar lValue = OpenCV2Tools::getChannelValue(*hlsImage, location, 1);
+                uchar lValue = OpenCV2Tools::getChannelValue(*hlsImagePtr, location, 1);
                 if ((rValue <= rThresh || rValue <= bValue / 3U) && (gValue >= bValue / 6U) && 
                     gValue <= bValue && bValue >= bThresh && 
                     lValue >= lThresh){                    

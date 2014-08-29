@@ -88,7 +88,7 @@ namespace core{
             static cv::Mat* convertToHLS(const cv::Mat* src) throw (SDException&);
             static cv::Mat* getImageROI(const cv::Mat* src, uint roiWidth, uint roiHeight,
                                         const Pair<uint>& location) throw (SDException&);
-            static float getAvgChannelValue(const cv::Mat* src, 
+            static float getAvgChannelValue(const cv::Mat& src, 
                                             uchar channelIndex) throw (SDException&);
             static uchar getChannelValue(   const cv::Mat& image, uint x, uint y, 
                                             uchar channelIndex) throw (SDException&);

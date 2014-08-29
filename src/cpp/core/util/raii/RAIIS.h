@@ -37,22 +37,22 @@ namespace core{
                 }
             };
             
-            class ImageNewRaii{
-            private:
-                cv::Mat* image;
-                ImageNewRaii(){
-                    image = 0;
-                }
-            protected:
-            public:
-                ImageNewRaii(cv::Mat* img){
-                    image = img;
-                }
-                ~ImageNewRaii(){
-                    if (image != 0)
-                        delete image;
-                }
-            };
+//            class ImageNewRaii{
+//            private:
+//                cv::Mat* image;
+//                ImageNewRaii(){
+//                    image = 0;
+//                }
+//            protected:
+//            public:
+//                ImageNewRaii(cv::Mat* img){
+//                    image = img;
+//                }
+//                ~ImageNewRaii(){
+//                    if (image != 0)
+//                        delete image;
+//                }
+//            };
             
             class MutexRaii{
             private:
@@ -137,34 +137,34 @@ namespace core{
                 }
             };
             
-            template <typename T> class PointerRaii{
-            private:                                
-                T* pointer;                
-            protected:
-            public:
-                PointerRaii(){
-                    pointer = 0;
-                }
-                
-                PointerRaii(T* pt){
-                    pointer = pt;
-                }
-                
-                ~PointerRaii(){
-                    if (pointer)                        
-                        delete pointer;
-                }
-                
-                void setPointer(T* pt){
-                    if (pointer)
-                        delete pointer;
-                    pointer = pt;
-                }
-                
-                void deactivate(){
-                    pointer = 0;
-                }
-            };
+//            template <typename T> class PointerRaii{
+//            private:                                
+//                T* pointer;                
+//            protected:
+//            public:
+//                PointerRaii(){
+//                    pointer = 0;
+//                }
+//                
+//                PointerRaii(T* pt){
+//                    pointer = pt;
+//                }
+//                
+//                ~PointerRaii(){
+//                    if (pointer)                        
+//                        delete pointer;
+//                }
+//                
+//                void setPointer(T* pt){
+//                    if (pointer)
+//                        delete pointer;
+//                    pointer = pt;
+//                }
+//                
+//                void deactivate(){
+//                    pointer = 0;
+//                }
+//            };
             
         }
     }
