@@ -123,8 +123,7 @@ namespace skydetection{
                 }
             }
         }
-        processSegments();
-        imwrite("testSky.tif", *detectedImage);
+        processSegments();        
     }
     
     bool SkyDetection::isSky(Pair<uint> location) throw (SDException&){

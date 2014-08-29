@@ -23,7 +23,9 @@ namespace shadowdetection{
             using namespace core::util::raii;
 #ifdef _OPENCL
             using namespace shadowdetection::opencl;
-#endif
+#endif            
+            
+            REGISTER_CLASS(ImageShadowParameters, shadowdetection::tools::image)
             
             ImageShadowParameters::ImageShadowParameters(){
                 regionsAvgsSecondChannel = 0;

@@ -1349,7 +1349,7 @@
             <pElem>/opt/AMDAPP/include</pElem>
             <pElem>src/cpp</pElem>
           </incDir>
-          <commandLine>-O0 -fopenmp</commandLine>
+          <commandLine>-O0 -fopenmp -std=c++11</commandLine>
           <preprocessorList>
             <Elem>_AMD</Elem>
             <Elem>_DEBUG</Elem>

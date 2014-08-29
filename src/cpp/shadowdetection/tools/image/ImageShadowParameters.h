@@ -5,12 +5,14 @@
 #include "typedefs.h"
 #include "core/util/Matrix.h"
 #include "core/tools/image/IImageParameters.h"
+#include "core/util/rtti/RTTI.h"
 
 namespace shadowdetection{
     namespace tools{
         namespace image{
             
             class ImageShadowParameters : public core::tools::image::IImageParameteres{
+                PREPARE_REGISTRATION(ImageShadowParameters)
             private:
                 core::util::Matrix<float>* regionsAvgsSecondChannel;
                 int numOfSegments;

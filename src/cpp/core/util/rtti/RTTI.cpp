@@ -10,8 +10,17 @@ namespace core{
                 
             }
             
-            void* RTTI::getClassInstancePrivate(string className){
-                return 0;
+            void* RTTI::getClassInstancePrivate(string classID){
+                unordered_map<string, void*(*)()>::iterator iter = mappedInstancers.find(classID);
+                if (iter == mappedInstancers.end())
+                    return 0;
+                void*(*instancer)() = iter->second;
+                return instancer();
+            }
+            
+            int RTTI::registerClassWithInstancer(string classID, void*(*instanceFuinction)()){
+                mappedInstancers[classID] = instanceFuinction;
+                return 1;
             }
         }
     }
