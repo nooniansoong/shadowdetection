@@ -423,7 +423,7 @@ int main(int argc, char **argv) {
     OpenCLToolsTrain::getInstancePtr()->cleanUp();
 #endif
 #ifdef _DEBUG
-    string unallocated = MemTracker::getUnfree();
+    string unallocated = MemTracker::getUnfreed();
     cout << unallocated;
 #endif
     return 0;

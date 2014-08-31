@@ -41,7 +41,7 @@ namespace core{
             static void add(MemTrackerStruct ptr) throw(SDException&);
             static void remove(void* ptr) throw(SDException&);
             static void remove(const void* ptr) throw(SDException&);
-            static std::string getUnfree();
+            static std::string getUnfreed();
         };                
         
     }
