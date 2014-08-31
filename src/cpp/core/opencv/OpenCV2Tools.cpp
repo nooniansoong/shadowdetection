@@ -19,8 +19,8 @@ namespace core{
             height = image->size().height;
             width = image->size().width;
             channels = image->channels();
-            unsigned int* retArr = 0;
-            retArr = (uint*)MemMenager::allocate<uint>(height * width * channels);
+            uint* retArr = 0;
+            retArr = New uint[height * width * channels];
             if (retArr == 0){
                 SDException exc(SHADOW_NO_MEM, "Convert to HSI");
             }
@@ -56,7 +56,7 @@ namespace core{
                 int width = image->size().width;
                 int channels = image->channels();
                 uchar* retArr = 0;
-                retArr = MemMenager::allocate<uchar>(height * width * channels);
+                retArr = New uchar[height * width * channels];
                 if (retArr == 0){
                     SDException exc(SHADOW_NO_MEM, "Convert image to array");
                     throw exc;
@@ -87,7 +87,7 @@ namespace core{
             }
 
             Mat* image = 0;
-            image = new(nothrow) Mat(height, width, CV_8UC3, arr);
+            image = New Mat(height, width, CV_8UC3, arr);
             if (image == 0){
                 SDException exc(SHADOW_NO_MEM, "Convert array to image");
                 throw exc;
@@ -100,7 +100,7 @@ namespace core{
                 return 0;
             }
             Mat* image = 0;
-            image = new(nothrow) Mat(height, width, CV_8U, input);
+            image = New Mat(height, width, CV_8U, input);
             if (image == 0){
                 SDException exc(SHADOW_NO_MEM, "Get 8bit image");
                 throw exc;
@@ -110,7 +110,7 @@ namespace core{
         
         Mat* OpenCV2Tools::get8bitImage(int height, int width){
             Mat* image = 0;
-            image = new(nothrow) Mat(height, width, CV_8U);
+            image = New Mat(height, width, CV_8U);
             if (image == 0){
                 SDException exc(SHADOW_NO_MEM, "Get 8bit image");
                 throw exc;
@@ -120,7 +120,7 @@ namespace core{
         
         Mat* OpenCV2Tools::get24bitImage(int height, int width){
             Mat* image = 0;
-            image = new(nothrow) Mat(height, width, CV_8UC3);
+            image = New Mat(height, width, CV_8UC3);
             if (image == 0){
                 SDException exc(SHADOW_NO_MEM, "Get 24bit image");
                 throw exc;
@@ -133,7 +133,7 @@ namespace core{
                 return 0;
             }
             Mat* image = 0;
-            image = new(nothrow) Mat();
+            image = New Mat();
             if (image == 0){
                 SDException exc(SHADOW_NO_MEM, "binarize");
                 throw exc;
@@ -147,7 +147,7 @@ namespace core{
                 return 0;
             }
             Mat* image = 0;
-            image = new(nothrow) Mat();
+            image = New Mat();
             if (image == 0){
                 SDException exc(SHADOW_NO_MEM, "Join two");
                 throw exc;
@@ -201,7 +201,7 @@ namespace core{
             oclMat res;
             ocl::bitwise_or(oclSrc1, oclSrc2, res);
             Mat* image = 0;
-            image = new(nothrow) Mat(res);
+            image = New Mat(res);
             if (image == 0){
                 SDException exc(SHADOW_NO_MEM, "Join two ocl");
                 throw exc;
@@ -216,13 +216,13 @@ namespace core{
             oclMat oclSrc(*src);
             oclMat res;
             ocl::cvtColor(oclSrc, res, CV_BGR2HSV);
-            ret = new(nothrow) Mat(res);
+            ret = New Mat(res);
             if (ret == 0){
                 SDException exc(SHADOW_NO_MEM, "Convert to HSV");
                 throw exc;
             }            
 #else
-            ret = new(nothrow) Mat();
+            ret = New Mat();
             if (ret == 0){
                 SDException exc(SHADOW_NO_MEM, "Convert to HSV");
                 throw exc;
@@ -238,13 +238,13 @@ namespace core{
             oclMat oclSrc(*src);
             oclMat res;
             ocl::cvtColor(oclSrc, res, CV_BGR2HLS);
-            ret = new(nothrow) Mat(res);
+            ret = New Mat(res);
             if (ret == 0){
                 SDException exc(SHADOW_NO_MEM, "Convert to HSV");
                 throw exc;
             }            
 #else
-            ret = new(nothrow) Mat();
+            ret = New Mat();
             if (ret == 0){
                 SDException exc(SHADOW_NO_MEM, "Convert to HSV");
                 throw exc;
@@ -292,7 +292,7 @@ namespace core{
             int diffY = endY - startY;
             if (diffX <= 0 || diffY <= 0)
                 return 0;
-            Mat* retMat = new Mat(*src, Rect(startX, startY, diffX, diffY));
+            Mat* retMat = New Mat(*src, Rect(startX, startY, diffX, diffY));
             return retMat;
         }
         
@@ -392,7 +392,7 @@ namespace core{
                 unordered_set< Pair<uint>*, hash< Pair<uint>* >, eqKeyVal >::iterator iter = container.begin();
                 while (iter != container.end()) {
                     Pair<uint>* location = *iter;
-                    delete location;
+                    Delete(location);
                     iter++;
                 }
             }
@@ -439,18 +439,18 @@ namespace core{
             startY = clamp<int>(startY, 0, image.rows - 1);
             int endY = location->getSecond() + 1U;
             endY = clamp<int>(endY, 0, image.rows - 1);
-            vector< Pair<uint>* >* retVec = new vector< Pair<uint>* >();
+            vector< Pair<uint>* >* retVec = New vector< Pair<uint>* >();
             for (int i = startX; i <= endX; i++){
                 for (int j = startY; j <= endY; j++){
                     if ((uint)i != location->getFirst() || (uint)j != location->getSecond()){
                         uchar currentColor = OpenCV2Tools::getChannelValue(image, i, j, 0);
                         if (currentColor == color){
-                            Pair<uint>* nLocation = new Pair<uint>((uint)i, (uint)j);
+                            Pair<uint>* nLocation = New Pair<uint>((uint)i, (uint)j);
                             if (openList.contains(nLocation) == false && closedList.contains(nLocation) == false){
                                 retVec->push_back(nLocation);
                             }
                             else{
-                                delete nLocation;
+                                Delete(nLocation);
                             }
                         }
                     }
@@ -464,15 +464,15 @@ namespace core{
             uint pixel = OpenCV2Tools::getChannelValue(image, location, 0);
             if (pixel == color){
                 if (openList.contains(&location) == false && closedList.contains(&location) == false){
-                    Pair<uint>* locationCopy = new Pair<uint>(location);
+                    Pair<uint>* locationCopy = New Pair<uint>(location);
                     openList.push(locationCopy);
                     while (openList.size() > 0){
                         Pair<uint>* loc = openList.pop();
                         closedList.push(loc);
-                        vector< Pair<uint>* >* neighbours = getNeighbours(loc, image, openList, 
-                                                                            closedList, color);
-                        for (uint i = 0; i < neighbours->size(); i++){
-                            Pair<uint>* neighbour = (*neighbours)[i];
+                        UNIQUE_PTR(vector< Pair<uint>* >) neighboursPtr(getNeighbours(loc, image, openList, 
+                                                                            closedList, color));
+                        for (uint i = 0; i < neighboursPtr->size(); i++){
+                            Pair<uint>* neighbour = (*neighboursPtr)[i];
                             openList.push(neighbour);
                         }
                     }
@@ -502,7 +502,7 @@ namespace core{
                 SDException exc(SHADOW_INVALID_IMAGE_FORMAT, "OpenCV2Tools::getRegionsOfColor");
                 throw exc;
             }
-            list< unordered_set< Pair<uint> >* >* retList = new list< unordered_set< Pair<uint> >* >();
+            list< unordered_set< Pair<uint> >* >* retList = New list< unordered_set< Pair<uint> >* >();
             uint rows = image.rows;
             uint cols = image.cols;
             for (uint i = 0; i < rows; i++){
@@ -513,7 +513,7 @@ namespace core{
                         List openList;
                         List closedList;
                         doFloodFill(location, image, color, openList, closedList);
-                        unordered_set< Pair<uint> >* region = new unordered_set< Pair<uint> >();
+                        unordered_set< Pair<uint> >* region = New unordered_set< Pair<uint> >();
                         vector< Pair<uint>* > regionLocations = closedList.getElements();
                         for (uint k = 0; k < regionLocations.size(); k++){
                             region->insert(*regionLocations[k]);
@@ -538,11 +538,11 @@ namespace core{
                     SDException exc(SHADOW_NULL_POINTER, "OpenCV2Tools::destroySegments segment");
                     throw exc;
                 }
-                delete segment;
+                Delete(segment);
                 iter++;
             }
             segments->clear();
-            delete segments;
+            Delete(segments);
         }
 
     }

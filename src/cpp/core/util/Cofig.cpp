@@ -49,7 +49,7 @@ namespace core{
             try {
                 xml_document<> doc;
                 const char* constContent = xmlFileContent.c_str();
-                char* content = MemMenager::allocate<char>(strlen(constContent) + 1);
+                char* content = New char[strlen(constContent) + 1];
                 strcpy(content, constContent);
                 doc.parse<0>(content);
                 string currName = "";

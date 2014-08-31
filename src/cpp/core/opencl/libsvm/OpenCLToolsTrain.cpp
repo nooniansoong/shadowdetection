@@ -79,7 +79,7 @@ namespace core {
                 }
 
                 if (xMatrix){
-                    delete xMatrix;
+                    Delete(xMatrix);
                 }                        
 
                 if (clQD){
@@ -176,7 +176,7 @@ namespace core {
             }
 
             Matrix<double>* getValuesFromNodes(Matrix<svm_node>& nodes) {
-                Matrix<double>* retMat = new Matrix<double>(nodes.getWidth(), nodes.getHeight());
+                Matrix<double>* retMat = New Matrix<double>(nodes.getWidth(), nodes.getHeight());
                 for (int i = 0; i < nodes.getHeight(); i++) {
                     for (int j = 0; j < nodes.getWidth(); j++) {
                         (*retMat)[i][j] = nodes[i][j].value;
@@ -254,14 +254,14 @@ namespace core {
                 if (clX == 0 && x != 0) {
                     size_t size = sizeof (cl_double) * x->getWidth() * x->getHeight();
                     if (xMatrix)
-                        delete xMatrix;
+                        Delete(xMatrix);
                     xMatrix = getValuesFromNodes(*x);
                     clX = clCreateBuffer(context, flag2, size, (cl_double*) xMatrix->getVec(), &err);
                     err_check(err, "OpenCLToolsTrain::createBuffersSVM clCreateBufferCLX");
                 } else if (x != 0) {
                     if (xChanged) {
                         if (xMatrix)
-                            delete xMatrix;
+                            Delete(xMatrix);
                         xMatrix = getValuesFromNodes(*x);
                         size_t size = sizeof (cl_double) * x->getWidth() * x->getHeight();
                         err = clEnqueueWriteBuffer(command_queue, clX, CL_FALSE,

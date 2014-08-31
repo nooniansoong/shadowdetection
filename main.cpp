@@ -174,39 +174,39 @@ void processSingleCPU(const char* out, IplImage* image) {
  * @param imageNew
  */
 void processSingleOpenCL(const char* out, const Mat& image) {                
-    unique_ptr<Mat> hlsPtr(OpenCV2Tools::convertToHLS(&image));
+    UNIQUE_PTR(Mat) hlsPtr(OpenCV2Tools::convertToHLS(&image));
     if (hlsPtr.get() == 0){
         return;
     }    
     OpenclTools* oclt = OpenclTools::getInstancePtr();
-    unsigned char* buffer = OpenCV2Tools::convertImageToByteArray(&image, true);
-    VectorRaii bufferRaii(buffer);
-    unique_ptr<Mat> processedImagePtr;
+    uchar* buffer = OpenCV2Tools::convertImageToByteArray(&image, true);
+    VectorRaii<uchar> bufferRaii(buffer);
+    UNIQUE_PTR(Mat) processedImagePtr;
     bool usePrediction = false;
     string usePredStr = Config::getInstancePtr()->getPropertyValue("process.Prediction.usePrediction");
     if (usePredStr.compare("true") == 0)
         usePrediction = true;
     if (usePrediction == false){
         try {
-            processedImagePtr = unique_ptr<Mat>(oclt->processRGBImage(buffer, image.size().width, 
+            processedImagePtr = UNIQUE_PTR(Mat)(oclt->processRGBImage(buffer, image.size().width, 
                                             image.size().height, image.channels()));
         } catch (SDException& exception) {
             throw exception;
         }
     }
     else{
-        unique_ptr<Mat> piPtr(oclt->processRGBImage(buffer, image.size().width, image.size().height, image.channels()));
+        UNIQUE_PTR(Mat) piPtr(oclt->processRGBImage(buffer, image.size().width, image.size().height, image.channels()));
         if (piPtr.get()){            
             int pixCount;
             int parameterCount;
-            unique_ptr<IImageParameteres> ipPtr(createImageParameters());
+            UNIQUE_PTR(IImageParameteres) ipPtr(createImageParameters());
             
-            unique_ptr<Mat> hsvPtr(OpenCV2Tools::convertToHSV(&image));
+            UNIQUE_PTR(Mat) hsvPtr(OpenCV2Tools::convertToHSV(&image));
             if (hsvPtr.get() == 0){
                 return;
             }            
             
-            unique_ptr< Matrix<float> > parametersPtr(ipPtr->getImageParameters(image, *hsvPtr, *hlsPtr, 
+            UNIQUE_PTR(Matrix<float>) parametersPtr(ipPtr->getImageParameters(image, *hsvPtr, *hlsPtr, 
                                                                 parameterCount, pixCount));
             if (parametersPtr.get() != 0){                
                 IPrediction* predictor = getPredictor();
@@ -215,13 +215,13 @@ void processSingleOpenCL(const char* out, const Mat& image) {
                 }
                 uchar* predicted = predictor->predict(parametersPtr.get(), pixCount, parameterCount);
                 if (predicted){
-                    VectorRaii vraiiPred(predicted);
+                    VectorRaii<uchar> vraiiPred(predicted);
                     //FileSaver<uchar>::saveToFile("myPredictedOCL.out", predicted, pixCount);
                     for (int i = 0; i < pixCount; i++)
                         predicted[i] *= 255;
-                    unique_ptr<Mat> predictedImagePtr(  OpenCV2Tools::get8bitImage(predicted, 
+                    UNIQUE_PTR(Mat) predictedImagePtr(  OpenCV2Tools::get8bitImage(predicted, 
                                                         image.size().height, image.size().width));                    
-                    processedImagePtr = unique_ptr<Mat>(OpenCV2Tools::joinTwoOcl(*piPtr, *predictedImagePtr));
+                    processedImagePtr = UNIQUE_PTR(Mat)(OpenCV2Tools::joinTwoOcl(*piPtr, *predictedImagePtr));
                 }
                 else{
                     SDException e(SHADOW_CANT_PREDICT, "processSingleOpenCL");
@@ -421,6 +421,13 @@ int main(int argc, char **argv) {
     }
 #ifdef _OPENCL
     OpenclTools::getInstancePtr()->cleanUp();
+    OpenCLToolsPredict::getInstancePtr()->cleanUp();
+    OpenCLImageParameters::getInstancePtr()->cleanUp();
+    OpenCLToolsTrain::getInstancePtr()->cleanUp();
+#endif
+#ifdef _DEBUG
+    string unallocated = MemTracker::getUnallocated();
+    cout << unallocated;
 #endif
     return 0;
 }

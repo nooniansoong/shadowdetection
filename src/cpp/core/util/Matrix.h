@@ -1,6 +1,8 @@
 #ifndef __MATRIX_H__
 #define __MATRIX_H__
 
+#include "MemTracker.h"
+
 namespace core{
     namespace util{
         
@@ -81,8 +83,8 @@ namespace core{
         template <typename T> Matrix<T>::Matrix(T* const* mat, int width, int height){
             this->width = width;
             this->height = height;
-            vector = new T[height * width];
-            v = new Vector[height];
+            vector = New T[height * width];
+            v = New Vector[height];
             for (int i = 0; i < height; i++){
                 memcpy(vector + i * width, mat[i], width * sizeof(T));
                 v[i].setWidth(width);
@@ -94,8 +96,8 @@ namespace core{
         template <typename T> Matrix<T>::Matrix(const T* vec, int width, int height){
             this->width = width;
             this->height = height;
-            vector = new T[height * width];
-            v = new Vector[height];
+            vector = New T[height * width];
+            v = New Vector[height];
             memcpy(vector, vec, width * height * sizeof(T));
             for (int i = 0; i < height; i++){
                 v[i].setWidth(width);
@@ -106,8 +108,8 @@ namespace core{
         template <typename T> Matrix<T>::Matrix(int width, int height){
             this->width = width;
             this->height = height;
-            vector = new T[height * width];
-            v = new Vector[height];
+            vector = New T[height * width];
+            v = New Vector[height];
             for (int i = 0; i < height; i++){
                 v[i].setWidth(width);
                 v[i].setVec(vector + i * width);
@@ -116,17 +118,17 @@ namespace core{
         
         template <typename T> Matrix<T>::~Matrix(){
             if (vector)
-                delete[] vector;
+                DeleteArr(vector);
             if (v)
-                delete[] v;
+                DeleteArr(v);
         }
         
         template <typename T> void Matrix<T>::swap(int i, int j){
-            T* tmp = new T[width];
+            T* tmp = New T[width];
             memcpy(tmp, vector + (i * width), width * sizeof(T));
             memcpy(vector + (i * width), vector + (j * width), width * sizeof(T));
             memcpy(vector + (j * width), tmp, width * sizeof(T));
-            delete[] tmp;
+            DeleteArr(tmp);
             changed = true;
         }
         

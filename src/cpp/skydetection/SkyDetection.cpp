@@ -31,14 +31,14 @@ namespace skydetection{
     
     SkyDetection::SkyDetection(const Mat& originalImage){
         initBaseVariables();
-        this->originalImage = new Mat(originalImage);
+        this->originalImage = New Mat(originalImage);
     }
     
     SkyDetection::~SkyDetection(){
         if (originalImage != 0)
-            delete originalImage;
+            Delete(originalImage);
         if (detectedImage != 0)
-            delete detectedImage;
+            Delete(detectedImage);
     }
     
     Triple<float> SkyDetection::getMeanBGRValuesOfSegment(unordered_set< Pair<uint> >* segment){
@@ -101,7 +101,7 @@ namespace skydetection{
             SDException exc(SHADOW_INVALID_IMAGE_FORMAT, "SkyDetection::isSky");
             throw exc;
         }
-        unique_ptr<Mat> hlsImagePtr(OpenCV2Tools::convertToHLS(originalImage));
+        UNIQUE_PTR(Mat) hlsImagePtr(OpenCV2Tools::convertToHLS(originalImage));
         if (hlsImagePtr.get() == 0 || hlsImagePtr->data == 0){
             SDException exc(SHADOW_INVALID_IMAGE_FORMAT, "SkyDetection::isSky");
             throw exc;

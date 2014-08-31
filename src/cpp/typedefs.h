@@ -282,3 +282,5 @@ enum LIBSVM_CLASS_TYPE{
 
 #endif	/* TYPEDEFS_H */
 
+
+    

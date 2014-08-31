@@ -7,7 +7,7 @@
 
 #define PREPARE_REGISTRATION(CLASS_NAME) public:\
                                 static void* __getClassInstanceSPC(){\
-                                    return new CLASS_NAME();\
+                                    return New CLASS_NAME();\
                                 }    
 #define REGISTER_CLASS(CLASS_NAME, NAMESPACE)   static core::util::RTTI::RTTI* rtti = core::util::RTTI::RTTI::getInstancePtr();\
                                                 std::string clsIDISP = std::string(#NAMESPACE) + std::string("::") + std::string(#CLASS_NAME);\

@@ -62,7 +62,7 @@ namespace shadowdetection {
             int imageWidth = originalImage->cols;
             int imageHeight = originalImage->rows;            
             int numOfPixels = imageWidth * imageHeight;
-            Matrix<float>* retMat = new Matrix<float>(parameterCount, numOfPixels);
+            Matrix<float>* retMat = New Matrix<float>(parameterCount, numOfPixels);
             createBuffers(numOfPixels, parameterCount, originalImage,
                             hsvImage, hlsImage);
             setKernelArgs(parameterCount, numOfPixels);

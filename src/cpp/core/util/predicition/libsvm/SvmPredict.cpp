@@ -47,12 +47,12 @@ namespace core{
                     if (imagePixelsParameters == 0)
                         return 0;
 #ifndef _OPENCL                                
-                    ret = MemMenager::allocate<uchar>(pixCount);
+                    ret = MemTracker::allocate<uchar>(pixCount);
                     for (int i = 0; i < pixCount; i++) {
                         if (i % 1000 == 0)
                             cout << "Pix no: " << i << endl;
                         const float* x = (*imagePixelsParameters)[i];
-                        svm_node* nodes = MemMenager::allocate<svm_node>(parameterCount + 1);
+                        svm_node* nodes = MemTracker::allocate<svm_node>(parameterCount + 1);
                         for (int j = 0; j < parameterCount; j++) {
                             nodes[j].index = j + 1;
                             nodes[j].value = x[j];
@@ -61,7 +61,7 @@ namespace core{
                         nodes[parameterCount].value = 0.;
                         double val = svm_predict(model, nodes);
                         ret[i] = (uchar) round(val);
-                        MemMenager::delocate(nodes);
+                        MemTracker::delocate(nodes);
                     }
 #else
                     if (OpenCLToolsPredict::getInstancePtr()->hasInitialized() == false) {

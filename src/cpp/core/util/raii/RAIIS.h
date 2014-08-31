@@ -13,7 +13,7 @@
 #include <pthread.h>
 #include <fstream>
 #include "opencv2/core/core.hpp"
-#include "core/util/MemMenager.h"
+#include "core/util/MemTracker.h"
 
 
 namespace core{
@@ -50,7 +50,7 @@ namespace core{
 //                }
 //                ~ImageNewRaii(){
 //                    if (image != 0)
-//                        delete image;
+//                        Delete image;
 //                }
 //            };
             
@@ -92,37 +92,37 @@ namespace core{
             };
             
             /**allocate vector with MemMenager*/
-            class VectorRaii{
+            template<typename T> class VectorRaii{
             private:
+                T* vector;
+                
                 VectorRaii(){
                     vector = 0;
-                }
-                
-                void* vector;                
+                }                                
             protected:
             public:                                
-                VectorRaii(void* vec){
+                VectorRaii(T* vec){
                     vector = vec;
                 }
                 
                 ~VectorRaii(){
                     if (vector)                        
-                        core::util::MemMenager::delocate(vector);
+                        Delete(vector);
                 }                                
             };
             
             /**allocate vector and elements with MemMenager*/
-            class MatrixRaii{
+            template<typename T> class MatrixRaii{
             private:
+                T** matrix;
+                int dim;
+                
                 MatrixRaii(){
                     matrix = 0;
-                }
-                
-                void** matrix;
-                int dim;
+                }                                
             protected:
             public:
-                MatrixRaii(void** mat, int dimension){
+                MatrixRaii(T** mat, int dimension){
                     matrix = mat;
                     dim = dimension;
                 }
@@ -130,9 +130,9 @@ namespace core{
                 ~MatrixRaii(){
                     if (matrix != 0){
                         for (int i = 0; i < dim; i++){                            
-                            core::util::MemMenager::delocate(matrix[i]);
+                            Delete(matrix[i]);
                         }
-                        core::util::MemMenager::delocate(matrix);
+                        Delete(matrix);
                     }
                 }
             };
@@ -152,12 +152,12 @@ namespace core{
 //                
 //                ~PointerRaii(){
 //                    if (pointer)                        
-//                        delete pointer;
+//                        Delete pointer;
 //                }
 //                
 //                void setPointer(T* pt){
 //                    if (pointer)
-//                        delete pointer;
+//                        Delete pointer;
 //                    pointer = pt;
 //                }
 //                

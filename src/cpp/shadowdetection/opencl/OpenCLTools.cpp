@@ -50,9 +50,9 @@ namespace shadowdetection {
                 clReleaseMemObject(tsaiOutput);            
 
             if (ratios1)
-                MemMenager::delocate(ratios1);
+                Delete(ratios1);
             if (ratios2)
-                MemMenager::delocate(ratios2);                                    
+                Delete(ratios2);                                    
                                         
             initWorkVars();           
         }
@@ -177,7 +177,7 @@ namespace shadowdetection {
             clReleaseMemObject(hsi1Converted);
             hsi1Converted = 0;
             ratios1 = 0;
-            ratios1 = (uchar*)MemMenager::allocate<uchar>(width * height);
+            ratios1 = New uchar[width * height];
             if (ratios1 == 0) {
                 SDException exc(SHADOW_NO_MEM, "OpenclTools::processRGBImage Calculate ratios1");
                 throw exc;
@@ -189,9 +189,9 @@ namespace shadowdetection {
             
             Mat* ratiosImage1 = OpenCV2Tools::get8bitImage(ratios1, height, width);            
             Mat* binarized1 = OpenCV2Tools::binarize(ratiosImage1);            
-            MemMenager::delocate(ratios1);
+            Delete(ratios1);
             ratios1 = 0;
-            delete ratiosImage1;
+            Delete(ratiosImage1);
 
             local_ws = workGroupSize[1];
             global_ws = shrRoundUp(local_ws, width * height);
@@ -210,7 +210,7 @@ namespace shadowdetection {
             clReleaseMemObject(hsi2Converted);
             hsi2Converted = 0;
             ratios2 = 0;
-            ratios2 = (uchar*)MemMenager::allocate<uchar>(width * height);
+            ratios2 = New uchar[width * height];
             if (ratios2 == 0) {
                 SDException exc(SHADOW_NO_MEM, "OpenclTools::processRGBImage Calculate ratios2");
                 throw exc;
@@ -225,13 +225,13 @@ namespace shadowdetection {
             
             Mat* ratiosImage2 = OpenCV2Tools::get8bitImage(ratios2, height, width);            
             Mat* binarized2 = OpenCV2Tools::binarize(ratiosImage2);            
-            MemMenager::delocate(ratios2);
+            Delete(ratios2);
             ratios2 = 0;
-            delete ratiosImage2;
+            Delete(ratiosImage2);
             
             Mat* processedImageMat = OpenCV2Tools::joinTwoOcl(*binarized1, *binarized2);
-            delete binarized1;
-            delete binarized2;                        
+            Delete(binarized1);
+            Delete(binarized2);
             return processedImageMat;             
         }
         

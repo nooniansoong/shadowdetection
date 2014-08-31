@@ -1,7 +1,7 @@
 #include <memory>
 #include "ImageShadowParameters.h"
 #include "core/opencv/OpenCV2Tools.h"
-#include "core/util/MemMenager.h"
+#include "core/util/MemTracker.h"
 #include "core/util/raii/RAIIS.h"
 #include "core/util/Config.h"
 #ifdef _OPENCL
@@ -42,7 +42,7 @@ namespace shadowdetection{
                 for (int i = 0; i < arrsLen; i++) {
                     retSize += arrSize[i];
                 }
-                float* retArr = MemMenager::allocate<float>(retSize);
+                float* retArr = New float[retSize];
                 if (retArr){
                     int counter = 0;
                     retArr[counter] = label;
@@ -62,7 +62,7 @@ namespace shadowdetection{
                 for (int i = 0; i < arrsLen; i++) {
                     retSize += arrSize[i];
                 }
-                float* retArr = MemMenager::allocate<float>(retSize);
+                float* retArr = New float[retSize];
                 if (retArr){
                     int counter = -1;
                     for (int i = 0; i < arrsLen; i++) {
@@ -92,7 +92,7 @@ namespace shadowdetection{
                     SDException exc(SHADOW_DIFFERENT_IMAGES_SIZES, "ImageParameters::getImageParameters, MaskImage");
                     throw exc;    
                 }
-                unique_ptr< Matrix<float> > retPtr;                
+                UNIQUE_PTR(Matrix<float>) retPtr;                
                 int maskChan = maskImage.channels();
                 if (maskChan > 1){
                     SDException exc(SHADOW_INVALID_IMAGE_FORMAT, "ImageParameters::getImageParameters, MaskImage");
@@ -103,17 +103,17 @@ namespace shadowdetection{
                 int noLabelDataRowDimension;
                 int pixelCount;
                 
-                unique_ptr<Mat> hsvPtr(OpenCV2Tools::convertToHSV(&originalImage));
+                UNIQUE_PTR(Mat) hsvPtr(OpenCV2Tools::convertToHSV(&originalImage));
                 if (hsvPtr.get() == 0){
                     return 0;
                 }                
                 
-                unique_ptr<Mat> hlsPtr(OpenCV2Tools::convertToHLS(&originalImage));
+                UNIQUE_PTR(Mat) hlsPtr(OpenCV2Tools::convertToHLS(&originalImage));
                 if (hlsPtr.get() == 0){
                     return 0;
                 }                
                 
-                unique_ptr<const Matrix<float> > noLabelPtr(getImageParameters(originalImage, *hsvPtr, *hlsPtr,
+                UNIQUE_PTR(const Matrix<float>) noLabelPtr(getImageParameters(originalImage, *hsvPtr, *hlsPtr,
                                                                                 noLabelDataRowDimension, pixelCount));
                 if (noLabelPtr.get() != 0){                    
                     for (int i = 0; i < height; i++) {
@@ -130,9 +130,9 @@ namespace shadowdetection{
                             if (merged == 0){                                
                                 return 0;
                             }
-                            VectorRaii vraii(merged);
+                            VectorRaii<float> vraii(merged);
                             if (retPtr.get() == 0){
-                                retPtr = unique_ptr< Matrix<float> >(new Matrix<float>(mergedSize, width * height));                                
+                                retPtr = UNIQUE_PTR(Matrix<float>)(New Matrix<float>(mergedSize, width * height));                                
                             }
                             
                             (*retPtr)[i * width + j] = merged;                                                    
@@ -210,7 +210,7 @@ namespace shadowdetection{
                         }
                         VectorRaii vraii(merged);
                         if (ret == 0){
-                            ret = new Matrix<float>(mergedSize, width * height);
+                            ret = New Matrix<float>(mergedSize, width * height);
                             retRaii.setPointer(ret);
                         }
                                                 
@@ -228,7 +228,7 @@ namespace shadowdetection{
             
             float* ImageShadowParameters::processHSV(uchar H, uchar S, uchar V, int& size) {
                 size = HSV_PARAMETERS;
-                float* retArr = MemMenager::allocate<float>(size);
+                float* retArr = New float[size];
                 if (retArr != 0){
                 //180 is max in opencv for H
 //                    retArr[0] = (float) H / 180.f;
@@ -252,7 +252,7 @@ namespace shadowdetection{
 
             float* ImageShadowParameters::processHLS(uchar H, uchar L, uchar S, int& size) {
                 size = HLS_PARAMETERS;
-                float* retArr = MemMenager::allocate<float>(size);
+                float* retArr = New float[size];
                 if (retArr != 0){
                 //180 is max in opencv for H
 //                    retArr[0] = (float) H / 180.f;
@@ -276,7 +276,7 @@ namespace shadowdetection{
             
             float* ImageShadowParameters::processBGR(uchar B, uchar G, uchar R, int& size){
                 size = BGR_PARAMETERS;
-                float* retArr = MemMenager::allocate<float>(size);
+                float* retArr = New float[size];
                 if (retArr != 0){
                     retArr[0] = (float)B / 255.f;
                     retArr[0] = clamp<float>(retArr[0], 0.f, 1.f);
@@ -295,7 +295,7 @@ namespace shadowdetection{
             }
             
             Matrix<float>* ImageShadowParameters::getAvgChannelValForRegions(const Mat* originalImage, uchar channelIndex){                                                
-                regionsAvgsSecondChannel = new Matrix<float>(numOfSegments, numOfSegments);
+                regionsAvgsSecondChannel = New Matrix<float>(numOfSegments, numOfSegments);
                 segmentWidth = (float)originalImage->cols / (float)numOfSegments;
                 segmentHeight = (float)originalImage->rows / (float)numOfSegments;
                 for (int i = 0; i < numOfSegments; i++){
@@ -303,7 +303,7 @@ namespace shadowdetection{
                         float xStart = j * segmentWidth;
                         float yStart = i * segmentHeight;
                         Pair<uint> location((uint)xStart, (uint)yStart);
-                        unique_ptr<Mat> roiPtr(OpenCV2Tools::getImageROI(originalImage, segmentWidth, 
+                        UNIQUE_PTR(Mat) roiPtr(OpenCV2Tools::getImageROI(originalImage, segmentWidth, 
                                                             segmentHeight, location));
                         float avg = OpenCV2Tools::getAvgChannelValue(*roiPtr, channelIndex);
                         (*regionsAvgsSecondChannel)[i][j] = avg;                        
@@ -338,7 +338,7 @@ namespace shadowdetection{
                 proportion = atan(proportion / 3.f);
                 proportion = (proportion + M_PI_2) * M_1_PI;
                 proportion = clamp<float>(proportion, 0.f, 1.f);
-                float* ret = MemMenager::allocate<float>(1);
+                float* ret = New float[1];
                 ret[0] = proportion;
                 size = ROI_PARAMETERS;
                 return ret;
@@ -346,7 +346,7 @@ namespace shadowdetection{
             
             void ImageShadowParameters::reset(){
                 if (regionsAvgsSecondChannel)
-                    delete regionsAvgsSecondChannel;
+                    Delete(regionsAvgsSecondChannel);
                 regionsAvgsSecondChannel = 0;
                 numOfSegments = 1;
             }

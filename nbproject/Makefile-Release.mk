@@ -44,7 +44,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/cpp/core/tools/svm/TrainingSet.o \
 	${OBJECTDIR}/src/cpp/core/tools/svm/libsvmopenmp/svm-train.o \
 	${OBJECTDIR}/src/cpp/core/util/Cofig.o \
-	${OBJECTDIR}/src/cpp/core/util/MemMenager.o \
+	${OBJECTDIR}/src/cpp/core/util/MemTracker.o \
 	${OBJECTDIR}/src/cpp/core/util/ParametersFactory.o \
 	${OBJECTDIR}/src/cpp/core/util/PredictorFactory.o \
 	${OBJECTDIR}/src/cpp/core/util/TabParser.o \
@@ -130,10 +130,10 @@ ${OBJECTDIR}/src/cpp/core/util/Cofig.o: src/cpp/core/util/Cofig.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -I/usr/local/include/opencv -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/core/util/Cofig.o src/cpp/core/util/Cofig.cpp
 
-${OBJECTDIR}/src/cpp/core/util/MemMenager.o: src/cpp/core/util/MemMenager.cpp 
+${OBJECTDIR}/src/cpp/core/util/MemTracker.o: src/cpp/core/util/MemTracker.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/util
 	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/local/include/opencv -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/core/util/MemMenager.o src/cpp/core/util/MemMenager.cpp
+	$(COMPILE.cc) -O3 -I/usr/local/include/opencv -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/core/util/MemTracker.o src/cpp/core/util/MemTracker.cpp
 
 ${OBJECTDIR}/src/cpp/core/util/ParametersFactory.o: src/cpp/core/util/ParametersFactory.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/util

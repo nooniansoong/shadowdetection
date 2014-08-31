@@ -49,7 +49,7 @@
           <itemPath>src/cpp/core/util/Config.h</itemPath>
           <itemPath>src/cpp/core/util/FileSaver.h</itemPath>
           <itemPath>src/cpp/core/util/Matrix.h</itemPath>
-          <itemPath>src/cpp/core/util/MemMenager.h</itemPath>
+          <itemPath>src/cpp/core/util/MemTracker.h</itemPath>
           <itemPath>src/cpp/core/util/ParametersFactory.h</itemPath>
           <itemPath>src/cpp/core/util/PredictorFactory.h</itemPath>
           <itemPath>src/cpp/core/util/Singleton.h</itemPath>
@@ -137,7 +137,7 @@
             <itemPath>src/cpp/core/util/rtti/RTTI.cpp</itemPath>
           </logicalFolder>
           <itemPath>src/cpp/core/util/Cofig.cpp</itemPath>
-          <itemPath>src/cpp/core/util/MemMenager.cpp</itemPath>
+          <itemPath>src/cpp/core/util/MemTracker.cpp</itemPath>
           <itemPath>src/cpp/core/util/ParametersFactory.cpp</itemPath>
           <itemPath>src/cpp/core/util/PredictorFactory.cpp</itemPath>
           <itemPath>src/cpp/core/util/TabParser.cpp</itemPath>
@@ -307,9 +307,9 @@
       </item>
       <item path="src/cpp/core/util/Matrix.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/MemMenager.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/cpp/core/util/MemTracker.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
+      <item path="src/cpp/core/util/MemTracker.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/cpp/core/util/ParametersFactory.cpp"
             ex="false"
@@ -597,9 +597,9 @@
       </item>
       <item path="src/cpp/core/util/Matrix.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/MemMenager.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/cpp/core/util/MemTracker.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
+      <item path="src/cpp/core/util/MemTracker.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/cpp/core/util/ParametersFactory.cpp"
             ex="false"
@@ -881,9 +881,9 @@
       </item>
       <item path="src/cpp/core/util/Matrix.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/MemMenager.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/cpp/core/util/MemTracker.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
+      <item path="src/cpp/core/util/MemTracker.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/cpp/core/util/ParametersFactory.cpp"
             ex="false"
@@ -1170,9 +1170,9 @@
       </item>
       <item path="src/cpp/core/util/Matrix.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/MemMenager.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/cpp/core/util/MemTracker.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
+      <item path="src/cpp/core/util/MemTracker.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/cpp/core/util/ParametersFactory.cpp"
             ex="false"
@@ -1459,9 +1459,9 @@
       </item>
       <item path="src/cpp/core/util/Matrix.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/MemMenager.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/cpp/core/util/MemTracker.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
+      <item path="src/cpp/core/util/MemTracker.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/cpp/core/util/ParametersFactory.cpp"
             ex="false"
@@ -1751,9 +1751,9 @@
       </item>
       <item path="src/cpp/core/util/Matrix.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/MemMenager.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/cpp/core/util/MemTracker.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
+      <item path="src/cpp/core/util/MemTracker.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/cpp/core/util/ParametersFactory.cpp"
             ex="false"

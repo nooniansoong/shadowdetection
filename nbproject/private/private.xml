@@ -9,15 +9,12 @@
         <group>
             <file>file:/data/Dev/shadowdetection_0.7.0/src/cpp/typedefs.h</file>
             <file>file:/data/Dev/shadowdetection_0.7.0/main.cpp</file>
-            <file>file:/data/Dev/shadowdetection_0.7.0/src/cpp/core/opencv/OpenCV2Tools.cpp</file>
             <file>file:/data/Dev/shadowdetection_0.7.0/src/cpp/core/util/Matrix.h</file>
-            <file>file:/data/Dev/shadowdetection_0.7.0/src/cpp/core/opencl/OpenClToolsBase.h</file>
-            <file>file:/data/Dev/shadowdetection_0.7.0/src/cpp/skydetection/SkyDetection.cpp</file>
-            <file>file:/data/Dev/shadowdetection_0.7.0/src/cpp/core/util/rtti/RTTI.cpp</file>
-            <file>file:/data/Dev/shadowdetection_0.7.0/src/cpp/shadowdetection/tools/image/ImageShadowParameters.cpp</file>
-            <file>file:/data/Dev/shadowdetection_0.7.0/src/cpp/core/util/rtti/RTTI.h</file>
+            <file>file:/data/Dev/shadowdetection_0.7.0/src/cpp/core/opencv/OpenCV2Tools.cpp</file>
+            <file>file:/data/Dev/shadowdetection_0.7.0/src/cpp/core/util/Singleton.h</file>
+            <file>file:/data/Dev/shadowdetection_0.7.0/src/cpp/core/util/MemMenager.cpp</file>
+            <file>file:/data/Dev/shadowdetection_0.7.0/src/cpp/core/util/MemMenager.h</file>
             <file>file:/data/Dev/shadowdetection_0.7.0/src/cpp/core/opencl/OpenClToolsBase.cpp</file>
-            <file>file:/data/Dev/shadowdetection_0.7.0/src/cpp/core/tools/image/IImageParameters.h</file>
         </group>
     </open-files>
 </project-private>

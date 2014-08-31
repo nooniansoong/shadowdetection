@@ -42,7 +42,7 @@ namespace core {
                 OpenClBase::cleanUp();
                 
                 if (modelSVs)
-                    delete modelSVs;
+                    Delete(modelSVs);
                 if (clModelSVs){
                     err = clReleaseMemObject(clModelSVs);
                     err_check(err, "OpenclTools::cleanUp clModelSVs");
@@ -60,13 +60,13 @@ namespace core {
                     err_check(err, "OpenclTools::cleanUp clModelLabel");
                 }
                 if (svCoefs)
-                    delete svCoefs;            
+                    Delete(svCoefs);
                 if (clModelNsv){
                     err = clReleaseMemObject(clModelNsv);
                     err_check(err, "OpenclTools::cleanUp clModelNsv");
                 }
                 if (modelRHOs)
-                    MemMenager::delocate(modelRHOs);
+                    Delete(modelRHOs);
                 modelChanged = true;
                 
                 cleanWorkPart();
@@ -104,7 +104,7 @@ namespace core {
             Matrix<float>* convertSVs(svm_model* model) {
                 int height = model->l;
                 int width = getSVsWidth(model);
-                Matrix<float>* matrix = new Matrix<float>(width, height);
+                Matrix<float>* matrix = New Matrix<float>(width, height);
                 for (int i = 0; i < height; i++) {
                     for (int j = 0; j < width; j++) {
                         //(*matrix)[i][j].index = model->SV[i][j].index;
@@ -119,7 +119,7 @@ namespace core {
             Matrix<cl_float>* convertSVCoefs(svm_model* model) {
                 int width = model->l;
                 int height = model->nr_class - 1;
-                Matrix<cl_float>* matrix = new Matrix<cl_float>(width, height);
+                Matrix<cl_float>* matrix = New Matrix<cl_float>(width, height);
                 for (int i = 0; i < height; i++) {
                     for (int j = 0; j < width; j++) {
                         (*matrix)[i][j] = model->sv_coef[i][j];
@@ -130,7 +130,7 @@ namespace core {
 
             cl_float* convertRHO(svm_model* model) {
                 int count = model->nr_class * (model->nr_class - 1) / 2;
-                cl_float* retVec = MemMenager::allocate<cl_float>(count);
+                cl_float* retVec = New cl_float[count];
                 for (int i = 0; i < count; i++) {
                     retVec[i] = model->rho[i];
                 }
@@ -170,7 +170,7 @@ namespace core {
 
                 if (modelChanged) {
                     if (modelSVs != 0)
-                        delete modelSVs;
+                        Delete(modelSVs);
                     modelSVs = convertSVs(model);
                     size = modelSVs->getWidth() * model->l * sizeof (cl_float);
                     if (clModelSVs) {
@@ -181,7 +181,7 @@ namespace core {
                     err_check(err, "OpenclTools::createBuffersPredict clModelSVs");
 
                     if (svCoefs)
-                        delete svCoefs;
+                        Delete(svCoefs);
                     svCoefs = convertSVCoefs(model);
                     size = (model->nr_class - 1) * (model->l) * sizeof (cl_float);
                     if (clModelSVCoefs) {
@@ -194,7 +194,7 @@ namespace core {
                     int count = model->nr_class * (model->nr_class - 1) / 2;
                     size = count * sizeof (cl_float);
                     if (modelRHOs)
-                        MemMenager::delocate(modelRHOs);
+                        Delete(modelRHOs);
                     modelRHOs = convertRHO(model);
                     if (clModelRHO) {
                         err = clReleaseMemObject(clModelRHO);
@@ -308,7 +308,7 @@ namespace core {
                 err = clEnqueueNDRangeKernel(command_queue, kernel[0], 1, NULL, &global_ws, &local_ws, 0, NULL, NULL);
                 err_check(err, "OpenclTools::predict clEnqueueNDRangeKernel");
                 size_t size = parameters->getHeight() * sizeof(cl_uchar);
-                uchar* retVec = MemMenager::allocate<uchar>(parameters->getHeight());
+                uchar* retVec = New uchar[parameters->getHeight()];
                 err = clEnqueueReadBuffer(command_queue, clPredictResults, CL_TRUE, 0, size, retVec, 0, NULL, NULL);
                 err_check(err, "OpenclTools::predict clEnqueueReadBuffer");
                 clFlush(command_queue);
