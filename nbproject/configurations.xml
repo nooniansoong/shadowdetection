@@ -208,6 +208,9 @@
             <pElem>src/cpp</pElem>
           </incDir>
           <commandLine>-fopenmp -std=c++11</commandLine>
+          <preprocessorList>
+            <Elem>_DEBUG</Elem>
+          </preprocessorList>
         </ccTool>
         <linkerTool>
           <linkerAddLib>

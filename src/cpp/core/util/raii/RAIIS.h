@@ -37,23 +37,6 @@ namespace core{
                 }
             };
             
-//            class ImageNewRaii{
-//            private:
-//                cv::Mat* image;
-//                ImageNewRaii(){
-//                    image = 0;
-//                }
-//            protected:
-//            public:
-//                ImageNewRaii(cv::Mat* img){
-//                    image = img;
-//                }
-//                ~ImageNewRaii(){
-//                    if (image != 0)
-//                        Delete image;
-//                }
-//            };
-            
             class MutexRaii{
             private:
                 pthread_mutex_t* mutex;
@@ -107,7 +90,7 @@ namespace core{
                 
                 ~VectorRaii(){
                     if (vector)                        
-                        Delete(vector);
+                        DeleteArr(vector);
                 }                                
             };
             
@@ -130,41 +113,12 @@ namespace core{
                 ~MatrixRaii(){
                     if (matrix != 0){
                         for (int i = 0; i < dim; i++){                            
-                            Delete(matrix[i]);
+                            DeleteArr(matrix[i]);
                         }
-                        Delete(matrix);
+                        DeleteArr(matrix);
                     }
                 }
-            };
-            
-//            template <typename T> class PointerRaii{
-//            private:                                
-//                T* pointer;                
-//            protected:
-//            public:
-//                PointerRaii(){
-//                    pointer = 0;
-//                }
-//                
-//                PointerRaii(T* pt){
-//                    pointer = pt;
-//                }
-//                
-//                ~PointerRaii(){
-//                    if (pointer)                        
-//                        Delete pointer;
-//                }
-//                
-//                void setPointer(T* pt){
-//                    if (pointer)
-//                        Delete pointer;
-//                    pointer = pt;
-//                }
-//                
-//                void deactivate(){
-//                    pointer = 0;
-//                }
-//            };
+            };            
             
         }
     }

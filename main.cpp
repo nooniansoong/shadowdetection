@@ -97,26 +97,25 @@ void initOpenCL(){
  */
 void processSingleCPU(const char* out, IplImage* image) {    
     Mat imageMat(image);
-    Mat* hls = OpenCV2Tools::convertToHLS(&imageMat);
+    UNIQUE_PTR(Mat) hls(OpenCV2Tools::convertToHLS(&imageMat));
     if (hls == 0){
         return;
-    }
-    ImageNewRaii hlsRaii(hls);
+    }    
     
     IplImage* processedImage = 0;
     int height, width, channels;
-    unsigned int* hsi1 = OpenCvTools::convertImagetoHSI(image, height, width, channels, &OpenCvTools::RGBtoHSI_1);
-    VectorRaii vraiiHsi1(hsi1);
-    unsigned char* ratios1 = OpenCvTools::simpleTsai(hsi1, height, width, channels);
-    VectorRaii vraiiR1(ratios1);
+    uint* hsi1 = OpenCvTools::convertImagetoHSI(image, height, width, channels, &OpenCvTools::RGBtoHSI_1);
+    VectorRaii<uint> vraiiHsi1(hsi1);
+    uchar* ratios1 = OpenCvTools::simpleTsai(hsi1, height, width, channels);
+    VectorRaii<uchar> vraiiR1(ratios1);
     IplImage* ratiosImage1 = OpenCvTools::get8bitImage(ratios1, height, width);
     ImageRaii iariiR1(ratiosImage1);
     IplImage* binarized1 = OpenCvTools::binarize(ratiosImage1);
     ImageRaii iraiiBin1(binarized1);
-    unsigned int* hsi2 = OpenCvTools::convertImagetoHSI(image, height, width, channels, &OpenCvTools::RGBtoHSI_2);
-    VectorRaii vraiiHsi2(hsi2);
-    unsigned char* ratios2 = OpenCvTools::simpleTsai(hsi2, height, width, channels);
-    VectorRaii vraiiR2(ratios2);
+    uint* hsi2 = OpenCvTools::convertImagetoHSI(image, height, width, channels, &OpenCvTools::RGBtoHSI_2);
+    VectorRaii<uint> vraiiHsi2(hsi2);
+    uchar* ratios2 = OpenCvTools::simpleTsai(hsi2, height, width, channels);
+    VectorRaii<uchar> vraiiR2(ratios2);
     IplImage* ratiosImage2 = OpenCvTools::get8bitImage(ratios2, height, width);
     ImageRaii iraiiR2(ratiosImage2);
     IplImage* binarized2 = OpenCvTools::binarize(ratiosImage2);
@@ -132,22 +131,20 @@ void processSingleCPU(const char* out, IplImage* image) {
         int pixCount;
         int parameterCount;
         
-        Mat* hsv = OpenCV2Tools::convertToHSV(&imageMat);
+        UNIQUE_PTR(Mat) hsv(OpenCV2Tools::convertToHSV(&imageMat));
         if (hsv == 0){
             return;
-        }
-        ImageNewRaii hsvRaii(hsv);
+        }        
         
-        IImageParameteres* imageParameters = createImageParameters();
-        PointerRaii<IImageParameteres> imParametersRaii(imageParameters);
-        Matrix<float>* parameters = imageParameters->getImageParameters(imageMat, *hsv, *hls, 
-                                                                        parameterCount, pixCount);
+        UNIQUE_PTR(IImageParameteres) imageParameters(createImageParameters());        
+        UNIQUE_PTR(Matrix<float>) parameters(imageParameters->getImageParameters(imageMat, *hsv, *hls, 
+                                                                        parameterCount, pixCount));
         IPrediction* predictor = getPredictor();
         if (predictor->hasLoadedModel() == false){            
             predictor->loadModel();
         }
-        uchar* predicted = predictor->predict(parameters, pixCount, parameterCount);
-        VectorRaii vraii(predicted);        
+        uchar* predicted = predictor->predict(parameters.get(), pixCount, parameterCount);
+        VectorRaii<uchar> vraii(predicted);        
         for (int i = 0; i < pixCount; i++)
             predicted[i] *= 255;
         IplImage* predictedImage = OpenCvTools::get8bitImage(predicted, height, width);

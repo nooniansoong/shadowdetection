@@ -86,15 +86,14 @@ namespace core{
 #else
     #define New new
     #define Delete(P) delete P;
-    #define Delete[](P) DeleteArr P;
+    #define DeleteArr(P) delete[] P;
 #endif
 
-template<typename T> struct MemTrackerDeleter{
-  void operator()(T* b) 
-  { 
-      T* ptr = const_cast<T*>(b);
-      Delete(ptr); 
-  }
+template<typename T> struct MemTrackerDeleter {
+    void operator()(T* b) {
+        T* ptr = const_cast<T*> (b);
+        Delete(ptr);
+    }
 };
 
 #define UNIQUE_PTR(TYPE) unique_ptr< TYPE, MemTrackerDeleter< TYPE > >

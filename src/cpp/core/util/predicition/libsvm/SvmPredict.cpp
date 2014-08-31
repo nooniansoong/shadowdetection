@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 #include "thirdparty/lib_svm/svm.h"
 #include "SvmPredict.h"
 #ifdef _OPENCL
@@ -6,6 +7,7 @@
 #endif
 #include "core/util/Matrix.h"
 #include "core/util/Config.h"
+#include "core/util/MemTracker.h"
 
 namespace core{
     namespace util{
@@ -47,21 +49,20 @@ namespace core{
                     if (imagePixelsParameters == 0)
                         return 0;
 #ifndef _OPENCL                                
-                    ret = MemTracker::allocate<uchar>(pixCount);
+                    ret = New uchar[pixCount];
                     for (int i = 0; i < pixCount; i++) {
                         if (i % 1000 == 0)
                             cout << "Pix no: " << i << endl;
                         const float* x = (*imagePixelsParameters)[i];
-                        svm_node* nodes = MemTracker::allocate<svm_node>(parameterCount + 1);
+                        UNIQUE_PTR(svm_node) nodes(New svm_node[parameterCount + 1]);
                         for (int j = 0; j < parameterCount; j++) {
-                            nodes[j].index = j + 1;
-                            nodes[j].value = x[j];
+                            (nodes.get())[j].index = j + 1;
+                            (nodes.get())[j].value = x[j];
                         }
-                        nodes[parameterCount].index = -1;
-                        nodes[parameterCount].value = 0.;
-                        double val = svm_predict(model, nodes);
-                        ret[i] = (uchar) round(val);
-                        MemTracker::delocate(nodes);
+                        (nodes.get())[parameterCount].index = -1;
+                        (nodes.get())[parameterCount].value = 0.;
+                        double val = svm_predict(model, nodes.get());
+                        ret[i] = (uchar) round(val);                        
                     }
 #else
                     if (OpenCLToolsPredict::getInstancePtr()->hasInitialized() == false) {
