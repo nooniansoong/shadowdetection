@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<QsConfig>
+<EFConfig>
     <process>
         <!-- true, false -->
         <UseBatch>
@@ -15,7 +15,7 @@
         <Prediction>            
             <!-- true, false -->
             <usePrediction>
-                false
+                true
             </usePrediction>
             <!--SVM for support vector machine, REG for regresion-->
             <predictionType>
@@ -239,4 +239,4 @@
         </classes>
         
     </settings>
-</QsConfig>
+</EFConfig>
