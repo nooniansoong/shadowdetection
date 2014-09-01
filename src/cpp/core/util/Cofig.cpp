@@ -19,13 +19,15 @@ namespace core{
             
         }
         
-        string Config::getPropertyValue(const string& key){
+        string Config::getPropertyValue(const string& key) throw(SDException&){
             unordered_map<string, string>::iterator iter = mappedValues.find(key);
             if (iter != mappedValues.end()){
                 return iter->second;
             }
-            else 
-                return "";
+            else{ 
+                SDException exc(SHADOW_NOT_FOUND_PROPERTY, "Config::getPropertyValue: " + key);
+                throw exc;
+            }
         }
         void Config::init() {            
             string path = CONFIG_FILE;

@@ -13,7 +13,7 @@ namespace core{
     namespace util{
         IPrediction* getPredictor(){
             Config* conf = Config::getInstancePtr();
-            string type = conf->getPropertyValue("process.Prediction.predictionType");
+            string type = conf->getPropertyValue("general.Prediction.predictionType");
             if (type == "SVM"){
                 return SvmPredict::getInstancePtr();
             }

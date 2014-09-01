@@ -46,13 +46,14 @@ using namespace shadowdetection::tools::image;
 void handleException(const SDException& exception){
     const char* err = exception.what();
     cout << "Error: " << err << endl;
+    delete err;
 }
 
 void initOpenMP(){
 #if defined _OPENMP_MY
     omp_set_dynamic(0);
     int numThreads = 4;                    
-    string tnStr = Config::getInstancePtr()->getPropertyValue("settings.openMP.threadNum");
+    string tnStr = Config::getInstancePtr()->getPropertyValue("general.openMP.threadNum");
     int tmp = atoi(tnStr.c_str());
     if (tmp != 0)
         numThreads = tmp;
@@ -67,8 +68,8 @@ void initOpenCL(){
         int platformId = 0;
         int deviceId = 0;
         Config* conf = Config::getInstancePtr();
-        string platformStr = conf->getPropertyValue("settings.openCL.platformid");
-        string deviceStr = conf->getPropertyValue("settings.openCL.deviceid");
+        string platformStr = conf->getPropertyValue("general.openCL.platformid");
+        string deviceStr = conf->getPropertyValue("general.openCL.deviceid");
         int tmp = atoi(platformStr.c_str());
         if (tmp != 0)
             platformId = tmp;
@@ -122,7 +123,7 @@ void processSingleCPU(const char* out, IplImage* image) {
     ImageRaii iraiiBin2(binarized2);
     
     bool usePrediction = false;
-    string usePredStr = Config::getInstancePtr()->getPropertyValue("process.Prediction.usePrediction");
+    string usePredStr = Config::getInstancePtr()->getPropertyValue("general.Prediction.usePrediction");
     if (usePredStr.compare("true") == 0)
         usePrediction = true;
     if (usePrediction){
@@ -180,7 +181,7 @@ void processSingleOpenCL(const char* out, const Mat& image) {
     VectorRaii<uchar> bufferRaii(buffer);
     UNIQUE_PTR(Mat) processedImagePtr;
     bool usePrediction = false;
-    string usePredStr = Config::getInstancePtr()->getPropertyValue("process.Prediction.usePrediction");
+    string usePredStr = Config::getInstancePtr()->getPropertyValue("general.Prediction.usePrediction");
     if (usePredStr.compare("true") == 0)
         usePrediction = true;
     if (usePrediction == false){
@@ -358,7 +359,7 @@ int main(int argc, char **argv) {
     }
     
     Config* conf = Config::getInstancePtr();
-    string useBatch = conf->getPropertyValue("process.UseBatch");
+    string useBatch = conf->getPropertyValue("general.UseBatch");
     if (useBatch.compare("false") == 0){
         if (argc > 2) {
             char* path = argv[1];

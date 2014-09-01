@@ -56,7 +56,7 @@ namespace core{
              * @param key
              * @return 
              */
-            virtual std::string getPropertyValue(const std::string& key);
+            virtual std::string getPropertyValue(const std::string& key) throw(SDException&);
         };
 
     }

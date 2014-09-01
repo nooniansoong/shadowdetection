@@ -22,7 +22,7 @@ namespace shadowdetection{
             
             void ResultFixer::init() throw(SDException&){
                 Config* conf = Config::getInstancePtr();                                
-                string lThreshStr = conf->getPropertyValue("process.Thresholds.shadow.lValue");
+                string lThreshStr = conf->getPropertyValue("shadowDetection.Thresholds.lValue");
                 lThresh = (uchar)atoi(lThreshStr.c_str());
 //                string useThreshStr = conf->getPropertyValue("process.Thresholds.shadow.useThresh");
 //                useThresh = true;
