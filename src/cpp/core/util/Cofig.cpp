@@ -1,5 +1,6 @@
 #include "Config.h"
 #include <fstream>
+#include "core/util/raii/RAIIS.h"
 
 //#define ARRAY_KEY_TAG "array"
 //#define TYPE_KEY_TAG "type"
@@ -9,6 +10,7 @@ namespace core{
     namespace util{
         using namespace std;        
         using namespace rapidxml;
+        using namespace core::util::raii;
         
         Config::Config() : Singleton<Config>(){
             rootNodeProcessing = true;
@@ -52,6 +54,7 @@ namespace core{
                 xml_document<> doc;
                 const char* constContent = xmlFileContent.c_str();
                 char* content = New char[strlen(constContent) + 1];
+                VectorRaii<char> cntRaii(content);
                 strcpy(content, constContent);
                 doc.parse<0>(content);
                 string currName = "";
