@@ -217,13 +217,13 @@
                 
     </general>
     <shadowDetection>
+        <!-- tells whether to use or not thresholds bellow -->
         <useThresholds>
             true;
         </useThresholds>
-                    
-        <Thresholds>
-            <!-- threshold values for results correction -->            
-            
+        
+        <!-- threshold values for results correction -->            
+        <Thresholds>                                    
             <!-- maximum lightness value for shadow pixel. HSL color space.
             If pixel has bigger value then specified it can not be shadow pixel-->                
             <lValue>
@@ -232,16 +232,17 @@
             <!-- true, false -->            
         </Thresholds>
         
+        <!-- tells whether to use or not correction on sky areas in shadow
+        detection process -->
         <useSkyDetection>
             true
         </useSkyDetection>
         
     </shadowDetection>
     <skyDetection>
-        <Thresholds>
-            <!-- sky detection threshold values 
-            If pixel is detected as sky pixel then it can not be shadow pixel-->
-            
+        <!-- sky detection threshold values 
+        If useSkyDetection is true pixel detected as sky pixel then it can not be shadow pixel-->
+        <Thresholds>                        
             <!-- maximum R channel value for sky pixel -->
             <rValue>
                 51
