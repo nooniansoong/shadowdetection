@@ -94,7 +94,10 @@
                 <borderValue>
                     0.39
                 </borderValue>
-            </regression>            
+            </regression>
+            <parametersClass>
+                shadowdetection::tools::image::ImageShadowParameters
+            </parametersClass>            
         </Prediction>
         
         <openCL>            

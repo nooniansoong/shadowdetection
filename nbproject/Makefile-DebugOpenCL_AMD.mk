@@ -45,12 +45,11 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/cpp/core/tools/svm/libsvmopenmp/svm-train.o \
 	${OBJECTDIR}/src/cpp/core/util/Cofig.o \
 	${OBJECTDIR}/src/cpp/core/util/MemTracker.o \
-	${OBJECTDIR}/src/cpp/core/util/ParametersFactory.o \
-	${OBJECTDIR}/src/cpp/core/util/PredictorFactory.o \
 	${OBJECTDIR}/src/cpp/core/util/TabParser.o \
 	${OBJECTDIR}/src/cpp/core/util/Timer.o \
 	${OBJECTDIR}/src/cpp/core/util/predicition/libsvm/SvmPredict.o \
 	${OBJECTDIR}/src/cpp/core/util/predicition/regression/RegressionPredict.o \
+	${OBJECTDIR}/src/cpp/core/util/rtti/ObjectFactory.o \
 	${OBJECTDIR}/src/cpp/core/util/rtti/RTTI.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLImageParameters.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLTools.o \
@@ -135,16 +134,6 @@ ${OBJECTDIR}/src/cpp/core/util/MemTracker.o: src/cpp/core/util/MemTracker.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -D_AMD -D_DEBUG -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/core/util/MemTracker.o src/cpp/core/util/MemTracker.cpp
 
-${OBJECTDIR}/src/cpp/core/util/ParametersFactory.o: src/cpp/core/util/ParametersFactory.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/util
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Wall -D_AMD -D_DEBUG -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/core/util/ParametersFactory.o src/cpp/core/util/ParametersFactory.cpp
-
-${OBJECTDIR}/src/cpp/core/util/PredictorFactory.o: src/cpp/core/util/PredictorFactory.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/util
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Wall -D_AMD -D_DEBUG -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/core/util/PredictorFactory.o src/cpp/core/util/PredictorFactory.cpp
-
 ${OBJECTDIR}/src/cpp/core/util/TabParser.o: src/cpp/core/util/TabParser.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/util
 	${RM} "$@.d"
@@ -164,6 +153,11 @@ ${OBJECTDIR}/src/cpp/core/util/predicition/regression/RegressionPredict.o: src/c
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/util/predicition/regression
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -D_AMD -D_DEBUG -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/core/util/predicition/regression/RegressionPredict.o src/cpp/core/util/predicition/regression/RegressionPredict.cpp
+
+${OBJECTDIR}/src/cpp/core/util/rtti/ObjectFactory.o: src/cpp/core/util/rtti/ObjectFactory.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/util/rtti
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -D_AMD -D_DEBUG -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/core/util/rtti/ObjectFactory.o src/cpp/core/util/rtti/ObjectFactory.cpp
 
 ${OBJECTDIR}/src/cpp/core/util/rtti/RTTI.o: src/cpp/core/util/rtti/RTTI.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/util/rtti

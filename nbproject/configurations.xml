@@ -50,8 +50,6 @@
           <itemPath>src/cpp/core/util/FileSaver.h</itemPath>
           <itemPath>src/cpp/core/util/Matrix.h</itemPath>
           <itemPath>src/cpp/core/util/MemTracker.h</itemPath>
-          <itemPath>src/cpp/core/util/ParametersFactory.h</itemPath>
-          <itemPath>src/cpp/core/util/PredictorFactory.h</itemPath>
           <itemPath>src/cpp/core/util/Singleton.h</itemPath>
           <itemPath>src/cpp/core/util/TabParser.h</itemPath>
           <itemPath>src/cpp/core/util/Timer.h</itemPath>
@@ -134,12 +132,11 @@
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="rtti" displayName="rtti" projectFiles="true">
+            <itemPath>src/cpp/core/util/rtti/ObjectFactory.cpp</itemPath>
             <itemPath>src/cpp/core/util/rtti/RTTI.cpp</itemPath>
           </logicalFolder>
           <itemPath>src/cpp/core/util/Cofig.cpp</itemPath>
           <itemPath>src/cpp/core/util/MemTracker.cpp</itemPath>
-          <itemPath>src/cpp/core/util/ParametersFactory.cpp</itemPath>
-          <itemPath>src/cpp/core/util/PredictorFactory.cpp</itemPath>
           <itemPath>src/cpp/core/util/TabParser.cpp</itemPath>
           <itemPath>src/cpp/core/util/Timer.cpp</itemPath>
         </logicalFolder>
@@ -314,26 +311,6 @@
       </item>
       <item path="src/cpp/core/util/MemTracker.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/ParametersFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/ParametersFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/PredictorFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/PredictorFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/cpp/core/util/Singleton.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/cpp/core/util/TabParser.cpp" ex="false" tool="1" flavor2="0">
@@ -370,6 +347,11 @@
             flavor2="0">
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/ObjectFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="src/cpp/core/util/rtti/ObjectFactory.h"
             ex="false"
@@ -604,26 +586,6 @@
       </item>
       <item path="src/cpp/core/util/MemTracker.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/ParametersFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/ParametersFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/PredictorFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/PredictorFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/cpp/core/util/Singleton.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/cpp/core/util/TabParser.cpp" ex="false" tool="1" flavor2="0">
@@ -660,6 +622,11 @@
             flavor2="0">
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/ObjectFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="src/cpp/core/util/rtti/ObjectFactory.h"
             ex="false"
@@ -888,26 +855,6 @@
       </item>
       <item path="src/cpp/core/util/MemTracker.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/ParametersFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/ParametersFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/PredictorFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/PredictorFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/cpp/core/util/Singleton.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/cpp/core/util/TabParser.cpp" ex="false" tool="1" flavor2="0">
@@ -944,6 +891,11 @@
             flavor2="0">
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/ObjectFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="src/cpp/core/util/rtti/ObjectFactory.h"
             ex="false"
@@ -1177,26 +1129,6 @@
       </item>
       <item path="src/cpp/core/util/MemTracker.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/ParametersFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/ParametersFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/PredictorFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/PredictorFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/cpp/core/util/Singleton.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/cpp/core/util/TabParser.cpp" ex="false" tool="1" flavor2="0">
@@ -1233,6 +1165,11 @@
             flavor2="0">
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/ObjectFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="src/cpp/core/util/rtti/ObjectFactory.h"
             ex="false"
@@ -1466,26 +1403,6 @@
       </item>
       <item path="src/cpp/core/util/MemTracker.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/ParametersFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/ParametersFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/PredictorFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/PredictorFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/cpp/core/util/Singleton.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/cpp/core/util/TabParser.cpp" ex="false" tool="1" flavor2="0">
@@ -1522,6 +1439,11 @@
             flavor2="0">
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/ObjectFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="src/cpp/core/util/rtti/ObjectFactory.h"
             ex="false"
@@ -1758,26 +1680,6 @@
       </item>
       <item path="src/cpp/core/util/MemTracker.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/ParametersFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/ParametersFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/PredictorFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/PredictorFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/cpp/core/util/Singleton.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/cpp/core/util/TabParser.cpp" ex="false" tool="1" flavor2="0">
@@ -1814,6 +1716,11 @@
             flavor2="0">
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/ObjectFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="src/cpp/core/util/rtti/ObjectFactory.h"
             ex="false"

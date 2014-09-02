@@ -17,15 +17,15 @@
 #include "core/tools/svm/libsvmopenmp/svm-train.h"
 #include "core/tools/image/IImageParameters.h"
 #include "core/util/Matrix.h"
-#include "core/util/PredictorFactory.h"
+#include "core/util/rtti/ObjectFactory.h"
 #if defined _OPENMP_MY
 #include <omp.h>
 #endif
 #include "shadowdetection/tools/image/ResultFixer.h"
-#include "core/util/ParametersFactory.h"
 #include "core/opencl/libsvm/OpenCLToolsPredict.h"
 #include "shadowdetection/opencl/OpenCLImageParameters.h"
 #include "core/opencl/libsvm/OpenCLToolsTrain.h"
+#include "core/util/predicition/IPrediction.h"
 
 using namespace std;
 #ifdef _OPENCL
@@ -42,6 +42,7 @@ using namespace core::util::prediction;
 using namespace core::tools::image;
 using namespace core::tools::svm::libsvmopenmp;
 using namespace shadowdetection::tools::image;
+using namespace core::util::RTTI;
 
 void handleException(const SDException& exception){
     const char* err = exception.what();
@@ -197,7 +198,7 @@ void processSingleOpenCL(const char* out, const Mat& image) {
         if (piPtr.get()){            
             int pixCount;
             int parameterCount;
-            UNIQUE_PTR(IImageParameteres) ipPtr(createImageParameters());
+            UNIQUE_PTR(IImageParameteres) ipPtr(ObjectFactory::getInstancePtr()->createImageParameters());
             
             UNIQUE_PTR(Mat) hsvPtr(OpenCV2Tools::convertToHSV(&image));
             if (hsvPtr.get() == 0){
@@ -207,7 +208,7 @@ void processSingleOpenCL(const char* out, const Mat& image) {
             UNIQUE_PTR(Matrix<float>) parametersPtr(ipPtr->getImageParameters(image, *hsvPtr, *hlsPtr, 
                                                                 parameterCount, pixCount));
             if (parametersPtr.get() != 0){                
-                IPrediction* predictor = getPredictor();
+                IPrediction* predictor = ObjectFactory::getInstancePtr()->createPredictor();
                 if (predictor->hasLoadedModel() == false){                    
                     predictor->loadModel();
                 }
