@@ -41,6 +41,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/cpp/core/opencl/libsvm/OpenCLToolsTrain.o \
 	${OBJECTDIR}/src/cpp/core/opencv/OpenCV2Tools.o \
 	${OBJECTDIR}/src/cpp/core/opencv/OpenCVTools.o \
+	${OBJECTDIR}/src/cpp/core/process/MakeSetProcessor.o \
+	${OBJECTDIR}/src/cpp/core/process/TrainingProcessor.o \
 	${OBJECTDIR}/src/cpp/core/tools/svm/TrainingSet.o \
 	${OBJECTDIR}/src/cpp/core/tools/svm/libsvmopenmp/svm-train.o \
 	${OBJECTDIR}/src/cpp/core/util/Cofig.o \
@@ -54,6 +56,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLImageParameters.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLTools.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsImage.o \
+	${OBJECTDIR}/src/cpp/shadowdetection/process/ShadowDetectionProcessor.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/tools/image/ImageShadowParameters.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/tools/image/ResultFixer.o \
 	${OBJECTDIR}/src/cpp/skydetection/SkyDetection.o \
@@ -113,6 +116,16 @@ ${OBJECTDIR}/src/cpp/core/opencv/OpenCVTools.o: src/cpp/core/opencv/OpenCVTools.
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/opencv
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -std=c++11 -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/core/opencv/OpenCVTools.o src/cpp/core/opencv/OpenCVTools.cpp
+
+${OBJECTDIR}/src/cpp/core/process/MakeSetProcessor.o: src/cpp/core/process/MakeSetProcessor.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/process
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -std=c++11 -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/core/process/MakeSetProcessor.o src/cpp/core/process/MakeSetProcessor.cpp
+
+${OBJECTDIR}/src/cpp/core/process/TrainingProcessor.o: src/cpp/core/process/TrainingProcessor.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/process
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -std=c++11 -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/core/process/TrainingProcessor.o src/cpp/core/process/TrainingProcessor.cpp
 
 ${OBJECTDIR}/src/cpp/core/tools/svm/TrainingSet.o: src/cpp/core/tools/svm/TrainingSet.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/tools/svm
@@ -178,6 +191,11 @@ ${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsImage.o: src/cpp/shadowde
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/opencl
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -std=c++11 -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsImage.o src/cpp/shadowdetection/opencl/OpenCLToolsImage.cpp
+
+${OBJECTDIR}/src/cpp/shadowdetection/process/ShadowDetectionProcessor.o: src/cpp/shadowdetection/process/ShadowDetectionProcessor.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/process
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -std=c++11 -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/process/ShadowDetectionProcessor.o src/cpp/shadowdetection/process/ShadowDetectionProcessor.cpp
 
 ${OBJECTDIR}/src/cpp/shadowdetection/tools/image/ImageShadowParameters.o: src/cpp/shadowdetection/tools/image/ImageShadowParameters.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/tools/image

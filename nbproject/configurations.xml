@@ -16,6 +16,11 @@
           <itemPath>src/cpp/core/opencv/OpenCV2Tools.h</itemPath>
           <itemPath>src/cpp/core/opencv/OpenCVTools.h</itemPath>
         </logicalFolder>
+        <logicalFolder name="process" displayName="process" projectFiles="true">
+          <itemPath>src/cpp/core/process/IProcessor.h</itemPath>
+          <itemPath>src/cpp/core/process/MakeSetProcessor.h</itemPath>
+          <itemPath>src/cpp/core/process/TrainingProcessor.h</itemPath>
+        </logicalFolder>
         <logicalFolder name="tools" displayName="tools" projectFiles="true">
           <logicalFolder name="image" displayName="image" projectFiles="true">
             <itemPath>src/cpp/core/tools/image/IImageParameters.h</itemPath>
@@ -61,6 +66,9 @@
         <logicalFolder name="opencl" displayName="opencl" projectFiles="true">
           <itemPath>src/cpp/shadowdetection/opencl/OpenCLImageParameters.h</itemPath>
           <itemPath>src/cpp/shadowdetection/opencl/OpenCLTools.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="process" displayName="process" projectFiles="true">
+          <itemPath>src/cpp/shadowdetection/process/ShadowDetectionProcessor.h</itemPath>
         </logicalFolder>
         <logicalFolder name="tools" displayName="tools" projectFiles="true">
           <logicalFolder name="image" displayName="image" projectFiles="true">
@@ -112,6 +120,10 @@
           <itemPath>src/cpp/core/opencv/OpenCV2Tools.cpp</itemPath>
           <itemPath>src/cpp/core/opencv/OpenCVTools.cpp</itemPath>
         </logicalFolder>
+        <logicalFolder name="process" displayName="process" projectFiles="true">
+          <itemPath>src/cpp/core/process/MakeSetProcessor.cpp</itemPath>
+          <itemPath>src/cpp/core/process/TrainingProcessor.cpp</itemPath>
+        </logicalFolder>
         <logicalFolder name="tools" displayName="tools" projectFiles="true">
           <logicalFolder name="svm" displayName="svm" projectFiles="true">
             <logicalFolder name="libsvmopenmp"
@@ -153,6 +165,9 @@
           <itemPath>src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp</itemPath>
           <itemPath>src/cpp/shadowdetection/opencl/OpenCLTools.cpp</itemPath>
           <itemPath>src/cpp/shadowdetection/opencl/OpenCLToolsImage.cpp</itemPath>
+        </logicalFolder>
+        <logicalFolder name="process" displayName="process" projectFiles="true">
+          <itemPath>src/cpp/shadowdetection/process/ShadowDetectionProcessor.cpp</itemPath>
         </logicalFolder>
         <logicalFolder name="tools" displayName="tools" projectFiles="true">
           <logicalFolder name="image" displayName="image" projectFiles="true">
@@ -273,6 +288,28 @@
             flavor2="0">
       </item>
       <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/IProcessor.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/MakeSetProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/MakeSetProcessor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/TrainingProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/TrainingProcessor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/cpp/core/tools/image/IImageParameters.h"
             ex="false"
@@ -398,6 +435,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/regression_predict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/process/ShadowDetectionProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/process/ShadowDetectionProcessor.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -549,6 +596,28 @@
       </item>
       <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/process/IProcessor.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/MakeSetProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/MakeSetProcessor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/TrainingProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/TrainingProcessor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/tools/image/IImageParameters.h"
             ex="false"
             tool="3"
@@ -673,6 +742,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/regression_predict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/process/ShadowDetectionProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/process/ShadowDetectionProcessor.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -818,6 +897,28 @@
       </item>
       <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/process/IProcessor.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/MakeSetProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/MakeSetProcessor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/TrainingProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/TrainingProcessor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/tools/image/IImageParameters.h"
             ex="false"
             tool="3"
@@ -942,6 +1043,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/regression_predict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/process/ShadowDetectionProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/process/ShadowDetectionProcessor.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1092,6 +1203,28 @@
       </item>
       <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/process/IProcessor.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/MakeSetProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/MakeSetProcessor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/TrainingProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/TrainingProcessor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/tools/image/IImageParameters.h"
             ex="false"
             tool="3"
@@ -1216,6 +1349,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/regression_predict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/process/ShadowDetectionProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/process/ShadowDetectionProcessor.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1366,6 +1509,28 @@
       </item>
       <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/process/IProcessor.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/MakeSetProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/MakeSetProcessor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/TrainingProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/TrainingProcessor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/tools/image/IImageParameters.h"
             ex="false"
             tool="3"
@@ -1490,6 +1655,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/regression_predict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/process/ShadowDetectionProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/process/ShadowDetectionProcessor.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1643,6 +1818,28 @@
       </item>
       <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/process/IProcessor.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/MakeSetProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/MakeSetProcessor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/TrainingProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/TrainingProcessor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/tools/image/IImageParameters.h"
             ex="false"
             tool="3"
@@ -1767,6 +1964,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/regression_predict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/process/ShadowDetectionProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/process/ShadowDetectionProcessor.h"
             ex="false"
             tool="3"
             flavor2="0">

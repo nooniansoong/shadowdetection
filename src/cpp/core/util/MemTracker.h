@@ -73,10 +73,10 @@ namespace core{
         throw 0;
     }
     
-    inline void operator delete (void * p, const char* file, int line){        
+    inline void operator delete(void * p, const char* file, int line){        
     }
     
-    inline void operator delete[] (void * p, const char* file, int line){        
+    inline void operator delete[](void * p, const char* file, int line){        
     }
     #define New new(__FILE__, __LINE__)
     #define Delete(P) core::util::MemTracker::remove(P); delete P;
