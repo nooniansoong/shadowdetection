@@ -225,6 +225,10 @@ namespace shadowdetection {
             OpenclTools::getInstancePtr()->cleanUp();            
             OpenCLToolsPredict::getInstancePtr()->cleanUp();
             OpenCLImageParameters::getInstancePtr()->cleanUp();
+            OpenclTools::destroy();            
+            OpenCLToolsPredict::destroy();
+            OpenCLImageParameters::destroy();
+            Config::destroy();
 #endif
         }
         
@@ -271,7 +275,7 @@ namespace shadowdetection {
         }
 
         ShadowDetectionProcessor::~ShadowDetectionProcessor() {
-
+            cleanUp();
         }
 
         void ShadowDetectionProcessor::init() throw (SDException&) {

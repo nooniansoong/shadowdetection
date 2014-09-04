@@ -5,6 +5,14 @@
 #include "core/util/Singleton.h"
 #include "core/util/rtti/RTTI.h"
 
+namespace core{
+    namespace util{
+        namespace prediction{
+            class IPrediction;
+        }
+    }
+}
+
 namespace shadowdetection{
     namespace process{
         
@@ -13,6 +21,7 @@ namespace shadowdetection{
             friend class core::util::Singleton<ShadowDetectionProcessor>;
         PREPARE_REGISTRATION(ShadowDetectionProcessor)
         private:
+            core::util::prediction::IPrediction* currPrediction;
         protected:
             ShadowDetectionProcessor();
         public:

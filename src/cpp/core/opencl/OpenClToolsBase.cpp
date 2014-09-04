@@ -28,6 +28,9 @@ namespace core{
             kernel          = 0;
             workGroupSize   = 0;
             kernelCount     = 0;
+            program         = 0;
+            context         = 0;
+            command_queue   = 0;
         }
         
         void OpenClBase::cleanUp(){            
