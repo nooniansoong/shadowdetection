@@ -230,10 +230,18 @@ public:
         excCode = code;
         this->location = location;        
     }
+    
     virtual const char* what() const throw () {
         std::string retStr = ExceptionStrings[excCode] + " " + location;
         char* ret = new char[retStr.length() + 1];
         strcpy(ret, retStr.c_str());
+        return ret;
+    }
+    
+    std::string handleException(){
+        const char* err = this->what();
+        std::string ret(err);
+        delete err;
         return ret;
     }
 };
