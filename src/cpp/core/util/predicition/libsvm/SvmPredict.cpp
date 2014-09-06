@@ -19,7 +19,7 @@ namespace core{
                 using namespace core::opencl::libsvm;
 #endif
                 
-                //REGISTER_SINGLETON(SvmPredict, core::util::prediction::svm)
+                REGISTER_SINGLETON(SvmPredict, core::util::prediction::svm)
                 
                 SvmPredict::SvmPredict() {
                     model = 0;
