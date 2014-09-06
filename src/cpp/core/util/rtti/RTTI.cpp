@@ -4,24 +4,27 @@ namespace core{
     namespace util{
         namespace RTTI{
             
-            using namespace std;
+            using namespace std;                        
             
-            RTTI::RTTI() : Singleton<RTTI>(){
+            RTTI::RTTI(){
                 
             }
             
-            void* RTTI::getClassInstancePrivate(string classID){
-                unordered_map<string, void*(*)()>::iterator iter = mappedInstancers.find(classID);
-                if (iter == mappedInstancers.end())
-                    return 0;
-                void*(*instancer)() = iter->second;
-                return instancer();
+            bool RTTI::isSingleton(){
+                
             }
             
-            int RTTI::registerClassWithInstancer(string classID, void*(*instanceFuinction)()){
-                mappedInstancers[classID] = instanceFuinction;
-                return 1;
+            int RTTI::setSingleton(bool value){
+                
             }
+            
+            int RTTI::setInstancer(void*(*instancer)()){
+                
+            }                        
+            
+            void* RTTI::getClassInstance(){
+                
+            }                                    
         }
     }
 }

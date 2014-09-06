@@ -3,6 +3,7 @@
 
 #include "core/util/Singleton.h"
 #include "core/util/predicition/IPrediction.h"
+#include "core/util/rtti/ObjectFactory.h"
 
 struct svm_model;
 
@@ -13,10 +14,11 @@ namespace core{
 
                 class SvmPredict : public IPrediction, public core::util::Singleton<SvmPredict> {
                     friend class core::util::Singleton<SvmPredict>;
+                    PREPARE_REGISTRATION(SvmPredict)
                 private:
                     svm_model* model;
-                    SvmPredict();
                 protected:
+                    SvmPredict();
                 public:
                     virtual ~SvmPredict();
                     virtual void loadModel() throw(SDException&);

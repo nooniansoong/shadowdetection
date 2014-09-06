@@ -5,38 +5,35 @@
 #include <unordered_map>
 #include "core/util/Singleton.h"
 
-#define PREPARE_REGISTRATION(CLASS_NAME) public:\
-                                static void* __getClassInstanceSPC(){\
-                                    return New CLASS_NAME();\
-                                }    
-#define REGISTER_CLASS(CLASS_NAME, NAMESPACE)   static core::util::RTTI::RTTI* rtti = core::util::RTTI::RTTI::getInstancePtr();\
-                                                std::string clsIDISP = std::string(#NAMESPACE) + std::string("::") + std::string(#CLASS_NAME);\
-                                                int a = rtti->registerClassWithInstancer(clsIDISP, &CLASS_NAME::__getClassInstanceSPC);
-
-
 namespace core{
     namespace util{
         namespace RTTI{
             
-            class RTTI : public Singleton<RTTI>{
-                friend class Singleton<RTTI>;
-            private:
-                std::unordered_map<std::string, void*(*)()> mappedInstancers;
+            class RTTI{                
+            private:                
             protected:
-                RTTI();
-                void* getClassInstancePrivate(std::string classID);
+                void*(*mappedInstancer)();
+                bool singleton;
             public:
-                virtual ~RTTI(){}
-                
-                template<typename T> T* getClassInstance(std::string classID){
-                    void* tmp = getClassInstancePrivate(classID);
-                    if (tmp == 0)
-                        return 0;
-                    T* retPointer = static_cast<T*>(tmp);
-                    return retPointer;
+                RTTI(){};
+                virtual ~RTTI(){}                                
+                bool isSingleton(){
+                    return singleton;
                 }
                 
-                int registerClassWithInstancer(std::string classID, void*(*instanceFuinction)());
+                int setSingleton(bool value){
+                    singleton = value;
+                    return 0;
+                }
+                
+                void* getClassInstance(){
+                    return mappedInstancer();
+                }
+                
+                int setInstancer(void*(*instancer)()){
+                    mappedInstancer = instancer;
+                    return 0;
+                }                                
             };
             
         }

@@ -52,7 +52,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/cpp/core/util/predicition/libsvm/SvmPredict.o \
 	${OBJECTDIR}/src/cpp/core/util/predicition/regression/RegressionPredict.o \
 	${OBJECTDIR}/src/cpp/core/util/rtti/ObjectFactory.o \
-	${OBJECTDIR}/src/cpp/core/util/rtti/RTTI.o \
+	${OBJECTDIR}/src/cpp/core/util/rtti/RTTIStorage.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLImageParameters.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLTools.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsImage.o \
@@ -172,10 +172,10 @@ ${OBJECTDIR}/src/cpp/core/util/rtti/ObjectFactory.o: src/cpp/core/util/rtti/Obje
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -I/usr/local/include/opencv -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/core/util/rtti/ObjectFactory.o src/cpp/core/util/rtti/ObjectFactory.cpp
 
-${OBJECTDIR}/src/cpp/core/util/rtti/RTTI.o: src/cpp/core/util/rtti/RTTI.cpp 
+${OBJECTDIR}/src/cpp/core/util/rtti/RTTIStorage.o: src/cpp/core/util/rtti/RTTIStorage.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/util/rtti
 	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/local/include/opencv -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/core/util/rtti/RTTI.o src/cpp/core/util/rtti/RTTI.cpp
+	$(COMPILE.cc) -O3 -I/usr/local/include/opencv -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/core/util/rtti/RTTIStorage.o src/cpp/core/util/rtti/RTTIStorage.cpp
 
 ${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLImageParameters.o: src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/opencl

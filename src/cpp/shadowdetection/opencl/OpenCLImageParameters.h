@@ -32,11 +32,10 @@ namespace shadowdetection {
                                 const cv::Mat* hlsImage);
             void setKernelArgs(const cl_uint& numOfParameters, const cl_uint& numOfPixels);
         protected:
-            virtual std::string getClassName();
-        public:
             OpenCLImageParameters();
-            virtual ~OpenCLImageParameters();
-            
+            virtual std::string getClassName();            
+        public:            
+            virtual ~OpenCLImageParameters();            
             virtual void initVars();
             virtual void initWorkVars();
             virtual void cleanUp();

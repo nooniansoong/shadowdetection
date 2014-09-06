@@ -6,6 +6,8 @@ namespace core{
         namespace prediction{
             namespace regression{
                 
+                REGISTER_SINGLETON(RegressionPredict, core::util::prediction::regression)
+                
                 using namespace core::util;
                 using namespace std;
                 

@@ -3,7 +3,7 @@
 
 #include "core/process/IProcessor.h"
 #include "core/util/Singleton.h"
-#include "core/util/rtti/RTTI.h"
+#include "core/util/rtti/ObjectFactory.h"
 
 namespace core{
     namespace util{

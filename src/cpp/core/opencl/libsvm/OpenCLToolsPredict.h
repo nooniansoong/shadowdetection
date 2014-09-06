@@ -37,9 +37,9 @@ namespace core{
                 void createBuffers(const core::util::Matrix<float>* parameters, svm_model* model);            
                 void setKernelArgs(uint pixelCount, uint paramsPerPixel, svm_model* model);                
             protected:
-                virtual std::string getClassName();
-            public:
                 OpenCLToolsPredict();
+                virtual std::string getClassName();
+            public:                
                 virtual ~OpenCLToolsPredict();
                 
                 virtual void initVars();

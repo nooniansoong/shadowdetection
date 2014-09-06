@@ -5,7 +5,7 @@
 #include "typedefs.h"
 #include "core/util/Matrix.h"
 #include "core/tools/image/IImageParameters.h"
-#include "core/util/rtti/RTTI.h"
+#include "core/util/rtti/ObjectFactory.h"
 
 namespace shadowdetection{
     namespace tools{

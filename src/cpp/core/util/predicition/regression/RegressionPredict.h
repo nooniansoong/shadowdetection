@@ -1,9 +1,10 @@
 #ifndef __REGRESSION_PREDICT_H__
 #define __REGRESSION_PREDICT_H__
 
+#include <vector>
 #include "core/util/predicition/IPrediction.h"
 #include "core/util/Singleton.h"
-#include <vector>
+#include "core/util/rtti/ObjectFactory.h"
 
 namespace core{
     namespace util{
@@ -12,12 +13,13 @@ namespace core{
                 
                 class RegressionPredict : public IPrediction, public core::util::Singleton<RegressionPredict> {
                     friend class core::util::Singleton<RegressionPredict>;
+                    PREPARE_REGISTRATION(RegressionPredict)
                 private:
                     bool loadedModel;
                     float borderValue;
-                    std::vector<float> coefs;
-                    RegressionPredict();
+                    std::vector<float> coefs;                    
                 protected:
+                    RegressionPredict();
                 public:
                     virtual ~RegressionPredict();
                     virtual void loadModel() throw(SDException&);
