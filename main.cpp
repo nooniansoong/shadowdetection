@@ -128,7 +128,8 @@ int main(int argc, char **argv) {
     
     //TODO instance ShadowDetection processor
     {
-        UNIQUE_PTR(IProcessor) ip(ObjectFactory::getInstancePtr()->createInstance<IProcessor>("shadowdetection::process::ShadowDetectionProcessor"));
+        string proccClassStr = Config::getInstancePtr()->getPropertyValue("general.classes.processorClass");
+        UNIQUE_PTR(IProcessor) ip(ObjectFactory::getInstancePtr()->createInstance<IProcessor>(proccClassStr));
         ip->init();
         ip->process(argc, argv);
     }

@@ -124,6 +124,10 @@
         
         <!-- something like simple reflection, do not touch for now -->
         <classes>
+            <!-- general processor class -->
+            <processorClass>
+                shadowdetection::process::ShadowDetectionProcessor
+            </processorClass>
             
             <core::opencl::libsvm::OpenCLToolsTrain>
                 <kernels>
