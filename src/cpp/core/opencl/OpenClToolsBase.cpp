@@ -2,7 +2,7 @@
 #include "OpenClToolsBase.h"
 #include <iostream>
 #include "core/util/raii/RAIIS.h"
-#include "core/util/MemMenager.h"
+#include "core/util/MemTracker.h"
 #include "core/util/Config.h"
 
 #define MAX_DEVICES 100
@@ -45,10 +45,10 @@ namespace core{
                         err_check(err, "OpenClBase::cleanUp clReleaseKernel");
                     }
                 }
-                delete[] kernel;
+                DeleteArr(kernel);
             }
             if (workGroupSize){
-                delete[] workGroupSize;
+                DeleteArr(workGroupSize);
             }
         }
         
@@ -64,8 +64,8 @@ namespace core{
                     size_t log_size;
                     clGetProgramBuildInfo(program, device, CL_PROGRAM_BUILD_LOG, 0, NULL, &log_size);
                     // Allocate memory for the log
-                    char* log = MemMenager::allocate<char>(log_size);
-                    VectorRaii vraii(log);
+                    char* log = New char[log_size];
+                    VectorRaii<char> vraii(log);
                     // Get the log
                     clGetProgramBuildInfo(program, device, CL_PROGRAM_BUILD_LOG, log_size, log, NULL);
                     // Print the log
@@ -99,7 +99,7 @@ namespace core{
                 char* fp = saveProgramBinary(programFileName);
                 if (fp != 0){
                     remove(fp);
-                    MemMenager::delocate(fp);
+                    Delete(fp);
                 }
             }
         }
@@ -111,9 +111,9 @@ namespace core{
             FileRaii fRaii(&kernelFile);
             if (kernelFile.is_open()) {
                 char* buffer = 0;
-                buffer = (char*)MemMenager::allocate<char>(MAX_SRC_SIZE);
+                buffer = New char[MAX_SRC_SIZE];
                 if (buffer) {
-                    VectorRaii vraiiBuff(buffer);
+                    VectorRaii<char> vraiiBuff(buffer);
                     kernelFile.read(buffer, MAX_SRC_SIZE);
                     if (kernelFile.eof()) {
                         size_t readBytes = kernelFile.gcount();
@@ -152,9 +152,9 @@ namespace core{
             FileRaii fRaii(&kernelFile);
             if (kernelFile.is_open()) {
                 char* buffer = 0;
-                buffer = (char*)MemMenager::allocate<char>(MAX_SRC_SIZE);
+                buffer = New char[MAX_SRC_SIZE];
                 if (buffer) {
-                    VectorRaii vRaiiBuff(buffer);
+                    VectorRaii<char> vRaiiBuff(buffer);
                     kernelFile.read(buffer, MAX_SRC_SIZE);
                     if (kernelFile.eof()) {
                         size_t readBytes = kernelFile.gcount();
@@ -185,7 +185,7 @@ namespace core{
         }
         
         char* getCStrCopy(string str){
-            char* ret = (char*)MemMenager::allocate<char>(str.size() + 1);
+            char* ret = New char[str.size() + 1];
             ret[str.size()] = '\0';
             strcpy(ret, str.c_str());
             return ret;
@@ -209,13 +209,13 @@ namespace core{
                 }
                 
                 size_t* binarySize = 0;
-                binarySize = MemMenager::allocate<size_t>(nb_devices);
+                binarySize = New size_t[nb_devices];
                 if (binarySize == 0){
                     SDException exc(SHADOW_NO_MEM, "Get binary sizes");
                     cout << exc.what() << endl;
                     return getCStrCopy(programFile);
                 }
-                VectorRaii bsRaii(binarySize);
+                VectorRaii<size_t> bsRaii(binarySize);
                 err = clGetProgramInfo(program, CL_PROGRAM_BINARY_SIZES, sizeof(size_t) * nb_devices, binarySize, 0);
                 try{
                     err_check(err, kernelFileName + " OpenClBase::saveKernelBinary: clGetProgramInfo2");
@@ -225,12 +225,12 @@ namespace core{
                     return getCStrCopy(programFile);
                 }
                 uchar**  buffer = 0;
-                buffer = MemMenager::allocate<uchar*>(nb_devices);                
+                buffer = New uchar*[nb_devices];
                 if (buffer != 0){                    
                     for (uint i = 0; i < nb_devices; i++){
-                        buffer[i] = MemMenager::allocate<uchar>(binarySize[i]);                        
+                        buffer[i] = New uchar[binarySize[i]]; 
                     }
-                    MatrixRaii mRaii((void**)buffer, nb_devices);
+                    MatrixRaii<uchar> mRaii(buffer, nb_devices);
                     
                     size_t read;
                     err = clGetProgramInfo(program, CL_PROGRAM_BINARIES, sizeof(uchar*)*nb_devices, buffer, &read);
@@ -259,7 +259,7 @@ namespace core{
         }
         
         void OpenClBase::createWorkGroupSizes() {
-            workGroupSize = new size_t[kernelCount];
+            workGroupSize = New size_t[kernelCount];
             for (int i = 0; i < kernelCount; i++) {
                 if (kernel[i]){
                     err = clGetKernelWorkGroupInfo(kernel[i], device, CL_KERNEL_WORK_GROUP_SIZE, sizeof(workGroupSize[i]), &(workGroupSize[i]), NULL);
@@ -301,7 +301,7 @@ namespace core{
         void OpenClBase::createKernels(){
             vector<string> kernelNames = getKernelNamesForClass();
             kernelCount = kernelNames.size();
-            kernel = new cl_kernel[kernelCount];
+            kernel = New cl_kernel[kernelCount];
             for (int i = 0; i < kernelCount; i++){
                 kernel[i] = clCreateKernel(program, kernelNames[i].c_str(), &err);
                 err_check(err, "OpenClBase::createKernels clCreateKernel: " + kernelNames[i]);
@@ -324,7 +324,7 @@ namespace core{
                 err_check(err, "OpenclTools::init clGetPlatformInfo");
                 cout << "Platform name: " << info << endl;
                 try {
-#if defined _AMD || defined _MAC
+#if defined _AMD
                     err = clGetDeviceIDs(platform[i], CL_DEVICE_TYPE_ALL, MAX_DEVICES, devices, &num_devices);
 #else
                     err = clGetDeviceIDs(platform[i], CL_DEVICE_TYPE_GPU, MAX_DEVICES, devices, &num_devices);
@@ -366,7 +366,7 @@ namespace core{
             
             cl_device_id devices[MAX_DEVICES];
             cl_uint num_devices;
-#if defined _AMD || defined _MAC
+#if defined _AMD
                 err = clGetDeviceIDs(platform[platformID], CL_DEVICE_TYPE_ALL, MAX_DEVICES, devices, &num_devices);
 #else
                 err = clGetDeviceIDs(platform[platformID], CL_DEVICE_TYPE_GPU, MAX_DEVICES, devices, &num_devices);

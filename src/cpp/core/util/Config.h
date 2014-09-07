@@ -9,11 +9,7 @@
 #define	CONFIG_H
 
 #include "Singleton.h"
-#ifndef _MAC
-#include <hash_map>
-#else
-#include <ext/hash_map>
-#endif
+#include <unordered_map>
 #include "typedefs.h"
 #include "thirdparty/rapidxml-1.13/rapidxml.hpp"
 
@@ -34,7 +30,7 @@ namespace core{
              * format is key=xml_node_name.xml_node_name....
              * val = xml_node_value
              */
-            __gnu_cxx::hash_map<std::string, std::string> mappedValues;            
+            std::unordered_map<std::string, std::string> mappedValues;            
             /**
              * process xml file content
              * @param xmlFileContent

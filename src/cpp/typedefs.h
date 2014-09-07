@@ -13,9 +13,7 @@
 #endif
 
 #include <string>
-#ifndef _MAC
-#include <hash_fun.h>
-#endif
+#include <functional>
 #include <vector>
 #include <sstream>
 #include <exception>
@@ -158,17 +156,8 @@ template<typename T> class Triple : public Pair<T>{
         }
 };
 
-#ifndef _MAC
-namespace __gnu_cxx {
-
-    template<> struct hash<std::string> {
-        hash<char*> h;
-
-        size_t operator()(const std::string &s) const {
-            return h(s.c_str());
-        };
-    };
-
+namespace std {
+    
     template<typename T> struct hash< Pair<T> > {
 
         size_t operator()(const Pair<T> &kv) const {
@@ -192,7 +181,6 @@ namespace __gnu_cxx {
     };
 
 }
-#endif
 
 inline std::string trim(const std::string& input, bool trimCommas = true) {
     std::string whitespaces = " \t\f\v\n\r";
@@ -294,3 +282,5 @@ enum LIBSVM_CLASS_TYPE{
 
 #endif	/* TYPEDEFS_H */
 
+
+    

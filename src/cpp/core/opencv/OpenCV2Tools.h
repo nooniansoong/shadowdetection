@@ -13,7 +13,7 @@
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
 #include <list>
-#include <hash_set>
+#include <unordered_set>
 #include "typedefs.h"
 
 namespace core{
@@ -88,7 +88,7 @@ namespace core{
             static cv::Mat* convertToHLS(const cv::Mat* src) throw (SDException&);
             static cv::Mat* getImageROI(const cv::Mat* src, uint roiWidth, uint roiHeight,
                                         const Pair<uint>& location) throw (SDException&);
-            static float getAvgChannelValue(const cv::Mat* src, 
+            static float getAvgChannelValue(const cv::Mat& src, 
                                             uchar channelIndex) throw (SDException&);
             static uchar getChannelValue(   const cv::Mat& image, uint x, uint y, 
                                             uchar channelIndex) throw (SDException&);
@@ -96,9 +96,9 @@ namespace core{
                                             uchar channelIndex) throw (SDException&);
             static void setChannelValue(cv::Mat& image, Pair<uint> location, 
                                         uchar channelIndex, uchar newValue) throw (SDException&);
-            static std::list< __gnu_cxx::hash_set< Pair<uint> >* >* getRegionsOfColor(const cv::Mat& image, 
+            static std::list< std::unordered_set< Pair<uint> >* >* getRegionsOfColor(const cv::Mat& image, 
                                                                                         const uint& color) throw (SDException&);
-            static void destroySegments(std::list< __gnu_cxx::hash_set< Pair<uint> >* >* segments) throw (SDException&);
+            static void destroySegments(std::list< std::unordered_set< Pair<uint> >* >* segments) throw (SDException&);
 #ifdef _OPENCL
             /**
              * init global variables needed for openCV openCL processing

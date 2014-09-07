@@ -2,6 +2,7 @@
 #include "core/util/Config.h"
 #include <string>
 #include "core/util/raii/RAIIS.h"
+#include <memory>
 
 namespace skydetection{
     
@@ -9,8 +10,7 @@ namespace skydetection{
     using namespace core::util;
     using namespace std;
     using namespace core::opencv2;
-    using namespace core::util::raii;
-    using namespace __gnu_cxx;
+    using namespace core::util::raii;    
     
     void SkyDetection::initBaseVariables(){
         originalImage = 0;        
@@ -31,19 +31,19 @@ namespace skydetection{
     
     SkyDetection::SkyDetection(const Mat& originalImage){
         initBaseVariables();
-        this->originalImage = new Mat(originalImage);
+        this->originalImage = New Mat(originalImage);
     }
     
     SkyDetection::~SkyDetection(){
         if (originalImage != 0)
-            delete originalImage;
+            Delete(originalImage);
         if (detectedImage != 0)
-            delete detectedImage;
+            Delete(detectedImage);
     }
     
-    Triple<float> SkyDetection::getMeanBGRValuesOfSegment(hash_set< Pair<uint> >* segment){
+    Triple<float> SkyDetection::getMeanBGRValuesOfSegment(unordered_set< Pair<uint> >* segment){
         float avgB = 0.f, avgG = 0.f, avgR = 0.f;
-        hash_set< Pair<uint> >::iterator iter = segment->begin();
+        unordered_set< Pair<uint> >::iterator iter = segment->begin();
         while (iter != segment->end()){
             Pair<uint> location = *iter;
             avgB += (float)OpenCV2Tools::getChannelValue(*originalImage, location, 0);
@@ -59,11 +59,11 @@ namespace skydetection{
     }
     
     void SkyDetection::processSegments(){
-        list< hash_set< Pair<uint> >* >* segments = OpenCV2Tools::getRegionsOfColor(*detectedImage, 255);
+        list< unordered_set< Pair<uint> >* >* segments = OpenCV2Tools::getRegionsOfColor(*detectedImage, 255);
         if (segments->size() > 1){
-            list< hash_set< Pair<uint> >* >::iterator iter = segments->begin();
+            list< unordered_set< Pair<uint> >* >::iterator iter = segments->begin();
             //largest segment
-            hash_set< Pair<uint> >* segment = *iter;
+            unordered_set< Pair<uint> >* segment = *iter;
             Triple<float> meanValues = getMeanBGRValuesOfSegment(segment);
             while (iter != segments->end()){
                 segment = *iter;
@@ -74,8 +74,8 @@ namespace skydetection{
         OpenCV2Tools::destroySegments(segments);
     }
     
-    void SkyDetection::reduceInSegment(hash_set< Pair<uint> >* segment, const Triple<float>& thresHold){
-        hash_set< Pair<uint> >::iterator iter = segment->begin();
+    void SkyDetection::reduceInSegment(unordered_set< Pair<uint> >* segment, const Triple<float>& thresHold){
+        unordered_set< Pair<uint> >::iterator iter = segment->begin();
         while (iter != segment->end()){
             Pair<uint> location = *iter;
             uint bValue = OpenCV2Tools::getChannelValue(*originalImage, location, 0);
@@ -101,19 +101,18 @@ namespace skydetection{
             SDException exc(SHADOW_INVALID_IMAGE_FORMAT, "SkyDetection::isSky");
             throw exc;
         }
-        Mat* hlsImage = OpenCV2Tools::convertToHLS(originalImage);
-        if (hlsImage == 0 || hlsImage->data == 0){
+        UNIQUE_PTR(Mat) hlsImagePtr(OpenCV2Tools::convertToHLS(originalImage));
+        if (hlsImagePtr.get() == 0 || hlsImagePtr->data == 0){
             SDException exc(SHADOW_INVALID_IMAGE_FORMAT, "SkyDetection::isSky");
             throw exc;
-        }
-        ImageNewRaii imageRaii(hlsImage);
+        }        
         for (int i = 0; i < originalImage->rows; i++){
             for (int j = 0; j < originalImage->cols; j++){
                 Pair<uint> location((uint)j, (uint)i);
                 uchar rValue = OpenCV2Tools::getChannelValue(*originalImage, location, 2);
                 uchar gValue = OpenCV2Tools::getChannelValue(*originalImage, location, 1);
                 uchar bValue = OpenCV2Tools::getChannelValue(*originalImage, location, 0);
-                uchar lValue = OpenCV2Tools::getChannelValue(*hlsImage, location, 1);
+                uchar lValue = OpenCV2Tools::getChannelValue(*hlsImagePtr, location, 1);
                 if ((rValue <= rThresh || rValue <= bValue / 3U) && (gValue >= bValue / 6U) && 
                     gValue <= bValue && bValue >= bThresh && 
                     lValue >= lThresh){                    
@@ -124,8 +123,7 @@ namespace skydetection{
                 }
             }
         }
-        processSegments();
-        imwrite("testSky.tif", *detectedImage);
+        processSegments();        
     }
     
     bool SkyDetection::isSky(Pair<uint> location) throw (SDException&){

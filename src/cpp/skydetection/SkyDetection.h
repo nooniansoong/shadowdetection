@@ -3,7 +3,7 @@
 
 #include "typedefs.h"
 #include "core/opencv/OpenCV2Tools.h"
-#include "hash_set"
+#include <unordered_set>
 
 namespace skydetection{
     
@@ -21,8 +21,8 @@ namespace skydetection{
         
         void initBaseVariables();
         void processSegments();
-        Triple<float> getMeanBGRValuesOfSegment(__gnu_cxx::hash_set< Pair<uint> >* segment);
-        void reduceInSegment(__gnu_cxx::hash_set< Pair<uint> >* segment, const Triple<float>& thresHold);
+        Triple<float> getMeanBGRValuesOfSegment(std::unordered_set< Pair<uint> >* segment);
+        void reduceInSegment(std::unordered_set< Pair<uint> >* segment, const Triple<float>& thresHold);
     protected:
     public:
         SkyDetection();

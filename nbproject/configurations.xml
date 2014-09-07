@@ -42,10 +42,14 @@
           <logicalFolder name="raii" displayName="raii" projectFiles="true">
             <itemPath>src/cpp/core/util/raii/RAIIS.h</itemPath>
           </logicalFolder>
+          <logicalFolder name="rtti" displayName="rtti" projectFiles="true">
+            <itemPath>src/cpp/core/util/rtti/ObjectFactory.h</itemPath>
+            <itemPath>src/cpp/core/util/rtti/RTTI.h</itemPath>
+          </logicalFolder>
           <itemPath>src/cpp/core/util/Config.h</itemPath>
           <itemPath>src/cpp/core/util/FileSaver.h</itemPath>
           <itemPath>src/cpp/core/util/Matrix.h</itemPath>
-          <itemPath>src/cpp/core/util/MemMenager.h</itemPath>
+          <itemPath>src/cpp/core/util/MemTracker.h</itemPath>
           <itemPath>src/cpp/core/util/ParametersFactory.h</itemPath>
           <itemPath>src/cpp/core/util/PredictorFactory.h</itemPath>
           <itemPath>src/cpp/core/util/Singleton.h</itemPath>
@@ -129,8 +133,11 @@
               <itemPath>src/cpp/core/util/predicition/regression/RegressionPredict.cpp</itemPath>
             </logicalFolder>
           </logicalFolder>
+          <logicalFolder name="rtti" displayName="rtti" projectFiles="true">
+            <itemPath>src/cpp/core/util/rtti/RTTI.cpp</itemPath>
+          </logicalFolder>
           <itemPath>src/cpp/core/util/Cofig.cpp</itemPath>
-          <itemPath>src/cpp/core/util/MemMenager.cpp</itemPath>
+          <itemPath>src/cpp/core/util/MemTracker.cpp</itemPath>
           <itemPath>src/cpp/core/util/ParametersFactory.cpp</itemPath>
           <itemPath>src/cpp/core/util/PredictorFactory.cpp</itemPath>
           <itemPath>src/cpp/core/util/TabParser.cpp</itemPath>
@@ -200,7 +207,7 @@
             <pElem>/usr/local/include/opencv</pElem>
             <pElem>src/cpp</pElem>
           </incDir>
-          <commandLine>-fopenmp</commandLine>
+          <commandLine>-fopenmp -std=c++11</commandLine>
         </ccTool>
         <linkerTool>
           <linkerAddLib>
@@ -300,9 +307,9 @@
       </item>
       <item path="src/cpp/core/util/Matrix.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/MemMenager.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/cpp/core/util/MemTracker.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
+      <item path="src/cpp/core/util/MemTracker.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/cpp/core/util/ParametersFactory.cpp"
             ex="false"
@@ -360,6 +367,15 @@
             flavor2="0">
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/ObjectFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTI.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTI.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp"
             ex="false"
@@ -475,7 +491,7 @@
             <pElem>/usr/local/include/opencv</pElem>
             <pElem>src/cpp</pElem>
           </incDir>
-          <commandLine>-fopenmp</commandLine>
+          <commandLine>-fopenmp -std=c++11</commandLine>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
@@ -581,9 +597,9 @@
       </item>
       <item path="src/cpp/core/util/Matrix.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/MemMenager.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/cpp/core/util/MemTracker.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
+      <item path="src/cpp/core/util/MemTracker.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/cpp/core/util/ParametersFactory.cpp"
             ex="false"
@@ -641,6 +657,15 @@
             flavor2="0">
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/ObjectFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTI.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTI.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp"
             ex="false"
@@ -748,6 +773,7 @@
       <compileType>
         <ccTool>
           <architecture>2</architecture>
+          <standard>8</standard>
           <incDir>
             <pElem>/usr/local/include/opencv</pElem>
             <pElem>src/cpp</pElem>
@@ -855,9 +881,9 @@
       </item>
       <item path="src/cpp/core/util/Matrix.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/MemMenager.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/cpp/core/util/MemTracker.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
+      <item path="src/cpp/core/util/MemTracker.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/cpp/core/util/ParametersFactory.cpp"
             ex="false"
@@ -915,6 +941,15 @@
             flavor2="0">
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/ObjectFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTI.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTI.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp"
             ex="false"
@@ -1026,6 +1061,7 @@
         <ccTool>
           <developmentMode>6</developmentMode>
           <architecture>2</architecture>
+          <standard>8</standard>
           <commandlineTool>nvcc</commandlineTool>
           <incDir>
             <pElem>/usr/local/include/opencv</pElem>
@@ -1134,9 +1170,9 @@
       </item>
       <item path="src/cpp/core/util/Matrix.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/MemMenager.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/cpp/core/util/MemTracker.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
+      <item path="src/cpp/core/util/MemTracker.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/cpp/core/util/ParametersFactory.cpp"
             ex="false"
@@ -1194,6 +1230,15 @@
             flavor2="0">
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/ObjectFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTI.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTI.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp"
             ex="false"
@@ -1306,7 +1351,7 @@
             <pElem>/opt/AMDAPP/include</pElem>
             <pElem>src/cpp</pElem>
           </incDir>
-          <commandLine>-O0 -fopenmp</commandLine>
+          <commandLine>-O0 -fopenmp -std=c++11</commandLine>
           <preprocessorList>
             <Elem>_AMD</Elem>
             <Elem>_DEBUG</Elem>
@@ -1414,9 +1459,9 @@
       </item>
       <item path="src/cpp/core/util/Matrix.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/MemMenager.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/cpp/core/util/MemTracker.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
+      <item path="src/cpp/core/util/MemTracker.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/cpp/core/util/ParametersFactory.cpp"
             ex="false"
@@ -1474,6 +1519,15 @@
             flavor2="0">
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/ObjectFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTI.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTI.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp"
             ex="false"
@@ -1591,7 +1645,7 @@
             <pElem>/opt/AMDAPP/include</pElem>
             <pElem>src/cpp</pElem>
           </incDir>
-          <commandLine>-fopenmp</commandLine>
+          <commandLine>-fopenmp -std=c++11</commandLine>
           <preprocessorList>
             <Elem>_AMD</Elem>
             <Elem>_OPENCL</Elem>
@@ -1697,9 +1751,9 @@
       </item>
       <item path="src/cpp/core/util/Matrix.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/MemMenager.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/cpp/core/util/MemTracker.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/cpp/core/util/MemMenager.h" ex="false" tool="3" flavor2="0">
+      <item path="src/cpp/core/util/MemTracker.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/cpp/core/util/ParametersFactory.cpp"
             ex="false"
@@ -1757,6 +1811,15 @@
             flavor2="0">
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/ObjectFactory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTI.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTI.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp"
             ex="false"

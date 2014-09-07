@@ -1,12 +1,14 @@
 #include "OpenCVTools.h"
 #include "typedefs.h"
-#include "core/util/MemMenager.h"
+#include "core/util/MemTracker.h"
 
 namespace core{
     namespace opencv{
         
         using namespace std;
+#ifdef _DEBUG
         using namespace core::util;
+#endif
 
         void OpenCvTools::RGBtoHSI_1(unsigned char r, unsigned char g, unsigned char b, unsigned int& h, unsigned char& s, unsigned char& i) {
             unsigned char min;//, max;// delta;
@@ -99,7 +101,7 @@ namespace core{
             width = image->width;
             channels = image->nChannels;
             uint* retArr = 0;
-            retArr = MemMenager::allocate<uint>(height * width * channels);
+            retArr = New uint[height * width * channels];
             if (retArr == 0){
                 SDException exc(SHADOW_NO_MEM, "convertImagetoHSI");
                 throw exc;
@@ -136,7 +138,7 @@ namespace core{
             int width = image->width;
             int channels = image->nChannels;
             uchar* retArr = 0;
-            retArr = MemMenager::allocate<uchar>(height * width * channels);
+            retArr = New uchar[height * width * channels];
             if (retArr == 0){
                 SDException exc(SHADOW_NO_MEM, "convertImageToByteArray");
                 throw exc;
@@ -188,7 +190,7 @@ namespace core{
 
         uchar* OpenCvTools::simpleTsai(unsigned int* inputHSI, int height, int width, int channels) {
             uchar* retArr = 0;
-            retArr = MemMenager::allocate<uchar>(height * width);
+            retArr = New uchar[height * width];
             if (retArr == 0){
                 SDException exc(SHADOW_NO_MEM, "simpleTsai");
                 throw exc;

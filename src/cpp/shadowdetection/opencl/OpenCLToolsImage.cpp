@@ -1,6 +1,6 @@
 #ifdef _OPENCL
 #include "OpenCLTools.h"
-#include "core/util/MemMenager.h"
+#include "core/util/MemTracker.h"
 
 namespace shadowdetection {
     namespace opencl {
@@ -22,7 +22,7 @@ namespace shadowdetection {
                                             &global_ws, &local_ws, 0, 0, 0);
             err_check(err, "OpenclTools::convertHSI1 clEnqueueNDRangeKernel");
             size_t size = width * height * channels; 
-            uint32_t* retArr = MemMenager::allocate<uint32_t>(size);
+            uint32_t* retArr = New uint32_t[size];
             err = clEnqueueReadBuffer(  command_queue, hsi1Converted, CL_FALSE, 0, 
                                         size * sizeof(cl_uint), retArr, 0, 0, 0);
             err_check(err, "OpenclTools::convertHSI1 clEnqueueReadBuffer");
@@ -47,7 +47,7 @@ namespace shadowdetection {
                                             &global_ws, &local_ws, 0, 0, 0);
             err_check(err, "OpenclTools::convertHSI2 clEnqueueNDRangeKernel");
             size_t size = width * height * channels; 
-            uint32_t* retArr = MemMenager::allocate<uint32_t>(size);
+            uint32_t* retArr = New uint32_t[size];
             err = clEnqueueReadBuffer(  command_queue, hsi1Converted, CL_FALSE, 0, 
                                         size * sizeof(cl_uint), retArr, 0, 0, 0);
             err_check(err, "OpenclTools::convertHSI2 clEnqueueReadBuffer");

@@ -7,8 +7,7 @@
 
 namespace core{
     namespace util{
-        using namespace std;
-        using namespace __gnu_cxx;
+        using namespace std;        
         using namespace rapidxml;
         
         Config::Config() : Singleton<Config>(){
@@ -21,7 +20,7 @@ namespace core{
         }
         
         string Config::getPropertyValue(const string& key){
-            hash_map<string, string>::iterator iter = mappedValues.find(key);
+            unordered_map<string, string>::iterator iter = mappedValues.find(key);
             if (iter != mappedValues.end()){
                 return iter->second;
             }
@@ -50,7 +49,7 @@ namespace core{
             try {
                 xml_document<> doc;
                 const char* constContent = xmlFileContent.c_str();
-                char* content = MemMenager::allocate<char>(strlen(constContent) + 1);
+                char* content = New char[strlen(constContent) + 1];
                 strcpy(content, constContent);
                 doc.parse<0>(content);
                 string currName = "";

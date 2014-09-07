@@ -44,13 +44,14 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/cpp/core/tools/svm/TrainingSet.o \
 	${OBJECTDIR}/src/cpp/core/tools/svm/libsvmopenmp/svm-train.o \
 	${OBJECTDIR}/src/cpp/core/util/Cofig.o \
-	${OBJECTDIR}/src/cpp/core/util/MemMenager.o \
+	${OBJECTDIR}/src/cpp/core/util/MemTracker.o \
 	${OBJECTDIR}/src/cpp/core/util/ParametersFactory.o \
 	${OBJECTDIR}/src/cpp/core/util/PredictorFactory.o \
 	${OBJECTDIR}/src/cpp/core/util/TabParser.o \
 	${OBJECTDIR}/src/cpp/core/util/Timer.o \
 	${OBJECTDIR}/src/cpp/core/util/predicition/libsvm/SvmPredict.o \
 	${OBJECTDIR}/src/cpp/core/util/predicition/regression/RegressionPredict.o \
+	${OBJECTDIR}/src/cpp/core/util/rtti/RTTI.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLImageParameters.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLTools.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsImage.o \
@@ -64,8 +65,8 @@ OBJECTFILES= \
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=-m64 -fopenmp
-CXXFLAGS=-m64 -fopenmp
+CCFLAGS=-m64 -fopenmp -std=c++11
+CXXFLAGS=-m64 -fopenmp -std=c++11
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -78,11 +79,11 @@ LDLIBSOPTIONS=-L/usr/local/lib
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection_0.7.0
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection_0.7.0: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection ${OBJECTFILES} ${LDLIBSOPTIONS} -lopencv_highgui -lopencv_core -lopencv_imgproc -lopencv_ocl -fopenmp
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection_0.7.0 ${OBJECTFILES} ${LDLIBSOPTIONS} -lopencv_highgui -lopencv_core -lopencv_imgproc -lopencv_ocl -fopenmp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -129,10 +130,10 @@ ${OBJECTDIR}/src/cpp/core/util/Cofig.o: src/cpp/core/util/Cofig.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -I/usr/local/include/opencv -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/core/util/Cofig.o src/cpp/core/util/Cofig.cpp
 
-${OBJECTDIR}/src/cpp/core/util/MemMenager.o: src/cpp/core/util/MemMenager.cpp 
+${OBJECTDIR}/src/cpp/core/util/MemTracker.o: src/cpp/core/util/MemTracker.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/util
 	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -I/usr/local/include/opencv -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/core/util/MemMenager.o src/cpp/core/util/MemMenager.cpp
+	$(COMPILE.cc) -O3 -I/usr/local/include/opencv -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/core/util/MemTracker.o src/cpp/core/util/MemTracker.cpp
 
 ${OBJECTDIR}/src/cpp/core/util/ParametersFactory.o: src/cpp/core/util/ParametersFactory.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/util
@@ -163,6 +164,11 @@ ${OBJECTDIR}/src/cpp/core/util/predicition/regression/RegressionPredict.o: src/c
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/util/predicition/regression
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -I/usr/local/include/opencv -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/core/util/predicition/regression/RegressionPredict.o src/cpp/core/util/predicition/regression/RegressionPredict.cpp
+
+${OBJECTDIR}/src/cpp/core/util/rtti/RTTI.o: src/cpp/core/util/rtti/RTTI.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/util/rtti
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -I/usr/local/include/opencv -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/core/util/rtti/RTTI.o src/cpp/core/util/rtti/RTTI.cpp
 
 ${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLImageParameters.o: src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/opencl
@@ -205,7 +211,7 @@ ${OBJECTDIR}/src/cpp/thirdparty/lib_svm/svm.o: src/cpp/thirdparty/lib_svm/svm.cp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/shadowdetection_0.7.0
 
 # Subprojects
 .clean-subprojects:

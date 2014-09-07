@@ -41,7 +41,7 @@ namespace core{
                 
                 uchar* RegressionPredict::predict( const Matrix<float>* imagePixelsParameters, 
                                         const int& pixCount, const int& parameterCount) throw(SDException&){
-                    uchar* retArr = MemMenager::allocate<uchar>(pixCount);
+                    uchar* retArr = New uchar[pixCount];
                     for (int i = 0; i < pixCount; i++){
                         //intercept
                         float result = coefs[parameterCount];

@@ -3,11 +3,7 @@
 
 #ifdef _OPENCL
 
-#ifndef _MAC
 #include <CL/cl.h>
-#else
-#include <OpenCL/opencl.h>
-#endif
 #include "typedefs.h"
 #include <vector>
 

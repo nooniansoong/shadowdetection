@@ -6,6 +6,7 @@
  */
 
 #include <iostream>
+#include <memory>
 #include "shadowdetection/opencl/OpenCLTools.h"
 #include "core/opencv/OpenCV2Tools.h"
 #include "core/opencv/OpenCVTools.h"
@@ -173,59 +174,54 @@ void processSingleCPU(const char* out, IplImage* image) {
  * @param imageNew
  */
 void processSingleOpenCL(const char* out, const Mat& image) {                
-    Mat* hls = OpenCV2Tools::convertToHLS(&image);
-    if (hls == 0){
+    UNIQUE_PTR(Mat) hlsPtr(OpenCV2Tools::convertToHLS(&image));
+    if (hlsPtr.get() == 0){
         return;
-    }
-    ImageNewRaii hlsRaii(hls);
+    }    
     OpenclTools* oclt = OpenclTools::getInstancePtr();
-    unsigned char* buffer = OpenCV2Tools::convertImageToByteArray(&image, true);
-    VectorRaii bufferRaii(buffer);
-    Mat* processedImage = 0;
+    uchar* buffer = OpenCV2Tools::convertImageToByteArray(&image, true);
+    VectorRaii<uchar> bufferRaii(buffer);
+    UNIQUE_PTR(Mat) processedImagePtr;
     bool usePrediction = false;
     string usePredStr = Config::getInstancePtr()->getPropertyValue("process.Prediction.usePrediction");
     if (usePredStr.compare("true") == 0)
         usePrediction = true;
     if (usePrediction == false){
         try {
-            processedImage = oclt->processRGBImage(buffer, image.size().width, image.size().height, image.channels());            
+            processedImagePtr = UNIQUE_PTR(Mat)(oclt->processRGBImage(buffer, image.size().width, 
+                                            image.size().height, image.channels()));
         } catch (SDException& exception) {
             throw exception;
         }
     }
     else{
-        Mat* pi = oclt->processRGBImage(buffer, image.size().width, image.size().height, image.channels());
-        if (pi){
-            ImageNewRaii imraiiPi(pi);                        
+        UNIQUE_PTR(Mat) piPtr(oclt->processRGBImage(buffer, image.size().width, image.size().height, image.channels()));
+        if (piPtr.get()){            
             int pixCount;
             int parameterCount;
-            IImageParameteres* ip = createImageParameters();
-            PointerRaii<IImageParameteres> ipRaii(ip);
+            UNIQUE_PTR(IImageParameteres) ipPtr(createImageParameters());
             
-            Mat* hsv = OpenCV2Tools::convertToHSV(&image);
-            if (hsv == 0){
+            UNIQUE_PTR(Mat) hsvPtr(OpenCV2Tools::convertToHSV(&image));
+            if (hsvPtr.get() == 0){
                 return;
-            }
-            ImageNewRaii hsvRaii(hsv);                        
+            }            
             
-            Matrix<float>* parameters = ip->getImageParameters( image, *hsv, *hls, 
-                                                                parameterCount, pixCount);
-            if (parameters){
-                PointerRaii< Matrix<float> > paramRaii(parameters);
+            UNIQUE_PTR(Matrix<float>) parametersPtr(ipPtr->getImageParameters(image, *hsvPtr, *hlsPtr, 
+                                                                parameterCount, pixCount));
+            if (parametersPtr.get() != 0){                
                 IPrediction* predictor = getPredictor();
                 if (predictor->hasLoadedModel() == false){                    
                     predictor->loadModel();
                 }
-                uchar* predicted = predictor->predict(parameters, pixCount, parameterCount);
+                uchar* predicted = predictor->predict(parametersPtr.get(), pixCount, parameterCount);
                 if (predicted){
-                    VectorRaii vraiiPred(predicted);
+                    VectorRaii<uchar> vraiiPred(predicted);
                     //FileSaver<uchar>::saveToFile("myPredictedOCL.out", predicted, pixCount);
                     for (int i = 0; i < pixCount; i++)
                         predicted[i] *= 255;
-                    Mat* predictedImage = OpenCV2Tools::get8bitImage(predicted, image.size().height, image.size().width);
-                    ImageNewRaii prdeRaii(predictedImage);
-                    //imwrite("myPredictedOCL.jpg", *predictedImage);
-                    processedImage = OpenCV2Tools::joinTwoOcl(*pi, *predictedImage);
+                    UNIQUE_PTR(Mat) predictedImagePtr(  OpenCV2Tools::get8bitImage(predicted, 
+                                                        image.size().height, image.size().width));                    
+                    processedImagePtr = UNIQUE_PTR(Mat)(OpenCV2Tools::joinTwoOcl(*piPtr, *predictedImagePtr));
                 }
                 else{
                     SDException e(SHADOW_CANT_PREDICT, "processSingleOpenCL");
@@ -238,11 +234,10 @@ void processSingleOpenCL(const char* out, const Mat& image) {
             }
         }        
     }
-    if (processedImage != 0) {
+    if (processedImagePtr.get() != 0) {
         ResultFixer rf;
-        rf.applyThreshholds(*processedImage, image, *hls);
-        imwrite(out, *processedImage);
-        delete processedImage;
+        rf.applyThreshholds(*processedImagePtr, image, *hlsPtr);
+        imwrite(out, *processedImagePtr);        
     }    
 }
 #endif
@@ -426,6 +421,13 @@ int main(int argc, char **argv) {
     }
 #ifdef _OPENCL
     OpenclTools::getInstancePtr()->cleanUp();
+    OpenCLToolsPredict::getInstancePtr()->cleanUp();
+    OpenCLImageParameters::getInstancePtr()->cleanUp();
+    OpenCLToolsTrain::getInstancePtr()->cleanUp();
+#endif
+#ifdef _DEBUG
+    string unallocated = MemTracker::getUnallocated();
+    cout << unallocated;
 #endif
     return 0;
 }

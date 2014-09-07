@@ -95,7 +95,7 @@ namespace core{
                                     write0 = !write0;
                                 }                                
                             }
-                            delete processed;
+                            Delete(processed);
                         }
                         else{
                             SDException exc(SHADOW_READ_UNABLE, "TrainingSet::processImages");
@@ -114,10 +114,9 @@ namespace core{
 
                 if (originalImage.data == 0 || maskImage.data == 0) {
                     return 0;
-                }
-                IImageParameteres* ip = createImageParameters();
-                PointerRaii<IImageParameteres> ipRaii(ip);
-                Matrix<float>* retVec = ip->getImageParameters( originalImage, maskImage, 
+                }                
+                UNIQUE_PTR(IImageParameteres) ipPtr(createImageParameters());
+                Matrix<float>* retVec = ipPtr->getImageParameters( originalImage, maskImage, 
                                                                 rowDimesion, pixelNum);                
                 return retVec;
             }
