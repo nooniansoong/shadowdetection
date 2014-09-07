@@ -222,14 +222,14 @@ namespace shadowdetection {
 
         void cleanUp(){
 #ifdef _OPENCL
-            OpenclTools::getInstancePtr()->cleanUp();            
-            OpenCLToolsPredict::getInstancePtr()->cleanUp();
-            OpenCLImageParameters::getInstancePtr()->cleanUp();
-            OpenclTools::destroy();            
-            OpenCLToolsPredict::destroy();
-            OpenCLImageParameters::destroy();
-            Config::destroy();
+        OpenclTools::getInstancePtr()->cleanUp();            
+        OpenCLToolsPredict::getInstancePtr()->cleanUp();
+        OpenCLImageParameters::getInstancePtr()->cleanUp();
+        OpenclTools::destroy();            
+        OpenCLToolsPredict::destroy();
+        OpenCLImageParameters::destroy();            
 #endif
+        Config::destroy();
         }
         
         void cleanUpWork(){
@@ -293,12 +293,10 @@ namespace shadowdetection {
                     try {
                         processSingle(path, savePath);
                     } catch (SDException& exception) {
-                        cout << exception.handleException() << endl;
-                        cleanUp();
-                        exit(1);
+                        cout << exception.handleException() << endl;                        
+                        return;
                     }
-                } else {
-                    cleanUp();
+                } else {                    
                     cout << "need two arguments: input image path, output image path" << endl;
                     return;
                 }
@@ -322,11 +320,9 @@ namespace shadowdetection {
                             cout << "Continue to process" << endl;
                         }
                         cleanUpWork();
-                    }
-                    cleanUp();
+                    }                    
                 } else {
-                    cout << "Needed parameter path to csv file" << endl;
-                    cleanUp();
+                    cout << "Needed parameter path to csv file" << endl;                    
                     return;
                 }
             }

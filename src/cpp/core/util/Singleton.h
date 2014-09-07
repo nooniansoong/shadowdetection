@@ -46,11 +46,15 @@ namespace core{
         template<class T> T* Singleton<T>::getInstancePtr(){
             pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
             raii::MutexRaii autoLock(&mutex);
-            if (instancePtr == 0){
-                instancePtr = New T();
-                if (instancePtr == 0){
+            static T* instancePtrTmp = 0;
+            if (instancePtrTmp == 0){
+                instancePtrTmp = New T();
+                if (instancePtrTmp == 0){
                     SDException exc(SHADOW_NO_MEM, "Init singleton");
                     throw exc;
+                }
+                else{
+                    instancePtr = instancePtrTmp;
                 }
             }
             return instancePtr;
@@ -58,7 +62,7 @@ namespace core{
         
         template<class T> void Singleton<T>::destroy(){
             if (instancePtr != 0){
-                Delete(instancePtr);
+                Delete(instancePtr);                
             }
             instancePtr = 0;
         }

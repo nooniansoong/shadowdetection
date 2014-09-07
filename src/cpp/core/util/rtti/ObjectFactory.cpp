@@ -15,6 +15,7 @@ namespace core {
             using namespace core::util;
             
             void* ObjectFactory::getSingleton(std::string classID){
+                raii::MutexRaii autoLock(&mutex);
                 std::unordered_map<std::string, void*>::iterator iter = mappedSingletons.find(classID);
                 if (iter != mappedSingletons.end())
                     return iter->second;
@@ -29,16 +30,18 @@ namespace core {
             
             IPrediction* ObjectFactory::createPredictor(){
                 Config* conf = Config::getInstancePtr();
-                string type = conf->getPropertyValue("general.Prediction.predictionType");
-                if (type == "SVM"){
-                    return ObjectFactory::getInstancePtr()->createInstance<IPrediction>("core::util::prediction::svm::SvmPredict");
-                }
-                else{
-                    return ObjectFactory::getInstancePtr()->createInstance<IPrediction>("core::util::prediction::regression::RegressionPredict");
-                }
+                string type = conf->getPropertyValue("general.Prediction.predictionClass");
+                return ObjectFactory::getInstancePtr()->createInstance<IPrediction>(type);
+//                if (type == "SVM"){
+//                    return ObjectFactory::getInstancePtr()->createInstance<IPrediction>("core::util::prediction::svm::SvmPredict");
+//                }
+//                else{
+//                    return ObjectFactory::getInstancePtr()->createInstance<IPrediction>("core::util::prediction::regression::RegressionPredict");
+//                }
             }
             
             int ObjectFactory::registerSingleton(std::string classID, void* singleton){
+                raii::MutexRaii autoLock(&mutex);
                 mappedSingletons[classID] = singleton;
                 return 1;
             }

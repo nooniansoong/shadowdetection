@@ -132,8 +132,7 @@ int main(int argc, char **argv) {
         ip->init();
         ip->process(argc, argv);
     }
-#ifdef _DEBUG
-    cout << "Unallocated" << endl;
+#ifdef _DEBUG    
     string unallocated = MemTracker::getUnfreed();
     cout << unallocated << endl;
 #endif

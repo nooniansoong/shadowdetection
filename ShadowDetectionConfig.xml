@@ -31,9 +31,9 @@
             </usePrediction>
             
             <!--SVM for support vector machine, REG for regresion-->
-            <predictionType>
-                REG
-            </predictionType>
+            <predictionClass>
+                core::util::prediction::regression::RegressionPredict
+            </predictionClass>
             
             <svm>
                 <!-- full file name -->

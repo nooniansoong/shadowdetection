@@ -43,8 +43,11 @@ namespace core{
             class ObjectFactory : public Singleton<ObjectFactory>{
                 friend class Singleton<ObjectFactory>;
             private:
-                ObjectFactory(){}
+                ObjectFactory(){
+                    mutex = PTHREAD_MUTEX_INITIALIZER;
+                }
                 
+                pthread_mutex_t mutex;
                 std::unordered_map<std::string, void*> mappedSingletons;
                 void* getSingleton(std::string classID);
             protected:
