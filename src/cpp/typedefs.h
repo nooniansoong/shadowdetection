@@ -44,6 +44,8 @@ enum SHADOW_EXCEPTIONS {
     SHADOW_NOT_INITIALIZED_BY_MENAGER_OR_DELETED,
     SHADOW_CANT_ADD_TO_MEM_MENAGER,
     SHADOW_NULL_POINTER,
+    SHADOW_NOT_FOUND_PROPERTY,
+    SHADOW_CLASS_NOT_REGISTRETED,
     SHADOW_OTHER,
 };
 
@@ -69,6 +71,8 @@ static std::string ExceptionStrings[] = {
     "SHADOW_NOT_INITIALIZED_BY_MENAGER_OR_DELETED",
     "SHADOW_CANT_ADD_TO_MEM_MENAGER",
     "SHADOW_NULL_POINTER",
+    "SHADOW_NOT_FOUND_PROPERTY",
+    "SHADOW_CLASS_NOT_REGISTRETED",
     "SHADOW_OTHER"
 };
 
@@ -217,21 +221,30 @@ inline std::vector<std::string> split(const std::string &s, char delim) {
 class SDException : public std::exception{
 private:
     SHADOW_EXCEPTIONS excCode;
-    std::string location;
-    
-    SDException(){}
+    std::string location;    
+    SDException(){        
+    }
 protected:
 public:
     virtual ~SDException() throw(){}
     
     SDException(SHADOW_EXCEPTIONS code, std::string location){
         excCode = code;
-        this->location = location;
+        this->location = location;        
     }
+    
     virtual const char* what() const throw () {
         std::string retStr = ExceptionStrings[excCode] + " " + location;
-        const char* msg = retStr.c_str();
-        return msg;
+        char* ret = new char[retStr.length() + 1];
+        strcpy(ret, retStr.c_str());
+        return ret;
+    }
+    
+    std::string handleException(){
+        const char* err = this->what();
+        std::string ret(err);
+        delete err;
+        return ret;
     }
 };
 

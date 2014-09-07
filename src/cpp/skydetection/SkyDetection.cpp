@@ -17,11 +17,11 @@ namespace skydetection{
         detectedImage = 0;
         
         Config* conf = Config::getInstancePtr();
-        string rThreshStr = conf->getPropertyValue("process.Thresholds.sky.rValue");
+        string rThreshStr = conf->getPropertyValue("skyDetection.Thresholds.rValue");
         rThresh = (uchar)atoi(rThreshStr.c_str());
-        string bThreshStr = conf->getPropertyValue("process.Thresholds.sky.bValue");
+        string bThreshStr = conf->getPropertyValue("skyDetection.Thresholds.bValue");
         bThresh = (uchar)atoi(bThreshStr.c_str());
-        string lThreshStr = conf->getPropertyValue("process.Thresholds.sky.lValue");
+        string lThreshStr = conf->getPropertyValue("skyDetection.Thresholds.lValue");
         lThresh = (uchar)atoi(lThreshStr.c_str());
     }
     

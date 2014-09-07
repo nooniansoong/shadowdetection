@@ -9,23 +9,31 @@ namespace core{
     namespace util{
         namespace RTTI{
             
-            class RTTI : public Singleton<RTTI>{
-                friend class Singleton<RTTI>;
-            private:
-                std::unordered_map<std::string, void*(*)()> mappedInstancers;
+            class RTTI{                
+            private:                
             protected:
-                RTTI();
-                void* getClassInstancePrivate(std::string className);
+                void*(*mappedInstancer)();
+                bool singleton;
             public:
-                virtual ~RTTI(){}
-                
-                template<typename T> T* getClassInstance(std::string className){
-                    void* tmp = getClassInstancePrivate(className);
-                    if (tmp == 0)
-                        return 0;
-                    T* retPointer = static_cast<T*>(tmp);
-                    return retPointer;
+                RTTI(){};
+                virtual ~RTTI(){}                                
+                bool isSingleton(){
+                    return singleton;
                 }
+                
+                int setSingleton(bool value){
+                    singleton = value;
+                    return 0;
+                }
+                
+                void* getClassInstance(){
+                    return mappedInstancer();
+                }
+                
+                int setInstancer(void*(*instancer)()){
+                    mappedInstancer = instancer;
+                    return 0;
+                }                                
             };
             
         }

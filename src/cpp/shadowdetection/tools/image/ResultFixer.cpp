@@ -1,4 +1,5 @@
 #include "ResultFixer.h"
+#include <memory>
 #include "core/opencv/OpenCV2Tools.h"
 #include "core/util/Config.h"
 #include "skydetection/SkyDetection.h"
@@ -11,6 +12,7 @@ namespace shadowdetection{
             using namespace core::opencv2;
             using namespace core::util;
             using namespace skydetection;
+            using namespace std;
         
             ResultFixer::ResultFixer(){
                 init();
@@ -22,12 +24,16 @@ namespace shadowdetection{
             
             void ResultFixer::init() throw(SDException&){
                 Config* conf = Config::getInstancePtr();                                
-                string lThreshStr = conf->getPropertyValue("process.Thresholds.shadow.lValue");
+                string lThreshStr = conf->getPropertyValue("shadowDetection.Thresholds.lValue");
                 lThresh = (uchar)atoi(lThreshStr.c_str());
-//                string useThreshStr = conf->getPropertyValue("process.Thresholds.shadow.useThresh");
-//                useThresh = true;
-//                if (useThreshStr == "false")
-//                    useThresh = false;                
+                string useThreshStr = conf->getPropertyValue("shadowDetection.useThresholds");
+                useThresh = true;
+                if (useThreshStr == "false")
+                    useThresh = false;
+                useSky = true;
+                string useSkyStr = conf->getPropertyValue("shadowDetection.useSkyDetection");
+                if (useSkyStr == "false")
+                    useSky = false;
             }
             
             void ResultFixer::applyThreshholds( Mat& image, const Mat& originalImage, 
@@ -46,25 +52,34 @@ namespace shadowdetection{
                     throw exc;
                 }
                 
-                SkyDetection skyDetection(originalImage);
-                skyDetection.process();
+                UNIQUE_PTR(SkyDetection) skyDetection;
+                if (useSky){
+                    skyDetection = UNIQUE_PTR(SkyDetection)(New SkyDetection(originalImage));
+                    skyDetection->process();
+                }
                 
-                for (int i = 0; i < image.rows; i++){
-                    for (int j = 0; j < image.cols; j++){
-                        Pair<uint> location((uint)j, (uint)i);
-                        uchar shadowValue = OpenCV2Tools::getChannelValue(image, location, 0);
-                        if (shadowValue > 0){                            
-                            uchar lValue = OpenCV2Tools::getChannelValue(hlsImage, location, 1);
-                            if (lValue >= lThresh){                                
-                                OpenCV2Tools::setChannelValue(image, location, 0, 0);
-                            }
-                            //sky detection
-                            else if (skyDetection.isSky(location) == true){
-                                OpenCV2Tools::setChannelValue(image, location, 0, 0);
+                if (useThresh || useSky){
+                    for (int i = 0; i < image.rows; i++){
+                        for (int j = 0; j < image.cols; j++){
+                            Pair<uint> location((uint)j, (uint)i);
+                            uchar shadowValue = OpenCV2Tools::getChannelValue(image, location, 0);
+                            if (shadowValue > 0){                            
+                                if (useThresh){
+                                    uchar lValue = OpenCV2Tools::getChannelValue(hlsImage, location, 1);
+                                    if (lValue >= lThresh){                                
+                                        OpenCV2Tools::setChannelValue(image, location, 0, 0);
+                                    }
+                                }
+                                //sky detection
+                                if (useSky){
+                                    if (skyDetection->isSky(location) == true){
+                                        OpenCV2Tools::setChannelValue(image, location, 0, 0);
+                                    }
+                                }
                             }
                         }
                     }
-                }                                
+                }
             }
             
         }

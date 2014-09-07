@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=shadowdetection_0.7.0
+PROJECTNAME=shadowdetection
 
 # Active Configuration
 DEFAULTCONF=Debug

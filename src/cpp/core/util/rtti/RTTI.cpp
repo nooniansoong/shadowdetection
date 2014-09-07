@@ -4,15 +4,27 @@ namespace core{
     namespace util{
         namespace RTTI{
             
-            using namespace std;
+            using namespace std;                        
             
-            RTTI::RTTI() : Singleton<RTTI>(){
+            RTTI::RTTI(){
                 
             }
             
-            void* RTTI::getClassInstancePrivate(string className){
-                return 0;
+            bool RTTI::isSingleton(){
+                
             }
+            
+            int RTTI::setSingleton(bool value){
+                
+            }
+            
+            int RTTI::setInstancer(void*(*instancer)()){
+                
+            }                        
+            
+            void* RTTI::getClassInstance(){
+                
+            }                                    
         }
     }
 }

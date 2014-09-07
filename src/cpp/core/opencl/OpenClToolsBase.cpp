@@ -28,6 +28,9 @@ namespace core{
             kernel          = 0;
             workGroupSize   = 0;
             kernelCount     = 0;
+            program         = 0;
+            context         = 0;
+            command_queue   = 0;
         }
         
         void OpenClBase::cleanUp(){            
@@ -86,7 +89,7 @@ namespace core{
         }
         
         void OpenClBase::loadProgramFile(const string& programFileName){
-            string usePrecompiledStr = Config::getInstancePtr()->getPropertyValue("settings.openCL.UsePrecompiledKernels");
+            string usePrecompiledStr = Config::getInstancePtr()->getPropertyValue("general.openCL.UsePrecompiledKernels");
             bool usePrecompiled = usePrecompiledStr.compare("true") == 0;
             if (usePrecompiled){
                 bool succ = loadProgramFromBinary(programFileName);
@@ -272,7 +275,7 @@ namespace core{
             vector<string> retVec;
             Config* conf = Config::getInstancePtr();
             string className = getClassName();
-            string keyStr = "settings.classes." + className + ".kernels";
+            string keyStr = "general.classes." + className + ".kernels";
             string k1 = keyStr + ".kernelCount";            
             string kerCountStr = conf->getPropertyValue(k1);
             int count = atoi(kerCountStr.c_str());
@@ -290,10 +293,10 @@ namespace core{
             vector<string> retVec;
             Config* conf = Config::getInstancePtr();
             string className = getClassName();
-            string keyStr = "settings.classes." + className + ".programs.programFile";
+            string keyStr = "general.classes." + className + ".programs.programFile";
             string programFile = conf->getPropertyValue(keyStr);
             retVec.push_back(programFile);
-            keyStr = "settings.classes." + className + ".programs.rootDir";
+            keyStr = "general.classes." + className + ".programs.rootDir";
             dirToOpenclprogramFiles = conf->getPropertyValue(keyStr);
             return retVec;
         }

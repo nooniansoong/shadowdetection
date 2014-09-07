@@ -3,8 +3,9 @@
 #include <iostream>
 #include "core/util/raii/RAIIS.h"
 #include "typedefs.h"
-#include "core/util/ParametersFactory.h"
 #include "core/opencv/OpenCV2Tools.h"
+#include "core/util/rtti/ObjectFactory.h"
+#include "core/tools/image/IImageParameters.h"
 
 namespace core{
     namespace tools{
@@ -16,6 +17,7 @@ namespace core{
             using namespace cv;
             using namespace core::opencv2;
             using namespace core::util;
+            using namespace core::util::RTTI;
 
             void TrainingSet::readFile()throw (SDException&) {
                 fstream file;
@@ -115,7 +117,7 @@ namespace core{
                 if (originalImage.data == 0 || maskImage.data == 0) {
                     return 0;
                 }                
-                UNIQUE_PTR(IImageParameteres) ipPtr(createImageParameters());
+                UNIQUE_PTR(IImageParameteres) ipPtr(ObjectFactory::getInstancePtr()->createImageParameters());
                 Matrix<float>* retVec = ipPtr->getImageParameters( originalImage, maskImage, 
                                                                 rowDimesion, pixelNum);                
                 return retVec;

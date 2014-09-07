@@ -168,8 +168,7 @@ namespace shadowdetection{
                 rowDimension = parameterCount;
                 return ret;
 #else
-                Matrix<float>* ret = 0;
-                PointerRaii< Matrix<float> > retRaii;                                                                
+                UNIQUE_PTR(Matrix<float>) ret;                
                 
                 for (int i = 0; i < height; i++) {
                     for (int j = 0; j < width; j++) {
@@ -188,12 +187,12 @@ namespace shadowdetection{
                         if (procs[0] == 0){
                             return 0;
                         }
-                        VectorRaii vraiiProc0(procs[0]);
+                        VectorRaii<float> vraiiProc0(procs[0]);
                         procs[1] = processHLS(hHLS, lHLS, sHLS, size[1]);
                         if (procs[1] == 0){
                             return 0;
                         }
-                        VectorRaii vraiiProc1(procs[1]);
+                        VectorRaii<float> vraiiProc1(procs[1]);
                         uchar B = OpenCV2Tools::getChannelValue(originalImage, location, 0);
                         uchar G = OpenCV2Tools::getChannelValue(originalImage, location, 1);
                         uchar R = OpenCV2Tools::getChannelValue(originalImage, location, 2);
@@ -201,17 +200,16 @@ namespace shadowdetection{
                         if (procs[2] == 0){
                             return 0;
                         }
-                        VectorRaii vraiiProc2(procs[2]);                                                
+                        VectorRaii<float> vraiiProc2(procs[2]);                                                
                         
                         int mergedSize = 0;
                         float* merged = ImageShadowParameters::merge(procs, SPACES_COUNT, size, mergedSize);
                         if (merged == 0){                            
                             return 0;
                         }
-                        VectorRaii vraii(merged);
+                        VectorRaii<float> vraii(merged);
                         if (ret == 0){
-                            ret = New Matrix<float>(mergedSize, width * height);
-                            retRaii.setPointer(ret);
+                            ret = UNIQUE_PTR(Matrix<float>)(New Matrix<float>(mergedSize, width * height));                            
                         }
                                                 
                         (*ret)[i * width + j] = merged;                        
@@ -221,8 +219,8 @@ namespace shadowdetection{
                         }
                     }
                 }
-                retRaii.deactivate();
-                return ret;
+                Matrix<float>* retPtr = ret.release();
+                return retPtr;
 #endif
             }
             

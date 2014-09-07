@@ -1,65 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<EFConfig>
-    <process>
+<settings>
+    <general>
         <!-- true, false -->
         <UseBatch>
             true
         </UseBatch>
+        
         <Training>
             <!-- true, false -->
             <distribute0and1>
                 true
             </distribute0and1>
+            <svm>
+                <!-- 0=C-SVC, 1=nu-SVC, 2=one-class, 3=epsilon-SVR, 4=nu-SVR -->
+                <svm_type>
+                    0
+                </svm_type>
+                <!-- 0=linear, 1=polynomial, 2=radial basis function, 3=sigmoid, 4-not supported -->
+                <kernel_type>
+                    2
+                </kernel_type>
+            </svm>
         </Training>
+        
         <Prediction>            
             <!-- true, false -->
             <usePrediction>
                 true
             </usePrediction>
+            
             <!--SVM for support vector machine, REG for regresion-->
-            <predictionType>
-                REG
-            </predictionType>            
+            <predictionClass>
+                core::util::prediction::regression::RegressionPredict
+            </predictionClass>
+            
+            <svm>
+                <!-- full file name -->
+                <modelFile>
+                    bigModel_RemovedThree.model
+                </modelFile> 
+            </svm>
+            
+            <regression>
+                <!-- number of coefficients used in regression classification, do not involve intercept -->
+                <coefNum>
+                    12
+                </coefNum>
+                <!-- numerical value of coefficient -->
+                <coefNo1>
+                    -0.78317 
+                </coefNo1>
+                <coefNo2>
+                    -0.32998 
+                </coefNo2>
+                <coefNo3>
+                    6.30192 
+                </coefNo3>
+                <coefNo4>
+                    8.70635
+                </coefNo4>
+                <coefNo5>
+                    -3.11831 
+                </coefNo5>
+                <coefNo6>
+                    -2.51965 
+                </coefNo6>
+                <coefNo7>
+                    1.49102 
+                </coefNo7>
+                <coefNo8>
+                    -2.45055 
+                </coefNo8>
+                <coefNo9>
+                    5.74217 
+                </coefNo9>
+                <coefNo10>
+                    -6.24504 
+                </coefNo10>
+                <coefNo11>
+                    1.18127
+                </coefNo11>
+                <coefNo12>
+                    -0.36501
+                </coefNo12>            
+                <Intercept>
+                    -0.52834
+                </Intercept>
+                <!-- formula used for shadow detection here is: 
+                1 / (1 + exp(-alpha)),
+                where alpha = Intercept + coefNo1 * parameter1 + ... + coefNocoefNum * parametercoefNum
+                If result is > then border value then pixel is candidate for shadow -->
+                <borderValue>
+                    0.39
+                </borderValue>
+            </regression>
+            <parametersClass>
+                shadowdetection::tools::image::ImageShadowParameters
+            </parametersClass>            
         </Prediction>
-        <Thresholds>
-            <!-- threshold values for results correction -->
-            <shadow>
-                <!-- maximum lightness value for shadow pixel. HSL color space.
-                If pixel has bigger value then specified it can not be shadow pixel-->                
-                <lValue>
-                    150
-                </lValue>
-                <!-- true, false -->
-                <useThresh>
-                    true;
-                </useThresh>
-            </shadow>            
-            <!-- sky detection threshold values 
-            If pixel is detected as sky pixel then it can not be shadow pixel-->
-            <sky>
-                <!-- maximum R channel value for sky pixel -->
-                <rValue>
-                    51
-                </rValue>
-                <!-- minimum B channel value for sky pixel -->
-                <bValue>
-                    110
-                </bValue>
-                <!-- minimum lightness value for sky pixel -->
-                <lValue>
-                    50
-                </lValue>
-            </sky>
-        </Thresholds>        
-    </process>
-    <settings>
-        <Parameters>
-            <!-- leave it to 1 for now -->
-            <numSegments>
-                1
-            </numSegments>
-        </Parameters>
         
         <openCL>            
             <!-- true, false -->
@@ -83,99 +122,9 @@
             </threadNum>
         </openMP>
         
-        <svm>
-            <!-- full file name -->
-            <modelFile>
-                bigModel_RemovedThree.model
-            </modelFile>            
-            <!-- 0=C-SVC, 1=nu-SVC, 2=one-class, 3=epsilon-SVR, 4=nu-SVR -->
-            <svm_type>
-                0
-            </svm_type>
-            <!-- 0=linear, 1=polynomial, 2=radial basis function, 3=sigmoid, 4-not supported -->
-            <kernel_type>
-                2
-            </kernel_type>
-        </svm>
-        <regression>
-            <!-- number of coefficients used in regression classification, do not involve intercept -->
-            <coefNum>
-                12
-            </coefNum>
-            <!-- numerical value of coefficient -->
-            <coefNo1>
-                -0.78317 
-            </coefNo1>
-            <coefNo2>
-                -0.32998 
-            </coefNo2>
-            <coefNo3>
-                6.30192 
-            </coefNo3>
-            <coefNo4>
-                8.70635
-            </coefNo4>
-            <coefNo5>
-                -3.11831 
-            </coefNo5>
-            <coefNo6>
-                -2.51965 
-            </coefNo6>
-            <coefNo7>
-                1.49102 
-            </coefNo7>
-            <coefNo8>
-                -2.45055 
-            </coefNo8>
-            <coefNo9>
-                5.74217 
-            </coefNo9>
-            <coefNo10>
-                -6.24504 
-            </coefNo10>
-            <coefNo11>
-                1.18127
-            </coefNo11>
-            <coefNo12>
-                -0.36501
-            </coefNo12>            
-            <Intercept>
-                -0.52834
-            </Intercept>
-            <!-- formula used for shadow detection here is: 
-            1 / (1 + exp(-alpha)),
-            where alpha = Intercept + coefNo1 * parameter1 + ... + coefNocoefNum * parametercoefNum
-            If result is > then border value then pixel is candidate for shadow -->
-            <borderValue>
-                0.39
-            </borderValue>
-        </regression>
         <!-- something like simple reflection, do not touch for now -->
         <classes>
-            <shadowdetection::opencl::OpenclTools>
-                <kernels>
-                    <kernelCount>
-                        3
-                    </kernelCount>
-                    <kernelNo0>
-                        image_hsi_convert1
-                    </kernelNo0>
-                    <kernelNo1>
-                        image_hsi_convert2
-                    </kernelNo1>
-                    <kernelNo2>
-                        image_simple_tsai
-                    </kernelNo2>
-                </kernels>
-                <programs>
-                    <programFile>
-                        image_hci_convert_kernel
-                    </programFile>
-                    <rootDir>
-                        src/cpp/shadowdetection/opencl/kernels/
-                    </rootDir>
-                </programs>
-            </shadowdetection::opencl::OpenclTools>
+            
             <core::opencl::libsvm::OpenCLToolsTrain>
                 <kernels>
                     <kernelCount>
@@ -200,6 +149,7 @@
                     </rootDir>
                 </programs>
             </core::opencl::libsvm::OpenCLToolsTrain>
+            
             <core::opencl::libsvm::OpenCLToolsPredict>
                 <kernels>
                     <kernelCount>
@@ -218,6 +168,32 @@
                     </rootDir>
                 </programs>
             </core::opencl::libsvm::OpenCLToolsPredict>
+            
+            <shadowdetection::opencl::OpenclTools>
+                <kernels>
+                    <kernelCount>
+                        3
+                    </kernelCount>
+                    <kernelNo0>
+                        image_hsi_convert1
+                    </kernelNo0>
+                    <kernelNo1>
+                        image_hsi_convert2
+                    </kernelNo1>
+                    <kernelNo2>
+                        image_simple_tsai
+                    </kernelNo2>
+                </kernels>
+                <programs>
+                    <programFile>
+                        image_hci_convert_kernel
+                    </programFile>
+                    <rootDir>
+                        src/cpp/shadowdetection/opencl/kernels/
+                    </rootDir>
+                </programs>
+            </shadowdetection::opencl::OpenclTools>
+            
             <shadowdetection::opencl::OpenCLImageParameters>
                 <kernels>
                     <kernelCount>
@@ -236,7 +212,49 @@
                     </rootDir>
                 </programs>
             </shadowdetection::opencl::OpenCLImageParameters>
+            
         </classes>
+                
+    </general>
+    <shadowDetection>
+        <!-- tells whether to use or not thresholds bellow -->
+        <useThresholds>
+            true;
+        </useThresholds>
         
-    </settings>
-</EFConfig>
+        <!-- threshold values for results correction -->            
+        <Thresholds>                                    
+            <!-- maximum lightness value for shadow pixel. HSL color space.
+            If pixel has bigger value then specified it can not be shadow pixel-->                
+            <lValue>
+                150
+            </lValue>
+            <!-- true, false -->            
+        </Thresholds>
+        
+        <!-- tells whether to use or not correction on sky areas in shadow
+        detection process -->
+        <useSkyDetection>
+            true
+        </useSkyDetection>
+        
+    </shadowDetection>
+    <skyDetection>
+        <!-- sky detection threshold values 
+        If useSkyDetection is true pixel detected as sky pixel then it can not be shadow pixel-->
+        <Thresholds>                        
+            <!-- maximum R channel value for sky pixel -->
+            <rValue>
+                51
+            </rValue>
+            <!-- minimum B channel value for sky pixel -->
+            <bValue>
+                110
+            </bValue>
+            <!-- minimum lightness value for sky pixel -->
+            <lValue>
+                50
+            </lValue>            
+        </Thresholds>
+    </skyDetection>    
+</settings>

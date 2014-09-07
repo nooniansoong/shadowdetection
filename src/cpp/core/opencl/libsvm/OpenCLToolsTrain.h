@@ -58,9 +58,9 @@ namespace core{
                                             const double& Gmax);
                 
             protected:
-                virtual std::string getClassName();
-            public:
                 OpenCLToolsTrain();
+                virtual std::string getClassName();
+            public:                
                 virtual ~OpenCLToolsTrain();
                 
                 virtual void initVars();

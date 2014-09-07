@@ -41,20 +41,22 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/cpp/core/opencl/libsvm/OpenCLToolsTrain.o \
 	${OBJECTDIR}/src/cpp/core/opencv/OpenCV2Tools.o \
 	${OBJECTDIR}/src/cpp/core/opencv/OpenCVTools.o \
+	${OBJECTDIR}/src/cpp/core/process/MakeSetProcessor.o \
+	${OBJECTDIR}/src/cpp/core/process/TrainingProcessor.o \
 	${OBJECTDIR}/src/cpp/core/tools/svm/TrainingSet.o \
 	${OBJECTDIR}/src/cpp/core/tools/svm/libsvmopenmp/svm-train.o \
 	${OBJECTDIR}/src/cpp/core/util/Cofig.o \
 	${OBJECTDIR}/src/cpp/core/util/MemTracker.o \
-	${OBJECTDIR}/src/cpp/core/util/ParametersFactory.o \
-	${OBJECTDIR}/src/cpp/core/util/PredictorFactory.o \
 	${OBJECTDIR}/src/cpp/core/util/TabParser.o \
 	${OBJECTDIR}/src/cpp/core/util/Timer.o \
 	${OBJECTDIR}/src/cpp/core/util/predicition/libsvm/SvmPredict.o \
 	${OBJECTDIR}/src/cpp/core/util/predicition/regression/RegressionPredict.o \
-	${OBJECTDIR}/src/cpp/core/util/rtti/RTTI.o \
+	${OBJECTDIR}/src/cpp/core/util/rtti/ObjectFactory.o \
+	${OBJECTDIR}/src/cpp/core/util/rtti/RTTIStorage.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLImageParameters.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLTools.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsImage.o \
+	${OBJECTDIR}/src/cpp/shadowdetection/process/ShadowDetectionProcessor.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/tools/image/ImageShadowParameters.o \
 	${OBJECTDIR}/src/cpp/shadowdetection/tools/image/ResultFixer.o \
 	${OBJECTDIR}/src/cpp/skydetection/SkyDetection.o \
@@ -115,6 +117,16 @@ ${OBJECTDIR}/src/cpp/core/opencv/OpenCVTools.o: src/cpp/core/opencv/OpenCVTools.
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -D_AMD -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/core/opencv/OpenCVTools.o src/cpp/core/opencv/OpenCVTools.cpp
 
+${OBJECTDIR}/src/cpp/core/process/MakeSetProcessor.o: src/cpp/core/process/MakeSetProcessor.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/process
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -D_AMD -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/core/process/MakeSetProcessor.o src/cpp/core/process/MakeSetProcessor.cpp
+
+${OBJECTDIR}/src/cpp/core/process/TrainingProcessor.o: src/cpp/core/process/TrainingProcessor.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/process
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -D_AMD -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/core/process/TrainingProcessor.o src/cpp/core/process/TrainingProcessor.cpp
+
 ${OBJECTDIR}/src/cpp/core/tools/svm/TrainingSet.o: src/cpp/core/tools/svm/TrainingSet.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/tools/svm
 	${RM} "$@.d"
@@ -134,16 +146,6 @@ ${OBJECTDIR}/src/cpp/core/util/MemTracker.o: src/cpp/core/util/MemTracker.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/util
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -D_AMD -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/core/util/MemTracker.o src/cpp/core/util/MemTracker.cpp
-
-${OBJECTDIR}/src/cpp/core/util/ParametersFactory.o: src/cpp/core/util/ParametersFactory.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/util
-	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -D_AMD -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/core/util/ParametersFactory.o src/cpp/core/util/ParametersFactory.cpp
-
-${OBJECTDIR}/src/cpp/core/util/PredictorFactory.o: src/cpp/core/util/PredictorFactory.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/util
-	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -D_AMD -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/core/util/PredictorFactory.o src/cpp/core/util/PredictorFactory.cpp
 
 ${OBJECTDIR}/src/cpp/core/util/TabParser.o: src/cpp/core/util/TabParser.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/util
@@ -165,10 +167,15 @@ ${OBJECTDIR}/src/cpp/core/util/predicition/regression/RegressionPredict.o: src/c
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -D_AMD -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/core/util/predicition/regression/RegressionPredict.o src/cpp/core/util/predicition/regression/RegressionPredict.cpp
 
-${OBJECTDIR}/src/cpp/core/util/rtti/RTTI.o: src/cpp/core/util/rtti/RTTI.cpp 
+${OBJECTDIR}/src/cpp/core/util/rtti/ObjectFactory.o: src/cpp/core/util/rtti/ObjectFactory.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/util/rtti
 	${RM} "$@.d"
-	$(COMPILE.cc) -O3 -D_AMD -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/core/util/rtti/RTTI.o src/cpp/core/util/rtti/RTTI.cpp
+	$(COMPILE.cc) -O3 -D_AMD -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/core/util/rtti/ObjectFactory.o src/cpp/core/util/rtti/ObjectFactory.cpp
+
+${OBJECTDIR}/src/cpp/core/util/rtti/RTTIStorage.o: src/cpp/core/util/rtti/RTTIStorage.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/util/rtti
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -D_AMD -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/core/util/rtti/RTTIStorage.o src/cpp/core/util/rtti/RTTIStorage.cpp
 
 ${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLImageParameters.o: src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/opencl
@@ -184,6 +191,11 @@ ${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsImage.o: src/cpp/shadowde
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/opencl
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -D_AMD -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/opencl/OpenCLToolsImage.o src/cpp/shadowdetection/opencl/OpenCLToolsImage.cpp
+
+${OBJECTDIR}/src/cpp/shadowdetection/process/ShadowDetectionProcessor.o: src/cpp/shadowdetection/process/ShadowDetectionProcessor.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/process
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -D_AMD -D_OPENCL -I/usr/local/include/opencv -I/opt/AMDAPP/include -Isrc/cpp -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/cpp/shadowdetection/process/ShadowDetectionProcessor.o src/cpp/shadowdetection/process/ShadowDetectionProcessor.cpp
 
 ${OBJECTDIR}/src/cpp/shadowdetection/tools/image/ImageShadowParameters.o: src/cpp/shadowdetection/tools/image/ImageShadowParameters.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/shadowdetection/tools/image

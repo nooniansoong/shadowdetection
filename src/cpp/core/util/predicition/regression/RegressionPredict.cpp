@@ -6,6 +6,8 @@ namespace core{
         namespace prediction{
             namespace regression{
                 
+                REGISTER_SINGLETON(RegressionPredict, core::util::prediction::regression)
+                
                 using namespace core::util;
                 using namespace std;
                 
@@ -20,10 +22,10 @@ namespace core{
                 void RegressionPredict::loadModel() throw(SDException&){
                     coefs.clear();
                     Config* conf = Config::getInstancePtr();
-                    string numOfArgsStr = conf->getPropertyValue("settings.regression.coefNum");
+                    string numOfArgsStr = conf->getPropertyValue("general.Prediction.regression.coefNum");
                     int numOfCoefs = atoi(numOfArgsStr.c_str());
                     for (int i = 0; i < numOfCoefs; i++){
-                        string key = "settings.regression.coefNo";
+                        string key = "general.Prediction.regression.coefNo";
                         char num[10];
                         sprintf(num, "%d", (i + 1));
                         key = key + num;
@@ -31,10 +33,10 @@ namespace core{
                         float coefVal = atof(coefValStr.c_str());
                         coefs.push_back(coefVal);
                     }
-                    string interStrVal = conf->getPropertyValue("settings.regression.Intercept");
+                    string interStrVal = conf->getPropertyValue("general.Prediction.regression.Intercept");
                     float intercept = atof(interStrVal.c_str());
                     coefs.push_back(intercept);
-                    interStrVal = conf->getPropertyValue("settings.regression.borderValue");
+                    interStrVal = conf->getPropertyValue("general.Prediction.regression.borderValue");
                     borderValue = atof(interStrVal.c_str());
                     loadedModel = true;
                 }

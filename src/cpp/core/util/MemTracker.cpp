@@ -67,8 +67,8 @@ namespace core{
             remove(tmpPtr);
         }
         
-        string MemTracker::getUnallocated(){
-            string retString = "";
+        string MemTracker::getUnfreed(){
+            string retString = "Unfreed:\n";
             set<MemTrackerStruct>::iterator iter = allocatedByManager.begin();
             while (iter != allocatedByManager.end()){
                 MemTrackerStruct mtStruct = *iter;

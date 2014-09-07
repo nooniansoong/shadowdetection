@@ -1,5 +1,6 @@
 #ifdef _OPENCL
 #include "OpenCLTools.h"
+#include <memory>
 
 #include "core/opencv/OpenCV2Tools.h"
 #include "core/opencv/OpenCVTools.h"
@@ -19,6 +20,7 @@ namespace shadowdetection {
         using namespace cv;
         using namespace core::util;
         using namespace core::opencl;
+        using namespace std;
         
         void OpenclTools::initVars(){          
             OpenClBase::initVars();
@@ -187,11 +189,10 @@ namespace shadowdetection {
             clFlush(command_queue);
             clFinish(command_queue);
             
-            Mat* ratiosImage1 = OpenCV2Tools::get8bitImage(ratios1, height, width);            
-            Mat* binarized1 = OpenCV2Tools::binarize(ratiosImage1);            
+            UNIQUE_PTR(Mat) ratiosImage1(OpenCV2Tools::get8bitImage(ratios1, height, width));
+            UNIQUE_PTR(Mat) binarized1(OpenCV2Tools::binarize(ratiosImage1.get()));
             Delete(ratios1);
-            ratios1 = 0;
-            Delete(ratiosImage1);
+            ratios1 = 0;            
 
             local_ws = workGroupSize[1];
             global_ws = shrRoundUp(local_ws, width * height);
@@ -223,15 +224,12 @@ namespace shadowdetection {
             clReleaseMemObject(tsaiOutput);
             tsaiOutput = 0;            
             
-            Mat* ratiosImage2 = OpenCV2Tools::get8bitImage(ratios2, height, width);            
-            Mat* binarized2 = OpenCV2Tools::binarize(ratiosImage2);            
+            UNIQUE_PTR(Mat) ratiosImage2(OpenCV2Tools::get8bitImage(ratios2, height, width));
+            UNIQUE_PTR(Mat) binarized2(OpenCV2Tools::binarize(ratiosImage2.get()));
             Delete(ratios2);
-            ratios2 = 0;
-            Delete(ratiosImage2);
+            ratios2 = 0;            
             
-            Mat* processedImageMat = OpenCV2Tools::joinTwoOcl(*binarized1, *binarized2);
-            Delete(binarized1);
-            Delete(binarized2);
+            Mat* processedImageMat = OpenCV2Tools::joinTwoOcl(*binarized1, *binarized2);                      
             return processedImageMat;             
         }
         

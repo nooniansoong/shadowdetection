@@ -41,7 +41,7 @@ namespace core{
             static void add(MemTrackerStruct ptr) throw(SDException&);
             static void remove(void* ptr) throw(SDException&);
             static void remove(const void* ptr) throw(SDException&);
-            static std::string getUnallocated();
+            static std::string getUnfreed();
         };                
         
     }
@@ -73,12 +73,10 @@ namespace core{
         throw 0;
     }
     
-    inline void operator delete (void * p, const char* file, int line){
-        free(p);
+    inline void operator delete(void * p, const char* file, int line){        
     }
     
-    inline void operator delete[] (void * p, const char* file, int line){
-        free(p);
+    inline void operator delete[](void * p, const char* file, int line){        
     }
     #define New new(__FILE__, __LINE__)
     #define Delete(P) core::util::MemTracker::remove(P); delete P;
@@ -86,15 +84,14 @@ namespace core{
 #else
     #define New new
     #define Delete(P) delete P;
-    #define Delete[](P) DeleteArr P;
+    #define DeleteArr(P) delete[] P;
 #endif
 
-template<typename T> struct MemTrackerDeleter{
-  void operator()(T* b) 
-  { 
-      T* ptr = const_cast<T*>(b);
-      Delete(ptr); 
-  }
+template<typename T> struct MemTrackerDeleter {
+    void operator()(T* b) {
+        T* ptr = const_cast<T*> (b);
+        Delete(ptr);
+    }
 };
 
 #define UNIQUE_PTR(TYPE) unique_ptr< TYPE, MemTrackerDeleter< TYPE > >

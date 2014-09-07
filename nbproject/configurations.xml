@@ -16,6 +16,11 @@
           <itemPath>src/cpp/core/opencv/OpenCV2Tools.h</itemPath>
           <itemPath>src/cpp/core/opencv/OpenCVTools.h</itemPath>
         </logicalFolder>
+        <logicalFolder name="process" displayName="process" projectFiles="true">
+          <itemPath>src/cpp/core/process/IProcessor.h</itemPath>
+          <itemPath>src/cpp/core/process/MakeSetProcessor.h</itemPath>
+          <itemPath>src/cpp/core/process/TrainingProcessor.h</itemPath>
+        </logicalFolder>
         <logicalFolder name="tools" displayName="tools" projectFiles="true">
           <logicalFolder name="image" displayName="image" projectFiles="true">
             <itemPath>src/cpp/core/tools/image/IImageParameters.h</itemPath>
@@ -45,13 +50,12 @@
           <logicalFolder name="rtti" displayName="rtti" projectFiles="true">
             <itemPath>src/cpp/core/util/rtti/ObjectFactory.h</itemPath>
             <itemPath>src/cpp/core/util/rtti/RTTI.h</itemPath>
+            <itemPath>src/cpp/core/util/rtti/RTTIStorage.h</itemPath>
           </logicalFolder>
           <itemPath>src/cpp/core/util/Config.h</itemPath>
           <itemPath>src/cpp/core/util/FileSaver.h</itemPath>
           <itemPath>src/cpp/core/util/Matrix.h</itemPath>
           <itemPath>src/cpp/core/util/MemTracker.h</itemPath>
-          <itemPath>src/cpp/core/util/ParametersFactory.h</itemPath>
-          <itemPath>src/cpp/core/util/PredictorFactory.h</itemPath>
           <itemPath>src/cpp/core/util/Singleton.h</itemPath>
           <itemPath>src/cpp/core/util/TabParser.h</itemPath>
           <itemPath>src/cpp/core/util/Timer.h</itemPath>
@@ -63,6 +67,9 @@
         <logicalFolder name="opencl" displayName="opencl" projectFiles="true">
           <itemPath>src/cpp/shadowdetection/opencl/OpenCLImageParameters.h</itemPath>
           <itemPath>src/cpp/shadowdetection/opencl/OpenCLTools.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="process" displayName="process" projectFiles="true">
+          <itemPath>src/cpp/shadowdetection/process/ShadowDetectionProcessor.h</itemPath>
         </logicalFolder>
         <logicalFolder name="tools" displayName="tools" projectFiles="true">
           <logicalFolder name="image" displayName="image" projectFiles="true">
@@ -114,6 +121,10 @@
           <itemPath>src/cpp/core/opencv/OpenCV2Tools.cpp</itemPath>
           <itemPath>src/cpp/core/opencv/OpenCVTools.cpp</itemPath>
         </logicalFolder>
+        <logicalFolder name="process" displayName="process" projectFiles="true">
+          <itemPath>src/cpp/core/process/MakeSetProcessor.cpp</itemPath>
+          <itemPath>src/cpp/core/process/TrainingProcessor.cpp</itemPath>
+        </logicalFolder>
         <logicalFolder name="tools" displayName="tools" projectFiles="true">
           <logicalFolder name="svm" displayName="svm" projectFiles="true">
             <logicalFolder name="libsvmopenmp"
@@ -134,12 +145,11 @@
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="rtti" displayName="rtti" projectFiles="true">
-            <itemPath>src/cpp/core/util/rtti/RTTI.cpp</itemPath>
+            <itemPath>src/cpp/core/util/rtti/ObjectFactory.cpp</itemPath>
+            <itemPath>src/cpp/core/util/rtti/RTTIStorage.cpp</itemPath>
           </logicalFolder>
           <itemPath>src/cpp/core/util/Cofig.cpp</itemPath>
           <itemPath>src/cpp/core/util/MemTracker.cpp</itemPath>
-          <itemPath>src/cpp/core/util/ParametersFactory.cpp</itemPath>
-          <itemPath>src/cpp/core/util/PredictorFactory.cpp</itemPath>
           <itemPath>src/cpp/core/util/TabParser.cpp</itemPath>
           <itemPath>src/cpp/core/util/Timer.cpp</itemPath>
         </logicalFolder>
@@ -156,6 +166,9 @@
           <itemPath>src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp</itemPath>
           <itemPath>src/cpp/shadowdetection/opencl/OpenCLTools.cpp</itemPath>
           <itemPath>src/cpp/shadowdetection/opencl/OpenCLToolsImage.cpp</itemPath>
+        </logicalFolder>
+        <logicalFolder name="process" displayName="process" projectFiles="true">
+          <itemPath>src/cpp/shadowdetection/process/ShadowDetectionProcessor.cpp</itemPath>
         </logicalFolder>
         <logicalFolder name="tools" displayName="tools" projectFiles="true">
           <logicalFolder name="image" displayName="image" projectFiles="true">
@@ -208,6 +221,9 @@
             <pElem>src/cpp</pElem>
           </incDir>
           <commandLine>-fopenmp -std=c++11</commandLine>
+          <preprocessorList>
+            <Elem>_DEBUG</Elem>
+          </preprocessorList>
         </ccTool>
         <linkerTool>
           <linkerAddLib>
@@ -274,6 +290,28 @@
       </item>
       <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/process/IProcessor.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/MakeSetProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/MakeSetProcessor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/TrainingProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/TrainingProcessor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/tools/image/IImageParameters.h"
             ex="false"
             tool="3"
@@ -310,26 +348,6 @@
       <item path="src/cpp/core/util/MemTracker.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/cpp/core/util/MemTracker.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/ParametersFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/ParametersFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/PredictorFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/PredictorFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
       </item>
       <item path="src/cpp/core/util/Singleton.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -368,14 +386,27 @@
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/util/rtti/ObjectFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/util/rtti/ObjectFactory.h"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/core/util/rtti/RTTI.cpp" ex="false" tool="1" flavor2="0">
-      </item>
       <item path="src/cpp/core/util/rtti/RTTI.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTIStorage.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTIStorage.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp"
             ex="false"
@@ -413,6 +444,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/regression_predict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/process/ShadowDetectionProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/process/ShadowDetectionProcessor.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -564,6 +605,28 @@
       </item>
       <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/process/IProcessor.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/MakeSetProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/MakeSetProcessor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/TrainingProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/TrainingProcessor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/tools/image/IImageParameters.h"
             ex="false"
             tool="3"
@@ -600,26 +663,6 @@
       <item path="src/cpp/core/util/MemTracker.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/cpp/core/util/MemTracker.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/ParametersFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/ParametersFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/PredictorFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/PredictorFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
       </item>
       <item path="src/cpp/core/util/Singleton.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -658,14 +701,27 @@
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/util/rtti/ObjectFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/util/rtti/ObjectFactory.h"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/core/util/rtti/RTTI.cpp" ex="false" tool="1" flavor2="0">
-      </item>
       <item path="src/cpp/core/util/rtti/RTTI.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTIStorage.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTIStorage.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp"
             ex="false"
@@ -703,6 +759,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/regression_predict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/process/ShadowDetectionProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/process/ShadowDetectionProcessor.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -848,6 +914,28 @@
       </item>
       <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/process/IProcessor.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/MakeSetProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/MakeSetProcessor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/TrainingProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/TrainingProcessor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/tools/image/IImageParameters.h"
             ex="false"
             tool="3"
@@ -884,26 +972,6 @@
       <item path="src/cpp/core/util/MemTracker.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/cpp/core/util/MemTracker.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/ParametersFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/ParametersFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/PredictorFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/PredictorFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
       </item>
       <item path="src/cpp/core/util/Singleton.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -942,14 +1010,27 @@
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/util/rtti/ObjectFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/util/rtti/ObjectFactory.h"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/core/util/rtti/RTTI.cpp" ex="false" tool="1" flavor2="0">
-      </item>
       <item path="src/cpp/core/util/rtti/RTTI.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTIStorage.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTIStorage.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp"
             ex="false"
@@ -987,6 +1068,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/regression_predict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/process/ShadowDetectionProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/process/ShadowDetectionProcessor.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1137,6 +1228,28 @@
       </item>
       <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/process/IProcessor.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/MakeSetProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/MakeSetProcessor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/TrainingProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/TrainingProcessor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/tools/image/IImageParameters.h"
             ex="false"
             tool="3"
@@ -1173,26 +1286,6 @@
       <item path="src/cpp/core/util/MemTracker.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/cpp/core/util/MemTracker.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/ParametersFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/ParametersFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/PredictorFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/PredictorFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
       </item>
       <item path="src/cpp/core/util/Singleton.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1231,14 +1324,27 @@
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/util/rtti/ObjectFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/util/rtti/ObjectFactory.h"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/core/util/rtti/RTTI.cpp" ex="false" tool="1" flavor2="0">
-      </item>
       <item path="src/cpp/core/util/rtti/RTTI.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTIStorage.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTIStorage.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp"
             ex="false"
@@ -1276,6 +1382,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/regression_predict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/process/ShadowDetectionProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/process/ShadowDetectionProcessor.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1426,6 +1542,28 @@
       </item>
       <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/process/IProcessor.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/MakeSetProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/MakeSetProcessor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/TrainingProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/TrainingProcessor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/tools/image/IImageParameters.h"
             ex="false"
             tool="3"
@@ -1462,26 +1600,6 @@
       <item path="src/cpp/core/util/MemTracker.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/cpp/core/util/MemTracker.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/ParametersFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/ParametersFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/PredictorFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/PredictorFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
       </item>
       <item path="src/cpp/core/util/Singleton.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1520,14 +1638,27 @@
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/util/rtti/ObjectFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/util/rtti/ObjectFactory.h"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/core/util/rtti/RTTI.cpp" ex="false" tool="1" flavor2="0">
-      </item>
       <item path="src/cpp/core/util/rtti/RTTI.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTIStorage.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTIStorage.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp"
             ex="false"
@@ -1565,6 +1696,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/regression_predict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/process/ShadowDetectionProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/process/ShadowDetectionProcessor.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1718,6 +1859,28 @@
       </item>
       <item path="src/cpp/core/opencv/OpenCVTools.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/process/IProcessor.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/MakeSetProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/MakeSetProcessor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/TrainingProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/process/TrainingProcessor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/tools/image/IImageParameters.h"
             ex="false"
             tool="3"
@@ -1754,26 +1917,6 @@
       <item path="src/cpp/core/util/MemTracker.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/cpp/core/util/MemTracker.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/ParametersFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/ParametersFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/PredictorFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/cpp/core/util/PredictorFactory.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
       </item>
       <item path="src/cpp/core/util/Singleton.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1812,14 +1955,27 @@
       </item>
       <item path="src/cpp/core/util/raii/RAIIS.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/cpp/core/util/rtti/ObjectFactory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/util/rtti/ObjectFactory.h"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/cpp/core/util/rtti/RTTI.cpp" ex="false" tool="1" flavor2="0">
-      </item>
       <item path="src/cpp/core/util/rtti/RTTI.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTIStorage.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/util/rtti/RTTIStorage.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/OpenCLImageParameters.cpp"
             ex="false"
@@ -1857,6 +2013,16 @@
             flavor2="0">
       </item>
       <item path="src/cpp/shadowdetection/opencl/kernels/regression_predict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/process/ShadowDetectionProcessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/shadowdetection/process/ShadowDetectionProcessor.h"
             ex="false"
             tool="3"
             flavor2="0">
