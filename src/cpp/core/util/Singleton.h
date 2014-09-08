@@ -19,7 +19,7 @@ namespace core{
          */
         template <class T> class Singleton{
         private:
-            static T* instancePtr;
+            static T* instancePtr;            
         protected:
             Singleton();            
             virtual ~Singleton();
@@ -43,11 +43,11 @@ namespace core{
         template<class T> Singleton<T>::~Singleton(){            
         }
         
-        template<class T> T* Singleton<T>::getInstancePtr(){
+        template<class T> T* Singleton<T>::getInstancePtr(){            
             pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
             raii::MutexRaii autoLock(&mutex);
             static T* instancePtrTmp = 0;
-            if (instancePtrTmp == 0){
+            if (instancePtrTmp == 0 || instancePtr == 0){
                 instancePtrTmp = New T();
                 if (instancePtrTmp == 0){
                     SDException exc(SHADOW_NO_MEM, "Init singleton");
@@ -60,7 +60,9 @@ namespace core{
             return instancePtr;
         }
         
-        template<class T> void Singleton<T>::destroy(){
+        template<class T> void Singleton<T>::destroy(){           
+            pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+            raii::MutexRaii autoLock(&mutex);
             if (instancePtr != 0){
                 Delete(instancePtr);                
             }

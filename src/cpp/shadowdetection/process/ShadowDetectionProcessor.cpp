@@ -221,10 +221,7 @@ namespace shadowdetection {
 #endif
 
         void cleanUp(){
-#ifdef _OPENCL
-        OpenclTools::getInstancePtr()->cleanUp();            
-        OpenCLToolsPredict::getInstancePtr()->cleanUp();
-        OpenCLImageParameters::getInstancePtr()->cleanUp();
+#ifdef _OPENCL        
         OpenclTools::destroy();            
         OpenCLToolsPredict::destroy();
         OpenCLImageParameters::destroy();            
