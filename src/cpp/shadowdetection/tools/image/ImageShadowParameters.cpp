@@ -83,8 +83,11 @@ namespace shadowdetection{
                     return 1.f;
             }
             
-            Matrix<float>* ImageShadowParameters::getImageParameters(const Mat& originalImage, const Mat& maskImage, 
-                                                        int& rowDimension, int& pixelNum) throw (SDException&){
+            Matrix<float>* ImageShadowParameters::getImageParameters(   const std::vector<const Mat*>& images,
+                                                                        const Mat& maskImage,
+                                                                        int& rowDimension, 
+                                                                        int& pixelNum) throw (SDException&){
+                const Mat& originalImage = *(images[0]); 
                 if (originalImage.data == 0 || maskImage.data == 0)
                     return 0;
                 if (originalImage.size().width != maskImage.size().width ||
@@ -113,7 +116,9 @@ namespace shadowdetection{
                     return 0;
                 }                
                 
-                UNIQUE_PTR(const Matrix<float>) noLabelPtr(getImageParameters(originalImage, *hsvPtr, *hlsPtr,
+                vector<const Mat*> images1;
+                images1.push_back(&originalImage); images1.push_back(hsvPtr.get()); images1.push_back(hlsPtr.get());
+                UNIQUE_PTR(const Matrix<float>) noLabelPtr(getImageParameters(  images1,
                                                                                 noLabelDataRowDimension, pixelCount));
                 if (noLabelPtr.get() != 0){                    
                     for (int i = 0; i < height; i++) {
@@ -150,11 +155,12 @@ namespace shadowdetection{
                 return ret;
             }
             
-            Matrix<float>* ImageShadowParameters::getImageParameters( const Mat& originalImage, 
-                                                                const Mat& hsvImage,
-                                                                const Mat& hlsImage,
+            Matrix<float>* ImageShadowParameters::getImageParameters( const std::vector<const cv::Mat*>& images,
                                                                 int& rowDimension,
                                                                 int& pixelNum) throw (SDException&){
+                const Mat& originalImage = *images[0];
+                const Mat& hsvImage = *images[1];
+                const Mat& hlsImage = *images[2];
                 if (originalImage.data == 0 || hsvImage.data == 0 || hlsImage.data == 0)
                     return 0;
                 int height = originalImage.size().height;

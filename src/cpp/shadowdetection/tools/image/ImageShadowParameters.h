@@ -33,12 +33,10 @@ namespace shadowdetection{
                 ImageShadowParameters();
                 virtual ~ImageShadowParameters();
                                 
-                virtual core::util::Matrix<float>* getImageParameters(  const cv::Mat& originalImage,
-                                                                        const cv::Mat& hsvImage,
-                                                                        const cv::Mat& hlsImage,
+                virtual core::util::Matrix<float>* getImageParameters(  const std::vector<const cv::Mat*>& images,
                                                                         int& rowDimension, int& pixelNum) throw (SDException&);
-                virtual core::util::Matrix<float>* getImageParameters(  const cv::Mat& originalImage, 
-                                                                        const cv::Mat& maskImage,                                                     
+                virtual core::util::Matrix<float>* getImageParameters(  const std::vector<const cv::Mat*>& images,
+                                                                        const cv::Mat& maskImage,
                                                                         int& rowDimension, int& pixelNum) throw (SDException&);
                 virtual void reset();
             };

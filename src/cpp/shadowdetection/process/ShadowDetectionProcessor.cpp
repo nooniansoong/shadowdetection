@@ -112,8 +112,12 @@ namespace shadowdetection {
                     if (hsvPtr.get() == 0) {
                         return;
                     }
-
-                    UNIQUE_PTR(Matrix<float>) parametersPtr(ipPtr->getImageParameters(image, *hsvPtr, *hlsPtr,
+                    
+                    vector<const Mat*> images;
+                    images.push_back(&image);
+                    images.push_back(hsvPtr.get()); 
+                    images.push_back(hlsPtr.get());
+                    UNIQUE_PTR(Matrix<float>) parametersPtr(ipPtr->getImageParameters(images,
                             parameterCount, pixCount));
                     if (parametersPtr.get() != 0) {
                         IPrediction* predictor = ObjectFactory::getInstancePtr()->createPredictor();
@@ -193,8 +197,12 @@ namespace shadowdetection {
                }        
 
                UNIQUE_PTR(IImageParameteres) ipPtr(ObjectFactory::getInstancePtr()->createImageParameters());        
-               UNIQUE_PTR(Matrix<float>) parameters(ipPtr->getImageParameters(imageMat, *hsv, *hls, 
-                                                                               parameterCount, pixCount));
+               
+               vector<const Mat*> images;
+               images.push_back(&imageMat); images.push_back(hsv.get()); images.push_back(hls.get());
+               
+               UNIQUE_PTR(Matrix<float>) parameters(ipPtr->getImageParameters(  images, 
+                                                                                parameterCount, pixCount));
                IPrediction* predictor = ObjectFactory::getInstancePtr()->createPredictor();
                if (predictor->hasLoadedModel() == false){            
                    predictor->loadModel();
