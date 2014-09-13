@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="94">
+<configurationDescriptor version="95">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
@@ -9,6 +9,9 @@
           <logicalFolder name="libsvm" displayName="libsvm" projectFiles="true">
             <itemPath>src/cpp/core/opencl/libsvm/OpenCLToolsPredict.h</itemPath>
             <itemPath>src/cpp/core/opencl/libsvm/OpenCLToolsTrain.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="regression" displayName="regression" projectFiles="true">
+            <itemPath>src/cpp/core/opencl/regression/OpenCLRegressionPredict.h</itemPath>
           </logicalFolder>
           <itemPath>src/cpp/core/opencl/OpenClToolsBase.h</itemPath>
         </logicalFolder>
@@ -114,6 +117,12 @@
             </logicalFolder>
             <itemPath>src/cpp/core/opencl/libsvm/OpenCLToolsPredict.cpp</itemPath>
             <itemPath>src/cpp/core/opencl/libsvm/OpenCLToolsTrain.cpp</itemPath>
+          </logicalFolder>
+          <logicalFolder name="regression" displayName="regression" projectFiles="true">
+            <logicalFolder name="kernels" displayName="kernels" projectFiles="true">
+              <itemPath>src/cpp/core/opencl/regression/kernels/RegressionPredict.cl</itemPath>
+            </logicalFolder>
+            <itemPath>src/cpp/core/opencl/regression/OpenCLRegressionPredict.cpp</itemPath>
           </logicalFolder>
           <itemPath>src/cpp/core/opencl/OpenClToolsBase.cpp</itemPath>
         </logicalFolder>
@@ -272,6 +281,21 @@
             flavor2="0">
       </item>
       <item path="src/cpp/core/opencl/libsvm/kernels/libSvmTrain.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/regression/OpenCLRegressionPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/regression/OpenCLRegressionPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/regression/kernels/RegressionPredict.cl"
             ex="false"
             tool="3"
             flavor2="0">
@@ -591,6 +615,21 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/core/opencl/regression/OpenCLRegressionPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/regression/OpenCLRegressionPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/regression/kernels/RegressionPredict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
             ex="false"
             tool="1"
@@ -896,6 +935,21 @@
             flavor2="0">
       </item>
       <item path="src/cpp/core/opencl/libsvm/kernels/libSvmTrain.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/regression/OpenCLRegressionPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/regression/OpenCLRegressionPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/regression/kernels/RegressionPredict.cl"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1214,6 +1268,21 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/cpp/core/opencl/regression/OpenCLRegressionPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/regression/OpenCLRegressionPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/regression/kernels/RegressionPredict.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/cpp/core/opencv/OpenCV2Tools.cpp"
             ex="false"
             tool="1"
@@ -1524,6 +1593,21 @@
             flavor2="0">
       </item>
       <item path="src/cpp/core/opencl/libsvm/kernels/libSvmTrain.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/regression/OpenCLRegressionPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/regression/OpenCLRegressionPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/regression/kernels/RegressionPredict.cl"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1841,6 +1925,21 @@
             flavor2="0">
       </item>
       <item path="src/cpp/core/opencl/libsvm/kernels/libSvmTrain.cl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/regression/OpenCLRegressionPredict.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/regression/OpenCLRegressionPredict.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/cpp/core/opencl/regression/kernels/RegressionPredict.cl"
             ex="false"
             tool="3"
             flavor2="0">

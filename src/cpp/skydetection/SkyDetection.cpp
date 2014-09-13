@@ -1,7 +1,6 @@
 #include "SkyDetection.h"
 #include "core/util/Config.h"
 #include <string>
-#include "core/util/raii/RAIIS.h"
 #include <memory>
 
 namespace skydetection{

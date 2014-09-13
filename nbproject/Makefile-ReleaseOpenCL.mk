@@ -39,6 +39,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/cpp/core/opencl/OpenClToolsBase.o \
 	${OBJECTDIR}/src/cpp/core/opencl/libsvm/OpenCLToolsPredict.o \
 	${OBJECTDIR}/src/cpp/core/opencl/libsvm/OpenCLToolsTrain.o \
+	${OBJECTDIR}/src/cpp/core/opencl/regression/OpenCLRegressionPredict.o \
 	${OBJECTDIR}/src/cpp/core/opencv/OpenCV2Tools.o \
 	${OBJECTDIR}/src/cpp/core/opencv/OpenCVTools.o \
 	${OBJECTDIR}/src/cpp/core/process/MakeSetProcessor.o \
@@ -106,6 +107,11 @@ ${OBJECTDIR}/src/cpp/core/opencl/libsvm/OpenCLToolsTrain.o: src/cpp/core/opencl/
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/opencl/libsvm
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -std=c++11 -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/core/opencl/libsvm/OpenCLToolsTrain.o src/cpp/core/opencl/libsvm/OpenCLToolsTrain.cpp
+
+${OBJECTDIR}/src/cpp/core/opencl/regression/OpenCLRegressionPredict.o: src/cpp/core/opencl/regression/OpenCLRegressionPredict.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/opencl/regression
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -D_OPENCL -I/usr/local/include/opencv -Isrc/cpp -std=c++11 -Xcompiler "-MMD -MP -MF $@.d" -o ${OBJECTDIR}/src/cpp/core/opencl/regression/OpenCLRegressionPredict.o src/cpp/core/opencl/regression/OpenCLRegressionPredict.cpp
 
 ${OBJECTDIR}/src/cpp/core/opencv/OpenCV2Tools.o: src/cpp/core/opencv/OpenCV2Tools.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/cpp/core/opencv

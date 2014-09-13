@@ -1,10 +1,13 @@
 #include "RegressionPredict.h" 
 #include "core/util/Config.h"
+#include "core/opencl/regression/OpenCLRegressionPredict.h"
 
 namespace core{
     namespace util{
         namespace prediction{
             namespace regression{
+                
+                using namespace core::opencl::regression;
                 
                 REGISTER_SINGLETON(RegressionPredict, core::util::prediction::regression)
                 
@@ -43,7 +46,25 @@ namespace core{
                 
                 uchar* RegressionPredict::predict( const Matrix<float>* imagePixelsParameters, 
                                         const int& pixCount, const int& parameterCount) throw(SDException&){
-                    uchar* retArr = New uchar[pixCount];
+                    if (loadedModel == false){
+                        SDException exc(SHADOW_EXCEPTIONS::SHADOW_NO_MODEL_LOADED, "RegressionPredict::predict");
+                        throw exc;
+                    }
+                    uchar* retArr = 0;
+#ifdef _OPENCL
+                    OpenCLRegressionPredict* regPredict = OpenCLRegressionPredict::getInstancePtr();
+                    if (regPredict->hasInitialized() == false){
+                        Config* conf = Config::getInstancePtr();
+                        string platformStr = conf->getPropertyValue("general.openCL.platformid");
+                        int platformID = atoi(platformStr.c_str());
+                        string deviceStr = conf->getPropertyValue("general.openCL.deviceid");
+                        int deviceID = atoi(deviceStr.c_str());
+                        regPredict->init(platformID, deviceID, false);
+                    }
+                    retArr = regPredict->predict(*imagePixelsParameters, pixCount, parameterCount, coefs, borderValue);
+                    regPredict->cleanWorkPart();
+#else
+                    retArr = New uchar[pixCount];
                     for (int i = 0; i < pixCount; i++){
                         //intercept
                         float result = coefs[parameterCount];
@@ -60,6 +81,7 @@ namespace core{
                         else
                             retArr[i] = 0U;
                     }
+#endif
                     return retArr;
                 }
                 

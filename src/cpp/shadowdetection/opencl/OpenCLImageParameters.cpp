@@ -69,7 +69,7 @@ namespace shadowdetection {
             size_t local_ws = workGroupSize[0];
             size_t global_ws = shrRoundUp(local_ws, numOfPixels);
             err = clEnqueueNDRangeKernel(command_queue, kernel[0], 1, NULL, &global_ws, &local_ws, 0, NULL, NULL);
-            err_check(err, "OpenCLImageParameters::getImageParameters clEnqueueNDRangeKernel0");
+            err_check(err, "OpenCLImageParameters::getImageParameters clEnqueueNDRangeKernel");
             float* parameters = retMat->getVec();
             err = clEnqueueReadBuffer(  command_queue, parametersMem, CL_TRUE, 0, 
                                         numOfPixels * parameterCount * sizeof(cl_float), 

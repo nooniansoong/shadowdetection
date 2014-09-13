@@ -3,6 +3,7 @@
 #include "shadowdetection/opencl/OpenCLTools.h"
 #include "core/opencl/libsvm/OpenCLToolsPredict.h"
 #include "shadowdetection/opencl/OpenCLImageParameters.h"
+#include "core/opencl/regression/OpenCLRegressionPredict.h"
 #include "core/util/Config.h"
 #include "core/opencv/OpenCV2Tools.h"
 #include "core/opencv/OpenCVTools.h"
@@ -24,6 +25,7 @@ namespace shadowdetection {
 #ifdef _OPENCL
         using namespace shadowdetection::opencl;
         using namespace core::opencl::libsvm;
+        using namespace core::opencl::regression;
 #endif
         using namespace std;
         using namespace core::util;
@@ -232,7 +234,8 @@ namespace shadowdetection {
 #ifdef _OPENCL        
         OpenclTools::destroy();            
         OpenCLToolsPredict::destroy();
-        OpenCLImageParameters::destroy();            
+        OpenCLImageParameters::destroy();
+        OpenCLRegressionPredict::destroy();
 #endif
         Config::destroy();
         }

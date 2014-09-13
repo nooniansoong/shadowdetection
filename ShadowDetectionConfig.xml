@@ -129,6 +129,25 @@
                 shadowdetection::process::ShadowDetectionProcessor
             </processorClass>
             
+            <core::opencl::regression::OpenCLRegressionPredict>
+                <kernels>
+                    <kernelCount>
+                        1
+                    </kernelCount>
+                    <kernelNo0>
+                        predict
+                    </kernelNo0>                    
+                </kernels>
+                <programs>
+                    <programFile>
+                        RegressionPredict
+                    </programFile>
+                    <rootDir>
+                        src/cpp/core/opencl/regression/kernels/
+                    </rootDir>
+                </programs>
+            </core::opencl::regression::OpenCLRegressionPredict>
+            
             <core::opencl::libsvm::OpenCLToolsTrain>
                 <kernels>
                     <kernelCount>
