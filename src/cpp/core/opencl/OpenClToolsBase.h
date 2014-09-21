@@ -76,38 +76,52 @@ namespace core{
             /**
              * check for openCL error
              * @param err
+             * OpenCL error code
              * @param err_code
+             * Text describing error 
              */
             void err_check(int err, std::string err_code) throw (SDException&);
             /**
              * uses for get number of global work size
              * @param localSize
+             * OpenCL workgroup size
              * @param allSize
+             * number of all threads
              * @return 
              */
             size_t shrRoundUp(size_t localSize, size_t allSize);
             /**
              * global function for load program
              * @param kernelFileName
+             * kernel file name 
              */
             void loadProgramFile(const std::string& programFileName);
             /**
              * load OpenCL program from source
              * @param kernelFileName
+             * path to kernel source file
              */
             void loadProgramFileFromSource(const std::string& programFileName);
             /**
              * load OpenCL program from precompiled binary
              * @param kernelFileName
-             * @return 
+             * path to precompiled kernel source
+             * @return
+             * true if source exists and can be loaded, otherwise false 
              */
             bool loadProgramFromBinary(const std::string& programFileName);
             /**
              * saves compiled OpenCL program binary loaded from source
+             * @param programFileName
+             * kernel file name
+             * @return
+             * path where compiled binaries are saved 
              */
             char* saveProgramBinary(const std::string& programFileName);
             /**
-             * return class names used in config
+             * 
+             * @return 
+             * class names used in config
              */
             virtual std::string getClassName() = 0;
         public:
@@ -136,15 +150,18 @@ namespace core{
              */
             virtual void cleanWorkPart() = 0;
             /**
-             * return is called init method;
              * @return 
+             * if init() method was called;
              */
             bool hasInitialized();
             /**
              * init variables for OpenclTools class instances
              * @param platformID
+             * wanted openCL platformID
              * @param deviceID
+             * wanted openCL deviceID
              * @param listOnly
+             * if true then method will only list all possible platforms and devices
              */
             void init(uint platformID, uint deviceID, bool listOnly) throw (SDException&);
         };
