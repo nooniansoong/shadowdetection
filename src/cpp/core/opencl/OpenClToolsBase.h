@@ -60,17 +60,43 @@ namespace core{
              */
             std::vector<std::string> getProgramFilesForClass();
         protected:
+            /**
+             * Device used in calculations
+             */
             cl_device_id device;
+            /**
+             * OpenCL error code
+             */
             cl_int err;
-            //program connected variables
+            /**
+             * OpenCL command cue for program
+             */
             cl_command_queue command_queue;
+            /**
+             * OpenCL program
+             */
             cl_program program;
+            /**
+             * OpenCL program context
+             */
             cl_context context;
             //kernel connected variables
+            /**
+             * array of all kernels used in class
+             */
             cl_kernel* kernel;
+            /**
+             * max workgroup thread number, for kernel on device
+             */
             size_t* workGroupSize;
+            /**
+             * number of kernels used in class
+             */
             int kernelCount;
             //class variables
+            /**
+             * if initialized or not
+             */
             bool initialized;
             
             /**
