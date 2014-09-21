@@ -10,20 +10,36 @@
 namespace core{
     namespace opencl{
         
+        /**
+         * helper struct, translation of libsvm structure
+         */
         struct cl_svm_node{
             cl_int index;
             cl_double value;
         };
         
+        /**
+         * helper struct, translation of libsvm structure with float instead of double value
+         */
         struct cl_svm_node_float{
             cl_int index;
             cl_float value;
         };
         
+        /**
+         * Base class for opencl tools. All "OpenCL" classes should be derived from this one, and then specified in configuration file
+         */
         class OpenClBase{
         private:
             std::string dirToOpenclprogramFiles;
             
+            /**
+             * compiles program file
+             * @param programFileName
+             * input file to compile
+             * @return 
+             * path to compiled file
+             */
             std::string getBinaryFile(const std::string& programFileName);
             /**
              * calculate work group sizes for each kernel
@@ -38,6 +54,10 @@ namespace core{
              * @return 
              */
             std::vector<std::string> getKernelNamesForClass();
+            /**
+             * return list of source file for class specified in config
+             * @return 
+             */
             std::vector<std::string> getProgramFilesForClass();
         protected:
             cl_device_id device;
@@ -72,18 +92,18 @@ namespace core{
              */
             void loadProgramFile(const std::string& programFileName);
             /**
-             * load program from source
+             * load OpenCL program from source
              * @param kernelFileName
              */
             void loadProgramFileFromSource(const std::string& programFileName);
             /**
-             * load program from precompiled binary
+             * load OpenCL program from precompiled binary
              * @param kernelFileName
              * @return 
              */
             bool loadProgramFromBinary(const std::string& programFileName);
             /**
-             * saves program binary loaded from source
+             * saves compiled OpenCL program binary loaded from source
              */
             char* saveProgramBinary(const std::string& programFileName);
             /**
@@ -91,7 +111,13 @@ namespace core{
              */
             virtual std::string getClassName() = 0;
         public:
+            /**
+             * constructor. Calls initVars()
+             */
             OpenClBase();
+            /**
+             * destructor call cleanUp()
+             */
             virtual ~OpenClBase();                        
             /**
              * init global openCL variables
