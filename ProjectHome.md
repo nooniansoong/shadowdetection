@@ -1,0 +1,1 @@
+Simple shadow detection on digital images, using enhanced Tsai's algorithm. Improved with statistical predictions with support vector machine and logistic regression
